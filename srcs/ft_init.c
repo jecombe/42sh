@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:32:45 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/08 14:49:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:53:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ static t_type		ft_parse_type(char **cmd, int chev)
 	{
 		return (NONE);
 	}
-		else if ((bintest = ft_isbin(*cmd, chev)))
+		else if ((bintest = ft_isbin(*cmd)))
 	{
 		ft_strdel(cmd);
 		*cmd = ft_strdup(bintest);

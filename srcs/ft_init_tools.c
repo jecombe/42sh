@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:54:51 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/08 14:49:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:52:53 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,7 +81,7 @@ static int			ft_isbin_check(const char *cmd, const char *path)
 	return (0);
 }
 
-char				*ft_isbin(const char *cmd, int chev)
+char				*ft_isbin(const char *cmd)
 {
 	int				i;
 	char			*s;
