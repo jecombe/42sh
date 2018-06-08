@@ -87,7 +87,6 @@ char				*ft_isbin(const char *cmd)
 	char			*s;
 	char			*path;
 	char			**array;
-	(void)chev;
 
 	i = -1;
 	s = NULL;
