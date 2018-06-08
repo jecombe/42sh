@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:54:51 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/06 13:44:04 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:49:53 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,12 +81,13 @@ static int			ft_isbin_check(const char *cmd, const char *path)
 	return (0);
 }
 
-char				*ft_isbin(const char *cmd)
+char				*ft_isbin(const char *cmd, int chev)
 {
 	int				i;
 	char			*s;
 	char			*path;
 	char			**array;
+	(void)chev;
 
 	i = -1;
 	s = NULL;
@@ -98,11 +99,13 @@ char				*ft_isbin(const char *cmd)
 	path = ft_getenv("PATH");
 	if ((array = ft_strsplit(path, ':')))
 		while (array[++i])
+		{
 			if (ft_isbin_check(cmd, array[i]))
 			{
 				s = ft_isbin_pathconstruct(array[i], cmd);
 				break ;
 			}
+		}
 	array ? ft_stradel(&array) : 0;
 	path ? ft_strdel(&path) : 0;
 	return (s);

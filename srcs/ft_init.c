@@ -3,30 +3,17 @@
 /*                                                              /             */
 /*   ft_init.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/05 15:50:14 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/06 15:23:58 by jecombe     ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_init.c                                        .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:32:45 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/05 15:49:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:49:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static t_type		ft_parse_type(char **cmd)
+int			g_chev;
+static t_type		ft_parse_type(char **cmd, int chev)
 {
 	char			*bintest;
 
@@ -34,7 +21,11 @@ static t_type		ft_parse_type(char **cmd)
 			ft_strcmp(*cmd, "env") == 0 || ft_strcmp(*cmd, "setenv") == 0 ||
 			ft_strcmp(*cmd, "unsetenv") == 0 || ft_strcmp(*cmd, "exit") == 0)
 		return (BI);
-	else if ((bintest = ft_isbin(*cmd)))
+	else if (chev == 1)
+	{
+		return (NONE);
+	}
+		else if ((bintest = ft_isbin(*cmd, chev)))
 	{
 		ft_strdel(cmd);
 		*cmd = ft_strdup(bintest);
@@ -46,10 +37,9 @@ static t_type		ft_parse_type(char **cmd)
 	return (NONE);
 }
 
-static t_token		*ft_parse_cmd(char *str, int i)
+static t_token		*ft_parse_cmd(char *str, int i, int chev)
 {
 	t_token			*token;
-
 	if (!(token = ft_token_new()))
 		return (NULL);
 	if (ft_isquote(str[0]))
@@ -61,7 +51,8 @@ static t_token		*ft_parse_cmd(char *str, int i)
 	{
 		token->id = ft_strdup(str);
 	}
-	token->type = (i == 0) ? ft_parse_type(&token->id) : ARG;
+
+	token->type = (i == 0) ? ft_parse_type(&token->id, chev) : ARG;
 	return (token);
 }
 
@@ -71,6 +62,7 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	t_token			*tokenarg;
 	char			*tab[100];
 	int				v;
+	int				chev;
 
 	token = NULL;
 	tbegin = token;
@@ -79,17 +71,26 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	v = 0;
 	while (tab[v] && (v < 100))
 	{
-		if (!(token = ft_parse_cmd(tab[v], 0)))
-		{
-			return (NULL);
-		}
+		/*if (v > 0 && ft_strcmp(tab[v - 1],">") != 0 && ft_strcmp(tab[v], ">") != 0)
+		{*/
+			if (v > 1 && ft_strcmp(tab[v], ">") != 0 && ft_strcmp(tab[v - 1], ">") == 0)
+			{
+				chev = 1;
+			}
+			else
+				chev = 0;
+			if (!(token = ft_parse_cmd(tab[v], 0, chev)))
+			{
+				return (NULL);
+			}
+		//}
 		while (tab[++v] && (v < 100))
 		{
 			if (ft_isbashop(tab[v][0]) || ft_isbashop(tab[v - 1][0]))
 			{
 				break ;
 			}
-			if (!(tokenarg = ft_parse_cmd(tab[v], 1)))
+			if (!(tokenarg = ft_parse_cmd(tab[v], 1, chev)))
 				return (NULL);
 			ft_token_add(&token->cmdarg, tokenarg);
 		}

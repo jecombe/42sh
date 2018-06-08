@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/21 21:30:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/06 13:43:31 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:35:37 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -128,7 +128,7 @@ t_token					*ft_init(t_token *tbegin, char *cmd);
 
 int						ft_isquote(int c);
 int						ft_isbashop(int c);
-char					*ft_isbin(const char *cmd);
+char					*ft_isbin(const char *cmd, int chev);
 
 /*
 **		LEXING - ft_lexer.c
@@ -175,4 +175,7 @@ int						ft_builtin_exit(t_token *token, char *arg[100]);
 
 char					*ft_builtin_join(const char *name, const char *value);
 
+
+
+int			ft_builtin_echo_output(char *arg[100], t_token *token, int co);
 #endif
