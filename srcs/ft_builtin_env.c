@@ -70,3 +70,12 @@ int			ft_builtin_env(void)
 		ft_putendl(g_env[i]);
 	return (0);
 }
+int			ft_builtin_env_output(void)
+{
+	int		i;
+
+	i = -1;
+	while (g_env[++i])
+		ft_putendl(g_env[i]);
+	return (0);
+}

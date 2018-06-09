@@ -179,5 +179,5 @@ char					*ft_builtin_join(const char *name, const char *value);
 
 int			ft_builtin_echo_output(char *arg[100], t_token *token, int co);
 int				ft_builtin_cd_redirect(const char *path, char *file);
-int			ft_builtin_envi_output(void);
+int			ft_builtin_env_output(void);
 #endif

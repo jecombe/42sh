@@ -62,7 +62,6 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 	int i = 0;
 	int ok = 0;
 	int ok2 = 0;
-	char *tmpp;
 	tmp = NULL;
 	c = ft_give_me_name(token, co);
 	arg++;
@@ -79,14 +78,8 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 				}
 			if (fd == -1)
 				ft_putendl("Error");
-			while (tmp[i])
-			{
-				write(fd, &tmp[i], 1);
-				i++;
-			}
-			tmp[i] = ' ';
-			write(fd, &tmp[i], 1);
-		tmp != NULL ? ft_strdel(&tmp) : 0;
+				write(fd, tmp, ft_strlen(tmp));
+			write(fd, " ", 1);
 		}
 		if (tmp == NULL)
 		{
@@ -97,22 +90,15 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 			}
 			if (fd == -1)
 				ft_putendl("Error");
-			tmpp = *arg;
 			i = 0;
 			while (*arg)
 			{
 				if (*arg[0] == '$')
 				{
 					tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
-					while (tmp[i])
-					{
-						write(fd, &tmp[i], 1);
-						i++;
-					}
-					tmp[i] = ' ';
-					write(fd, &tmp[i], 1);
+						write(fd, tmp, ft_strlen(tmp));
+					write(fd, " ", 1);
 					arg++;
-		tmp != NULL ? ft_strdel(&tmp) : 0;
 				}
 				else
 				{
@@ -123,6 +109,7 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 
 			}
 		}
+	tmp != NULL ? ft_strdel(&tmp) : 0;
 		arg++;
 	}
 	write(fd, "\n", 1);
