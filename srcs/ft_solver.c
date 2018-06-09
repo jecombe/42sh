@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/08 14:51:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/09 16:21:50 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,16 +73,15 @@ static int		ft_solver_bi(t_token *token, char *arg[100])
 		i = ft_builtin_echo(arg);
 	return (i);
 }
-static int		ft_solver_output(t_token *token, char *arg[100], int co)
+static int		ft_solver_output(t_token *token, char *arg[100], int co, char *file)
 {
 	int			i;
-
 	if (ft_solver_bi_error(token, arg))
 		return (1);
 	if (ft_strcmp(token->id, "cd") == 0)
-		i = ft_builtin_cd(arg[1]);
+		i = ft_builtin_cd_redirect(arg[1], file);
 	else if (ft_strcmp(token->id, "env") == 0)
-		i = ft_builtin_env();
+		i = ft_builtin_env_output();
 	/*else if (ft_strcmp(token->id, "setenv") == 0)
 	  i = ft_builtin_setenv(arg[1], arg[2]);
 	  else if (ft_strcmp(token->id, "unsetenv") == 0)
@@ -190,7 +189,7 @@ int				ft_solver(t_token *tbegin)
 				if (ft_strcmp(token->next->id, ">") == 0)
 				{
 					ok = 1;
-					i = ft_solver_output(token, arg, co);
+					i = ft_solver_output(token, arg, co, token->next->next->id);
 				}
 			}
 			else

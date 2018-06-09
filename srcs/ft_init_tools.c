@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:54:51 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/08 14:52:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/08 14:55:12 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,7 +87,6 @@ char				*ft_isbin(const char *cmd)
 	char			*s;
 	char			*path;
 	char			**array;
-	(void)chev;
 
 	i = -1;
 	s = NULL;

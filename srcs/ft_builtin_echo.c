@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:29:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/07 13:12:17 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/09 15:57:00 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,38 +59,73 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 	char	*tmp;
 	char *c;
 	int fd;
+	int i = 0;
+	int ok = 0;
+	int ok2 = 0;
+	char *tmpp;
 	tmp = NULL;
 	c = ft_give_me_name(token, co);
-	printf("--> %s\n", c);
-	printf("--> %s\n", arg[0]);
-	printf("--> %s-\n-", arg[1]);
-	printf("--> %s\n", token->id);
 	arg++;
 	while (*arg)
 	{
+		i = 0;
 		if (*arg[0] == '$')
-			tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
-		if (tmp == NULL)
 		{
-			printf("OK\n");
-			fd = open(c, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+			ok++;
+			tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
+			if (ok2 == 0 && ok == 1)
+				{
+					fd = open(c, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+				}
 			if (fd == -1)
 				ft_putendl("Error");
+			while (tmp[i])
+			{
+				write(fd, &tmp[i], 1);
+				i++;
+			}
+			tmp[i] = ' ';
+			write(fd, &tmp[i], 1);
+		tmp != NULL ? ft_strdel(&tmp) : 0;
+		}
+		if (tmp == NULL)
+		{
+			if (ok == 0)
+			{
+				ok2++;
+				fd = open(c, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+			}
+			if (fd == -1)
+				ft_putendl("Error");
+			tmpp = *arg;
+			i = 0;
 			while (*arg)
 			{
+				if (*arg[0] == '$')
+				{
+					tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
+					while (tmp[i])
+					{
+						write(fd, &tmp[i], 1);
+						i++;
+					}
+					tmp[i] = ' ';
+					write(fd, &tmp[i], 1);
+					arg++;
+		tmp != NULL ? ft_strdel(&tmp) : 0;
+				}
+				else
+				{
 				write(fd, *arg, ft_strlen(*arg));
 				write(fd, " ", 1);
 				arg++;
+				}
 
 			}
-			close(fd);
-			return (0);
 		}
-		//tmp == NULL ? ft_putstr(*arg) : ft_putstr(tmp);
-		tmp != NULL ? ft_strdel(&tmp) : 0;
-		ft_putchar(' ');
 		arg++;
 	}
-	ft_putchar('\n');
+	write(fd, "\n", 1);
+	close(fd);
 	return (0);
 }
