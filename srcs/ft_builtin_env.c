@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:27:40 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/03 02:43:07 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 13:26:55 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,12 +70,22 @@ int			ft_builtin_env(void)
 		ft_putendl(g_env[i]);
 	return (0);
 }
-int			ft_builtin_env_output(void)
+int			ft_builtin_env_output(char *file, int flag)
 {
 	int		i;
-
+	int fd;
+	(void)file;
+	(void)flag;
 	i = -1;
+	printf("++> %s\n", file);
+	fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+			if (fd == -1)
+				ft_putendl("Error");
+
 	while (g_env[++i])
-		ft_putendl(g_env[i]);
+	{
+		write(fd, g_env[i], ft_strlen(g_env[i]));
+		write(fd, "\n", 1);
+	}
 	return (0);
 }

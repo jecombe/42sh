@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/21 21:30:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/09 16:22:27 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 13:27:45 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -177,7 +177,7 @@ char					*ft_builtin_join(const char *name, const char *value);
 
 
 
-int			ft_builtin_echo_output(char *arg[100], t_token *token, int co);
-int				ft_builtin_cd_redirect(const char *path, char *file);
-int			ft_builtin_env_output(void);
+int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int flag);
+int				ft_builtin_cd_redirect(const char *path, char *file, int flag);
+int			ft_builtin_env_output(char *file, int flag);
 #endif

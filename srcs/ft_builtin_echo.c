@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:29:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/09 15:57:00 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 13:47:51 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ int			ft_builtin_echo(char *arg[100])
 	return (0);
 }
 
-char		*ft_give_me_name(t_token *token, int co)
+/*char		*ft_give_me_name(t_token *token, int co)
 {
 	int i;
 	t_token *tmptock;
@@ -51,19 +51,20 @@ char		*ft_give_me_name(t_token *token, int co)
 		i++;
 	}
 	return (NULL);
-}
+}*/
 
 
-int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
+int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int flag)
 {
 	char	*tmp;
-	char *c;
+	//char *c;
 	int fd;
 	int i = 0;
 	int ok = 0;
 	int ok2 = 0;
 	tmp = NULL;
-	c = ft_give_me_name(token, co);
+	(void)token;
+	//c = ft_give_me_name(token, co);
 	arg++;
 	while (*arg)
 	{
@@ -74,7 +75,7 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 			tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
 			if (ok2 == 0 && ok == 1)
 				{
-					fd = open(c, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+					fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 				}
 			if (fd == -1)
 				ft_putendl("Error");
@@ -86,7 +87,7 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, int co)
 			if (ok == 0)
 			{
 				ok2++;
-				fd = open(c, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+				fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 			}
 			if (fd == -1)
 				ft_putendl("Error");

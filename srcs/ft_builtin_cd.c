@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:30:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/09 16:19:58 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/11 13:28:39 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,7 @@ int				ft_builtin_cd(const char *path)
 	return (0);
 }
 
-static char		*ft_builtin_cd_pathconstruct_redirect(const char *path, char *file)
+static char		*ft_builtin_cd_pathconstruct_redirect(const char *path, char *file, int flag)
 {
 	char		*s;
 	char		*tmp;
@@ -80,7 +80,7 @@ static char		*ft_builtin_cd_pathconstruct_redirect(const char *path, char *file)
 	else if (ft_strcmp(path, "-") == 0)
 	{
 		s = ft_getenv("OLDPWD");
-		fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+		fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 			if (fd == -1)
 				ft_putendl("Error");
 			write(fd, s, ft_strlen(s));
@@ -92,7 +92,7 @@ static char		*ft_builtin_cd_pathconstruct_redirect(const char *path, char *file)
 	return (s);
 }
 
-int				ft_builtin_cd_redirect(const char *path, char *file)
+int				ft_builtin_cd_redirect(const char *path, char *file, int flag)
 {
 	char		buff[1024];
 	char		*s;
@@ -100,7 +100,7 @@ int				ft_builtin_cd_redirect(const char *path, char *file)
 	printf("+++ > %s\n", path);
 	printf("+++ > %s\n", file);
 	ft_bzero(buff, 1024);
-	s = ft_builtin_cd_pathconstruct_redirect(path, file);
+	s = ft_builtin_cd_pathconstruct_redirect(path, file, flag);
 	if (chdir(s) == -1)
 	{
 		ft_strcpy(buff, s);
