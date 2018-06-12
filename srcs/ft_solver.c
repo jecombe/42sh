@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 16:38:02 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/12 14:03:00 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,8 +132,10 @@ int			ft_redirect_output(t_token *tok, char *arg[100], char *file, int flag)
 	int i = 1;
 	char		*cmd;
 	int flag2;
+	int ok;
 	int ret;
 
+	ok = 0;
 	if (flag == O_RDONLY)
 	{
 		printf("PUTA CABAN\n");
@@ -152,19 +154,31 @@ int			ft_redirect_output(t_token *tok, char *arg[100], char *file, int flag)
 	else
 	{
 		i = 1;
-		if (flag2 != O_RDONLY)
+		if (flag2 == O_WRONLY)
+		{
+			printf("1\n");
 			ret = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+		}
 		if (flag2 == O_RDONLY)
+		{
+			printf("2 %s\n", file);
+			ok = 1;
 			ret = open(file, O_RDONLY);
+		}
 
 		if (ret == -1)
 		{
 			ft_putendl("Error");
+			return (0);
 		}
 		if (flag2 == O_RDONLY)
+		{
+			printf("10\n");
 			dup2(ret, 0);
+		}
 		else
 			dup2(ret, 1);
+		printf("===> %s\n", cmd);
 		execve(cmd, arg, g_env);
 		close(ret);
 	}
@@ -217,14 +231,22 @@ int				ft_solver(t_token *tbegin)
 				{
 					ok = 1;
 					flag2 = ft_return_flag(token->next->id, 0);
-
-					if ((flag = ft_return_flag(token->next->next->id, 0)) == O_APPEND)
-						file = token->next->next->next->id;
-					if ((flag = ft_return_flag(token->next->next->id, 0)) == O_RDONLY)
-						file = token->next->next->next->id;
+					if (flag2 == O_RDONLY)
+						f = 1;
 					else
+						f = 0;
+					if ((flag = ft_return_flag(token->next->next->id, f)) == O_APPEND)
+						file = token->next->next->next->id;
+					else if ((flag = ft_return_flag(token->next->next->id, f)) == O_RDONLY)
+					{
+						if (f == 1)
+							file = token->next->next->id;
+						else
+							file = token->next->next->next->id;
+					}
+					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
 						file = token->next->next->id;
-					i = ft_solver_output(token, arg,file, flag);
+					i = ft_solver_output(token, arg, file, flag);
 				}
 			}
 			else
@@ -247,12 +269,10 @@ int				ft_solver(t_token *tbegin)
 						file = token->next->next->next->id;
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_RDONLY)
 					{
-						printf("YEAH %s\n", token->next->next->id);
 						if (f == 1)
 							file = token->next->next->id;
 						else
 							file = token->next->next->next->id;
-
 					}
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
 						file = token->next->next->id;
@@ -263,9 +283,7 @@ int				ft_solver(t_token *tbegin)
 				i = ft_solver_cmd(arg);
 		}
 		else if (token->type == NONE && ok == 0)
-		{
 			i = ft_error_none(arg[0]);
-		}
 		ft_lexer_del(arg);
 		tbegin = tbegin->next;
 	}

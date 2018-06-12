@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:30:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 13:28:39 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/12 14:03:33 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,8 +97,6 @@ int				ft_builtin_cd_redirect(const char *path, char *file, int flag)
 	char		buff[1024];
 	char		*s;
 	char		*tmp;
-	printf("+++ > %s\n", path);
-	printf("+++ > %s\n", file);
 	ft_bzero(buff, 1024);
 	s = ft_builtin_cd_pathconstruct_redirect(path, file, flag);
 	if (chdir(s) == -1)

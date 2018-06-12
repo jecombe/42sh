@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:29:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 13:47:51 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/12 14:04:28 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,27 +32,6 @@ int			ft_builtin_echo(char *arg[100])
 	return (0);
 }
 
-/*char		*ft_give_me_name(t_token *token, int co)
-{
-	int i;
-	t_token *tmptock;
-
-	i = 1;
-	tmptock = token;
-	char *c;
-	while (i != co + 2)
-	{
-		if (i == 3)
-		{
-			c = tmptock->id;
-			return (c);
-		}
-		tmptock = tmptock->next;
-		i++;
-	}
-	return (NULL);
-}*/
-
 
 int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int flag)
 {
@@ -63,9 +42,13 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 	int ok = 0;
 	int ok2 = 0;
 	tmp = NULL;
+	int flag2;
 	(void)token;
-	//c = ft_give_me_name(token, co);
 	arg++;
+	if (flag == O_RDONLY)
+		flag2 = O_RDONLY;
+	else
+		flag2 = O_WRONLY;
 	while (*arg)
 	{
 		i = 0;
@@ -73,18 +56,25 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 		{
 			ok++;
 			tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
-			if (ok2 == 0 && ok == 1)
-				{
-					fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-				}
+			if (ok2 == 0 && ok == 1 && flag2 == O_WRONLY)
+				fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
 			if (fd == -1)
 				ft_putendl("Error");
-				write(fd, tmp, ft_strlen(tmp));
+			write(fd, tmp, ft_strlen(tmp));
 			write(fd, " ", 1);
+			if (flag2 == O_RDONLY)
+			{
+				fd = open(file, O_RDONLY);
+				if (fd == -1)
+				{
+					ft_putendl("Erreur");
+					return (0);
+				}
+			}
 		}
 		if (tmp == NULL)
 		{
-			if (ok == 0)
+			if (ok == 0 && flag2 == O_WRONLY)
 			{
 				ok2++;
 				fd = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
@@ -97,20 +87,28 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 				if (*arg[0] == '$')
 				{
 					tmp = ft_getenv(ft_strrchr(*arg, '$') + 1);
-						write(fd, tmp, ft_strlen(tmp));
+					write(fd, tmp, ft_strlen(tmp));
 					write(fd, " ", 1);
 					arg++;
 				}
 				else
 				{
-				write(fd, *arg, ft_strlen(*arg));
-				write(fd, " ", 1);
-				arg++;
+					write(fd, *arg, ft_strlen(*arg));
+					write(fd, " ", 1);
+					arg++;
 				}
-
+			}
+			if (flag2 == O_RDONLY)
+			{
+				fd = open(file, O_RDONLY);
+				if (fd == -1)
+				{
+					printf("Erreur");
+					return (0);
+				}
 			}
 		}
-	tmp != NULL ? ft_strdel(&tmp) : 0;
+		tmp != NULL ? ft_strdel(&tmp) : 0;
 		arg++;
 	}
 	write(fd, "\n", 1);
