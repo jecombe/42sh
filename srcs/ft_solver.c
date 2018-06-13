@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 15:15:23 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 16:05:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -244,7 +244,7 @@ int				ft_solver(t_token *tbegin)
 							file = token->next->next->id;
 						else
 						{
-							printf("DOUBLE\n");
+							printf("DOUBLEDOUBLE\n");
 							file = token->next->next->next->id;
 						}
 					}
