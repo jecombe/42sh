@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/12 14:03:00 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 15:15:23 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -225,6 +225,7 @@ int				ft_solver(t_token *tbegin)
 		ft_solver_init(token, arg);
 		if (token->type == BI)
 		{
+			ok = 0;
 			if (token->next != NULL)
 			{
 				if (ft_return_flag(token->next->id, 0) == O_APPEND || ft_return_flag(token->next->id, 0) == O_RDONLY)
@@ -242,18 +243,22 @@ int				ft_solver(t_token *tbegin)
 						if (f == 1)
 							file = token->next->next->id;
 						else
+						{
+							printf("DOUBLE\n");
 							file = token->next->next->next->id;
+						}
 					}
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
 						file = token->next->next->id;
 					i = ft_solver_output(token, arg, file, flag);
 				}
 			}
-			else
+			if (ok == 0)
 				i = ft_solver_bi(token, arg);
 		}
 		else if (token->type == ID)
 		{
+			ok = 0;
 			if (token->next != NULL)
 			{
 				if (ft_return_flag(token->next->id, 0) == O_APPEND || ft_return_flag(token->next->id, 0) == O_RDONLY)
@@ -279,7 +284,7 @@ int				ft_solver(t_token *tbegin)
 					i = ft_redirect_output(token, arg, file, flag);
 				}
 			}
-			else if (ok == 0)
+			if (ok == 0)
 				i = ft_solver_cmd(arg);
 		}
 		else if (token->type == NONE && ok == 0)

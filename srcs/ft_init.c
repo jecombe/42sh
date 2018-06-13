@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:32:45 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/12 13:33:43 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/13 14:50:15 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,14 +69,14 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	ft_lexer(cmd, tab);
 	v = 0;
 	v = 0;
+	chev = 0;
 	while (tab[v] && (v < 100))
 	{
+		chev = 0;
 			if (v > 1 && ft_strcmp(tab[v], ">") != 0 && ft_strcmp(tab[v - 1], ">") == 0)
 				chev = 1;
 			if (v > 1 && ft_strcmp(tab[v], "<") != 0 && ft_strcmp(tab[v - 1], "<") == 0)
 				chev = 1;
-			else
-				chev = 0;
 			if (!(token = ft_parse_cmd(tab[v], 0, chev)))
 				return (NULL);
 		while (tab[++v] && (v < 100))
