@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/21 21:30:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/11 13:27:45 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 15:03:55 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,6 +98,7 @@ int						ft_error_cd(const char *name, int stat);
 int						ft_error_env(const char *name, int stat);
 int						ft_error_exit(const char *name, int stat);
 int						ft_error_none(const char *name);
+void					ft_error_file_directory(char *file);
 
 /*
 **		ENVIRONNEMENT-MANAGE - ft_env_manage.c

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/12 23:29:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/12 14:05:26 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 16:56:30 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,11 +44,18 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 	tmp = NULL;
 	int flag2;
 	(void)token;
-	arg++;
 	if (flag == O_RDONLY)
+	{
+		printf("YES\n");
 		flag2 = O_RDONLY;
+		i = ft_builtin_echo(arg);
+		return (0);
+	}
 	else
 		flag2 = O_WRONLY;
+
+	arg++;
+	printf("+++++++++++> %s\n", *arg);
 	while (*arg)
 	{
 		i = 0;
@@ -82,6 +89,9 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 			if (fd == -1)
 				ft_putendl("Error");
 			i = 0;
+			if (flag2 == O_WRONLY)
+			{
+				printf("PUTE\n");
 			while (*arg)
 			{
 				if (*arg[0] == '$')
@@ -98,13 +108,18 @@ int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int fla
 					arg++;
 				}
 			}
+			}
 			if (flag2 == O_RDONLY)
 			{
+				printf("LAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA %s\n", file);
 				fd = open(file, O_RDONLY);
 				if (fd == -1)
 				{
 					printf("Erreur");
 					return (0);
+				}
+				else
+				{
 				}
 			}
 		}

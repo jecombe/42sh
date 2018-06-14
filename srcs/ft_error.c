@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 02:15:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/03 02:42:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 15:03:33 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,22 +60,28 @@ int		ft_error_exit(const char *name, int stat)
 {
 	if (stat == 1)
 	{
-		ft_putstr_fd("minishell: exit: ", 2);
+		ft_putstr_fd("21sh: exit: ", 2);
 		ft_putstr_fd(RED, 2);
 		ft_putstr_fd(name, 2);
 		ft_putstr_fd(END, 2);
 		ft_putendl_fd(": numeric argument required", 2);
 	}
 	if (stat == 2)
-		ft_putendl_fd("minishell: exit: too many arguments", 2);
+		ft_putendl_fd("21sh: exit: too many arguments", 2);
 	return (1);
 }
 
 int		ft_error_none(const char *name)
 {
-	ft_putstr_fd("minishell: command not found: ", 2);
+	ft_putstr_fd("21sh: command not found: ", 2);
 	ft_putstr_fd(RED, 2);
 	ft_putendl_fd(name, 2);
 	ft_putstr_fd(END, 2);
 	return (1);
+}
+
+void	ft_error_file_directory(char *file)
+{
+	ft_putstr_fd("21sh: no such file or directory: ", 2);
+	ft_putendl_fd(file, 2);
 }

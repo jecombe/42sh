@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/13 16:19:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/14 16:45:18 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -90,7 +90,10 @@ static int		ft_solver_output(t_token *token, char *arg[100], char *file, int fla
 	  else if (ft_strcmp(token->id, "exit") == 0)
 	  i = ft_builtin_exit(token, arg);*/
 	if (ft_strcmp(token->id, "echo") == 0)
+	{
+		printf("va dns echo\n");
 		i = ft_builtin_echo_output(arg, token, file, flag);
+	}
 	return (i);
 }
 
@@ -132,25 +135,16 @@ int			ft_redirect_output(t_token *tok, char *arg[100], char *file, int flag)
 	int i = 1;
 	char		*cmd;
 	int flag2;
-	int ok;
 	int ret;
 
-	ok = 0;
 	if (flag == O_RDONLY)
-	{
-		printf("PUTA CABAN\n");
 		flag2 = O_RDONLY;
-	}
 	else
 		flag2 = O_WRONLY;
-	printf("======> %d\n", flag);
 	tmptock = tok;
 	cmd = ft_strdup(arg[0]);
-	printf("un %s\n", cmd);
 	ft_strdel(&arg[0]);
-	printf("deux\n");
 	arg[0] = ft_strdup(ft_strrchr(cmd, '/') + 1);
-	printf("trois\n");
 	cpid = fork();
 	if (cpid > 0)
 		wait(0);
@@ -158,30 +152,18 @@ int			ft_redirect_output(t_token *tok, char *arg[100], char *file, int flag)
 	{
 		i = 1;
 		if (flag2 == O_WRONLY)
-		{
-			printf("1 %s\n", file);
 			ret = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-		}
 		if (flag2 == O_RDONLY)
-		{
-			printf("2 %s\n", file);
-			ok = 1;
 			ret = open(file, O_RDONLY);
-		}
-
 		if (ret == -1)
 		{
-			ft_putendl("Error");
+			ft_putendl("Error1");
 			return (0);
 		}
 		if (flag2 == O_RDONLY)
-		{
-			printf("10\n");
 			dup2(ret, 0);
-		}
 		else
 			dup2(ret, 1);
-		printf("===> %s\n", cmd);
 		execve(cmd, arg, g_env);
 		close(ret);
 	}
@@ -193,16 +175,51 @@ int				ft_return_flag(char *one, int dd)
 	if (ft_strcmp(one, ">") == 0)
 		return (O_APPEND);
 	if (ft_strcmp(one, "<") == 0)
-	{
-		printf("OK\n");
 		return (O_RDONLY);
-	}
 	if (dd == 1)
 		return (O_RDONLY);
 	else
 		return (O_TRUNC);
 
 
+}
+
+
+int				ft_verif_file(t_token *tmp, int pasbon)
+{
+	struct stat sb;
+
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->id, "<") != 0)
+		{
+			if (lstat(tmp->id, &sb) == -1)
+			{
+				if (pasbon == 0)
+					ft_error_file_directory(tmp->id);
+				return (-1);
+			}
+		}
+		tmp = tmp->next;
+	}
+	return (1);
+}
+
+void			ft_print_new_prompt(void)
+{
+	char		buff[PATH_MAX];
+	int i;
+
+	i = 0;
+	printf("NEW PROMPT\n");
+	while (101)
+	{
+		ft_putchar('\r');
+		ft_putstr(">");
+		ft_bzero(buff, PATH_MAX);
+		if (!(i = read(0, buff, PATH_MAX)))
+			break;
+	}
 }
 int				ft_solver(t_token *tbegin)
 {
@@ -217,6 +234,7 @@ int				ft_solver(t_token *tbegin)
 	int flag2;
 	int f;
 	int exec;
+	int pasbon = 0;
 
 	i = 0;
 	o = 0;
@@ -226,13 +244,17 @@ int				ft_solver(t_token *tbegin)
 	while (tbegin)
 	{
 		co++;
+		exec = 0;
+		pasbon = 0;
 		token = tbegin;
 		ft_solver_init(token, arg);
 		if (token->type == BI)
 		{
+			//conditions pour les builtins
 			ok = 0;
 			if (token->next != NULL)
 			{
+				//si il y a un chevron > ou < 
 				if (ft_return_flag(token->next->id, 0) == O_APPEND || ft_return_flag(token->next->id, 0) == O_RDONLY)
 				{
 					ok = 1;
@@ -241,21 +263,84 @@ int				ft_solver(t_token *tbegin)
 						f = 1;
 					else
 						f = 0;
+					//si chevron >> 
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_APPEND)
 						file = token->next->next->next->id;
+					//si chevron < 
 					else if ((flag = ft_return_flag(token->next->next->id, f)) == O_RDONLY)
 					{
+							printf("llllllll %s\n", token->next->next->id);
 						if (f == 1)
+						{
+							//si chevron <
+							printf("111111111111\n");
 							file = token->next->next->id;
+							if (ft_verif_file(token->next->next, pasbon) == -1)
+								pasbon = 1;
+							//ok = 0;
+						}
 						else
 						{
-							printf("DOUBLE\n");
+							//a gere le << 
+							printf("douyble\n");
 							file = token->next->next->next->id;
+							ft_print_new_prompt();
+							return (i);
 						}
+						exec = 1;
 					}
+					//si aucun chevron
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
 						file = token->next->next->id;
+					printf("OKOK\n");
 					i = ft_solver_output(token, arg, file, flag);
+					//--------------------------- si plusieur chevron sur une ligne----------
+					if (token->next->next->next != NULL)
+						if ((ft_strcmp(token->next->next->next->id, ">") == 0) || (ft_strcmp(token->next->next->next->id, "<") == 0)) 
+						{
+							printf("SA PASSE DANS\n");
+							if (ft_strcmp(token->next->next->next->id, "<") == 0)
+							{
+								t_token *tmpp;
+								tmpp = token->next->next->next;
+								if (ft_verif_file(tmpp, pasbon) == -1)
+									return (i);
+								else
+									;
+							}
+							if (token->next->next->next->next->next)
+							{
+								t_token *tmp;
+								tmp = token->next->next->next->next;
+								ft_solver_init(token, arg);
+								int g = 0;
+								while (tmp)
+								{
+									g++;
+									if (ft_strcmp(tmp->id, ">") != 0 && ft_strcmp(tmp->id, "<") != 0)
+									{
+										if (g > 0)
+											ft_solver_init(token, arg);
+										file = tmp->id;
+										if (exec == 0)
+											i = ft_redirect_output(tmp, arg, file, flag);
+									}
+									tmp = tmp->next;
+								}
+							}
+							else
+							{
+								file = token->next->next->next->next->id;
+								ft_solver_init(token, arg);
+								if (exec == 0)
+								{
+									printf("SA PASE LSLSLSLSLSLS\n");
+									i = ft_redirect_output(token, arg, file, flag);
+								}
+							}
+						}
+					//-------------------------------fin---------------------------------
+
 				}
 			}
 			if (ok == 0)
@@ -263,6 +348,7 @@ int				ft_solver(t_token *tbegin)
 		}
 		else if (token->type == ID)
 		{
+			//condition pour les fonction execve
 			ok = 0;
 			if (token->next != NULL)
 			{
@@ -280,54 +366,56 @@ int				ft_solver(t_token *tbegin)
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_RDONLY)
 					{
 						if (f == 1)
+						{
 							file = token->next->next->id;
+							if (ft_verif_file(token->next->next, pasbon) == -1)
+								pasbon = 1;
+						}
 						else
 							file = token->next->next->next->id;
+						exec = 1;
 					}
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
-					{
-						exec = 1;
 						file = token->next->next->id;
-					}
 					i = ft_redirect_output(token, arg, file, flag);
 					if (token->next->next->next != NULL)
 						if ((ft_strcmp(token->next->next->next->id, ">") == 0) || (ft_strcmp(token->next->next->next->id, "<") == 0)) 
 						{
-							//flag = O_TRUNC;
+							if (ft_strcmp(token->next->next->next->id, "<") == 0)
+							{
+								t_token *tmpp;
+								tmpp = token->next->next->next;
+								if (ft_verif_file(tmpp, pasbon) == -1)
+									return (i);
+								else
+									;
+							}
 							if (token->next->next->next->next->next)
 							{
-								printf("sa passe la \n");
 								t_token *tmp;
 								tmp = token->next->next->next->next;
 								ft_solver_init(token, arg);
 								int g = 0;
 								while (tmp)
 								{
-									g++;	
-									if (flag == O_RDONLY)
+									g++;
+									if (ft_strcmp(tmp->id, ">") != 0 && ft_strcmp(tmp->id, "<") != 0)
 									{
-										printf("O_RDONLY\n");
-									}
-										if (ft_strcmp(tmp->id, ">") != 0 && ft_strcmp(tmp->id, "<") != 0)
-										{
-											if (g > 0)
-												ft_solver_init(token, arg);
-
-											file = tmp->id;
-											printf("yeyeyeyeyeyey %s :n", file);
+										if (g > 0)
+											ft_solver_init(token, arg);
+										file = tmp->id;
+										if (exec == 0)
 											i = ft_redirect_output(tmp, arg, file, flag);
-										}
+									}
 									tmp = tmp->next;
 								}
-
 							}
 							else
 							{
-
 								file = token->next->next->next->next->id;
-								printf("------> %s %s %s\n", token->next->next->next->next->id, file, arg[0]);
 								ft_solver_init(token, arg);
-								i = ft_redirect_output(token, arg, file, flag);
+								if (exec == 0)
+									i = ft_redirect_output(token, arg, file, flag);
 							}
 						}
 				}
