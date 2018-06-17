@@ -1,35 +1,42 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   shell_signal.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/01/12 19:37:38 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/27 13:22:22 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/11 17:32:26 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/05/28 05:55:06 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 9999
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-# include "libft.h"
+#include "minishell.h"
 
-typedef struct			s_fd
+void	myhandle(int signal)
 {
-	int					fd;
-	char				*save;
-	int					ret;
-	char				*tmp;
-	char				buf[BUFF_SIZE + 1];
-	struct s_fd			*next;
-}						t_fd;
+	char buf[4096];
 
-int						get_next_line(const int fd, char **line);
+	if (signal == SIGINT)
+	{
+		getcwd(buf, sizeof(buf));
+		ft_putchar('\n');
+		display_prompt(buf, g_save_home, 2, cut_pwd_rep(buf));
+		g_bin_exit = 1;
+		if (g_save_line)
+			ft_strdel(&g_save_line);
+		ft_putchar(7);
+		return ;
+	}
+}
 
-#endif
+void	term_signal(int signal, t_fd *cur, t_minish *sh)
+{
+	if (signal == 4)
+	{
+		free(cur);
+		free_minish(sh, NULL, NULL, 0);
+		ft_putendl("exit");
+		exit(0);
+	}
+}

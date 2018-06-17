@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   get_next_line.h                                  .::    .:/ .      .::   */
+/*   ft_tab_len.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/01/12 19:37:38 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/02/27 13:22:22 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/13 18:14:29 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/05/27 23:57:54 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 9999
-# include <fcntl.h>
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <unistd.h>
-# include "libft.h"
+#include "libft.h"
 
-typedef struct			s_fd
+int		ft_tablen(char **tab)
 {
-	int					fd;
-	char				*save;
-	int					ret;
-	char				*tmp;
-	char				buf[BUFF_SIZE + 1];
-	struct s_fd			*next;
-}						t_fd;
+	int i;
 
-int						get_next_line(const int fd, char **line);
-
-#endif
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
+}

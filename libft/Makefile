@@ -1,117 +1,114 @@
 # **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/04/19 06:06:28 by dzonda      ###    #+. /#+    ###.fr      #
-#                                                                              #
+#                                                           LE - /             #
+#                                                               /              #
+#    Makefile                                         .::    .:/ .      .::    #
+#                                                  +:+:+   +:    +:  +:+:+     #
+#    By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+      #
+#                                                  #+#   #+    #+    #+#       #
+#    Created: 2017/11/22 21:31:56 by dewalter     #+#   ##    ##    #+#        #
+#    Updated: 2018/06/17 03:29:07 by dewalter    ###    #+. /#+    ###.fr      #
+#                                                          /                   #
+#                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all re clean fclean
 
 NAME = libft.a
 
+INCLUDES = ./includes/
 CC = gcc
 
-CC_FLAGS = -Wall -Wextra -Werror
+COLOR = echo
 
-SRCS = ./srcs/
+CC_FLAGS = -c -Wall -Werror -Wextra
 
-INCLUDES = ./includes/
+SRC = ft_atoi.c \
+	  ft_bzero.c \
+	  ft_isalnum.c \
+	  ft_isalpha.c \
+	  ft_isascii.c \
+	  ft_isdigit.c \
+	  ft_isprint.c \
+	  ft_memccpy.c \
+	  ft_memcpy.c \
+	  ft_memset.c \
+	  ft_putchar.c \
+	  ft_putstr.c \
+	  ft_strcmp.c \
+	  ft_strcpy.c \
+	  ft_strdup.c \
+	  ft_strlen.c \
+	  ft_strncmp.c \
+	  ft_strncpy.c \
+	  ft_tolower.c \
+	  ft_toupper.c \
+	  ft_memmove.c \
+	  ft_islower.c \
+	  ft_isupper.c \
+	  ft_memalloc.c \
+	  ft_memchr.c \
+	  ft_memcmp.c \
+	  ft_memdel.c \
+	  ft_putchar_fd.c \
+	  ft_putendl.c \
+	  ft_putnbr.c \
+	  ft_putstr_fd.c \
+	  ft_strcat.c \
+	  ft_strchr.c \
+	  ft_strclr.c \
+	  ft_strdel.c \
+	  ft_striter.c \
+	  ft_striteri.c \
+	  ft_strmap.c \
+	  ft_strncat.c \
+	  ft_strnew.c \
+	  ft_strnstr.c \
+	  ft_strchr.c \
+	  ft_strstr.c \
+	  ft_strrchr.c \
+	  ft_putnbr_fd.c \
+	  ft_putendl_fd.c \
+	  ft_itoa.c \
+	  ft_strmapi.c \
+	  ft_strequ.c \
+	  ft_strnequ.c \
+	  ft_strsub.c \
+	  ft_strjoin.c \
+	  ft_strtrim.c \
+	  ft_strsplit.c \
+	  ft_strlcat.c \
+	  ft_lstnew.c \
+	  ft_lstdel.c \
+	  ft_lstdelone.c \
+	  ft_itoa_base.c \
+	  ft_lstadd.c \
+	  ft_lstiter.c \
+	  ft_lstmap.c \
+	  ft_sort_integer_table.c \
+	  ft_range.c \
+	  ft_ltoa.c \
+	  get_next_line.c \
+	  ft_tablen.c \
+	  ft_tabdup.c \
+	  ft_putc.c \
+	  ft_strjoin_free.c \
+	  ft_nbrlen.c \
 
-FILES = $(SRCS)get_next_line.c \
-		$(SRCS)ft_atoi.c \
-		$(SRCS)ft_bzero.c \
-		$(SRCS)ft_isalnum.c \
-		$(SRCS)ft_isalpha.c \
-		$(SRCS)ft_isascii.c \
-		$(SRCS)ft_isblank.c \
-		$(SRCS)ft_isdigit.c \
-		$(SRCS)ft_islower.c \
-		$(SRCS)ft_isprint.c \
-		$(SRCS)ft_isspace.c \
-		$(SRCS)ft_isupper.c \
-		$(SRCS)ft_itoa.c \
-		$(SRCS)ft_lstadd.c \
-		$(SRCS)ft_lstdel.c \
-		$(SRCS)ft_lstdelone.c \
-		$(SRCS)ft_lstiter.c \
-		$(SRCS)ft_lstmap.c \
-		$(SRCS)ft_lstnew.c \
-		$(SRCS)ft_memalloc.c \
-		$(SRCS)ft_memccpy.c \
-		$(SRCS)ft_memchr.c \
-		$(SRCS)ft_memcmp.c \
-		$(SRCS)ft_memcpy.c \
-		$(SRCS)ft_memdel.c \
-		$(SRCS)ft_memmove.c \
-		$(SRCS)ft_memset.c \
-		$(SRCS)ft_nbrlen.c \
-		$(SRCS)ft_putchar.c \
-		$(SRCS)ft_putchar_fd.c \
-		$(SRCS)ft_putendl.c \
-		$(SRCS)ft_putendl_fd.c \
-		$(SRCS)ft_putnbr.c \
-		$(SRCS)ft_putnbr_fd.c \
-		$(SRCS)ft_putstr.c \
-		$(SRCS)ft_putstr_fd.c \
-		$(SRCS)ft_stradel.c \
-		$(SRCS)ft_strcat.c \
-		$(SRCS)ft_strchr.c \
-		$(SRCS)ft_strclr.c \
-		$(SRCS)ft_strcmp.c \
-		$(SRCS)ft_strcpy.c \
-		$(SRCS)ft_strdel.c \
-		$(SRCS)ft_strdup.c \
-		$(SRCS)ft_strequ.c \
-		$(SRCS)ft_striter.c \
-		$(SRCS)ft_striteri.c \
-		$(SRCS)ft_strjoin.c \
-		$(SRCS)ft_strlcat.c \
-		$(SRCS)ft_strlen.c \
-		$(SRCS)ft_strmap.c \
-		$(SRCS)ft_strmapi.c \
-		$(SRCS)ft_strncat.c \
-		$(SRCS)ft_strncmp.c \
-		$(SRCS)ft_strncpy.c \
-		$(SRCS)ft_strnequ.c \
-		$(SRCS)ft_strnew.c \
-		$(SRCS)ft_strnstr.c \
-		$(SRCS)ft_strrchr.c \
-		$(SRCS)ft_strsplit.c \
-		$(SRCS)ft_strstr.c \
-		$(SRCS)ft_strsub.c \
-		$(SRCS)ft_strtrim.c \
-		$(SRCS)ft_tolower.c \
-		$(SRCS)ft_toupper.c \
-		$(SRCS)ft_wordcount.c \
-		$(SRCS)ft_wordlen.c
-
-
-OBJS = $(FILES:.c=.o)
+OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME) : $(OBJS)
-	clear
-	@ar rcs $(NAME) $(OBJS)
-	@echo "\033[1;32m[ $(NAME) ] Compiled\033[0m"
-
-./%.o : ./%.c
+./%.o: ./%.c
+	@ printf "\033[1mCompilation de \033[36m%-25s\033[37m\ten \033[32m%-26s\033[0m ✅\n" $< $@
 	@$(CC) $(CC_FLAGS) -I $(INCLUDES) -o $@ -c $<
-	@clear
-	@echo "\033[1m[ $@ ] Compiled\033[0m"
+
+$(NAME): $(OBJ)
+	@ar rcs $(NAME) $(OBJ)
 
 clean:
-	@/bin/rm -f $(OBJS)
-	@echo "\033[1;31mAll .o [ $(NAME) ] deleted\033[0m"
-
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
 	@/bin/rm -f $(NAME)
-	@echo "\033[1;31m[ $(NAME) ] deleted\033[0m"
 
 re: fclean all
