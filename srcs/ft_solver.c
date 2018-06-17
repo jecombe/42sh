@@ -204,6 +204,7 @@ int				ft_return_flag(char *one, int dd)
 int				ft_solver(t_token *tbegin)
 {
 	t_token		*token;
+	t_token		*test = tbegin;
 	int			i;
 	char		*arg[100];
 	int 		o;
@@ -218,8 +219,31 @@ int				ft_solver(t_token *tbegin)
 	o = 0;
 	co = 1;
 	arg[0] = NULL;
-	while (tbegin)
+	while (test)
 	{
+		if (test->id)
+			printf("\r\nid == %s\r\n", test->id);
+		if (test->quote)
+			printf("\r\nquote == %c\r\n", test->quote);
+//		if (test->type)
+//		{
+			if (test->type == BASHOP)
+				printf("\r\nTYPE == BASHOP\r\n");
+			if (test->type == BI)
+				printf("\r\nTYPE == BI\r\n");
+			if (test->type == ID)
+				printf("\r\nTYPE == ID\r\n");
+			if (test->type == ARG)
+				printf("\r\nTYPE == ARG\r\n");
+			if (test->type == NONE)
+				printf("\r\nTYPE == NONE\r\n");
+//		}
+		test = test->next;
+	}
+	while (tbegin)
+	{//
+
+		//
 		co++;
 		token = tbegin;
 		ft_solver_init(token, arg);
