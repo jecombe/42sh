@@ -63,20 +63,23 @@ void				ft_lexer(char *cmd, char *array[100])
 
 	j = 0;
 	v = 0;
+	printf("====> %s \n", cmd);
 	while (cmd[j] && (v < 100))
 	{
+		printf("====> %c \n", cmd[j]);
 		if (ft_isbashop(cmd[j]))
 		{
-			array[v++] = ft_lexer_bashop(cmd, &j);
+			printf("isbashop %s\n", array[v++] = ft_lexer_bashop(cmd, &j));
+		
 
 		}
 		else if (ft_isquote(cmd[j]))
 		{
-			array[v++] = ft_lexer_quote(cmd, &j);
+			printf("isquote %s\n", array[v++] = ft_lexer_quote(cmd, &j));
 		}
 		else if (!ft_isspace(cmd[j]))
 		{
-			array[v++] = ft_lexer_nquote(cmd, &j);
+			printf("isspace %s\n", array[v++] = ft_lexer_nquote(cmd, &j));
 		}
 		else
 			j++;

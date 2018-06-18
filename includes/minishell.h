@@ -181,4 +181,5 @@ char					*ft_builtin_join(const char *name, const char *value);
 int			ft_builtin_echo_output(char *arg[100], t_token *token, char *file, int flag);
 int				ft_builtin_cd_redirect(const char *path, char *file, int flag);
 int			ft_builtin_env_output(char *file, int flag);
+void ft_handle_signal2(int signo);
 #endif

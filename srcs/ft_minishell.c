@@ -22,6 +22,17 @@ void			ft_handle_signal(int signo)
 		ft_putprompt();
 	}
 }
+void			ft_handle_signal2(int signo)
+{
+	if (signo == SIGINT)
+	{
+		printf("ok saoooooooooooooope\n");
+		ft_putchar('\n');
+		g_stat = 1;
+		ft_minishell();
+	}
+}
+
 
 void			ft_putprompt(void)
 {

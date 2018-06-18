@@ -156,10 +156,7 @@ int			ft_redirect_output(t_token *tok, char *arg[100], char *file, int flag)
 		if (flag2 == O_RDONLY)
 			ret = open(file, O_RDONLY);
 		if (ret == -1)
-		{
-			ft_putendl("Error1");
 			return (0);
-		}
 		if (flag2 == O_RDONLY)
 			dup2(ret, 0);
 		else
@@ -191,7 +188,7 @@ int				ft_verif_file(t_token *tmp, int pasbon)
 
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->id, "<") != 0)
+		if (ft_strcmp(tmp->id, "<") != 0 && ft_strcmp(tmp->id, ";") != 0)
 		{
 			if (lstat(tmp->id, &sb) == -1)
 			{
@@ -219,7 +216,9 @@ void			ft_print_new_prompt(void)
 		ft_bzero(buff, PATH_MAX);
 		if (!(i = read(0, buff, PATH_MAX)))
 			break;
-	}
+		
+
+}
 }
 int				ft_solver(t_token *tbegin)
 {
@@ -246,6 +245,7 @@ int				ft_solver(t_token *tbegin)
 		co++;
 		exec = 0;
 		pasbon = 0;
+		printf("ok\n");
 		token = tbegin;
 		ft_solver_init(token, arg);
 		if (token->type == BI)
@@ -368,8 +368,17 @@ int				ft_solver(t_token *tbegin)
 						if (f == 1)
 						{
 							file = token->next->next->id;
+							if (ft_strcmp(token->next->next->id,"<") == 0)
+							{
+								signal(SIGINT, ft_handle_signal2);
+								ft_print_new_prompt();
+							}
+							if (ft_strcmp(token->next->next->id,"<") != 0)
 							if (ft_verif_file(token->next->next, pasbon) == -1)
-								pasbon = 1;
+							{
+								printf("NEIN\n");
+								return (i);
+							}
 						}
 						else
 							file = token->next->next->next->id;
@@ -386,7 +395,10 @@ int				ft_solver(t_token *tbegin)
 								t_token *tmpp;
 								tmpp = token->next->next->next;
 								if (ft_verif_file(tmpp, pasbon) == -1)
+								{
+									printf("sa passe \n");
 									return (i);
+								}
 								else
 									;
 							}

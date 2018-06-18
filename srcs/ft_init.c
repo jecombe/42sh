@@ -73,6 +73,7 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	while (tab[v] && (v < 100))
 	{
 		chev = 0;
+		printf("---> %s\n", tab[v]);
 			if (v > 1 && ft_strcmp(tab[v], ">") != 0 && ft_strcmp(tab[v - 1], ">") == 0)
 				chev = 1;
 			if (v > 1 && ft_strcmp(tab[v], "<") != 0 && ft_strcmp(tab[v - 1], "<") == 0)
