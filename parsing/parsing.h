@@ -6,30 +6,64 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 05:41:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/20 03:37:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "../libft/includes/libft.h"
 
-typedef enum	s_quote
+typedef enum	s_token
 {
+	/*RESERVED_WORD*/
+	NEWLINE,
+	AND_IF,
+	OR_IF,
+	DSEMI,
+	DLESS,
+	DGREAT,
+	LESSAND,
+	GREATAND,
+	LESSGREAT,
+	DLESSDASH,
+	CLOBBER,
+	IF,
+	THEN,
+	ELSE,
+	ELIF,
+	FI,
+	DO,
+	DONE,
+	CASE,
+	ESAC,
+	WHILE,
+	UNTIL,
+	FOR,
+	LBRACE,
+	RBRACE,
+	BANG,
+	IN,
+	PIPE,
+	SEMI,
+	AND,
+	SLESS,
+	SGREAT,
+/**/
 	NQUOTE,
 	QUOTE,
 	BQUOTE,
-	DQUOTE
-}				e_quote;
-
-typedef enum	s_sep
-{
+	DQUOTE,
 	NSEP,
-	PIPE,
-	SINF,
-	DINF,
-	SSUP,
-	DSUP
-}				e_sep;
+}				e_token;
+
+typedef struct		s_lex
+{
+	char			*name;
+	e_token			token;
+	struct s_lex	*next;
+	struct s_lex	*prev;
+}					t_lex;
 
 typedef enum	s_seqtype
 {
@@ -41,7 +75,7 @@ typedef enum	s_seqtype
 typedef struct	s_arg
 {
 	char				*name;
-	e_quote				quote;
+	e_token				quote;
 	struct s_arg		*next;//commande suivante
 	struct s_arg		*prev;
 }				t_arg;
@@ -49,8 +83,8 @@ typedef struct	s_arg
 typedef struct	s_cmd
 {
 	t_arg				*arg;//1 iere argument le binaire et la suite les args
-	e_sep				sep_next;
-	e_sep				sep_prev;
+	e_token				sep_next;
+	e_token				sep_prev;
 	struct s_cmd		*next;//commande suivante
 	struct s_cmd		*prev;
 }				t_cmd;
