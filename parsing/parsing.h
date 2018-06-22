@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 07:41:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/22 14:25:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,7 +70,7 @@ typedef struct	s_arg
 typedef struct	s_cmd
 {
 	t_arg				*arg;//1 iere argument le binaire et la suite les args
-	struct s_cmd		*next;//commande suivante
+	struct s_cmd		*next;//commande suivante, sep == 
 	struct s_cmd		*prev;
 }				t_cmd;
 

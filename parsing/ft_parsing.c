@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 09:40:07 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 14:07:30 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/22 14:25:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,6 +102,9 @@ int			ft_parse(t_seq **b_seq, t_seq **n_seq, e_token token, char *name)
 //		if (new_cmd == 1)
 		ft_malloc_cmd(&(*n_seq)->cmd, name, token);
 	}
+	else if (token == IF || token == THEN || token == ELSE)
+	{
+	}
 	new_cmd = 1;
 	return (0);
 }
@@ -131,13 +134,6 @@ void		ft_parsing(t_lex lex)
 			printf("KO\n");
 			break;
 		}
-	}
-	i = 0;
-	printf("--------------BOUCLE N_SEQ-------------\n");
-	while (n_seq)
-	{
-		printf("i == %d\n", i++);
-		n_seq = n_seq->prev;
 	}
 	printf("--------------BOUCLE B_SEQ-------------\n");
 	while (b_seq)
