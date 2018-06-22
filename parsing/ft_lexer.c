@@ -6,91 +6,86 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/20 05:05:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/22 04:58:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-
-e_token ft_isoperator(char c)
+int				ft_isoperator(char *input, char c)
 {
-	e_token token;
-
-	return (token);
-}
-
-void	ft_quoting(char input)
-{
-	/*
-	 *
-	if (c == '\')
-	{sofjdowfjw
-	}
-
-	* */
-}
-
-t_lex	*ft_lexer(char *input)
-{
-	t_lex		*begin;
-	t_lex		*prev;
-	t_lex		*now;
+	static char	*operator[11] = {"", "&&", "||", ";;", "<<", ">>", "<&", ">&",
+		"<>", "<<-", ">|"};
+	static char	part[8] = {'\0', '&', '|', ';', '<', '>', '&', '-'};
 	int			i;
-	int			j;
 
 	i = 0;
-	j = 0;
-	while (i <= (int)ft_strlen(input))
+	if (input == NULL)
 	{
-		if (input[i] == '\0')
-		{
-		}
-		else if (i > 0)
-		{
-			j = i - 1;
-			if (ft_isoperator(i) && input - 1)
-			{
-			}
-			else if (!ft_isoperator(i) && input -1)
-			{
-			}
-		}
-		if (input[i] == '\\' || input[i] == '"' || input[i] == '\'')
-		{
-			ft_quoting(input[i]);
-		}
-		else if (input[i] == '$' || input[i] == '`')
-		{
-		}
-		else if (ft_isoperator(input[i]))
-		{
-		}
-		else if (input[i] == '\\' && input[i + 1] == 'n')
-		{
-		}
-		else if (ft_isblank(input[i]))
-		{
-			//PAS FINI
-			i++;
-			j = i;
-		}
-		else if (ft_isprint(input[i - 1]))
-		{
-			ft_putchar(input[i++]);
-		}
-		else
-			j = i;
+		while (++i < 8)
+			if (part[i] == c)
+				return (1);
 	}
-	return (begin);
+	else
+	{
+		while (++i < 11)
+			if (ft_strcmp(operator[i], input) == 0)
+				return (i);
+	}
+	return (0);
 }
 
-int		main(int ac, char **av)
+char			*ft_lexer_break_input(char *input, int *idx)
 {
-//	t_lex *lex;
-	
-//	lex;
-	ft_lexer(av[1]);
-	return (0);
+	int			i;
+	char		*s;
+
+	i = *idx;
+	while (input[*idx])
+	{
+		if (ft_lexer_break_operator(input, *idx, i))
+			break ;
+		ft_lexer_break_quote(input, idx);
+		ft_lexer_break_expansion(input, idx);
+		if ((ft_lexer_break_blank(input, idx, &i)))
+			break ;
+		if (ft_lexer_break_comment(input, idx))
+			break ;
+		(*idx < ft_strlen(input)) ? (*idx)++ : 0;
+	}
+	if (input[*idx] == '\0' && (*idx == i))
+		return (NULL);
+	s = ft_strsub(input, i, (*idx - i));
+	return (s);
+}
+
+e_token			ft_lexer_token(char *name)
+{
+	e_token		tkn;
+	static char	*token[33] = {"\n", "&&", "||", ";;", "<<", ">>", "<&", ">&",
+		"<>", "<<-", ">|", "if", "then", "else", "elif", "fi", "do", "done",
+		"case", "esac", "while", "until", "for", "{", "}", "!", "in", "|", ";",
+		"&", "<", ">"};
+	int			i;
+
+	tkn = WORD;
+	i = -1;
+	while (++i < 32)
+		if (ft_strcmp(token[i], name) == 0)
+			tkn = i;
+	return (tkn);
+}
+
+t_lex			ft_lexer(char *input)
+{
+	t_lex		lex;
+	int			idx;
+	int			v;
+
+	idx = 0;
+	v = -1;
+	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
+		lex.token[v] = ft_lexer_token(lex.name[v]);
+	return (lex);
 }
