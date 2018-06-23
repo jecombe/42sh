@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   signal.c                                         .::    .:/ .      .::   */
+/*   go_to_end_of_line.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/13 22:39:45 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 08:45:57 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/19 06:27:22 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/20 22:32:20 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	myhandler_interrupt(int signal)
+void	go_to_end_of_line(t_editor *ed, char *line)
 {
-
-	if (signal == SIGINT)
+	ioctl(0, TIOCGWINSZ, &sz);
+	if (ed->cursor_str_pos < ft_strlen(line))
 	{
-	}
-}
-
-void	myhandler_winsize_change(int signal)
-{
-	if (signal == SIGWINCH)
-	{
-		printf("\n\n\n\n\n\n\n[OK]\n\n\n\n\n\n");
+		tputs(tgoto(tgetstr("cv", NULL), 0, ed->first_row - 1), 1, ft_putchar);
+		tputs(tgoto(tgetstr("ch", NULL), 0, ed->prompt_size - 1), 1, ft_putchar);
+		ft_putstr(line);
+		ed->cursor_str_pos = ft_strlen(line);
+		if (!((ft_strlen(line) + ed->prompt_size - 1) % sz.ws_col))
+			tputs(tgetstr("do", NULL), 1, ft_putchar);
 	}
 }

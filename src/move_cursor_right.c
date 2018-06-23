@@ -1,20 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putchar.c                                     .::    .:/ .      .::   */
+/*   move_cursor_right.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/22 21:36:09 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/21 18:51:27 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/19 08:45:05 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "stdin.h"
 
-int		ft_putchar(int c)
+void	move_cursor_right(t_editor *ed, char *line)
 {
-	write(1, &c, 1);
-	return (0);
+	ioctl(0, TIOCGWINSZ, &sz);
+	if (ed->cursor_str_pos < ft_strlen(line))
+	{
+		ed->cursor_str_pos++;
+		if (get_cursor_position(0) == sz.ws_col)
+			tputs(tgetstr("do", NULL), 1, ft_putchar);
+		else
+			tputs(tgetstr("nd", NULL), 1, ft_putchar);
+	}
 }

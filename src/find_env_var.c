@@ -6,12 +6,12 @@
 /*   By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/23 01:33:09 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/28 01:59:15 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/19 08:46:21 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.c"
+#include "stdin.h"
 
 char	*var_directory(char *var_value, char *var_dir)
 {

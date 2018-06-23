@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_putchar.c                                     .::    .:/ .      .::   */
+/*   clear_window.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/22 21:36:09 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/21 18:51:27 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/19 04:18:49 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/19 08:43:05 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "stdin.h"
 
-int		ft_putchar(int c)
+int		clear_window(t_shell *sh, t_editor *ed)
 {
-	write(1, &c, 1);
+	tputs(tgetstr("cl", NULL), 1, ft_putchar);
+	display_prompt(sh->pwd, g_save_home, sh->err, cut_pwd_dir(sh->pwd));
+	if (sh->line)
+		ft_putstr(sh->line);
+	ed->last_row = get_cursor_position(1);
+	ed->first_row = ed->last_row;
 	return (0);
 }

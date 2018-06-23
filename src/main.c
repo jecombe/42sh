@@ -6,12 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:45:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/07 00:24:51 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/23 12:33:21 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "stdin.h"
 
 t_shell		*shell_init(t_shell *sh, char **env)
 {
@@ -19,7 +19,7 @@ t_shell		*shell_init(t_shell *sh, char **env)
 		return (NULL);
 	sh->err = 0;
 	sh->line = NULL;
-	g_save_line = NULL;
+	sh->clipboard = NULL;
 	g_save_home = NULL;
 	g_bin_exit = 0;
 	getcwd(sh->last_path, sizeof(sh->last_path));
@@ -44,9 +44,8 @@ int		main(void)
 	}
 	if (tgetent(NULL, xterm) == ERR)
 		return (-1);
-	signal(SIGINT, myhandler_interrupt);
 	ft_putstr(tgetstr("cl", NULL));
-	while (get_stdin(sh, &sh->line) > 0)
+	while (get_stdin(sh) > 0)
 	{
 		ft_strdel(&sh->line);
 	}

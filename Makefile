@@ -6,7 +6,7 @@
 #    By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/02/22 01:51:44 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/06 21:57:55 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/06/23 12:39:51 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -15,8 +15,7 @@
 
 NAME = 21sh
 
-HEADER = shell.h \
-#		 stdin.h \
+HEADER = stdin.h \
 
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
@@ -32,12 +31,26 @@ COLOR = echo
 CC_FLAGS = -Wall -Werror -Wextra
 
 SRC =		main.c \
-			shell.c \
 			get_stdin.c \
 			prompt.c \
 			signal.c \
 			find_env_var.c \
 			cursor_position.c \
+			backspace.c \
+			clear_window.c \
+			escape_sequence.c \
+			go_to_begin_of_line.c \
+			go_to_end_of_line.c \
+			move_cursor_up.c \
+			move_cursor_down.c \
+			move_cursor_left.c \
+			move_cursor_right.c \
+			move_word_left.c \
+			move_word_right.c \
+			end_of_text.c \
+			add_char.c \
+			delete_from_cursor_to_end.c \
+			paste_clipboard.c \
 
 OBJ = $(addprefix $(OBJ_PATH), $(SRC:.c=.o))
 

@@ -6,12 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/17 22:13:44 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/19 08:43:28 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../includes/shell.h"
+#include "stdin.h"
 
 static int		get_row(char *str)
 {
@@ -19,7 +19,7 @@ static int		get_row(char *str)
 	char tmp[ft_strlen(str) + 1];
 
 	i = -1;
-	while (str[++i] != ':')
+	while (str[++i] != ';')
 		tmp[i] = str[i];
 	tmp[i] = '\0';
 	free(str);
@@ -33,7 +33,7 @@ static int		get_col(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (str[i - 1] == ':')
+		if (str[i - 1] == ';')
 		{
 			ft_strcpy(tmp, str + i);
 			break ;
@@ -53,16 +53,16 @@ static int		cursor_position(int mode)
 	{
 		buf[ret] = '\0';
 		if ((buf[0] >= '0' && buf[0] <= '9') || (buf[0] == ';'))
-		cursor_position = ft_strjoin_free(cursor_position, buf[0] == ';' ? ":" : buf);
+		cursor_position = ft_strjoin_free(cursor_position, buf);
 		if (ft_strchr(buf, 'R'))
 			break ;
 	}
 	return (mode ? get_row(cursor_position) : get_col(cursor_position));
 }
 
-int		get_cursor_position(int mode)
+size_t	get_cursor_position(int mode)
 {
-	int res;
+	size_t res;
 
 	tputs(tgetstr("sc", NULL), 1, ft_putchar);
 	res = cursor_position(mode);

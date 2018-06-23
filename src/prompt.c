@@ -6,12 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/02 19:39:12 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/20 22:28:00 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "shell.h"
+#include "stdin.h"
 
 /*
 ** pwd = Path Working Directory
@@ -34,30 +34,34 @@ char	*cut_pwd_dir(char *pwd)
 	return (0);
 }
 
-void	display_prompt(char *pwd, char *home, int err, char *rwd)
+int		display_prompt(char *pwd, char *home, int err, char *rwd)
 {
-	g_prompt_size = 1;
+	int prompt_size;
+
+	prompt_size = 1;
 	err == 2 ? ft_putstr(RED) : ft_putstr(WHITE);
 	ft_putstr("101sh");
 	ft_putstr(END);
 	ft_putchar(' ');
 	ft_putstr(BLUE);
-	if (ft_strcmp(pwd, !home ? "" : home) == 0)
+//	prompt_size = !ft_strcmp(pwd, !home ? "" : home) ?
+//	prompt_size + 1 : prompt_size;
+	if (!ft_strcmp(pwd, !home ? "" : home))
 	{
 		ft_putstr("~");
-		g_prompt_size++;
+		prompt_size++;
 	}
 	else if (ft_strlen(pwd) == (ft_strlen(rwd) + 1))
 	{
 			ft_putstr(pwd);
-			g_prompt_size += ft_strlen(pwd);
+			prompt_size += ft_strlen(pwd);
 	}
 	else
 	{
 		ft_putstr(rwd);
-		g_prompt_size += ft_strlen(rwd);
+		prompt_size += ft_strlen(rwd);
 	}
 	ft_putstr(END);
 	ft_putchar(' ');
-	g_prompt_size += 7;
+	return (prompt_size + 7);
 }

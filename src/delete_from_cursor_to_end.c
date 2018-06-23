@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   signal.c                                         .::    .:/ .      .::   */
+/*   delete_from_cursor_to_end.c                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/05/13 22:39:45 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 08:45:57 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/23 11:54:31 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/06/23 12:38:09 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	myhandler_interrupt(int signal)
+void	delete_from_cursor_to_end(t_shell *sh, t_editor *ed)
 {
+	char tmp[ed->cursor_str_pos + 1];
 
-	if (signal == SIGINT)
-	{
-	}
-}
-
-void	myhandler_winsize_change(int signal)
-{
-	if (signal == SIGWINCH)
-	{
-		printf("\n\n\n\n\n\n\n[OK]\n\n\n\n\n\n");
-	}
+	ft_bzero(tmp, sizeof(tmp));
+	ft_putstr("\E[0J");
+	ft_strncpy(tmp, sh->line, ed->cursor_str_pos);
+	if (sh->clipboard)
+		ft_strdel(&(sh->clipboard));
+	sh->clipboard = ft_strdup(sh->line + ed->cursor_str_pos);
+	ft_strdel(&(sh->line));
+	sh->line = ft_strdup(tmp);
 }
