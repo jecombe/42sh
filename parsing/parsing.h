@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 10:43:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/23 11:49:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,10 +71,10 @@ typedef struct	s_simplecmd
 
 typedef struct	s_composecmd
 {
-	enum e_token		mot_cle;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR" ""
-	t_cmd				*cmd;
-	typedef struct s_composecmd	*next;
-	typedef struct s_composecmd	*prev;
+	enum e_token		mot_cle;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
+	t_simplecmd				*scmd;
+	typedef struct s_composecmd	*next_in;
+	typedef struct s_composecmd	*prev_in;
 }				t_composecmd;
 
 struct	s_cmd
