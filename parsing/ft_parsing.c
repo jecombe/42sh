@@ -5,21 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/22 09:40:07 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 14:25:15 by gmadec      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_parsing.c                                     .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 09:37:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/23 07:40:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,10 +83,8 @@ int			ft_parse(t_seq **b_seq, t_seq **n_seq, e_token token, char *name)
 		new_cmd = 0;
 		return (0);
 	}
-	else if (token == DLESS || token == DGREAT || token == LESSAND || token == GREATAND || token == SLESS || token == SGREAT || token == DLESSDASH || token == CLOBBER)
+	else if (token == DLESS || token == DGREAT || token == LESSAND || token == GREATAND || token == SLESS || token == SGREAT || token == DLESSDASH || token == CLOBBER || token == PIPE)
 	{
-		printf("ENTRER\n");
-//		if (new_cmd == 1)
 		ft_malloc_cmd(&(*n_seq)->cmd, name, token);
 	}
 	else if (token == IF || token == THEN || token == ELSE)

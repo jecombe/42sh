@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 02:52:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 04:58:07 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/23 03:52:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,7 +77,7 @@ void		ft_lexer_break_expansion(char *input, int *idx)
 	if (c == '$' && d == '{')
 		while (input[++(*idx)] != '}' && input[*idx])
 			;
-	if (c == '$' || d == '(')
+	if (c == '$' && d == '(')
 		while (input[++(*idx)] != ')' && input[*idx])
 			;
 	if (c == '`')

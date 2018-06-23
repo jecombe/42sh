@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 14:25:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/23 10:43:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,72 +14,85 @@
 #include <stdio.h>
 #include "../libft/includes/libft.h"
 
-typedef enum	s_token
+enum	e_token
 {
 	/*RESERVED_WORD*/
-	NEWLINE,//0
-	AND_IF,//1
-	OR_IF,//2
-	DSEMI,//3
-	DLESS,//4
-	DGREAT,//5
-	LESSAND,//6
-	GREATAND,//7
-	LESSGREAT,//8
-	DLESSDASH,//9
-	CLOBBER,//10
-	IF,//11
-	THEN,//12
-	ELSE,//13
-	ELIF,//14
-	FI,//15
-	DO,//16
-	DONE,//17
-	CASE,//18
-	ESAC,//19
-	WHILE,//20
-	UNTIL,//21
-	FOR,//22
-	LBRACE,//23
-	RBRACE,//24
-	BANG,//25
-	IN,//26
-	PIPE,//27
-	SEMI,//28
-	AND,//29
-	SLESS,//30
-	SGREAT,//31
-	WORD,//32
+	NEWLINE,/*\n*///0
+	AND_IF,/*&&*///1
+	OR_IF,/*||*///2
+	DSEMI,/*;;*///3
+	DLESS,/*<<*///4
+	DGREAT,/*>>*///5
+	LESSAND,/*<&*///6
+	GREATAND,/*>&*///7
+	LESSGREAT,/*<>*///8
+	DLESSDASH,/*<<-*///9
+	CLOBBER,/*>|*///10
+	IF,/*if*///11
+	THEN,/*then*///12
+	ELSE,/*else*///13
+	ELIF,/*elif*///14
+	FI,/*fi*///15
+	DO,/*do*///16
+	DONE,/*done*///17
+	CASE,/*case*///18
+	ESAC,/*esac*///19
+	WHILE,/*while*///20
+	UNTIL,/*until*///21
+	FOR,/*for*///22
+	LBRACE,/*{*///23
+	RBRACE,/*}*///24
+	BANG,/*!*///25
+	IN,/*in*///26
+	PIPE,/*|*///27
+	SEMI,/*;*///28
+	AND,/*&*///29
+	SLESS,/*<*///30
+	SGREAT,/*>*///31
+	WORD,/**///32
 	NUL//38
-}				e_token;
+};
+
+typedef struct	s_cmd t_cmd;
 
 typedef struct		s_lex
 {
-	char			*name[4096];
-	e_token			token[4096];
+	char					*name[4096];
+	enum e_token			token[4096];
 }					t_lex;
 
-typedef struct	s_arg
+typedef struct	s_simplecmd
 {
-	char				*name;
-	e_token				token;
+	char				*arg;
+	enum e_token		token;
 	struct s_arg		*next;//commande suivante
 	struct s_arg		*prev;
-}				t_arg;
+}				t_simplecmd;
 
-typedef struct	s_cmd
+typedef struct	s_composecmd
 {
-	t_arg				*arg;//1 iere argument le binaire et la suite les args
-	struct s_cmd		*next;//commande suivante, sep == 
+	enum e_token		mot_cle;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR" ""
+	t_cmd				*cmd;
+	typedef struct s_composecmd	*next;
+	typedef struct s_composecmd	*prev;
+}				t_composecmd;
+
+struct	s_cmd
+{
+	enum e_token		operateur;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
+	t_simplecmd			*simplecmd;//commande sans mot cle
+	t_composecmd		*compose_cmd;//commande comprenant un mot cle
+	struct s_cmd		*next;//commande suivante
 	struct s_cmd		*prev;
-}				t_cmd;
+};
 
 typedef struct	s_seq
 {
 	t_cmd				*cmd;
-	struct s_seq		*next;// ';' '||' '&&'
+	struct s_seq		*next;
 	struct s_seq		*prev;
 }				t_seq;
+
 void		ft_parsing(t_lex lex);
 t_lex		ft_lexer(char *input);
 int			ft_isoperator(char *input, char c);
