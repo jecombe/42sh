@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "../21SH_SAVE/libft/libft.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 typedef struct			s_btree
 {

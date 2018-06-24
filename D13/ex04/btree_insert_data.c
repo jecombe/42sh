@@ -9,11 +9,9 @@ void btree_insert_data(t_btree **root, int item, int (*cmpf)(int, int))
 	else
 	{
 		now = *root;
-//		while (item > now->item ? now->right : now->left)
-		while (cmpf(now->item, item) == -1 ? now->right : now->left)
-			now = item > now->item ? now->right : now->left;
-		if (cmpf(now->item, item) == -1)
-//		if (item > now->item)
+		if (item > now->item ? now->right : now->left)
+			btree_insert_data(item > now->item ? &now->right : &now->left, item, cmpf);
+		else if (item > now->item)
 			now->right = btree_create_node(item);
 		else
 			now->left = btree_create_node(item);
