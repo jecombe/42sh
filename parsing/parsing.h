@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 11:54:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/24 07:14:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,51 +53,57 @@ enum	e_token
 	NUL//38
 };
 
-typedef struct	s_cmd t_cmd;
+typedef struct s_cmd			t_cmd;
 
-typedef struct		s_lex
+typedef struct					s_lex
 {
-	char					*name[4096];
-	enum e_token			token[4096];
-}					t_lex;
+	char						*name[4096];
+	enum e_token				token[4096];
+}								t_lex;
 
-typedef struct	s_simplecmd
+typedef struct					s_simplecmd
 {
-	char				*arg;
-	enum e_token		token;
-	struct s_arg		*next;//commande suivante
-	struct s_arg		*prev;
-}				t_simplecmd;
+	char						*arg;
+	enum e_token				token;
+	struct s_arg				*next;//commande suivante
+	struct s_arg				*prev;
+}								t_simplecmd;
 
-typedef struct	s_composecmd
+typedef struct					s_composecmd
 {
-	enum e_token		mot_cle;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
-	t_simplecmd				*scmd;
-	typedef struct s_composecmd	*next_in;
+	enum e_token				mot_cle;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
+	t_simplecmd					*scmd;
+/*	typedef struct s_composecmd	*next_in;
 	typedef struct s_composecmd	*prev_in;
-}				t_composecmd;
+	typedef struct s_composecmd	*next_out;
+	typedef struct s_composecmd	*prev_out;*/
+	typedef struct s_composecmd	*left;
+	typedef struct s_composecmd	*right;
+}								t_composecmd;
 
-struct	s_cmd
+struct							s_cmd
 {
-	enum e_token		operateur;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
-	t_simplecmd			*simplecmd;//commande sans mot cle
-	t_composecmd		*compose_cmd;//commande comprenant un mot cle
-	struct s_cmd		*next;//commande suivante
-	struct s_cmd		*prev;
+	enum e_token				operateur;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
+/*	t_simplecmd					*simplecmd;//commande sans mot cle
+	t_composecmd				*compose_cmd;//commande comprenant un mot cle*/
+	t_simplecmd					*left;//commande sans mot cle
+	t_composecmd				*right;//commande comprenant un mot cle
+	struct s_cmd				*next;//commande suivante
+	struct s_cmd				*prev;
 };
 
-typedef struct	s_seq
+typedef struct					s_seq
 {
-	t_cmd				*cmd;
-	struct s_seq		*next;
-	struct s_seq		*prev;
-}				t_seq;
+	t_cmd						*cmd;
+	struct s_seq				*next;
+	struct s_seq				*prev;
+}								t_seq;
 
-void		ft_parsing(t_lex lex);
-t_lex		ft_lexer(char *input);
-int			ft_isoperator(char *input, char c);
-int			ft_lexer_break_operator(char *input, int idx, int i);
-void		ft_lexer_break_quote(char *input, int *idx);
-void		ft_lexer_break_expansion(char *input, int *idx);
-int			ft_lexer_break_blank(char *input, int *idx, int *i);
-int			ft_lexer_break_comment(char *input, int *idx);
+void							ft_parsing(t_lex lex);
+t_lex							ft_lexer(char *input);
+int								ft_isoperator(char *input, char c);
+int								ft_lexer_break_operator(char *input, int idx, int i);
+void							ft_lexer_break_quote(char *input, int *idx);
+void							ft_lexer_break_expansion(char *input, int *idx);
+int								ft_lexer_break_blank(char *input, int *idx, int *i);
+int								ft_lexer_break_comment(char *input, int *idx);
