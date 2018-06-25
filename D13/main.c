@@ -14,7 +14,7 @@ int		main(int ac, char **av)
 		j = atoi(av[i]);
 		btree_insert_data(&root, j, cmp);
 	}
-	btree_apply_infix(root, f);
+	printf("%d\n", btree_search_item(root, 42, cmp));
 /*	printf("ROOT->ITEM == %d\n", root->item);
 	printf("ROOT->LEFT->ITEM == %d\n", root->left->item);
 	printf("ROOT->LEFT->LEFT->ITEM == %d\n", root->left->left->item);

@@ -15,5 +15,6 @@ void btree_apply_prefix(t_btree *root, void (*applyf)(int));
 void btree_apply_infix(t_btree *root, void (*applyf)(int));
 void btree_apply_suffix(t_btree *root, void (*applyf)(int));
 void btree_insert_data(t_btree **root, int item, int (*cmpf)(int, int));
+int btree_search_item(t_btree *root, int data, int (*cmpf)(int, int));
 void f(int x);
 int cmp(int a, int b);
