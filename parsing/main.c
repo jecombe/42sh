@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 05:29:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/25 05:50:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/25 06:12:03 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ int main(int ac, char **av)
 		printf("TOKEN == %u\n", lex.token[i]);
 	}
 	printf("--------PARSING----------\n");
-	b_seq = ft_parsing(lex);
+	b_seq = ft_manage_parsing(lex);
 	printf("--------------BOUCLE B_SEQ-------------\n");
 	i = 0;
 	while (b_seq)

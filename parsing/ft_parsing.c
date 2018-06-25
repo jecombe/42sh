@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/25 04:55:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/25 06:11:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,13 +21,11 @@ int			ft_malloc_seq(t_seq **b_seq, t_seq **n_seq, char *name)
 		a_seq = malloc(sizeof(t_seq));
 		if (!(*b_seq))
 		{
-			printf("PREMIERE FOIS == %d\n", i);
 			*b_seq = a_seq;
 			a_seq->prev = NULL;
 		}
 		else
 		{
-			printf("FOIS D'APRES == %d\n", i);
 			(*n_seq)->next = a_seq;
 			a_seq->prev = *n_seq;
 		}
@@ -94,7 +92,7 @@ int			ft_parse(t_seq **b_seq, t_seq **n_seq, e_token token, char *name)
 	return (0);
 }
 
-t_seq		*ft_parsing(t_lex lex)
+void		ft_parsing(t_lex lex)
 {
 	int		i;
 	t_seq	*b_seq;
@@ -103,35 +101,15 @@ t_seq		*ft_parsing(t_lex lex)
 	b_seq = NULL;
 	n_seq = NULL;
 	i = -1;
-	printf("--------LEXING----------\n");
-	while (lex.name[++i])
-	{
-		printf("NAME == %s\n", lex.name[i]);
-		printf("TOKEN == %u\n", lex.token[i]);
-	}
-	printf("--------PARSING----------\n");
-	i = -1;
 	while (lex.name[++i])
 	{
 		printf("ok\n");
 		if ((ft_parse(&b_seq, &n_seq, lex.token[i], lex.name[i])) == -1)
 		{
 			printf("KO\n");
+			return (b_seq);
 			break;
 		}
 	}
-	printf("--------------BOUCLE B_SEQ-------------\n");
-	while (b_seq)
-	{
-		i = 0;
-		while (b_seq->cmd)
-		{
-			printf("B_SEQ->NAME == %s\n", b_seq->cmd->arg->name);
-			printf("B_SEQ->TOKEN == %u\n", b_seq->cmd->arg->token);
-			printf("I == %d\n", i);
-			b_seq->cmd = b_seq->cmd->next;
-			i++;
-		}
-		b_seq = b_seq->next;
-	}
+	return (b_seq);
 }
