@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/24 05:31:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/25 04:55:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,7 @@ int			ft_malloc_seq(t_seq **b_seq, t_seq **n_seq, char *name)
 	return (1);
 }
 
-int			ft_malloc_cmd(t_cmd **b_cmd, char *name, e_token token)
+int			ft_malloc_cmd(t_cmd **b_cmd, char *name, enum e_token token)
 {
 	t_cmd	*a_cmd;
 	t_cmd	*n_cmd;
@@ -94,7 +94,7 @@ int			ft_parse(t_seq **b_seq, t_seq **n_seq, e_token token, char *name)
 	return (0);
 }
 
-void		ft_parsing(t_lex lex)
+t_seq		*ft_parsing(t_lex lex)
 {
 	int		i;
 	t_seq	*b_seq;
