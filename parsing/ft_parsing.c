@@ -6,110 +6,85 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/25 06:11:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/26 17:48:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "./parsing.h"
 
-int			ft_malloc_seq(t_seq **b_seq, t_seq **n_seq, char *name)
+t_seq		*ft_search_now(t_seq *b_seq)
 {
-	t_seq	*a_seq;
-	static int	i = 0;
+	t_seq	*n_seq;
 
-		a_seq = malloc(sizeof(t_seq));
-		if (!(*b_seq))
+	n_seq = b_seq;
+	if (n_seq)
+	{
+		while (n_seq->next)
+			n_seq = n_seq->next;
+		if (n_seq->op)
 		{
-			*b_seq = a_seq;
-			a_seq->prev = NULL;
+			while (n_seq->op->next)
+				n_seq->op = n_seq->op->next;
+			if (n_seq->op->sc)
+				while (n_seq->op->sc->next)
+					n_seq->op->sc = n_seq->op->sc->next;
+			else if (n_seq->op->cc)
+			{
+				while (n_seq->op->cc->next_out)
+					n_seq->op->cc = n_seq->op->cc->next_out;
+				while (n_seq->op->cc->next_in)
+					n_seq->op->cc = n_seq->op->cc->next_in;
+				if (n_seq->op->cc->sc)
+					while (n_seq->op->cc->sc->next)
+						n_seq->op->cc->sc = n_seq->op->cc->sc->next;
+			}
 		}
-		else
-		{
-			(*n_seq)->next = a_seq;
-			a_seq->prev = *n_seq;
-		}
-		a_seq->next = NULL;
-		*n_seq = a_seq;
-		(*n_seq)->cmd = malloc(sizeof(t_cmd));
-		(*n_seq)->cmd->next = NULL;
-		(*n_seq)->cmd->prev = NULL;
-		(*n_seq)->cmd->arg = malloc(sizeof(t_arg));
-		(*n_seq)->cmd->arg->name = NULL;
-		(*n_seq)->cmd->arg->token = NUL;
-		(*n_seq)->cmd->arg->prev = NULL;
-		(*n_seq)->cmd->arg->next = NULL;
-		i++;
-		return (0);
-	return (1);
+	}
+	return (n_seq);
 }
 
-int			ft_malloc_cmd(t_cmd **b_cmd, char *name, enum e_token token)
+int			ft_init_bseq(t_seq **b_seq, t_seq **n_seq)
 {
-	t_cmd	*a_cmd;
-	t_cmd	*n_cmd;
-
-	n_cmd = *b_cmd;
-	if (n_cmd->arg->name)
-	{
-		while (n_cmd->next)
-			n_cmd = n_cmd->next;
-		a_cmd = malloc(sizeof(t_cmd));
-		a_cmd->prev = n_cmd;
-		n_cmd->next = a_cmd;
-		a_cmd->next = NULL;
-		n_cmd = a_cmd;
-	}
-	n_cmd->arg = malloc(sizeof(t_arg));
-	n_cmd->arg->name = ft_strdup(name);
-	n_cmd->arg->token = token;
+	if (!(*b_seq = malloc(sizeof(t_seq))))
+		return (1);
+	(*b_seq)->op = NULL;
+	(*b_seq)->next = NULL;
+	(*b_seq)->prev = NULL;
+	*n_seq = *b_seq;
 	return (0);
 }
 
-int			ft_parse(t_seq **b_seq, t_seq **n_seq, e_token token, char *name)
+int			ft_attribute_token(t_seq **n_seq)
 {
-	static int	new_cmd = 0;
 
-	if (new_cmd == 0)
-		ft_malloc_seq(&(*b_seq), &(*n_seq), name);
-	if (token == SEMI || token == OR_IF || token == AND_IF)
-	{
-		if (new_cmd == 1)
-			ft_malloc_seq(&(*b_seq), &(*n_seq), name);
-		(*n_seq)->cmd->arg->name = ft_strdup(name);
-		(*n_seq)->cmd->arg->token = token;
-		new_cmd = 0;
-		return (0);
-	}
-	else if (token == DLESS || token == DGREAT || token == LESSAND || token == GREATAND || token == SLESS || token == SGREAT || token == DLESSDASH || token == CLOBBER || token == PIPE)
-	{
-		ft_malloc_cmd(&(*n_seq)->cmd, name, token);
-	}
-	else if (token == IF || token == THEN || token == ELSE)
-	{
-	}
-	new_cmd = 1;
 	return (0);
 }
 
-void		ft_parsing(t_lex lex)
+int			ft_parse(t_seq **b_seq, char *name, enum e_token token)
+{
+	t_seq	*n_seq;
+
+	if (*b_seq)
+		n_seq = ft_search_now(*b_seq);
+	else
+		if (ft_init_bseq(&(*b_seq), &n_seq))
+			return (1);
+	ft_attribute_token(&n_seq);
+	if (!(*b_seq))
+		*b_seq = n_seq;
+	return (0);
+}
+
+t_seq		*ft_manage_parsing(t_lex lex)
 {
 	int		i;
 	t_seq	*b_seq;
-	t_seq	*n_seq;
 
 	b_seq = NULL;
-	n_seq = NULL;
 	i = -1;
 	while (lex.name[++i])
-	{
-		printf("ok\n");
-		if ((ft_parse(&b_seq, &n_seq, lex.token[i], lex.name[i])) == -1)
-		{
-			printf("KO\n");
-			return (b_seq);
-			break;
-		}
-	}
+		if (ft_parse(&b_seq, lex.name[i], lex.token[i]))
+			return (NULL);
 	return (b_seq);
 }

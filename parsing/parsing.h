@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/25 06:00:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/26 17:13:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -101,3 +101,4 @@ void							ft_lexer_break_quote(char *input, int *idx);
 void							ft_lexer_break_expansion(char *input, int *idx);
 int								ft_lexer_break_blank(char *input, int *idx, int *i);
 int								ft_lexer_break_comment(char *input, int *idx);
+t_seq							*ft_manage_parsing(t_lex lex);
