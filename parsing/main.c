@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 05:29:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 04:39:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 08:57:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,9 +39,9 @@ int main(int ac, char **av)
 	i = 0;
 //	printf("POINT-VIRGULE == %u\n", b_seq->close);
 //	if (b_seq->next)
-	printf("IF == %u\n", b_seq->op->cc->key);
-	printf("POINT-VIRGULE == %u\n", b_seq->op->cc->sc->token);
-	/*
+//	printf("IF == %u\n", b_seq->op->cc->key);
+//	printf("POINT-VIRGULE == %u\n", b_seq->op->cc->sc->token);
+	
 	while (b_seq)
 	{
 		printf("%dB_SEQ\n", i);
@@ -61,14 +61,19 @@ int main(int ac, char **av)
 			{
 				k = 0;
 				cc_out = op->cc;
+				sc = op->cc->sc;
+				while (sc)
+				{
+					printf("SC->ARG == %s\n", sc->arg);
+					sc = sc->next;
+				}
 				while (cc_out)
 				{
 					cc_in = cc_out;
 					sc = cc_out->sc;
-					printf("%dCC_OUT->NEXT_IN == %u\n", k, cc_out->key);
 					while (sc)
 					{
-						printf("SC->ARG == %s\n", sc->arg);
+						printf("OUT->SC->ARG == %s\n", sc->arg);
 						sc = sc->next;
 					}
 					l = 0;
@@ -77,7 +82,7 @@ int main(int ac, char **av)
 						sc = cc_in->sc;
 						while (sc)
 						{
-							printf("SC->ARG == %s\n", sc->arg);
+							printf("IN->SC->ARG == %s\n", sc->arg);
 							sc = sc->next;
 						}
 						printf("%dCC_IN->NEXT_IN == %u\n", l, cc_in->key);
@@ -95,6 +100,6 @@ int main(int ac, char **av)
 		}
 		i++;
 		b_seq = b_seq->next;
-	}*/
+	}
 	return (0);
 }
