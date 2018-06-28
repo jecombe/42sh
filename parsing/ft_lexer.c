@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/22 04:58:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 02:55:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,9 +60,9 @@ char			*ft_lexer_break_input(char *input, int *idx)
 	return (s);
 }
 
-e_token			ft_lexer_token(char *name)
+enum e_token			ft_lexer_token(char *name)
 {
-	e_token		tkn;
+	enum e_token		tkn;
 	static char	*token[33] = {"\n", "&&", "||", ";;", "<<", ">>", "<&", ">&",
 		"<>", "<<-", ">|", "if", "then", "else", "elif", "fi", "do", "done",
 		"case", "esac", "while", "until", "for", "{", "}", "!", "in", "|", ";",
@@ -87,5 +87,6 @@ t_lex			ft_lexer(char *input)
 	v = -1;
 	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
 		lex.token[v] = ft_lexer_token(lex.name[v]);
+	printf("OK\n");
 	return (lex);
 }

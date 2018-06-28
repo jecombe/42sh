@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 05:29:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/25 06:12:03 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 04:39:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,6 +37,11 @@ int main(int ac, char **av)
 	b_seq = ft_manage_parsing(lex);
 	printf("--------------BOUCLE B_SEQ-------------\n");
 	i = 0;
+//	printf("POINT-VIRGULE == %u\n", b_seq->close);
+//	if (b_seq->next)
+	printf("IF == %u\n", b_seq->op->cc->key);
+	printf("POINT-VIRGULE == %u\n", b_seq->op->cc->sc->token);
+	/*
 	while (b_seq)
 	{
 		printf("%dB_SEQ\n", i);
@@ -90,6 +95,6 @@ int main(int ac, char **av)
 		}
 		i++;
 		b_seq = b_seq->next;
-	}
+	}*/
 	return (0);
 }

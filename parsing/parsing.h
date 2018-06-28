@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/26 17:13:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/06/28 02:50:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,18 @@ enum	e_token
 	NUL//38
 };
 
+enum	e_parse
+{
+	DLESS_ON,
+	DLESS_OFF,
+	DGREAT_ON,
+	DGREAT_OFF,
+	LESSAND_ON,
+	LESSAND_OFF,
+	GREATAND_ON,
+	GREATAND_OFF,
+};
+
 typedef struct					s_lex
 {
 	char						*name[4096];
@@ -71,15 +83,17 @@ typedef struct					s_cc
 {
 	enum e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
 	t_sc						*sc;
-	typedef struct s_cc			*next_in;
-	typedef struct s_cc			*prev_in;
-	typedef struct s_cc			*next_out;
-	typedef struct s_cc			*prev_out;
+	int							close;
+	struct s_cc			*next_in;
+	struct s_cc			*prev_in;
+	struct s_cc			*next_out;
+	struct s_cc			*prev_out;
 }								t_cc;
 
 typedef struct					s_op
 {
 	enum e_token				op;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
+	int							close;
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//commande suivante
@@ -89,6 +103,7 @@ typedef struct					s_op
 typedef struct					s_seq
 {
 	t_op						*op;
+	int							close;
 	struct s_seq				*next;
 	struct s_seq				*prev;
 }								t_seq;
