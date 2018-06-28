@@ -21,7 +21,7 @@ int main(int ac, char **av)
 	t_cc *cc_in;
 	t_cc *cc_out;
 	t_op *op;
-	int	i;
+	int	i = -1;
 	int	j;
 	int	k;
 	int	l;
@@ -44,59 +44,66 @@ int main(int ac, char **av)
 	
 	while (b_seq)
 	{
-		printf("%dB_SEQ\n", i);
+		printf("B_SEQ NUMBER %d\n", i);
 		j = 0;
-		op = b_seq->op;
-		while (op)
+		if (b_seq->op)
 		{
-			printf("%dB_SEQ->OP->OP == %u\n", j, op->op);
-			if (op->sc)
-				while (op->sc)
-				{
-					printf("OP->SC->ARG == %s\n", op->sc->arg);
-					printf("OP->SC->TOKEN == %u\n", op->sc->token);
-					op->sc = op->sc->next;
-				}
-			else if (op->cc)
+			op = b_seq->op;
+			while (op)
 			{
-				k = 0;
-				cc_out = op->cc;
-				sc = op->cc->sc;
-				while (sc)
-				{
-					printf("SC->ARG == %s\n", sc->arg);
-					sc = sc->next;
-				}
-				while (cc_out)
-				{
-					cc_in = cc_out;
-					sc = cc_out->sc;
-					while (sc)
+				printf("%dB_SEQ->OP->OP == %u\n", j, op->op);
+				if (op->sc)
+					while (op->sc)
 					{
-						printf("OUT->SC->ARG == %s\n", sc->arg);
-						sc = sc->next;
+						printf("OP->SC->ARG == %s\n", op->sc->arg);
+						printf("OP->SC->TOKEN == %u\n", op->sc->token);
+						op->sc = op->sc->next;
 					}
-					l = 0;
-					while (cc_in)
-					{
-						sc = cc_in->sc;
+				else if (op->cc)
+				{
+					k = 0;
+					printf("KEY == %u\n", op->cc->key);
+					cc_out = op->cc;
+					sc = op->cc->sc;
+					if (sc)
 						while (sc)
 						{
-							printf("IN->SC->ARG == %s\n", sc->arg);
+							printf("SC->ARG == %s\n", sc->arg);
 							sc = sc->next;
 						}
-						printf("%dCC_IN->NEXT_IN == %u\n", l, cc_in->key);
+					while (cc_out)
+					{
+						cc_in = cc_out;
+						sc = cc_out->sc;
+						if (sc)
+							while (sc)
+							{
+								printf("OUT->SC->ARG == %s\n", sc->arg);
+								sc = sc->next;
+							}
+						l = 0;
+						while (cc_in)
+						{
+							sc = cc_in->sc;
+							if (sc)
+								while (sc)
+								{
+									printf("IN->SC->ARG == %s\n", sc->arg);
+									sc = sc->next;
+								}
+							printf("%dCC_IN->NEXT_IN == %u\n", l, cc_in->key);
 						cc_in = cc_in->next_in;
-						l++;
+							l++;
+						}
+						k++;
+						cc_out = cc_out->next_out;
 					}
-					k++;
-					cc_out = cc_out->next_out;
 				}
+				else
+					printf("ERROR: NI SIMPLE NI COMPOSE CMD !\n");
+				op = op->next;
+				j++;
 			}
-			else
-				printf("ERROR: NI SIMPLE NI COMPOSE CMD !\n");
-			op = op->next;
-			j++;
 		}
 		i++;
 		b_seq = b_seq->next;

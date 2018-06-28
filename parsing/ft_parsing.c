@@ -151,7 +151,8 @@ int			ft_manage_semi(t_seq **b_seq, t_seq **n_seq)
 					(*n_seq)->op->cc = (*n_seq)->op->cc->next_out;
 				while ((*n_seq)->op->cc->next_in)
 					(*n_seq)->op->cc = (*n_seq)->op->cc->next_in;
-				if ((*n_seq)->op->cc->sc != NULL)
+					//PB ICI
+				if ((*n_seq)->op->cc->sc)
 				{
 					printf("00000000000000\n");
 					printf("TEST TOKEN%s\n", (*n_seq)->op->cc->sc->arg);
@@ -217,6 +218,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, enum e_token token)
 {
 	t_seq		*n_seq;
 	int			ret;
+	t_sc		old_token;
 
 
 	n_seq = NULL;
