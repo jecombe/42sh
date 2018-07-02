@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/02 10:53:08 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 12:46:15 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -268,9 +268,9 @@ void	ft_read_line(int fd, char *s)
 	ft_memset(line, 0, 100);
 	ft_memset(list, 0, 100 * sizeof(*list));
 	i = 0;
-	while ((retval = read(1, line, 100)) > 0)
+	while ((retval = read(1, line, PATH_MAX)) > 0)
 	{
-		if (!ft_strncmp(line, s, ft_strlen(line) - 1))
+		if (ft_strcmp(line, s) == 0)
 			break ;
 		else
 			list[i++] = ft_strdup(line);
