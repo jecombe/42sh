@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 00:57:33 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/08 14:50:02 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/01 17:13:18 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,23 +63,21 @@ void				ft_lexer(char *cmd, char *array[100])
 
 	j = 0;
 	v = 0;
-	printf("====> %s \n", cmd);
 	while (cmd[j] && (v < 100))
 	{
-		printf("====> %c \n", cmd[j]);
 		if (ft_isbashop(cmd[j]))
 		{
-			printf("isbashop %s\n", array[v++] = ft_lexer_bashop(cmd, &j));
+		array[v++] = ft_lexer_bashop(cmd, &j);
 		
 
 		}
 		else if (ft_isquote(cmd[j]))
 		{
-			printf("isquote %s\n", array[v++] = ft_lexer_quote(cmd, &j));
+			array[v++] = ft_lexer_quote(cmd, &j);
 		}
 		else if (!ft_isspace(cmd[j]))
 		{
-			printf("isspace %s\n", array[v++] = ft_lexer_nquote(cmd, &j));
+			array[v++] = ft_lexer_nquote(cmd, &j);
 		}
 		else
 			j++;

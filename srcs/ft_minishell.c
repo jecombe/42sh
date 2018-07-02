@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/08 12:05:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/06 15:26:17 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/01 15:16:13 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,6 +80,7 @@ void			ft_minishell(void)
 			break ;
 		tokenlst = ft_init(tokenlst, buff);
 		g_stat = ft_solver(tokenlst);
+		printf("FIN\n");
 		ft_token_del(tokenlst);
 	}
 }

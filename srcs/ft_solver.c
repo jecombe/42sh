@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/14 16:45:18 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 10:53:08 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,7 +78,6 @@ static int		ft_solver_output(t_token *token, char *arg[100], char *file, int fla
 	int			i;
 	if (ft_solver_bi_error(token, arg))
 		return (1);
-	printf("======> %d\n", flag);
 	if (ft_strcmp(token->id, "cd") == 0)
 		i = ft_builtin_cd_redirect(arg[1], file, flag);
 	if (ft_strcmp(token->id, "env") == 0)
@@ -113,12 +112,19 @@ static int		ft_solver_cmd(char *arg[100])
 	if ((cpid = fork()) == 0)
 	{
 		if (execve(cmd, arg, g_env) == -1)
+		{
+			printf("BON\n");
 			exit(EXIT_FAILURE);
+		}
 		else
+		{
+			printf("BON2\n");
 			exit(EXIT_SUCCESS);
+		}
 	}
 	if (cpid > 0)
 	{
+		printf("BON222\n");
 		wait(&status);
 		ret = WEXITSTATUS(status);
 	}
@@ -177,10 +183,7 @@ int				ft_return_flag(char *one, int dd)
 		return (O_RDONLY);
 	else
 		return (O_TRUNC);
-
-
 }
-
 
 int				ft_verif_file(t_token *tmp, int pasbon)
 {
@@ -201,25 +204,185 @@ int				ft_verif_file(t_token *tmp, int pasbon)
 	}
 	return (1);
 }
-
-void			ft_print_new_prompt(void)
+/*
+void		ft_solver_cmd2(char *arg[100])
 {
-	char		buff[PATH_MAX];
-	int i;
+	pid_t		cpid;
+	int			status;
+	int			ret;
+	char		*cmd;
 
+	ret = 0;
+	cmd = ft_strdup(arg[0]);
+	ft_strdel(&arg[0]);
+	arg[0] = ft_strdup(ft_strrchr(cmd, '/') + 1);
+	cpid = fork();
+	if (cpid > 0)
+		wait(&status);
+	else
+		execve(cmd, arg, g_env);
+	cmd ? ft_strdel(&cmd) : 0;
+}
+*/
+static int		ft_solver_cmd2(char *arg[100])
+{
+	pid_t		cpid;
+	int			status;
+	int			ret;
+	char		*cmd;
+
+	ret = 0;
+	cmd = ft_strdup(arg[0]);
+	ft_strdel(&arg[0]);
+	arg[0] = ft_strdup(ft_strrchr(cmd, '/') + 1);
+	if ((cpid = fork()) == 0)
+	{
+		if (execve(cmd, arg, g_env) == -1)
+		{
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			exit(EXIT_SUCCESS);
+		}
+	}
+	if (cpid > 0)
+	{
+		wait(&status);
+		ret = WEXITSTATUS(status);
+	}
+	cmd ? ft_strdel(&cmd) : 0;
+	if (ret == 1)
+		return (1);
+	return (0);
+}
+
+
+void	ft_read_line(int fd, char *s)
+{
+	char	line[100];
+	char	*list[100];
+	int		i;
+	ssize_t	retval;
+
+	ft_memset(line, 0, 100);
+	ft_memset(list, 0, 100 * sizeof(*list));
 	i = 0;
-	printf("NEW PROMPT\n");
+	while ((retval = read(1, line, 100)) > 0)
+	{
+		if (!ft_strncmp(line, s, ft_strlen(line) - 1))
+			break ;
+		else
+			list[i++] = ft_strdup(line);
+		ft_memset(line, 0, 100);
+	}
+	if (retval == 0)
+		ft_putendl("21sh: warning: here-document delimited by end-of-file");
+	i = -1;
+	while (list[++i])
+		write(fd, list[i], ft_strlen(list[i]));
+}
+/*void	ft_read_line(int fd, char *s)
+{
+	char	line[100];
+	char	*list[100];
+	char		buff[PATH_MAX];
+	//char *save[100];
+	int		i;
+	//ssize_t	retval;
+printf("---------> %s--\n", s);
+	ft_memset(line, 0, 100);
+	ft_memset(list, 0, 100 * sizeof(*list));
+	i = 0;
 	while (101)
 	{
 		ft_putchar('\r');
-		ft_putstr(">");
+		ft_putstr("heredoc>");
+		ft_bzero(buff, PATH_MAX);
+		if (!(i = read(0, line, PATH_MAX)))
+			break ;
+		if (ft_strcmp(line, s) == 0)
+		{
+			printf("RESULT\n");
+			break ;
+		}
+		else
+		{
+			printf("OKOKOK\n");
+			list[i++] = ft_strdup(line);
+		}
+		ft_memset(line, 0, 100);
+	}
+	i = -1;
+	while (list[++i])
+	{
+		printf("========>  %s\n", list[i]);
+		write(fd, list[i], ft_strlen(list[i]));
+	}
+//}
+
+	while ((retval = read(1, line, 100)) > 0)
+	{
+		if (!ft_strncmp(line, s, ft_strlen(line) - 1))
+			break ;
+		else
+			list[i++] = ft_strdup(line);
+		ft_memset(line, 0, 100);
+	}
+	if (retval == 0)
+		ft_putendl("21sh: warning: here-document delimited by end-of-file");
+	i = -1;
+	while (list[++i])
+		write(fd, list[i], ft_strlen(list[i]));
+}*/
+
+
+
+void			ft_print_new_prompt(char *file, char *exec, char **arg)
+{
+	//char		buff[PATH_MAX];
+	int i;
+	//char *save[100];
+	(void)exec;
+	(void)arg;
+	i = 0;
+	printf("ICIC\n");
+	int fd[2];
+	pipe(fd);
+	ft_read_line(fd[1],file);
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
+	ft_solver_cmd2(arg);
+	/*while (101)
+	{
+		ft_putchar('\r');
+		ft_putstr("heredoc>");
 		ft_bzero(buff, PATH_MAX);
 		if (!(i = read(0, buff, PATH_MAX)))
-			break;
-		
+			break ;
+		save[i] = ft_strdup(buff);
+		i++;
+		if (ft_strcmp(buff, file) == 0)
+		{
+			printf("RESULT\n");
+			ft_solver_cmd2(arg);
+			return ;
+		}
+	}*/
+}
 
-}
-}
+/*int				ft_check_parse(t_token *tbegin)
+{
+	t_token *tmp;
+	tmp = tbegin;
+	while (tmp)
+	{
+		printf("===========>>> %s %s\n", tmp->id, tmp->cmdarg->id);
+		tmp = tmp->next;
+	}
+	return (1);
+}*/
 int				ft_solver(t_token *tbegin)
 {
 	t_token		*token;
@@ -240,12 +403,12 @@ int				ft_solver(t_token *tbegin)
 	co = 1;
 	exec = 0;
 	arg[0] = NULL;
+	//ft_check_parse(tbegin);
 	while (tbegin)
 	{
 		co++;
 		exec = 0;
 		pasbon = 0;
-		printf("ok\n");
 		token = tbegin;
 		ft_solver_init(token, arg);
 		if (token->type == BI)
@@ -254,7 +417,7 @@ int				ft_solver(t_token *tbegin)
 			ok = 0;
 			if (token->next != NULL)
 			{
-				//si il y a un chevron > ou < 
+				//si il y a un chevron > ou <
 				if (ft_return_flag(token->next->id, 0) == O_APPEND || ft_return_flag(token->next->id, 0) == O_RDONLY)
 				{
 					ok = 1;
@@ -263,17 +426,15 @@ int				ft_solver(t_token *tbegin)
 						f = 1;
 					else
 						f = 0;
-					//si chevron >> 
+					//si chevron >>
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_APPEND)
 						file = token->next->next->next->id;
-					//si chevron < 
+					//si chevron <
 					else if ((flag = ft_return_flag(token->next->next->id, f)) == O_RDONLY)
 					{
-							printf("llllllll %s\n", token->next->next->id);
 						if (f == 1)
 						{
 							//si chevron <
-							printf("111111111111\n");
 							file = token->next->next->id;
 							if (ft_verif_file(token->next->next, pasbon) == -1)
 								pasbon = 1;
@@ -281,10 +442,9 @@ int				ft_solver(t_token *tbegin)
 						}
 						else
 						{
-							//a gere le << 
-							printf("douyble\n");
+							//a gere le <<
 							file = token->next->next->next->id;
-							ft_print_new_prompt();
+							//ft_print_new_prompt();
 							return (i);
 						}
 						exec = 1;
@@ -292,13 +452,11 @@ int				ft_solver(t_token *tbegin)
 					//si aucun chevron
 					if ((flag = ft_return_flag(token->next->next->id, f)) == O_TRUNC)
 						file = token->next->next->id;
-					printf("OKOK\n");
 					i = ft_solver_output(token, arg, file, flag);
 					//--------------------------- si plusieur chevron sur une ligne----------
 					if (token->next->next->next != NULL)
 						if ((ft_strcmp(token->next->next->next->id, ">") == 0) || (ft_strcmp(token->next->next->next->id, "<") == 0)) 
 						{
-							printf("SA PASSE DANS\n");
 							if (ft_strcmp(token->next->next->next->id, "<") == 0)
 							{
 								t_token *tmpp;
@@ -334,18 +492,16 @@ int				ft_solver(t_token *tbegin)
 								ft_solver_init(token, arg);
 								if (exec == 0)
 								{
-									printf("SA PASE LSLSLSLSLSLS\n");
 									i = ft_redirect_output(token, arg, file, flag);
 								}
 							}
 						}
-					//-------------------------------fin---------------------------------
-
 				}
 			}
 			if (ok == 0)
 				i = ft_solver_bi(token, arg);
 		}
+		//-------------------------------fin---------------------------------
 		else if (token->type == ID)
 		{
 			//condition pour les fonction execve
@@ -370,15 +526,20 @@ int				ft_solver(t_token *tbegin)
 							file = token->next->next->id;
 							if (ft_strcmp(token->next->next->id,"<") == 0)
 							{
-								signal(SIGINT, ft_handle_signal2);
-								ft_print_new_prompt();
+								char *file2;
+								char *exec;
+								exec = token->id;
+								file2 = token->next->next->next->id;
+								ft_strcat(file2, "\n");
+								ft_print_new_prompt(file2, exec, arg);
+								return (i);
+							
 							}
 							if (ft_strcmp(token->next->next->id,"<") != 0)
-							if (ft_verif_file(token->next->next, pasbon) == -1)
-							{
-								printf("NEIN\n");
-								return (i);
-							}
+								if (ft_verif_file(token->next->next, pasbon) == -1)
+								{
+									return (i);
+								}
 						}
 						else
 							file = token->next->next->next->id;
@@ -396,7 +557,6 @@ int				ft_solver(t_token *tbegin)
 								tmpp = token->next->next->next;
 								if (ft_verif_file(tmpp, pasbon) == -1)
 								{
-									printf("sa passe \n");
 									return (i);
 								}
 								else
@@ -436,7 +596,10 @@ int				ft_solver(t_token *tbegin)
 				i = ft_solver_cmd(arg);
 		}
 		else if (token->type == NONE && ok == 0)
+		{
 			i = ft_error_none(arg[0]);
+
+		}
 		ft_lexer_del(arg);
 		tbegin = tbegin->next;
 	}
