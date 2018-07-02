@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/21 21:30:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/14 15:03:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 15:21:42 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,7 @@
 
 char					*g_env[100];
 int						g_stat;
-//int						g_chevron;
+int						g_heredoc;
 char					**g_tab;
 
 typedef struct dirent	t_dirent;

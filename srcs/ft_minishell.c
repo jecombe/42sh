@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/08 12:05:41 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/01 15:16:13 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 15:33:57 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,16 +72,23 @@ void			ft_minishell(void)
 	i = 0;
 	while (101)
 	{
+		printf("sa return\n");
 		ft_putchar('\r');
 		ft_putprompt();
 		g_stat = 0;
 		ft_bzero(buff, PATH_MAX);
 		if (!(i = read(0, buff, PATH_MAX)))
+		{
+			printf("LLLLLLLL\n");
 			break ;
+		}
+		if (g_heredoc == 0)
+		{
 		tokenlst = ft_init(tokenlst, buff);
 		g_stat = ft_solver(tokenlst);
 		printf("FIN\n");
 		ft_token_del(tokenlst);
+		}
 	}
 }
 

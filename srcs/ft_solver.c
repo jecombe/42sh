@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/02 13:05:45 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 15:23:44 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@ static void		ft_solver_init(t_token *token, char *arg[100])
 	t_token		*p;
 	int			i;
 
+	printf("SOLVER INIT\n");
 	i = -1;
 	while (arg[++i] && (i < 100))
 		ft_strdel(&arg[i]);
@@ -56,7 +57,7 @@ static int		ft_solver_bi_error(t_token *token, char *arg[100])
 static int		ft_solver_bi(t_token *token, char *arg[100])
 {
 	int			i;
-
+	printf("SOLVER INIT\n");
 	if (ft_solver_bi_error(token, arg))
 		return (1);
 	if (ft_strcmp(token->id, "cd") == 0)
@@ -390,11 +391,11 @@ int				ft_solver(t_token *tbegin)
 	int ok = 0;
 	int co;
 	char *file;
-	int flag;
 	int flag2;
 	int f;
 	int exec;
 	int pasbon = 0;
+	int flag = 0;
 
 	i = 0;
 	o = 0;
@@ -408,7 +409,7 @@ int				ft_solver(t_token *tbegin)
 		exec = 0;
 		pasbon = 0;
 		token = tbegin;
-		ft_solver_init(token, arg);
+			ft_solver_init(token, arg);
 		if (token->type == BI)
 		{
 			//conditions pour les builtins
@@ -530,6 +531,7 @@ int				ft_solver(t_token *tbegin)
 								file2 = token->next->next->next->id;
 								ft_strcat(file2, "\n");
 								ft_print_new_prompt(file2, exec, arg);
+								g_heredoc = 1;
 								return (i);
 							
 							}

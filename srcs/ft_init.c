@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:32:45 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/02 13:26:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 14:02:52 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,12 +55,13 @@ static t_token		*ft_parse_cmd(char *str, int i, int chev)
 	token->type = (i == 0) ? ft_parse_type(&token->id, chev) : ARG;
 	return (token);
 }
-
+/*
 int				ft_check_parser(char **tab)
 {
 	int i = 0;
 	int o = 0;
 	int p = 0;
+	int ok1, ok2, ok3, ok4;
 	while (tab[i])
 	{
 		if (ft_strcmp(tab[i], ";") == 0)
@@ -74,28 +75,32 @@ int				ft_check_parser(char **tab)
 			p++;
 		if ((o == 1 && tab[i + 1] == '\0') || (o == 2 && tab[i + 1] == '\0'))
 		{
+			ok1 = 1;
 			ft_putendl("Erreur near '\\n'");
 			return (1);
 		}
 		if ((p == 1 && tab[i+  1] == '\0') || (p == 2 && tab[i + 1] == '\0'))
 		{
+			ok2 = 1;
 			ft_putendl("Erreur near '\\n'");
 			return (1);
 		}
 		if (o > 2)
 		{
+			ok3 = 1;
 			ft_putendl("ERREUR near '>'");
 			return (1);
 		}
 		if (p > 2)
 		{
+			ok4 = 1;
 			ft_putendl("ERREUR near '<'");
 			return (1);
 		}
 		i++;
 	}
 	return (0);
-}
+}*/
 t_token				*ft_init(t_token *tbegin, char *cmd)
 {
 	t_token			*token;
@@ -110,8 +115,8 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	v = 0;
 	v = 0;
 	chev = 0;
-	if (ft_check_parser(tab) == 1)
-		return (NULL);
+/*	if (ft_check_parser(tab) == 1)
+		return (NULL);*/
 	while (tab[v] && (v < 100))
 	{
 		chev = 0;
