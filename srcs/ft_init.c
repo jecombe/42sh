@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 06:32:45 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/14 14:53:27 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 13:04:52 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,6 +56,36 @@ static t_token		*ft_parse_cmd(char *str, int i, int chev)
 	return (token);
 }
 
+void				ft_check_parser(char **tab)
+{
+	int i = 0;
+	int o = 0;
+	int p = 0;
+	while (tab[i])
+	{
+		if (ft_strcmp(tab[i], ";") == 0)
+		{
+			o = 0;
+			p = 0;
+		}
+		if (ft_strcmp(tab[i], ">") == 0)
+			o++;
+		if (ft_strcmp(tab[i], "<") == 0)
+			p++;
+		if (o > 2)
+		{
+			ft_putendl("ERREUR near '>'");
+			return ;
+		}
+		if (p > 2)
+		{
+			ft_putendl("ERREUR near '<'");
+			return ;
+		}
+		i++;
+	}
+	
+}
 t_token				*ft_init(t_token *tbegin, char *cmd)
 {
 	t_token			*token;
@@ -70,6 +100,7 @@ t_token				*ft_init(t_token *tbegin, char *cmd)
 	v = 0;
 	v = 0;
 	chev = 0;
+	ft_check_parser(tab);
 	while (tab[v] && (v < 100))
 	{
 		chev = 0;

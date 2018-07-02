@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/20 12:33:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/02 12:46:15 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/02 13:05:45 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -276,8 +276,6 @@ void	ft_read_line(int fd, char *s)
 			list[i++] = ft_strdup(line);
 		ft_memset(line, 0, 100);
 	}
-	if (retval == 0)
-		ft_putendl("21sh: warning: here-document delimited by end-of-file");
 	i = -1;
 	while (list[++i])
 		write(fd, list[i], ft_strlen(list[i]));
