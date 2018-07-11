@@ -147,17 +147,28 @@ int			ft_manage_semi(t_seq **b_seq, t_seq **n_seq)
 				(*n_seq)->op = (*n_seq)->op->next;
 			if ((*n_seq)->op->cc)
 			{
+			printf("CC TROUVE\n");
 				while ((*n_seq)->op->cc->next_out)
+				{
+					printf("BUG0\n");
 					(*n_seq)->op->cc = (*n_seq)->op->cc->next_out;
+				}
 				while ((*n_seq)->op->cc->next_in)
+				{
+					printf("NEXT_IN\n");
 					(*n_seq)->op->cc = (*n_seq)->op->cc->next_in;
+				}
 					//PB ICI
 				if ((*n_seq)->op->cc->sc)
 				{
 					printf("00000000000000\n");
-					printf("TEST TOKEN%s\n", (*n_seq)->op->cc->sc->arg);
+					printf("TEST TOKEN == %s\n", (*n_seq)->op->cc->sc->arg);
+					int i = 0;
 					while ((*n_seq)->op->cc->sc->next)
+					{
+						printf("SC->NEXT NUMBER %d\n", i++);
 						(*n_seq)->op->cc->sc = (*n_seq)->op->cc->sc->next;
+					}
 					if (ft_malloc_sc(&(*n_seq)->op->cc->sc))
 						return (1);
 				}
@@ -165,7 +176,10 @@ int			ft_manage_semi(t_seq **b_seq, t_seq **n_seq)
 				{
 					printf("1111111111111111\n");
 					if (ft_malloc_sc(&(*n_seq)->op->cc->sc))
+					{
+						printf("BUG MALLOC_SC\n");
 						return (1);
+					}
 				}
 				(*n_seq)->op->cc->sc->arg = ft_strdup(";");
 				(*n_seq)->op->cc->sc->token = SEMI;
@@ -193,15 +207,28 @@ int			ft_manage_semi(t_seq **b_seq, t_seq **n_seq)
 	return (0);
 }
 
-int			ft_manage_if(t_seq **b_seq, t_seq **n_seq)
+int			ft_manage_if(t_seq **b_seq)
 {
-	*n_seq = *b_seq;
-	if (*n_seq)
+	t_seq		*n_seq;
+
+	n_seq = *b_seq;
+	if (n_seq)
 	{
-		if ((*n_seq)->close == 1)
+		while (n_seq->next)
+			n_seq = n_seq->next;
+		if (n_seq->close == 1)
+		{
+			ft_malloc_seq(&(*b_seq));
+			ft_malloc_op(&(*b_seq)->op);
+			ft_malloc_cc(&(*b_seq)->op->cc, 0);
+			(*b_seq)->op->cc->key = IF;
 			printf("NOUVEAU MAILLON\n");
-		else
+		}
+		else if (n_seq->op)
+		{
+			if (n_seq->op)
 			printf("NOUVELLE CC\n");
+		}
 	}
 	else
 	{
@@ -230,7 +257,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, enum e_token token)
 	else if (token == IF)
 	{
 		printf("IF TROUVE\n");
-		if (ft_manage_if(&(*b_seq), &n_seq))
+		if (ft_manage_if(&(*b_seq)))
 			return (1);
 	}
 	else if (token == THEN)
@@ -284,7 +311,6 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	b_seq = NULL;
 	i = -1;
 	old_token = NUL;
-		printf("NAME\n");
 	while (lex.name[++i])
 	{
 		printf("NAME == %s\n", lex.name[i]);

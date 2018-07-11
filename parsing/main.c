@@ -68,6 +68,7 @@ int main(int ac, char **av)
 					if (sc)
 						while (sc)
 						{
+						if (sc->arg)
 							printf("SC->ARG == %s\n", sc->arg);
 							sc = sc->next;
 						}
@@ -75,10 +76,13 @@ int main(int ac, char **av)
 					{
 						cc_in = cc_out;
 						sc = cc_out->sc;
-						if (sc)
 							while (sc)
 							{
+							if (sc->arg)
+							{
 								printf("OUT->SC->ARG == %s\n", sc->arg);
+								printf("OUT->SC->TOKEN == %u\n", sc->token);
+							}
 								sc = sc->next;
 							}
 						l = 0;
@@ -88,6 +92,7 @@ int main(int ac, char **av)
 							if (sc)
 								while (sc)
 								{
+									if (sc->arg)
 									printf("IN->SC->ARG == %s\n", sc->arg);
 									sc = sc->next;
 								}
