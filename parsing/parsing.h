@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 00:28:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 22:04:51 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,8 +82,9 @@ typedef struct					s_sc
 typedef struct					s_cc
 {
 	enum e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
-	t_sc						*sc;
-	int							close;
+	t_sc				*sc;
+	int					open;
+	int					close;
 	struct s_cc			*next_in;
 	struct s_cc			*prev_in;
 	struct s_cc			*next_out;
@@ -93,7 +94,7 @@ typedef struct					s_cc
 typedef struct					s_op
 {
 	enum e_token				op;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
-	//WHY ???
+	//WHY ??? JE CROIS QUE C'EST SI IL Y A QUELQUE CHOSE DERRIERE !
 	int							close;
 	//
 	int							inside;

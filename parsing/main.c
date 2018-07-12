@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 05:29:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/11 21:09:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 21:44:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,14 +27,17 @@ int main(int ac, char **av)
 	int	l;
 
 	lex = ft_lexer(av[1]);
+	ft_putstr("\x1b[34m");
 	printf("--------LEXING----------\n");
 	while (lex.name[++i])
 	{
 		printf("NAME == %s\n", lex.name[i]);
 		printf("TOKEN == %u\n", lex.token[i]);
 	}
+	ft_putstr("\x1b[36m");
 	printf("--------PARSING----------\n");
 	b_seq = ft_manage_parsing(lex);
+	ft_putstr("\x1b[32m");
 	printf("--------------BOUCLE B_SEQ-------------\n");
 	i = 0;
 //	printf("POINT-VIRGULE == %u\n", b_seq->close);
@@ -43,7 +46,7 @@ int main(int ac, char **av)
 //	printf("POINT-VIRGULE == %u\n", b_seq->op->cc->sc->token);
 	while (b_seq)
 	{
-		printf("B_SEQ NUMBER %d\n", i);
+		printf("B_SEQUENCE NUMBER %d\n", i);
 		j = 0;
 		if (b_seq->op)
 		{
@@ -65,11 +68,11 @@ int main(int ac, char **av)
 					printf("KEY == %u\n", op->cc->key);
 					cc_out = op->cc;
 					sc = op->cc->sc;
-						while (sc)
-						{
-							printf("SC->ARG == %s\n", sc->arg);
-							sc = sc->next;
-						}
+					while (sc)
+					{
+						printf("SC->ARG == %s\n", sc->arg);
+						sc = sc->next;
+					}
 					while (cc_out)
 					{
 						cc_in = cc_out;
@@ -107,5 +110,6 @@ int main(int ac, char **av)
 		i++;
 		b_seq = b_seq->next;
 	}
+	ft_putstr("\x1b[0m");
 	return (0);
 }
