@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/28 02:50:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 00:28:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,7 @@ enum	e_token
 	SLESS,/*<*///30
 	SGREAT,/*>*///31
 	WORD,/**///32
-	NUL//38
+	NUL//33
 };
 
 enum	e_parse
@@ -93,7 +93,10 @@ typedef struct					s_cc
 typedef struct					s_op
 {
 	enum e_token				op;//Operateur de separation tels que "NONE" ">>" "<<" '<' '>' ">&" "<&" "<<-" "||" "&&"
+	//WHY ???
 	int							close;
+	//
+	int							inside;
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//commande suivante
