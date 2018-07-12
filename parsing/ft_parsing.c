@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 21:44:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/12 23:12:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,7 @@ t_seq		*ft_malloc_seq(int version)
 	static int		i = 0;
 	t_seq	*new;
 
+	printf("MALLOC_SEQ NUMBER %d\n", i);
 	if (!(new = malloc(sizeof(t_seq))))
 		return (NULL);
 	new->op = NULL;
@@ -26,7 +27,6 @@ t_seq		*ft_malloc_seq(int version)
 	new->prev = NULL;
 	if (version == 1)
 		new->close = 1;
-	printf("SEQUENCE NUMBER %d\n", i);
 	i++;
 	return (new);
 }
@@ -36,11 +36,15 @@ t_cc		*ft_malloc_cc(void)
 	t_cc		*new;
 	t_cc		*now;
 
+	static int		i = 0;
+	printf("MALLOC_CC NUMBER %d\n", i);
+	i++;
 	if (!(new = malloc(sizeof(t_cc))))
 		return (NULL);
 	new->next_in = NULL;
 	new->next_out = NULL;
 	new->sc = NULL;
+	new->open = 0;
 	new->close = 0;
 	new->key = NUL;
 	new->prev_in = NULL;
@@ -52,6 +56,9 @@ t_op		*ft_malloc_op(void)
 {
 	t_op	*new;
 
+	static int		i = 0;
+	printf("MALLOC_OP NUMBER %d\n", i);
+	i++;
 	if (!(new = malloc(sizeof(t_op))))
 		return (NULL);
 	new->op = NUL;
@@ -68,6 +75,9 @@ t_sc		*ft_malloc_sc(void)
 {
 	t_sc		*new;
 
+	static int		i = 0;
+	printf("MALLOC_SC NUMBER %d\n", i);
+	i++;
 	if (!(new = malloc(sizeof(t_cc))))
 		return (NULL);
 	new->next = NULL;
@@ -81,50 +91,73 @@ int			ft_manage_semi(t_seq **b_seq)
 {
 	t_seq	*n_seq;
 
+	static int		i = 0;
+	printf("MANAGE_SEMI NUMBER %d\n", i);
+	i++;
 	n_seq = *b_seq;
 	if (n_seq)
-		printf("';' MAILLON TROUVE\n");
-	else
-		printf("';' PAS DE MAILLON TROUVE\n");
-	if (n_seq)
 	{
+		int x = 1;
 		while (n_seq->next)
+		{
+			x++;
 			n_seq = n_seq->next;
+		}
+		printf("';' %d MAILLON TROUVE\n", x);
 		if (n_seq->op && !n_seq->close)
 		{
+			x = 1;
 			while (n_seq->op->next)
+			{
+				x++;
 				n_seq->op = n_seq->op->next;
+			}
+			printf("';' %d N_SEQ->OP && !N_SEQ->CLOSE\n", x);
 			if (n_seq->op->cc)
 			{
-			printf("CC TROUVE\n");
-				while (n_seq->op->cc->next_out)
+				if (n_seq->op->cc->next_out)
 				{
-					printf("NEXT_OUT\n");
-					n_seq->op->cc = n_seq->op->cc->next_out;
+					x = 1;
+					while (n_seq->op->cc->next_out)
+					{
+						x++;
+						n_seq->op->cc = n_seq->op->cc->next_out;
+					}
 				}
-				while (n_seq->op->cc->next_in)
+				else
+					x = 0;
+				printf("%d N_SEQ->OP->CC->NEXT_OUT TROUVE\n", x);
+				if (n_seq->op->cc->next_in)
 				{
-					printf("NEXT_IN\n");
-					n_seq->op->cc = n_seq->op->cc->next_in;
+					while (n_seq->op->cc->next_in)
+					{
+						printf("NEXT_IN NUMBER %d\n", x++);
+						n_seq->op->cc = n_seq->op->cc->next_in;
+					}
 				}
+				else
+					x = 0;
+				printf("%d N_SEQ->OP->CC->NEXT_IN TROUVE\n", x);
 					//PB ICI
-				printf("55555555555555555555555\n");
 				if (n_seq->op->cc->sc)
 				{
-					printf("00000000000000\n");
-					printf("TEST TOKEN == %s\n", n_seq->op->cc->sc->arg);
-					int i = 0;
-					while (n_seq->op->cc->sc->next)
+					x = 0;
+					if (n_seq->op->cc->sc->next)
 					{
-						printf("SC->NEXT NUMBER %d\n", i++);
-						n_seq->op->cc->sc = n_seq->op->cc->sc->next;
+						while (n_seq->op->cc->sc->next)
+						{
+							printf("SC->NEXT NUMBER %d\n", x++);
+							n_seq->op->cc->sc = n_seq->op->cc->sc->next;
+						}
 					}
+					printf("%d N_SEQ->OP->CC->SC->ARG TROUVE\n", x);
+					printf("N_SEQ->OP->CC->SC->ARG == %s\n", n_seq->op->cc->sc->arg);
 					if (!(n_seq->op->cc->sc = ft_malloc_sc()))
 						return (1);
 				}
 				else
 				{
-					printf("1111111111111111\n");
+					printf("N_SEQ->OP->CC->SC NON TROUVE\n");
 					if (!(n_seq->op->cc->sc = ft_malloc_sc()))
 					{
 						printf("BUG MALLOC_SC\n");
@@ -136,6 +169,7 @@ int			ft_manage_semi(t_seq **b_seq)
 			}
 			else
 			{
+				printf("N_SEQ->OP->CC NON TROUVE\n");
 				if (!(n_seq->next = ft_malloc_seq(1)))
 					return (1);
 //				(*n_seq)->close = 1;
@@ -143,6 +177,7 @@ int			ft_manage_semi(t_seq **b_seq)
 		}
 		else
 		{
+			printf("';' !(N_SEQ->OP && !N_SEQ->CLOSE)\n");
 			if (!(n_seq->next = ft_malloc_seq(1)))
 				return (1);
 //			(*n_seq)->close = 1;
@@ -150,10 +185,12 @@ int			ft_manage_semi(t_seq **b_seq)
 	}
 	else
 	{
+		printf("';' PAS DE MAILLON TROUVE\n");
 		if (!(*b_seq = ft_malloc_seq(1)))
 			return (1);
 //		(*n_seq)->close = 1;
 	}
+	printf("MANAGE_SEMI NUMBER %d FINISH\n", i);
 	return (0);
 }
 
@@ -162,20 +199,19 @@ int			ft_manage_if(t_seq **b_seq)
 	t_seq		*n_seq;
 	t_seq		*test;
 
-	printf("00000000000000000000000000000000000000000000000000000000000000000\n");
+	static int		i = 0;
+	printf("MANAGE_IF NUMBER %d\n", i);
+	i++;
 	n_seq = *b_seq;
 	test = n_seq;
-	if (test)
-		printf("TEST TROUVE\n");
-	else
-		printf("BUG\n");
 	if (n_seq)
 	{
+		printf("'IF' MAILLON TROUVE\n");
 		while (n_seq->next)
 			n_seq = n_seq->next;
 		if (n_seq->close == 1)
 		{
-			printf("NOUVEAU MAILLON\n");
+			printf("N_SEQ->CLOSE == 1\n");
 			n_seq->next = ft_malloc_seq(0);
 			n_seq->next->op = ft_malloc_op();
 			n_seq->next->op->cc = ft_malloc_cc();
@@ -183,18 +219,16 @@ int			ft_manage_if(t_seq **b_seq)
 		}
 		else if (n_seq->op)
 		{
-			printf("NOUVELLE CC\n");
-			if (n_seq->op)
-				;
+			printf("N_SEQ->OP TROUVE[[ EN COURS ]]\n");
 		}
 		else
 		{
-			printf("LE ELSE\n");
+			printf("LE ELSE[[ EN COURS ]]\n");
 		}
 	}
 	else
 	{
-		printf("INITIALISATION\n");
+		printf("'IF' PAS DE MAILLON TROUVE\n");
 		*b_seq = ft_malloc_seq(0);
 		(*b_seq)->op = ft_malloc_op();
 		(*b_seq)->op->cc = ft_malloc_cc();
@@ -209,51 +243,67 @@ int			ft_attribute_token(t_seq **b_seq, char *name, enum e_token token)
 	int			ret;
 	t_sc		old_token;
 
+	static int		i = 0;
+	printf("ATTRIBUTE_TOKEN NUMBER %d\n", i);
+	printf("RECHERCHE ");
+	i++;
 
 	n_seq = NULL;
 	if (token == SEMI)
 	{
+		printf("TOKEN == SEMI\n");
 		if (ft_manage_semi(&(*b_seq)))
 			return (1);
 	}
 	else if (token == IF)
 	{
-		printf("IF TROUVE\n");
+		printf("TOKEN == IF\n");
 		if (ft_manage_if(&(*b_seq)))
 			return (1);
 	}
 	else if (token == THEN)
 	{
+		printf("TOKEN == THEN\n");
 	}
 	else if (token == ELIF)
 	{
+		printf("TOKEN == ELIF\n");
 	}
 	else if (token == ELSE)
 	{
+		printf("TOKEN == ELSE\n");
 	}
 	else if (token == FI)
 	{
+		printf("TOKEN == FI\n");
 	}
 	else if (token == DO)
 	{
+		printf("TOKEN == DO\n");
 	}
 	else if (token == DONE)
 	{
+		printf("TOKEN == DONE\n");
 	}
 	else if (token == CASE)
 	{
+		printf("TOKEN == CASE\n");
 	}
 	else if (token == ESAC)
 	{
+		printf("TOKEN == ESAC\n");
 	}
 	else if (token == WHILE)
 	{
+		printf("TOKEN == WHILE\n");
 	}
 	else if (token == UNTIL)
 	{
+		printf("TOKEN == UNTIL\n");
 	}
 	else if (token == FOR)
 	{
+		printf("TOKEN == FOR\n");
 	}
 	return (0);
 }
@@ -273,7 +323,7 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	i = -1;
 	while (lex.name[++i])
 	{
-		printf("NAME == %s\n", lex.name[i]);
+		printf("BOUCLE LEX NUMBER %d NAME == [%s]\n", i, lex.name[i]);
 		if (ft_parse(&b_seq, lex.name[i], lex.token[i]))
 			return (NULL);
 	}
