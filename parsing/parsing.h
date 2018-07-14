@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 22:04:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/14 16:41:20 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,7 +97,9 @@ typedef struct					s_op
 	//WHY ??? JE CROIS QUE C'EST SI IL Y A QUELQUE CHOSE DERRIERE !
 	int							close;
 	//
+	//JE PENSE L'ENLEVER ! ! !
 	int							inside;
+	//
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//commande suivante
@@ -107,6 +109,7 @@ typedef struct					s_op
 typedef struct					s_seq
 {
 	t_op						*op;
+	int							background;
 	int							close;
 	struct s_seq				*next;
 	struct s_seq				*prev;

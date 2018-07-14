@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 23:12:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/14 16:48:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -113,8 +113,9 @@ int			ft_manage_semi(t_seq **b_seq)
 				n_seq->op = n_seq->op->next;
 			}
 			printf("';' %d N_SEQ->OP && !N_SEQ->CLOSE\n", x);
-			if (n_seq->op->cc)
+			if (n_seq->op->cc && n_seq->op->op != NUL)
 			{
+				x = 0;
 				if (n_seq->op->cc->next_out)
 				{
 					x = 1;
@@ -124,19 +125,17 @@ int			ft_manage_semi(t_seq **b_seq)
 						n_seq->op->cc = n_seq->op->cc->next_out;
 					}
 				}
-				else
-					x = 0;
 				printf("%d N_SEQ->OP->CC->NEXT_OUT TROUVE\n", x);
+				x = 0;
 				if (n_seq->op->cc->next_in)
 				{
+					x = 1;
 					while (n_seq->op->cc->next_in)
 					{
 						printf("NEXT_IN NUMBER %d\n", x++);
 						n_seq->op->cc = n_seq->op->cc->next_in;
 					}
 				}
-				else
-					x = 0;
 				printf("%d N_SEQ->OP->CC->NEXT_IN TROUVE\n", x);
 					//PB ICI
 				if (n_seq->op->cc->sc)
@@ -323,6 +322,7 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	i = -1;
 	while (lex.name[++i])
 	{
+		printf("---------------------------------------------\n");
 		printf("BOUCLE LEX NUMBER %d NAME == [%s]\n", i, lex.name[i]);
 		if (ft_parse(&b_seq, lex.name[i], lex.token[i]))
 			return (NULL);
