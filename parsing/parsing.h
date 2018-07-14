@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/14 16:41:20 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/14 20:22:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,6 +75,7 @@ typedef struct					s_sc
 {
 	char						*arg;
 	enum e_token				token;
+	int							close;
 	struct s_sc					*next;//commande suivante
 	struct s_sc					*prev;
 }								t_sc;

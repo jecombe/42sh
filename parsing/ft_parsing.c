@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/14 16:48:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/14 20:22:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -151,17 +151,23 @@ int			ft_manage_semi(t_seq **b_seq)
 					}
 					printf("%d N_SEQ->OP->CC->SC->ARG TROUVE\n", x);
 					printf("N_SEQ->OP->CC->SC->ARG == %s\n", n_seq->op->cc->sc->arg);
-					if (!(n_seq->op->cc->sc = ft_malloc_sc()))
-						return (1);
+					n_seq->op->cc->sc->close++;
+				//	if (!(n_seq->op->cc->sc = ft_malloc_sc()))
+				//		return (1);
 				}
-				else
+				else if (n_seq->op->cc)
 				{
+//					while (n_seq->op->cc->next)
+//						n_seq->op->cc = n_seq->op->cc->next;
 					printf("N_SEQ->OP->CC->SC NON TROUVE\n");
 					if (!(n_seq->op->cc->sc = ft_malloc_sc()))
 					{
 						printf("BUG MALLOC_SC\n");
 						return (1);
 					}
+				}
+				else
+				{
 				}
 				n_seq->op->cc->sc->arg = ft_strdup(";");
 				n_seq->op->cc->sc->token = SEMI;
