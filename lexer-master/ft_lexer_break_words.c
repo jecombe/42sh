@@ -6,12 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 02:52:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 03:52:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/15 02:47:37 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "parsing.h"
+#include "./lexer.h"
 
 int			ft_lexer_break_operator(char *input, int idx, int i)
 {
@@ -22,15 +22,23 @@ int			ft_lexer_break_operator(char *input, int idx, int i)
 	ret = 0;
 	if (idx == i)
 		return (0);
-	if (ft_isoperator(NULL, input[idx - 1]))
+	if ((s = ft_strsub(input, i, (idx - i))))
 	{
-		s = ft_strsub(input, i, ((idx - i) + 1));
-		if (!ft_isoperator(s, '\0'))
+		if (ft_isoperator(s) > 260)
+		{
+			ft_strdel(&s);
+			if ((s = ft_strsub(input, i, ((idx - i) + 1))))
+				if (ft_isoperator(s) == 260)
+					ret = 1;
+		}
+		else if (input[idx] == ';' || input[idx] == '&' || input[idx] == '|' ||
+			input[idx] == '(' || input[idx] == ')' || input[idx] == '<' ||
+			input[idx] == '>' || input[idx] == '-')
+		{
 			ret = 1;
+		}
 		ft_strdel(&s);
 	}
-	else if (ft_isoperator(NULL, input[idx]))
-		ret = 1;
 	return (ret);
 }
 
