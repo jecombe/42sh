@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/16 04:41:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 01:57:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,8 +59,8 @@ t_op		*ft_malloc_op(void)
 	i++;
 	if (!(new = malloc(sizeof(t_op))))
 		return (NULL);
-	new->sc = NULL;
 	new->token = TOKEN;
+	new->sc = NULL;
 	new->cc = NULL;
 	new->next = NULL;
 	new->prev = NULL;
@@ -77,7 +77,6 @@ t_sc		*ft_malloc_sc(void)
 	if (!(new = malloc(sizeof(t_cc))))
 		return (NULL);
 	new->arg = NULL;
-	new->close = 0;
 	new->token = TOKEN;
 	new->prev = NULL;
 	new->next = NULL;
@@ -94,14 +93,18 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 		while (n_seq->next)
 			n_seq = n_seq->next;
 		if (n_seq->token != TOKEN)
+		{
 			if (!(n_seq->next = ft_malloc_seq()))
 				return (1);
+			n_seq->next->prev = n_seq;
+			n_seq = n_seq->next;
+		}
 	}
 	else
 	{
-		if (!(n_seq = ft_malloc_seq()))
+		if (!(*b_seq = ft_malloc_seq()))
 			return (1);
-		*b_seq = n_seq;
+		n_seq = *b_seq;
 	}
 	n_seq->token = token;
 	return (0);
@@ -110,6 +113,7 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 int			ft_manage_op(t_seq **b_seq, e_token token)
 {
 	t_seq			*n_seq;
+	t_op			*n_op;
 
 	if (!(*b_seq))
 		if (!(*b_seq = ft_malloc_seq()))
@@ -119,6 +123,7 @@ int			ft_manage_op(t_seq **b_seq, e_token token)
 		n_seq = n_seq->next;
 	if ((!(n_seq->op) && n_seq->token == TOKEN) || n_seq->token != TOKEN)
 	{
+		printf("N_SEQ->TOKEN == %u\n", n_seq->token);
 		if (n_seq->token != TOKEN)
 		{
 			if (!(n_seq->next = ft_malloc_seq()))
@@ -128,64 +133,88 @@ int			ft_manage_op(t_seq **b_seq, e_token token)
 		}
 		if (!(n_seq->op = ft_malloc_op()))
 			return (1);
+		n_op = n_seq->op;
 	}
 	else if (n_seq->op)
 	{
-		while (n_seq->op->next)
-			n_seq->op = n_seq->op->next;
-		if (!(n_seq->op->next = ft_malloc_op()))
+		n_op = n_seq->op;
+		while (n_op->next)
+			n_op = n_op->next;
+		if (!(n_op->next = ft_malloc_op()))
 			return (1);
-		n_seq->op->next->prev = n_seq->op;
-		n_seq->op = n_seq->op->next;
+		n_op->next->prev = n_op;
+		n_op = n_op->next;
 	}
-	n_seq->op->token = token;
+	else
+	{
+		printf("BBBBBBBBBBBUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGG\n");
+	}
+	n_op->token = token;
 	return (0);
 }
 
-int			ft_manage_word(t_seq **b_seq, e_token token)
+int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 {
 	t_seq			*n_seq;
+	t_op			*n_op;
+	t_sc			*n_sc;
 
 	if (!(*b_seq))
-		if (!(*b_seq = ft_malloc_seq()))
-			return (1);
+	{
+//		if (ft_manage_op(&(*b_seq), TOKEN))
+		*b_seq = ft_malloc_seq();
+//			return (1);
+	}
 	n_seq = *b_seq;
 	while (n_seq->next)
+	{
 		n_seq = n_seq->next;
-	if ((!(n_seq->op) && n_seq->token == TOKEN) || n_seq->token != TOKEN)
+	}
+	if (!n_seq->op || n_seq->token != TOKEN)
 	{
 		if (n_seq->token != TOKEN)
 		{
-			if (!(n_seq->next = ft_malloc_seq()))
-				return (1);
+			printf("TOKEN != TOKEN\n");
+			n_seq->next = ft_malloc_seq();
 			n_seq->next->prev = n_seq;
 			n_seq = n_seq->next;
 		}
-		if (!(n_seq->op = ft_malloc_op()))
-			return (1);
+		n_seq->op = ft_malloc_op();
+		printf("\n");
 	}
-	else if (n_seq->op)
+	n_op = n_seq->op;
+	while (n_op->next)
+		n_op = n_op->next;
+	if (n_op->token != TOKEN)
 	{
-		while (n_seq->op->next)
-			n_seq->op = n_seq->op->next;
-		if (!(n_seq->op->next = ft_malloc_op()))
-			return (1);
-		n_seq->op->next->prev = n_seq->op;
-		n_seq->op = n_seq->op->next;
+	printf("MANAGE_WORD IF 1\n");
+		n_op->next = ft_malloc_op();
+		n_op->next->prev = n_op;
+		n_op = n_op->next;
+		n_op->sc = ft_malloc_sc();
+		n_op->sc->arg = ft_strdup(name);
+		n_op->sc->token = token;
 	}
-	if ((n_seq->op->token || !n_seq->op->sc) && !n_seq->op->cc)
+	else if (n_op->cc)
+		printf("MANAGE_WORD IF 2\n");
+	else
 	{
-		if (n_seq->op->token)
+		printf("BBBBBBBBBBBUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGG\n");
+		printf("MANAGE_WORD IF 3\n");
+		if (!n_op->sc)
+			n_op->sc = ft_malloc_sc();
+		n_sc = n_op->sc;
+		while (n_sc->next)
+			n_sc = n_sc->next;
+		if (n_sc->arg || n_sc->token != TOKEN)
 		{
-			n_seq->op->next = ft_malloc_op();
-			n_seq->op->next->prev = n_seq->op;
-			n_seq->op = n_seq->op->next;
+			n_sc->next = ft_malloc_sc();
+			n_sc->next->prev = n_sc;
+			n_sc = n_sc->next;
 		}
-		while (n_seq->op->sc->next)
-			n_seq->op->sc = n_seq->op->sc->next;
+		n_sc->arg = ft_strdup(name);
+		n_sc->token = token;
 	}
-	else if (n_seq->op->cc)
-		;
 	return (0);
 }
 
@@ -193,17 +222,20 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 {
 	if (token == SEMI || token == AND)
 	{
+		printf("TOKEN == SEMI OR AND\n");
 		if (ft_manage_seq(&(*b_seq), token))
 			return (1);
 	}
 	else if (token == AND_IF || token == OR_IF || token == NOT)
 	{
+		printf("TOKEN == AND_IF OR OR_IF OR NOT\n");
 		if (ft_manage_op(&(*b_seq), token))
 			return (1);
 	}
 	else
 	{
-		if (!(ft_manage_word(&(*b_seq), token)))
+		printf("TOKEN == OTHER\n");
+		if (ft_manage_word(&(*b_seq), name, token))
 			return (1);
 	}
 	return (0);
@@ -218,7 +250,6 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	i = -1;
 	while (lex.name[++i])
 	{
-		printf("---------------------------------------------\n");
 		printf("BOUCLE LEX NUMBER %d NAME == [%s]\n", i, lex.name[i]);
 		if (ft_attribute_token(&b_seq, lex.name[i], lex.token[i]))
 			return (NULL);

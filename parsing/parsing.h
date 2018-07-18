@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/16 02:20:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/17 07:18:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,6 @@ typedef struct					s_sc
 {
 	char						*arg;
 	e_token						token;
-	int							close;
 	struct s_sc					*next;//commande suivante
 	struct s_sc					*prev;
 }								t_sc;
@@ -38,7 +37,7 @@ typedef struct					s_cc
 
 typedef struct					s_op
 {
-	e_token						token; // && || | ;
+	e_token						token; // PIPE, LOGICAL, REDIRECTION OPERATOR ;
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//commande suivante
@@ -47,7 +46,7 @@ typedef struct					s_op
 
 typedef struct					s_seq
 {
-	e_token						token; // ; ou &
+	e_token						token; // LIST TERMINATOR
 	t_op						*op;
 	struct s_seq				*next;
 	struct s_seq				*prev;

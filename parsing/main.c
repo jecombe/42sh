@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 05:29:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/14 20:22:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 01:49:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,67 +46,17 @@ int main(int ac, char **av)
 //	printf("POINT-VIRGULE == %u\n", b_seq->op->cc->sc->token);
 	while (b_seq)
 	{
-		printf("B_SEQUENCE NUMBER %d\n", i);
-		j = 0;
-		if (b_seq->op)
+		printf("B_SEQ NUMBER %d, TOKEN == %u\n", i, b_seq->token);
+		while (b_seq->op)
 		{
-			printf("B_SEQ->OP TROUVE\n");
-			op = b_seq->op;
-			while (op)
+			printf("b_seq->op->token == %u\n", b_seq->op->token);
+			while (b_seq->op->sc)
 			{
-				printf("%dB_SEQ->OP->OP == %u\n", j, op->op);
-				if (op->sc)
-					while (op->sc)
-					{
-						printf("OP->SC->ARG == %s\n", op->sc->arg);
-						printf("OP->SC->TOKEN == %u\n", op->sc->token);
-						op->sc = op->sc->next;
-					}
-				else if (op->cc)
-				{
-					k = 0;
-					printf("KEY == %u\n", op->cc->key);
-					cc_out = op->cc;
-					sc = op->cc->sc;
-					while (sc)
-					{
-						printf("SC->ARG == %s\n", sc->arg);
-						sc = sc->next;
-					}
-					while (cc_out)
-					{
-						cc_in = cc_out;
-						sc = cc_out->sc;
-							while (sc)
-							{
-								printf("OUT->SC->ARG == %s\n", sc->arg);
-								printf("OUT->SC->TOKEN == %u\n", sc->token);
-								sc = sc->next;
-							}
-						l = 0;
-						while (cc_in)
-						{
-							sc = cc_in->sc;
-								while (sc)
-								{
-									printf("IN->SC->ARG == %s\n", sc->arg);
-									sc = sc->next;
-								}
-							printf("%dCC_IN->NEXT_IN == %u\n", l, cc_in->key);
-						cc_in = cc_in->next_in;
-							l++;
-						}
-						k++;
-						cc_out = cc_out->next_out;
-					}
-				}
-				else
-					printf("ERROR: NI SIMPLE NI COMPOSE CMD !\n");
-				op = op->next;
-				j++;
+				printf("sc->arg == %s, sc->token == %u\n", b_seq->op->sc->arg, b_seq->op->sc->token);
+				b_seq->op->sc = b_seq->op->sc->next;
 			}
+			b_seq->op = b_seq->op->next;
 		}
-		else printf("B_SEQ->OP NON TROUVE\n");
 		i++;
 		b_seq = b_seq->next;
 	}
