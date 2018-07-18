@@ -6,12 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 03:53:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/18 05:06:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "./parsing.h"
+
+int			ft_
 
 t_seq		*ft_malloc_seq(void)
 {
@@ -210,10 +212,10 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 		if (ft_manage_op(&(*b_seq), token))
 			return (1);
 	}
-	else if (token >= 276 && token <= 284)
-	{
-
-	}
+//	else if (token >= 276 && token <= 284)
+//	{
+//
+//	}
 	else
 	{
 		if (ft_manage_word(&(*b_seq), name, token))

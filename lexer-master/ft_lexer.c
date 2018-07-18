@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/15 05:44:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/17 04:27:30 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,19 +74,4 @@ t_lex			ft_lexer(char *input)
 		lex.token[v] = ft_lexer_token(lex.name, v, &cmd);
 	}
 	return (lex);
-}
-
-
-int main(int ac, char *argv[])
-{
-	t_lex lex;
-	
-	lex = ft_lexer(argv[1]);
-	int i = -1;
-	while (lex.name[++i])
-	{
-		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-		ft_strdel(&lex.name[i]);
-	}
-	return (0);
 }
