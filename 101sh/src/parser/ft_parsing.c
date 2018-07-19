@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 08:56:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/19 06:53:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,20 +40,7 @@ char		**ft_tabdup(char **tab)
 			i++;
 		}
 		ret[i] = NULL;
-		i = 0;
-		while (ret[i])
-		{
-			printf("RET[i] == %s\n", ret[i]);
-			i++;
-		}
-		i = 0;
-		while (tab[i])
-		{
-			printf("TAB[i] == %s\n", tab[i]);
-			i++;
-		}
 	}
-//	printf("dfgdfgdfgdf\n");
 	return (ret);
 }
 
@@ -61,10 +48,9 @@ int			ft_malloc_cmd(char ***cmd, char *new_arg)
 {
 	int		i;
 	char	**tab;
-	int		len;
 
 	i = 0;
-	if (!*cmd)
+	if (!(*cmd))
 	{
 		if (!(tab = malloc(sizeof(char**) * 2)))
 			return (1);
@@ -75,27 +61,14 @@ int			ft_malloc_cmd(char ***cmd, char *new_arg)
 			return (1);
 		while ((*cmd)[i])
 		{
+		printf("%s\n", ft_strdup((*cmd)[i]));
 			tab[i] = ft_strdup((*cmd)[i]);
-		printf("IIIIIIIIIIIIICCCCCCCCCCCCCIIIIIIIIIII\n");
 			i++;
 		}
 	}
 	tab[i] = ft_strdup(new_arg);
-	tab[++i] = NULL;
-	i = 0;
-	while (tab[i])
-	{
-		printf("0CMD[i] == %s\n", tab[i]);
-		i++;
-	}
-	printf("PPPPPPPPP\n");
+	tab[i + 1] = NULL;
 	*cmd = ft_tabdup(tab);
-	i = 0;
-	while ((*cmd)[i])
-	{
-		printf("1CMD[i] == %s\n", (*cmd)[i]);
-		i++;
-	}
 	return (0);
 }
 
@@ -211,10 +184,13 @@ int			ft_manage_op(t_seq **b_seq, e_token token)
 		n_op = n_seq->op;
 		while (n_op->next)
 			n_op = n_op->next;
-		if (!(n_op->next = ft_malloc_op()))
-			return (1);
-		n_op->next->prev = n_op;
-		n_op = n_op->next;
+		if (n_op->token != TOKEN)
+		{
+			if (!(n_op->next = ft_malloc_op()))
+				return (1);
+			n_op->next->prev = n_op;
+			n_op = n_op->next;
+		}
 	}
 	else
 		printf("BBBBBBBBBBBUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGG\n");
@@ -249,13 +225,10 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 	}
 	n_op = n_seq->op;
 	while (n_op->next)
-	{
-		printf("N_OP->NEXT\n");
 		n_op = n_op->next;
-	}
-	if (n_op->token != TOKEN)
+	if (n_op->token != TOKEN || n_op->token == NOT)
 	{
-	printf("0NAME == %s\n", name);
+		printf("0NAME == %s\n", name);
 		//PLUS D'ACTUALITE
 		n_op->next = ft_malloc_op();
 		n_op->next->prev = n_op;
@@ -268,7 +241,7 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 				return (1);
 	}
 	else if (n_op->cc)
-	printf("1NAME == %s\n", name);
+		printf("1NAME == %s CC NOT ENABLE\n", name);
 	else
 	{
 	printf("2NAME == %s\n", name);
@@ -282,13 +255,13 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 		}*/
 		if (ft_malloc_cmd(&n_op->sc->cmd, name))
 			return (1);
-	printf("2NAME == %s\n", name);
 	}
 	return (0);
 }
 
 int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 {
+	static int s = 0;
 	if (token == SEMI || token == AND)
 	{
 		if (ft_manage_seq(&(*b_seq), token))
@@ -308,6 +281,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 		if (ft_manage_word(&(*b_seq), name, token))
 			return (1);
 	}
+	s++;
 	return (0);
 }
 
