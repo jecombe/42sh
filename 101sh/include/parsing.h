@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 09:44:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 10:07:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,8 +27,8 @@ typedef struct					s_cc
 	e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
 	e_token				not_operator;
 	t_sc				*sc;
-	int					open;
-	int					close;
+	int					open_key;
+	int					close_key;
 	struct s_cc			*next_in;
 	struct s_cc			*prev_in;
 	struct s_cc			*next_out;
