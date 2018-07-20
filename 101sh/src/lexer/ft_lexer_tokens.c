@@ -6,17 +6,17 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/15 02:42:37 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 04:14:27 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 07:00:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
-/*
+
 e_token			ft_lexer_token_rules(t_lex *lex)
 {
 	e_token		tkn;
-
+/*
 	tkn = ft_isreserved(name[v]);
 	//expansion redirector;
 	//expansion here doc;
@@ -32,6 +32,6 @@ e_token			ft_lexer_token_rules(t_lex *lex)
 			tkn = ft_isreserved(name[v]);
 		else
 			tkn = WORD;
-	}
+	}*/
 	return (tkn);
-}*/
+}

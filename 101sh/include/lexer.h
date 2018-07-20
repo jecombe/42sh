@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 03:36:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 09:38:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,17 +60,17 @@ typedef enum	s_token
 
 /* RESERVED WORDS */
 	IF = 285,
-	THEN = 286,
-	ELSE = 287,
-	ELIF = 288,
-	FI = 289,
+	WHILE = 286,
+	FOR = 287,
+	CASE = 288,
+	THEN = 289,
 	DO = 290,
-	DONE = 291,
-	CASE = 292,
-	ESAC = 293,
-	WHILE = 294,
-	UNTIL = 295,
-	FOR = 296,
+	ESAC = 291,
+	FI = 292,
+	DONE = 293,
+	ELIF = 294,
+	ELSE = 295,
+	UNTIL = 296,
 
 	/* Not operators tokens, recognized when reserved word */
 	LBRACE = 297,		// {
@@ -105,7 +105,7 @@ int			ft_lexer_break_comment(char *input, int *idx);
 **		ft_lexer_break_tokens.c
 */
 
-void		ft_lexer_token_rules(t_lex *lex);
+e_token		ft_lexer_token_rules(t_lex *lex);
 
 /*
 **		ft_lexer_utils.c

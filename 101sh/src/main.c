@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 08:46:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 08:58:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,17 @@ int main(int ac, char *argv[])
 	(void)ac;
 	lex = ft_lexer(argv[1]);
 	while (lex.name[++i])
+	{
+		if (!ft_strcmp(lex.name[i], "if"))
+			lex.token[i] = IF;
+		if (!ft_strcmp(lex.name[i], "fi"))
+			lex.token[i] = FI;
+		if (!ft_strcmp(lex.name[i], "then"))
+			lex.token[i] = THEN;
+		if (!ft_strcmp(lex.name[i], "ELIF"))
+			lex.token[i] = ELIF;
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	}
 	b_seq = ft_manage_parsing(lex);
 	ft_putstr("\x1b[32m");
 	printf("-------------- PARSING -------------\n");
@@ -42,10 +52,14 @@ int main(int ac, char *argv[])
 					j = 0;
 					while (b_seq->op->sc->cmd[j])
 					{
-						printf("\t\tARG == %s\n", b_seq->op->sc->cmd[j]);
+						printf("\t\tSC ARG == %s token == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->token));
 						j++;
 					}
 				}
+			}
+			else if (b_seq->op->cc)
+			{
+				printf("CC TOKEN == %s\n", ft_convert_token_to_string(b_seq->op->cc->key));
 			}
 			printf("\n");
 			b_seq->op = b_seq->op->next;

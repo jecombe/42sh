@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 03:29:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 09:48:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,6 +93,7 @@ t_cc		*ft_malloc_cc(void)
 	if (!(new = malloc(sizeof(t_cc))))
 		return (NULL);
 	new->key = TOKEN;
+	new->not_operator = TOKEN;
 	new->sc = NULL;
 	new->open = 0;
 	new->close = 0;
@@ -124,7 +125,7 @@ t_sc		*ft_malloc_sc(void)
 	if (!(new = malloc(sizeof(t_cc))))
 		return (NULL);
 	new->cmd = NULL;
-	new->token = TOKEN;
+	new->not_operator = TOKEN;
 	return (new);
 }
 
@@ -204,6 +205,7 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 	t_op			*n_op;
 	t_sc			*n_sc;
 
+	//RESTE A INCLURE LE NOT OPERATOR !
 	if (!(*b_seq))
 	{
 //		if (ft_manage_op(&(*b_seq), TOKEN))
@@ -234,7 +236,7 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 		n_op->next->prev = n_op;
 		n_op = n_op->next;
 		n_op->sc = ft_malloc_sc();
-		if (token >= 276 && token <= 284)
+		if (token >= LESS && token <= DLESSDASH)
 			n_op->sc->token = token;
 		else
 			if (ft_malloc_cmd(&n_op->sc->cmd, name))
@@ -259,29 +261,105 @@ int			ft_manage_word(t_seq **b_seq, char *name, e_token token)
 	return (0);
 }
 
-int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
+int			ft_manage_entry_reserved(t_seq **b_seq, char *name, e_token token)
 {
-	static int s = 0;
-	if (token == SEMI || token == AND)
+	t_seq			*n_seq;
+	t_op			*n_op;
+	t_cc			*n_cc;
+
+	if (!(*b_seq))
+		*b_seq = ft_malloc_seq();
+	n_seq = *b_seq;
+	while (n_seq->next)
+		n_seq = n_seq->next;
+	if (!n_seq->op || n_seq->token != TOKEN)
 	{
-		if (ft_manage_seq(&(*b_seq), token))
-			return (1);
+		if (n_seq->token != TOKEN)
+		{
+			n_seq->next = ft_malloc_seq();
+			n_seq->next->prev = n_seq;
+			n_seq = n_seq->next;
+		}
+		n_seq->op = ft_malloc_op();
 	}
-	else if (token >= 266 && token <= 284)
+	n_op = n_seq->op;
+	while (n_op->next)
+		n_op = n_op->next;
+	if (n_op->token != TOKEN)
 	{
-		if (ft_manage_op(&(*b_seq), token))
-			return (1);
+		printf("NOUVELLE OP\n");
+		n_op->next = ft_malloc_op();
+		n_op->next->prev = n_op;
+		n_op = n_op->next;
+		n_op->cc = ft_malloc_cc();
+		n_op->cc->key = token;
 	}
-	else if (token >= 285 && token <= 300)
+	else if (n_op->sc)
 	{
-		printf("RESERVED WORD IS NOT ENABLED\n");
-	}
-	else
-	{
+		printf("VU COMME UN ARGUMENT DE LA SIMPLE COMMANDE\n");
+		token = TOKEN;
 		if (ft_manage_word(&(*b_seq), name, token))
 			return (1);
 	}
-	s++;
+	else
+	{
+		printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
+		if (!n_op->cc)
+			n_op->cc = ft_malloc_cc();
+		n_cc = n_op->cc;
+		while (n_cc->next)
+			n_cc = n_cc->next;
+		if (n_cc->key == TOKEN)
+		{
+			n_cc->key = token;
+		}
+		else if (cl)
+	}
+	return (0);
+}
+
+int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
+{
+	if (token == SEMI || token == AND)
+	{
+		printf("NEW SEQUENCE\n");
+		if (ft_manage_seq(&(*b_seq), token))
+			return (1);
+	}
+	else if (token >= AND_IF && token <= DLESSDASH && token != NOT)
+	{
+		printf("CONTROL OPERATOR\n");
+		if (ft_manage_op(&(*b_seq), token))
+			return (1);
+	}
+	else if (token => IF && token <= CASE)
+	{
+		printf("ENTRY RESERVED\n");
+		if (ft_manage_entry_reserved(&(*b_seq), name, token))
+			return (1);
+	}
+	else if (token == THEN || token == IN || token == DO)
+	{
+		printf("COMPLETMENTARY ENTRY RESERVED\n");
+	}
+	else if (token >= ESAC && token <= DONE)
+	{
+		printf("OPEN RESERVED\n");
+	}
+	else if (token == ESAC && token == DONE)
+	{
+		printf("CLOSE RESERVED\n");
+	}
+	else if (token == NOT)
+	{
+		printf("NOT\n");
+	}
+	else
+	{
+		printf("TOKEN\n");
+		if (ft_manage_word(&(*b_seq), name, token))
+			return (1);
+	}
 	return (0);
 }
 

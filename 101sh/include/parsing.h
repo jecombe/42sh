@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 03:58:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 09:44:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,12 +18,14 @@
 typedef struct					s_sc
 {
 	char						**cmd;//COMMANDE COMPLETE
-	e_token						token;//NOT OPERATOR
+	e_token						not_operator;
+	//ET SI BESOIN LE AND POUR LES COMMANDES AVEC CONTROL OPERATOR
 }								t_sc;
 
 typedef struct					s_cc
 {
 	e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
+	e_token				not_operator;
 	t_sc				*sc;
 	int					open;
 	int					close;
@@ -38,6 +40,7 @@ typedef struct					s_op
 	e_token						token;//PIPE, LOGICAL REDIRECTION OPERATOR
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
+	e_token						not_operator;
 	struct s_op					*next;//SUITE DE L'OPERATEUR
 	struct s_op					*prev;
 }								t_op;
