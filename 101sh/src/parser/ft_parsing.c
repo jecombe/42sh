@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/19 06:53:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/20 03:29:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -274,7 +274,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 	}
 	else if (token >= 285 && token <= 300)
 	{
-		printf("RESERVED WORD IS NOT ENABLE\n");
+		printf("RESERVED WORD IS NOT ENABLED\n");
 	}
 	else
 	{
