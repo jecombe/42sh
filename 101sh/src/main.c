@@ -57,7 +57,7 @@ int main(int ac, char *argv[])
 					j = 0;
 					while (b_seq->op->sc->cmd[j])
 					{
-						printf("\t\tSC ARG == %s NOT == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
+						printf("\t\tSC ARG == %s\n", b_seq->op->sc->cmd[j]);
 						j++;
 					}
 				}
@@ -78,18 +78,15 @@ int main(int ac, char *argv[])
 						if (n_cc_in->sc)
 						{
 							j = -1;
+							printf("NOT == %s\n", ft_convert_token_to_string(n_cc_in->not_operator));
 							if (n_cc_in->sc->cmd)
-							{
 								while (n_cc_in->sc->cmd[++j])
 								{
 									cc1 = cc0;
 									while (cc0-- + 1)
 										printf("\t");
-									printf("CC ARG == %s NOT == %s\n", n_cc_in->sc->cmd[j], ft_convert_token_to_string(n_cc_in->not_operator));
+									printf("CC ARG == %s\n", n_cc_in->sc->cmd[j]);
 								}
-							}
-							else
-								printf("CC ARG == (NULL) NOT == %s\n", ft_convert_token_to_string(n_cc_in->not_operator));
 						}
 						n_cc_in = n_cc_in->next_in;
 					}
