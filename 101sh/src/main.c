@@ -52,7 +52,7 @@ int main(int ac, char *argv[])
 					j = 0;
 					while (b_seq->op->sc->cmd[j])
 					{
-						printf("\t\tSC ARG == %s token == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->token));
+						printf("\t\tSC ARG == %s token == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
 						j++;
 					}
 				}

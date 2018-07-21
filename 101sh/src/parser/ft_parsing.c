@@ -309,9 +309,9 @@ int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
 		n_cc = n_op->cc;
 		while (n_cc->next_out)
 			n_cc = n_cc->next_out;
-		while (n_cc->next_in && !n_cc->close)
+		while (n_cc->next_in && !n_cc->close_key)
 			n_cc = n_cc->next_in;
-		if (n_cc->key == TOKEN && !sc)
+		if (n_cc->key == TOKEN && !n_cc->sc)
 		{
 			printf("NOUVELLE PREMIERE CC\n");
 			n_cc->key = token;
