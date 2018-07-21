@@ -40,7 +40,7 @@ typedef struct					s_op
 	e_token						token;//PIPE, LOGICAL REDIRECTION OPERATOR
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
-	e_token						not_operator;
+	e_token						not_operator;//JE PENSE L"ENLEVER
 	struct s_op					*next;//SUITE DE L'OPERATEUR
 	struct s_op					*prev;
 }								t_op;

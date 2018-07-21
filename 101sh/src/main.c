@@ -16,10 +16,14 @@
 
 int main(int ac, char *argv[])
 {
-	t_lex lex;
-	t_seq *b_seq;
-	int i = -1;
-	int j = 0;
+	t_lex	lex;
+	t_seq	*b_seq;
+	t_cc	*n_cc;
+	t_cc	*n_cc_in;
+	int		cc0 = 2;
+	int		cc1 = 2;
+	int		i = -1;
+	int		j = 0;
 
 	(void)ac;
 	lex = ft_lexer(argv[1]);
@@ -50,16 +54,52 @@ int main(int ac, char *argv[])
 				if (b_seq->op->sc->cmd)
 				{
 					j = 0;
-					while (b_seq->op->sc->cmd[j])
+					if (b_seq->op->sc->cmd[j])
 					{
-						printf("\t\tSC ARG == %s token == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
-						j++;
+						while (b_seq->op->sc->cmd[j])
+						{
+							printf("\t\tSC ARG == %s NOT == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
+							j++;
+						}
 					}
+					else
+						printf("\t\tSC ARG == (NULL) NOT == %s\n", ft_convert_token_to_string(b_seq->op->sc->not_operator));
 				}
 			}
 			else if (b_seq->op->cc)
 			{
-				printf("CC TOKEN == %s\n", ft_convert_token_to_string(b_seq->op->cc->key));
+				n_cc = b_seq->op->cc;
+				cc0 = 2;
+				while (n_cc)
+				{
+					n_cc_in = n_cc;
+					while (n_cc_in)
+					{
+						cc1 = cc0;
+						while (cc0--)
+							printf("\t");
+						printf("CC TOKEN == %s NOT == %s OPEN == %d CLOSE == %d\n", ft_convert_token_to_string(n_cc_in->key), ft_convert_token_to_string(n_cc_in->not_operator), n_cc_in->open_key, n_cc_in->close_key);
+						if (n_cc_in->sc)
+						{
+							j = -1;
+							if (n_cc_in->sc->cmd)
+							{
+								while (n_cc_in->sc->cmd[++j])
+								{
+									cc1 = cc0;
+									while (cc0-- + 1)
+										printf("\t");
+									printf("CC ARG == %s NOT == %s\n", n_cc_in->sc->cmd[j], ft_convert_token_to_string(n_cc_in->not_operator));
+								}
+							}
+							else
+								printf("CC ARG == (NULL) NOT == %s\n", ft_convert_token_to_string(n_cc_in->not_operator));
+						}
+						n_cc_in = n_cc_in->next_in;
+					}
+					n_cc = n_cc->next_out;
+					cc0++;
+				}
 			}
 			printf("\n");
 			b_seq->op = b_seq->op->next;
