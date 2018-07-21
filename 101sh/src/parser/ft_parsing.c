@@ -388,7 +388,7 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	i = -1;
 	while (lex.name[++i])
 	{
-		printf("I == %d\n", i);
+		printf("------------- I == %d ------------\n", i);
 		if (ft_attribute_token(&b_seq, lex.name[i], lex.token[i]))
 			return (NULL);
 	}

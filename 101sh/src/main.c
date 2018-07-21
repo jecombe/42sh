@@ -51,19 +51,15 @@ int main(int ac, char *argv[])
 			printf("\t|--> OPERATEUR == %s\n", ft_convert_token_to_string(b_seq->op->token));
 			if (b_seq->op->sc)
 			{
+				printf("\t\tSC NOT == %s\n", ft_convert_token_to_string(b_seq->op->sc->not_operator));
 				if (b_seq->op->sc->cmd)
 				{
 					j = 0;
-					if (b_seq->op->sc->cmd[j])
+					while (b_seq->op->sc->cmd[j])
 					{
-						while (b_seq->op->sc->cmd[j])
-						{
-							printf("\t\tSC ARG == %s NOT == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
-							j++;
-						}
+						printf("\t\tSC ARG == %s NOT == %s\n", b_seq->op->sc->cmd[j], ft_convert_token_to_string(b_seq->op->sc->not_operator));
+						j++;
 					}
-					else
-						printf("\t\tSC ARG == (NULL) NOT == %s\n", ft_convert_token_to_string(b_seq->op->sc->not_operator));
 				}
 			}
 			else if (b_seq->op->cc)
