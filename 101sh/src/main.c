@@ -14,55 +14,92 @@
 #include "../include/lexer.h"
 #include "../include/parsing.h"
 
-void		ft_parcour_cc(t_seq *b_seq)
+#define cv ft_convert_token_to_string
+
+void		ft_print_cc(t_cc *n_cc, int cmp)
 {
-	t_cc	*n_cc_out0;
-	t_cc	*n_cc_in0;
-	int		cc0 = 2;
-	int		cc1 = 2;
+	int				pcmp = cmp;
+	int				i = 0;
+
+	while (pcmp-- + 2)
+		write(1, "\t", 1);
+	if (n_cc->key != TOKEN)
+		printf("NOT == %s KEY == %s OPEN == %d CLOSE == %d\n", cv(n_cc->not_operator), cv(n_cc->key), n_cc->open_key, n_cc->close_key);
+	else
+		printf("NOT == %s KEY == %s\n", cv(n_cc->not_operator), cv(n_cc->key));
+	if (n_cc->sc)
+	{
+		if (n_cc->sc->not_operator != TOKEN)
+		{
+			pcmp = cmp;
+			while (pcmp-- + 3)
+				write(1, "\t", 1);
+			printf("SC NOT ==  %s\n", cv(n_cc->sc->not_operator));
+		}
+		if (n_cc->sc->cmd)
+			while (n_cc->sc->cmd[i])
+			{
+				pcmp = cmp;
+				while (pcmp-- + 3)
+					write(1, "\n", 1);
+				printf("%s\n", n_cc->sc->cmd[i++]);
+			}
+	}
+}
+
+void		ft_parcour_cc(t_cc *n_cc)
+{
+	static int		cmp = 0;
+	int				pcmp = cmp;
+
+	ft_print_cc(n_cc, cmp);
+	while (pcmp-- + 2)
+		write(1, "\t", 1);
+	if (n_cc->next_in)
+	{
+		printf("NEXT->IN\n");
+		cmp++;
+		ft_parcour_cc(n_cc->next_in);
+	}
+	if (n_cc->next_out)
+	{
+		printf("NEXT->OUT\n");
+		if (n_cc->next_in)
+			cmp--;
+		ft_parcour_cc(n_cc->next_out);
+	}
+}
+
+void		ft_parcour_op(t_op *n_op)
+{
 	int		j = 0;
 
-	n_cc_out0 = b_seq->op->cc;
-	cc0 = 2;
-	while (n_cc_out0)
+	printf("\t|--> OPERATEUR == %s\n", ft_convert_token_to_string(n_op->token));
+	if (n_op->sc)
 	{
-		n_cc_in0 = n_cc_out0;
-		while (n_cc_in0)
+		printf("\t\tSC NOT == %s\n", ft_convert_token_to_string(n_op->sc->not_operator));
+		if (n_op->sc->cmd)
 		{
-			cc1 = cc0;
-			while (cc0--)
-				printf("\t");
-			printf("CC TOKEN == %s NOT == %s OPEN == %d CLOSE == %d\n", ft_convert_token_to_string(n_cc_in0->key), ft_convert_token_to_string(n_cc_in0->not_operator), n_cc_in0->open_key, n_cc_in0->close_key);
-			if (n_cc_in0->sc)
+			j = 0;
+			while (n_op->sc->cmd[j])
 			{
-				j = -1;
-				printf("NOT == %s\n", ft_convert_token_to_string(n_cc_in0->not_operator));
-				if (n_cc_in0->sc->cmd)
-					while (n_cc_in0->sc->cmd[++j])
-					{
-						cc1 = cc0;
-						while (cc0-- + 1)
-							printf("\t");
-						printf("CC ARG == %s\n", n_cc_in0->sc->cmd[j]);
-					}
+				printf("\t\tSC ARG == %s\n", n_op->sc->cmd[j]);
+				j++;
 			}
-			n_cc_in0 = n_cc_in0->next_in;
 		}
-		n_cc_out0 = n_cc_out0->next_out;
-		cc0++;
 	}
+	else if (n_op->cc)
+		ft_parcour_cc(n_op->cc);
+	printf("\n");
+	if (n_op->next)
+		ft_parcour_op(n_op->next);
 }
 
 int			 main(int ac, char *argv[])
 {
 	t_lex	lex;
 	t_seq	*b_seq;
-	t_cc	*n_cc_out0;
-	t_cc	*n_cc_in0;
-	int		cc0 = 2;
-	int		cc1 = 2;
 	int		i = -1;
-	int		j = 0;
 
 	(void)ac;
 	lex = ft_lexer(argv[1]);
@@ -85,30 +122,10 @@ int			 main(int ac, char *argv[])
 	while (b_seq)
 	{
 		printf("SEQUENCE NUMBER %d, LIST TERMINATOR == %s\n", i, ft_convert_token_to_string(b_seq->token));
-		while (b_seq->op)
-		{
-			printf("\t|--> OPERATEUR == %s\n", ft_convert_token_to_string(b_seq->op->token));
-			if (b_seq->op->sc)
-			{
-				printf("\t\tSC NOT == %s\n", ft_convert_token_to_string(b_seq->op->sc->not_operator));
-				if (b_seq->op->sc->cmd)
-				{
-					j = 0;
-					while (b_seq->op->sc->cmd[j])
-					{
-						printf("\t\tSC ARG == %s\n", b_seq->op->sc->cmd[j]);
-						j++;
-					}
-				}
-			}
-			else if (b_seq->op->cc)
-			{
-				ft_parcour_cc(b_seq);
-			}
-			printf("\n");
-			b_seq->op = b_seq->op->next;
-		}
+		if (b_seq->op)
+			ft_parcour_op(b_seq->op);
 		i++;
+		if (b_seq->next)
 		printf("\n\n");
 		b_seq = b_seq->next;
 	}

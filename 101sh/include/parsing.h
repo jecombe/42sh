@@ -19,15 +19,16 @@ typedef struct					s_sc
 {
 	char						**cmd;//COMMANDE COMPLETE
 	e_token						not_operator;
+	int							close;//POUR LES CC
 	//ET SI BESOIN LE AND POUR LES COMMANDES AVEC CONTROL OPERATOR
 }								t_sc;
 
 typedef struct					s_cc
 {
 	e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
-	e_token				not_operator;
+	e_token				not_operator;// AU CAS OU "! KEY"
 	t_sc				*sc;
-	int					open_key;
+	int					open_key;//
 	int					close_key;
 	struct s_cc			*next_in;
 	struct s_cc			*next_out;
@@ -39,7 +40,6 @@ typedef struct					s_op
 	e_token						token;//PIPE, LOGICAL REDIRECTION OPERATOR
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
-	e_token						not_operator;//JE PENSE L"ENLEVER
 	struct s_op					*next;//SUITE DE L'OPERATEUR
 	struct s_op					*prev;
 }								t_op;
