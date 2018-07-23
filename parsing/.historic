@@ -1,3 +1,0 @@
-echo $PPID
-ls
-exit
