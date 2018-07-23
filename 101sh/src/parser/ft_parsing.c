@@ -381,7 +381,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 	{
 		printf("OPEN_KEY RESERVED\n");
 	}
-	else if (token == ESAC && token == DONE)
+	else if (token == ELIF && token == ELSE)
 	{
 		printf("CLOSE_KEY RESERVED\n");
 	}

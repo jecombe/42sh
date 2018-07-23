@@ -18,18 +18,21 @@
 typedef struct					s_sc
 {
 	char						**cmd;//COMMANDE COMPLETE
-	e_token						not_operator;
-	int							close;//POUR LES CC
-	//ET SI BESOIN LE AND POUR LES COMMANDES AVEC CONTROL OPERATOR
+	e_token						not_operator;//AU CAS OU !CMD
+	//POUR LES CC, RESTE A LE CONFIGURER
+	int							close;
+	e_token						control_operator;
+	struct s_sc					*next;
+	struct s_sc					*prev;
 }								t_sc;
 
 typedef struct					s_cc
 {
-	e_token				key;//Mot cle tels que "IF" "THEN" "ELSE" "ELIF" "FI" "DO" "DONE" "CASE" "ESAC" "WHILE" "UNTIL" "FOR"
+	e_token				key;//Mot cle tels que "IF" "ELSE" "ELIF" "CASE" "WHILE" "UNTIL" "FOR"
 	e_token				not_operator;// AU CAS OU "! KEY"
 	t_sc				*sc;
-	int					open_key;//
-	int					close_key;
+	int					open_key;//DO THEN REPERER
+	int					close_key;//FI DONE ESAC REPERER
 	struct s_cc			*next_in;
 	struct s_cc			*next_out;
 	struct s_cc			*parent;
