@@ -14,12 +14,51 @@
 #include "../include/lexer.h"
 #include "../include/parsing.h"
 
-int main(int ac, char *argv[])
+void		ft_parcour_cc(t_seq *b_seq)
+{
+	t_cc	*n_cc_out0;
+	t_cc	*n_cc_in0;
+	int		cc0 = 2;
+	int		cc1 = 2;
+	int		j = 0;
+
+	n_cc_out0 = b_seq->op->cc;
+	cc0 = 2;
+	while (n_cc_out0)
+	{
+		n_cc_in0 = n_cc_out0;
+		while (n_cc_in0)
+		{
+			cc1 = cc0;
+			while (cc0--)
+				printf("\t");
+			printf("CC TOKEN == %s NOT == %s OPEN == %d CLOSE == %d\n", ft_convert_token_to_string(n_cc_in0->key), ft_convert_token_to_string(n_cc_in0->not_operator), n_cc_in0->open_key, n_cc_in0->close_key);
+			if (n_cc_in0->sc)
+			{
+				j = -1;
+				printf("NOT == %s\n", ft_convert_token_to_string(n_cc_in0->not_operator));
+				if (n_cc_in0->sc->cmd)
+					while (n_cc_in0->sc->cmd[++j])
+					{
+						cc1 = cc0;
+						while (cc0-- + 1)
+							printf("\t");
+						printf("CC ARG == %s\n", n_cc_in0->sc->cmd[j]);
+					}
+			}
+			n_cc_in0 = n_cc_in0->next_in;
+		}
+		n_cc_out0 = n_cc_out0->next_out;
+		cc0++;
+	}
+}
+
+int			 main(int ac, char *argv[])
 {
 	t_lex	lex;
 	t_seq	*b_seq;
-	t_cc	*n_cc;
-	t_cc	*n_cc_in;
+	t_cc	*n_cc_out0;
+	t_cc	*n_cc_in0;
 	int		cc0 = 2;
 	int		cc1 = 2;
 	int		i = -1;
@@ -64,35 +103,7 @@ int main(int ac, char *argv[])
 			}
 			else if (b_seq->op->cc)
 			{
-				n_cc = b_seq->op->cc;
-				cc0 = 2;
-				while (n_cc)
-				{
-					n_cc_in = n_cc;
-					while (n_cc_in)
-					{
-						cc1 = cc0;
-						while (cc0--)
-							printf("\t");
-						printf("CC TOKEN == %s NOT == %s OPEN == %d CLOSE == %d\n", ft_convert_token_to_string(n_cc_in->key), ft_convert_token_to_string(n_cc_in->not_operator), n_cc_in->open_key, n_cc_in->close_key);
-						if (n_cc_in->sc)
-						{
-							j = -1;
-							printf("NOT == %s\n", ft_convert_token_to_string(n_cc_in->not_operator));
-							if (n_cc_in->sc->cmd)
-								while (n_cc_in->sc->cmd[++j])
-								{
-									cc1 = cc0;
-									while (cc0-- + 1)
-										printf("\t");
-									printf("CC ARG == %s\n", n_cc_in->sc->cmd[j]);
-								}
-						}
-						n_cc_in = n_cc_in->next_in;
-					}
-					n_cc = n_cc->next_out;
-					cc0++;
-				}
+				ft_parcour_cc(b_seq);
 			}
 			printf("\n");
 			b_seq->op = b_seq->op->next;

@@ -30,9 +30,8 @@ typedef struct					s_cc
 	int					open_key;
 	int					close_key;
 	struct s_cc			*next_in;
-	struct s_cc			*prev_in;
 	struct s_cc			*next_out;
-	struct s_cc			*prev_out;
+	struct s_cc			*parent;
 }								t_cc;
 
 typedef struct					s_op

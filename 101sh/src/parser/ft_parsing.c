@@ -99,8 +99,7 @@ t_cc		*ft_malloc_cc(void)
 	new->close_key = 0;
 	new->next_in = NULL;
 	new->next_out = NULL;
-	new->prev_in = NULL;
-	new->prev_out = NULL;
+	new->parent = NULL;
 	return (new);
 }
 
