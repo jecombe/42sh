@@ -12,8 +12,8 @@
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "../libft/includes/libft.h"
-#include "../lexer-master/lexer.h"
+#include "../libft/include/libft.h"
+#include "./lexer.h"
 
 typedef struct					s_sc
 {

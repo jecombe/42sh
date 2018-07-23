@@ -41,8 +41,8 @@ void		ft_print_cc(t_cc *n_cc, int cmp)
 			{
 				pcmp = cmp;
 				while (pcmp-- + 3)
-					write(1, "\n", 1);
-				printf("%s\n", n_cc->sc->cmd[i++]);
+					write(1, "\t", 1);
+				printf("CC ARG %s\n", n_cc->sc->cmd[i++]);
 			}
 	}
 }
@@ -126,7 +126,7 @@ int			 main(int ac, char *argv[])
 			ft_parcour_op(b_seq->op);
 		i++;
 		if (b_seq->next)
-		printf("\n\n");
+		printf("\n");
 		b_seq = b_seq->next;
 	}
 	ft_putstr("\x1b[0m");

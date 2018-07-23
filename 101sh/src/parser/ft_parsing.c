@@ -136,19 +136,19 @@ int			ft_attrib_last_nseq(t_seq **b_seq, t_seq **n_seq)
 		*n_seq = *b_seq;
 		while ((*n_seq)->next)
 			*n_seq = (*n_seq)->next;
-		if (n_seq->token != TOKEN)
+		if ((*n_seq)->token != TOKEN)
 		{
-			if (!(n_seq->next = ft_malloc_seq()))
+			if (!((*n_seq)->next = ft_malloc_seq()))
 				return (1);
-			n_seq->next->prev = n_seq;
-			n_seq = n_seq->next;
+			(*n_seq)->next->prev = *n_seq;
+			(*n_seq) = (*n_seq)->next;
 		}
 	}
 	else
 	{
 		if (!(*b_seq = ft_malloc_seq()))
 			return (1);
-		n_seq = *b_seq;
+		*n_seq = *b_seq;
 	}
 	return (0);
 }
@@ -168,14 +168,18 @@ int			ft_attrib_last_nop(t_seq **b_seq, t_op **n_op)
 {
 //n_op est egale au dernier maillon t_op et si le token n'est pas NULL alors un nouveau maillon sera creer
 	t_seq			*n_seq;
+	int				i = 0;
 
 	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
 		return (1);
 	if (n_seq->op)
 	{
-		*n_op = b_seq->op;
-		while (n_op->next)
-			n_op = n_op->next;
+		*n_op = n_seq->op;
+		while ((*n_op)->next)
+		{
+			printf("N_OP->NEXT NUMBER %d\n", i);
+			*n_op = (*n_op)->next;
+		}
 	}
 	else
 	{
@@ -183,12 +187,12 @@ int			ft_attrib_last_nop(t_seq **b_seq, t_op **n_op)
 			return (1);
 		*n_op = n_seq->op;
 	}
-	if (n_op->token != TOKEN)
+	if ((*n_op)->token != TOKEN)
 	{
-		if (!(n_op->next = ft_malloc_op())
+		if (!((*n_op)->next = ft_malloc_op()))
 			return (1);
-		n_op->next->prev = n_op;
-		n_op = n_op->next;
+		(*n_op)->next->prev = *n_op;
+		(*n_op) = (*n_op)->next;
 	}
 	return (0);
 }
@@ -204,7 +208,7 @@ int			ft_manage_op(t_seq **b_seq, e_token token)
 	return (0);
 }
 
-int			ft_attrib_last_sc_in_cc(t_op **n_cc)
+int			ft_attrib_last_sc_in_cc(t_cc **n_cc)
 {
 //ATTRIBUT A n_cc le dernier maillon pour une simple commande, en creer un si la commande est open et retourne une erreur de syntaxe si close_key est actif
 	if ((*n_cc)->next_out)
@@ -217,21 +221,24 @@ int			ft_attrib_last_sc_in_cc(t_op **n_cc)
 		if (ft_attrib_last_sc_in_cc(&(*n_cc)->next_in))
 			return (1);
 	}
-	else if (n_cc->close_key)
+	else if ((*n_cc)->close_key)
 	{
 		printf("101SH: syntax error near unexpected token `SC IN CC'\n");
 		return (1);
 	}
-	else if ((*n_cc)->open && !(*n_cc)->sc)
-	{
-		if (!((*n_cc)->next_in = ft_malloc_sc()))
-			return (1);
-		(*n_cc)->next_in->parent = *n_cc;
-		*n_cc = (*n_cc)->next_in;
-	}
 	else if (!(*n_cc)->sc)
+	{
+		printf("3\n");
 		if (!((*n_cc)->sc = ft_malloc_sc()))
+		{
 			return (1);
+		}
+	}
+	else if ((*n_cc)->sc->close)
+	{
+	// A definir selon Jecombe
+		printf("Jecombe apparait STP\n");
+	}
 	return (0);
 }
 
@@ -247,10 +254,11 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	{
 		printf("CC == %s\n", name);
 		n_cc = n_op->cc;
-		if (!(ft_attrib_last_sc_in_cc(&n_cc)))
+		if (ft_attrib_last_sc_in_cc(&n_cc))
 			return (1);
 		if (ft_malloc_cmd(&n_cc->sc->cmd, name))
 			return (1);
+		printf("(*b_seq)->op->cc->sc->cmd[0] == %s\n", (*b_seq)->op->cc->sc->cmd[0]);
 	}
 	else
 	{
@@ -318,6 +326,8 @@ int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
 		if (!(n_op->cc))
 			if (!(n_op->cc = ft_malloc_cc()))
 				return (1);
+		if (n_op->cc)
+			printf("N_OP->CC CREATED\n");
 		n_cc = n_op->cc;
 		if (ft_attrib_last_key_in_cc(&n_cc))
 			return (1);
@@ -332,6 +342,12 @@ int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
 			n_cc->key = token;
 		}
 	}
+	return (0);
+}
+
+int			ft_complete_entry_reserved(t_seq **b_seq, char *name, e_token token)
+{
+	
 	return (0);
 }
 
@@ -357,7 +373,9 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 	}
 	else if (token == THEN || token == IN || token == DO)
 	{
-		printf("COMPLETMENT ENTRY RESERVED\n");
+		printf("COMPLETE ENTRY RESERVED\n");
+		if (ft_complete_entry_reserved(&(*b_seq), name, token))
+			return (1);
 	}
 	else if (token >= ESAC && token <= DONE)
 	{
@@ -391,7 +409,11 @@ t_seq		*ft_manage_parsing(t_lex lex)
 	{
 		printf("------------- I == %d ------------\n", i);
 		if (ft_attribute_token(&b_seq, lex.name[i], lex.token[i]))
+		{
+			printf("AALERTTT GEEENEEERALLLL\n");
 			return (NULL);
+		}
+//			printf("b_seq->op->cc->key == %u\n", b_seq->op->cc->key);
 	}
 	return (b_seq);
 }
