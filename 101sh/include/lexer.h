@@ -33,19 +33,19 @@ typedef enum	s_token
 	SEMI = 266,			// ;
 	AND = 267,			// &
 
+	/* List punctuation */
+	DSEMI = 268,		// ;;
+	LPARENT = 269,		// (
+	RPARENT = 270,		// )
+
 	/* Logical operators */
-	AND_IF = 268,		// &&
-	OR_IF = 269,		// ||
-	NOT = 270,			// !
+	NOT = 271,			// !
+	AND_IF = 272,		// &&
+	OR_IF = 273,		// ||
 
 	/* Pipe operators */
-	PIPE = 271,			// |
-	PIPE_AND = 272,		// |& (shorthand for '2>&1 |')
-
-	/* List punctuation */
-	DSEMI = 273,		// ;;
-	LPARENT = 274,		// (
-	RPARENT = 275,		// )
+	PIPE = 274,			// |
+	PIPE_AND = 275,		// |& (shorthand for '2>&1 |')
 
 /* REDIRECTION OPERATORS */
 	LESS = 276,			// <
@@ -62,7 +62,7 @@ typedef enum	s_token
 	IF = 285,
 	WHILE = 286,
 	FOR = 287,
-	UNTIL = 288,
+	UNTIL = 288,//COMME UN WHILE< MAIS TANT QUE C'EST FAUX
 	CASE = 289,
 	THEN = 290,
 	DO = 291,

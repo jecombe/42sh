@@ -15,22 +15,26 @@
 #include "../libft/include/libft.h"
 #include "./lexer.h"
 
+typedef struct					s_arg
+{
+	char						**cmd;//COMMANDE COMPLETE
+	e_token						not_operator;//AU CAS OU !CMD
+	e_token						token[2];// token > SEMI && token < DLESSDASH
+	struct s_arg				*next;
+	struct s_arg				*prev;
+}								t_arg;
+
 typedef struct					s_sc
 {
 	char						**cmd;//COMMANDE COMPLETE
 	e_token						not_operator;//AU CAS OU !CMD
-	//POUR LES CC, RESTE A LE CONFIGURER
-	int							close;
-	e_token						control_operator;
-	struct s_sc					*next;
-	struct s_sc					*prev;
 }								t_sc;
 
 typedef struct					s_cc
 {
 	e_token				key;//Mot cle tels que "IF" "ELSE" "ELIF" "CASE" "WHILE" "UNTIL" "FOR"
 	e_token				not_operator;// AU CAS OU "! KEY"
-	t_sc				*sc;
+	t_arg				*arg;
 	int					open_key;//DO THEN REPERER
 	int					close_key;//FI DONE ESAC REPERER
 	struct s_cc			*next_in;
@@ -40,7 +44,7 @@ typedef struct					s_cc
 
 typedef struct					s_op
 {
-	e_token						token;//PIPE, LOGICAL REDIRECTION OPERATOR
+	e_token						token[2];//PIPE, LOGICAL REDIRECTION OPERATOR
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//SUITE DE L'OPERATEUR

@@ -27,22 +27,22 @@ void		ft_print_cc(t_cc *n_cc, int cmp)
 		printf("NOT == %s KEY == %s OPEN == %d CLOSE == %d\n", cv(n_cc->not_operator), cv(n_cc->key), n_cc->open_key, n_cc->close_key);
 	else
 		printf("NOT == %s KEY == %s\n", cv(n_cc->not_operator), cv(n_cc->key));
-	if (n_cc->sc)
+	if (n_cc->arg)
 	{
-		if (n_cc->sc->not_operator != TOKEN)
+		if (n_cc->arg->not_operator != TOKEN)
 		{
 			pcmp = cmp;
 			while (pcmp-- + 3)
 				write(1, "\t", 1);
-			printf("SC NOT ==  %s\n", cv(n_cc->sc->not_operator));
+			printf("SC NOT ==  %s\n", cv(n_cc->arg->not_operator));
 		}
-		if (n_cc->sc->cmd)
-			while (n_cc->sc->cmd[i])
+		if (n_cc->arg->cmd)
+			while (n_cc->arg->cmd[i])
 			{
 				pcmp = cmp;
 				while (pcmp-- + 3)
 					write(1, "\t", 1);
-				printf("CC ARG %s\n", n_cc->sc->cmd[i++]);
+				printf("CC ARG %s\n", n_cc->arg->cmd[i++]);
 			}
 	}
 }
@@ -74,7 +74,7 @@ void		ft_parcour_op(t_op *n_op)
 {
 	int		j = 0;
 
-	printf("\t|--> OPERATEUR == %s\n", ft_convert_token_to_string(n_op->token));
+	printf("\t|--> OPERATEUR[0] == %s OPERATEUR[1] == %s\n", cv(n_op->token[0]), cv(n_op->token[1]));
 	if (n_op->sc)
 	{
 		printf("\t\tSC NOT == %s\n", ft_convert_token_to_string(n_op->sc->not_operator));

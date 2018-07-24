@@ -91,7 +91,8 @@ t_op		*ft_malloc_op(void)
 
 	if (!(new = malloc(sizeof(t_op))))
 		return (NULL);
-	new->token = TOKEN;
+	new->token[0] = TOKEN;
+	new->token[1] = TOKEN;
 	new->sc = NULL;
 	new->cc = NULL;
 	new->next = NULL;
@@ -107,12 +108,27 @@ t_cc		*ft_malloc_cc(void)
 		return (NULL);
 	new->key = TOKEN;
 	new->not_operator = TOKEN;
-	new->sc = NULL;
+	new->arg = NULL;
 	new->open_key = 0;
 	new->close_key = 0;
 	new->next_in = NULL;
 	new->next_out = NULL;
 	new->parent = NULL;
+	return (new);
+}
+
+t_arg		*ft_malloc_arg(void)
+{
+	t_arg		*new;
+
+	if (!(new = malloc(sizeof(t_arg))))
+		return (NULL);
+	new->cmd = NULL;
+	new->not_operator = TOKEN;
+	new->token[0] = TOKEN;
+	new->token[1] = TOKEN;
+	new->next = NULL;
+	new->prev = NULL;
 	return (new);
 }
 
@@ -124,7 +140,6 @@ t_sc		*ft_malloc_sc(void)
 		return (NULL);
 	new->cmd = NULL;
 	new->not_operator = TOKEN;
-	new->close = 0;
 	return (new);
 }
 
@@ -153,14 +168,15 @@ int			ft_attrib_last_nseq(t_seq **b_seq, t_seq **n_seq)
 	return (0);
 }
 
-int			ft_manage_seq(t_seq **b_seq, e_token token)
+int			ft_parcour_n_op(t_seq **b_seq, t_op **n_op)
 {
-//Attribut le token de fin de sequnce au dernier maillon dont le token  est egale a NULL
-	t_seq			*n_seq;
-
-	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
+	if (!(*b_seq))
 		return (1);
-	n_seq->token = token;
+	else if (!(*b_seq)->op)
+		return (2);
+	*n_op = (*b_seq)->op;
+	while ((*n_op)->next)
+		*n_op = (*n_op)->next;
 	return (0);
 }
 
@@ -168,57 +184,168 @@ int			ft_attrib_last_nop(t_seq **b_seq, t_op **n_op)
 {
 //n_op est egale au dernier maillon t_op et si le token n'est pas NULL alors un nouveau maillon sera creer
 	t_seq			*n_seq;
-	int				i = 0;
+	int				ret;
 
-	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
-		return (1);
-	if (n_seq->op)
+	ret = 0;
+	if ((ret = ft_parcour_n_op(&(*b_seq), &(*n_op))))
 	{
-		*n_op = n_seq->op;
-		while ((*n_op)->next)
-		{
-			printf("N_OP->NEXT NUMBER %d\n", i);
-			*n_op = (*n_op)->next;
-		}
-	}
-	else
-	{
+		if (ret == 1)
+			if (!((*b_seq) = ft_malloc_seq()))
+				return (1);
+		n_seq = *b_seq;
 		if (!(n_seq->op = ft_malloc_op()))
 			return (1);
 		*n_op = n_seq->op;
 	}
-	if ((*n_op)->token != TOKEN)
-	{
-		if (!((*n_op)->next = ft_malloc_op()))
-			return (1);
-		(*n_op)->next->prev = *n_op;
-		(*n_op) = (*n_op)->next;
-	}
 	return (0);
 }
 
-int			ft_manage_op(t_seq **b_seq, e_token token)
-{
-//Attribut le token de redirection/pipe au dernier maillon dont le token  est egale a NULL
-	t_op			*n_op;
 
-	if (ft_attrib_last_nop(&(*b_seq), &n_op))
-		return (1);
-	n_op->token = token;
-	return (0);
-}
-
-int			ft_attrib_last_sc_in_cc(t_cc **n_cc)
+int			ft_parcour_cc(t_cc **n_cc)
 {
-//ATTRIBUT A n_cc le dernier maillon pour une simple commande, en creer un si la commande est open et retourne une erreur de syntaxe si close_key est actif
+//ATTRIBUT A n_cc le dernier maillon mais ne le creer pas si il existe pas
 	if ((*n_cc)->next_out)
 	{
-		if (ft_attrib_last_sc_in_cc(&(*n_cc)->next_out))
+		if (ft_parcour_cc(&(*n_cc)->next_out))
 			return (1);
 	}
 	else if ((*n_cc)->next_in)
 	{
-		if (ft_attrib_last_sc_in_cc(&(*n_cc)->next_in))
+		if (ft_parcour_cc(&(*n_cc)->next_in))
+			return (1);
+	}
+	return (0);
+}
+
+void		ft_attrib_last_arg(t_arg **n_arg)
+{
+	while ((*n_arg)->next)
+		*n_arg = (*n_arg)->next;
+}
+
+int			ft_manage_seq(t_seq **b_seq, e_token token)
+{
+//Attribut le token de fin de sequence au dernier maillon dont le token  est egale a NULL
+	t_seq			*n_seq;
+	t_op			*n_op;
+	t_cc			*n_cc;
+	t_arg			*n_arg;
+
+	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
+		return (1);
+	if (n_seq->token != TOKEN || !n_seq->op)
+	{
+		printf("bash: syntax error near unexpected token `;'\n");
+		return (1);
+	}
+	if (ft_attrib_last_nop(&(*b_seq), &n_op))
+		return (1);
+	if (n_op->token[0] != TOKEN)
+	{
+		printf("bash: syntax error near unexpected token `;'\n");
+		return (1);
+	}
+	else if (n_op->sc)
+	{
+		n_seq->token = token;
+	}
+	else if (n_op->cc)
+	{
+		n_cc = n_op->cc;
+		if (ft_parcour_cc(&n_cc))
+			return (1);
+		if (!n_cc->arg)
+		{
+			printf("bash: syntax error near unexpected token `;'\n");
+			return (1);
+		}
+		if (!n_cc->close_key)
+		{
+			ft_attrib_last_arg(&n_arg);
+			if (!n_arg->cmd || n_arg->token[0] != TOKEN)
+			{
+				printf("bash: syntax error near unexpected token `;'\n");
+				return (1);
+			}
+			else
+				n_arg->token[0] = token;
+		}
+		else
+			n_seq->token = token;
+	}
+	else
+	{
+		printf("PROBLEME IMPROBABLE DANS FT_MANAGE_SEQ\n");
+		exit (1);
+	}
+	return (0);
+}
+
+int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
+{
+//Attribut le token de logical/pipe au dernier maillon
+	t_op			*n_op;
+	t_cc			*n_cc;
+	t_arg			*n_arg;
+
+	if (ft_attrib_last_nop(&(*b_seq), &n_op))
+		return (1);
+	if (n_op->token[0] == TOKEN && n_op->sc)
+	{
+		n_op->token[0] = token;
+	}
+	else if (n_op->token[0] == TOKEN && n_op->cc)
+	{
+		n_cc = n_op->cc;
+		ft_parcour_cc(&n_cc);
+		if (n_cc->close_key > 0)
+		{
+			n_op->token[0] = token;
+		}
+		else if (n_cc->arg)
+		{
+			n_arg = n_cc->arg;
+			ft_attrib_last_arg(&n_arg);
+			if (n_arg->cmd && n_arg->token[0] == TOKEN)
+			{
+				n_arg->token[0] = token;
+			}
+			else
+			{
+				printf("bash: syntax error near unexpected token `&'\n");
+				return (1);
+			}
+		}
+		else
+		{
+			printf("bash: syntax error near unexpected token `&'\n");
+			return (1);
+		}
+	}
+	else
+	{
+		printf("bash: syntax error near unexpected token `&'\n");
+		return (1);
+	}
+	return (0);
+}
+
+int			ft_manage_redirection(t_seq **b_seq, e_token token)
+{
+	return (0);
+}
+
+int			ft_attrib_last_arg_in_cc(t_cc **n_cc)
+{
+//ATTRIBUT A n_cc le dernier maillon pour une simple commande, en creer un si la commande est open et retourne une erreur de syntaxe si close_key est actif
+	if ((*n_cc)->next_out)
+	{
+		if (ft_attrib_last_arg_in_cc(&(*n_cc)->next_out))
+			return (1);
+	}
+	else if ((*n_cc)->next_in)
+	{
+		if (ft_attrib_last_arg_in_cc(&(*n_cc)->next_in))
 			return (1);
 	}
 	else if ((*n_cc)->close_key)
@@ -226,15 +353,14 @@ int			ft_attrib_last_sc_in_cc(t_cc **n_cc)
 		printf("101SH: syntax error near unexpected token `SC IN CC'\n");
 		return (1);
 	}
-	else if (!(*n_cc)->sc)
+	else if (!(*n_cc)->arg)
 	{
-		printf("3\n");
-		if (!((*n_cc)->sc = ft_malloc_sc()))
+		if (!((*n_cc)->arg = ft_malloc_arg()))
 		{
 			return (1);
 		}
 	}
-	else if ((*n_cc)->sc->close)
+	else if ((*n_cc)->arg->token[0] != TOKEN)
 	{
 	// A definir selon Jecombe
 		printf("Jecombe apparait STP\n");
@@ -254,11 +380,11 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	{
 		printf("CC == %s\n", name);
 		n_cc = n_op->cc;
-		if (ft_attrib_last_sc_in_cc(&n_cc))
+		if (ft_attrib_last_arg_in_cc(&n_cc))
 			return (1);
-		if (ft_malloc_cmd(&n_cc->sc->cmd, name))
+		if (ft_malloc_cmd(&n_cc->arg->cmd, name))
 			return (1);
-		printf("(*b_seq)->op->cc->sc->cmd[0] == %s\n", (*b_seq)->op->cc->sc->cmd[0]);
+		printf("(*b_seq)->op->cc->arg->cmd[0] == %s\n", (*b_seq)->op->cc->arg->cmd[0]);
 	}
 	else
 	{
@@ -272,41 +398,30 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	return (0);
 }
 
-int			ft_attrib_last_key_in_cc(t_cc **n_cc)
+int			ft_attrib_last_key_in_cc(t_seq **b_seq, t_cc **n_cc)
 {
+	t_op			*n_op;
+
+	if (ft_attrib_last_nop(&(*b_seq), &n_op))
+		return (1);
+	if (!(n_op->cc))
+		if (!(n_op->cc = ft_malloc_cc()))
+			return (1);
+	*n_cc = n_op->cc;
 	if ((*n_cc)->next_out)
 	{
-		if (!(ft_attrib_last_key_in_cc(&(*n_cc)->next_out)))
+		if (!(ft_attrib_last_key_in_cc(&(*b_seq), &(*n_cc)->next_out)))
 			return (1);
 	}
 	else if ((*n_cc)->next_in)
 	{
-		if (!(ft_attrib_last_key_in_cc(&(*n_cc)->next_in)))
+		if (!(ft_attrib_last_key_in_cc(&(*b_seq), &(*n_cc)->next_in)))
 			return (1);
-	}
-	else if ((*n_cc)->key != TOKEN && !(*n_cc)->sc)
-	{
-		printf("bash: syntax error near unexpected token `;'\n");
-		return (1);
-	}
-	else if ((*n_cc)->open_key && !(*n_cc)->close_key)
-	{
-		if (!((*n_cc)->next_in = ft_malloc_cc()))
-			return (1);
-		(*n_cc)->next_in->parent = *n_cc;
-		*n_cc = (*n_cc)->next_in;
-	}
-	else if ((*n_cc)->close_key || (*n_cc)->sc)
-	{
-		if (!((*n_cc)->next_out = ft_malloc_cc()))
-			return (1);
-		(*n_cc)->next_out->parent = *n_cc;
-		*n_cc = (*n_cc)->next_out;
 	}
 	return (0);
 }
 
-int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
+int			ft_create_cc(t_seq **b_seq, char *name, e_token token)
 {
 	t_seq			*n_seq;
 	t_op			*n_op;
@@ -323,18 +438,41 @@ int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
 	else
 	{
 		printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
-		if (!(n_op->cc))
-			if (!(n_op->cc = ft_malloc_cc()))
-				return (1);
-		if (n_op->cc)
-			printf("N_OP->CC CREATED\n");
-		n_cc = n_op->cc;
-		if (ft_attrib_last_key_in_cc(&n_cc))
+		if (ft_attrib_last_key_in_cc(&(*b_seq), &n_cc))
 			return (1);
-		if (n_cc->key != TOKEN && n_cc->sc)
+		if (n_cc->key != TOKEN && !n_cc->arg)
+		{
+			printf("bash: syntax error near unexpected token `;'\n");
+			return (1);
+		}
+		else if (n_cc->open_key && !n_cc->close_key)
+		{
+			if (!(n_cc->next_in = ft_malloc_cc()))
+				return (1);
+			n_cc->next_in->parent = n_cc;
+			n_cc = n_cc->next_in;
+		}
+		else if (n_cc->close_key)
+		{
+			if (n_op->token[0] != TOKEN)
+			{
+				printf("creer nouvelle OP + CC + TOKEN\n");
+				n_op->next = ft_malloc_op();
+				n_op->next->prev = n_op;
+				n_op = n_op->next;
+				n_op->cc = ft_malloc_cc();
+				n_cc = n_op->cc;
+			}
+			else
+			{
+				printf("bash: syntax error near unexpected token `if'\n");
+				return (1);
+			}
+		}
+		if (n_cc->key != TOKEN && n_cc->arg)
 		{
 			printf("ARGUMENT DU TOKEN DANS SC, TOKEN = SC\n");
-			ft_malloc_cmd(&n_cc->sc->cmd, name);
+			ft_malloc_cmd(&n_cc->arg->cmd, name);
 		}
 		else
 		{
@@ -345,9 +483,30 @@ int			ft_entry_reserved(t_seq **b_seq, char *name, e_token token)
 	return (0);
 }
 
-int			ft_complete_entry_reserved(t_seq **b_seq, char *name, e_token token)
+int			ft_open_cc(t_seq **b_seq, char *name, e_token token)
 {
-	
+	t_seq			*n_seq;
+	t_op			*n_op;
+	t_cc			*n_cc;
+
+	if (ft_attrib_last_nop(&(*b_seq), &n_op))
+		return (1);
+	if (n_op->sc)
+	{
+		printf("VU COMME UN ARGUMENT DE LA SIMPLE COMMANDE\n");
+		if (ft_malloc_cmd(&n_op->sc->cmd, name))
+			return (1);
+	}
+	else
+	{
+		printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
+		if (ft_attrib_last_key_in_cc(&(*b_seq), &n_cc))
+			return (1);
+		if (token == THEN || token == DO)
+		{
+			
+		}
+	}
 	return (0);
 }
 
@@ -359,22 +518,28 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 		if (ft_manage_seq(&(*b_seq), token))
 			return (1);
 	}
-	else if (token >= AND_IF && token <= DLESSDASH && token != NOT)
+	else if (token >= AND_IF && token <= PIPE_AND)
 	{
-		printf("CONTROL OPERATOR\n");
-		if (ft_manage_op(&(*b_seq), token))
+		printf("LOGICAL OPERATOR\n");
+		if (ft_manage_logical_and_pipe(&(*b_seq), token))
+			return (1);
+	}
+	else if (token >= LESS && token <= DLESSDASH)
+	{
+		printf("LOGICAL OPERATOR\n");
+		if (ft_manage_redirection(&(*b_seq), token))
 			return (1);
 	}
 	else if (token >= IF && token <= CASE)
 	{
-		printf("ENTRY RESERVED\n");
-		if (ft_entry_reserved(&(*b_seq), name, token))
+		printf("CREATE CC\n");
+		if (ft_create_cc(&(*b_seq), name, token))
 			return (1);
 	}
 	else if (token == THEN || token == IN || token == DO)
 	{
-		printf("COMPLETE ENTRY RESERVED\n");
-		if (ft_complete_entry_reserved(&(*b_seq), name, token))
+		printf("OPEN CC\n");
+		if (ft_open_cc(&(*b_seq), name, token))
 			return (1);
 	}
 	else if (token >= ESAC && token <= DONE)
