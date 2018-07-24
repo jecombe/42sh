@@ -19,7 +19,7 @@ typedef struct					s_arg
 {
 	char						**cmd;//COMMANDE COMPLETE
 	e_token						not_operator;//AU CAS OU !CMD
-	e_token						token[2];// token > SEMI && token < DLESSDASH
+	e_token						token[2];// token >= SEMI && token <= DLESSDASH POUR TOKEN[0] ET SI IL Y A UN TOKEN DIFFERENT D'UNE REDIRECTION ALORS TOKEN[1] PEUT ETRE UNE REDIRECTION
 	struct s_arg				*next;
 	struct s_arg				*prev;
 }								t_arg;
@@ -35,7 +35,7 @@ typedef struct					s_cc
 	e_token				key;//Mot cle tels que "IF" "ELSE" "ELIF" "CASE" "WHILE" "UNTIL" "FOR"
 	e_token				not_operator;// AU CAS OU "! KEY"
 	t_arg				*arg;
-	int					open_key;//DO THEN REPERER
+	int					open_key;//DO THEN CASE REPERER
 	int					close_key;//FI DONE ESAC REPERER
 	struct s_cc			*next_in;
 	struct s_cc			*next_out;
@@ -44,10 +44,10 @@ typedef struct					s_cc
 
 typedef struct					s_op
 {
-	e_token						token[2];//PIPE, LOGICAL REDIRECTION OPERATOR
+	e_token						token[2];// token >= SEMI && token <= DLESSDASH POUR TOKEN[0] ET SI IL Y A UN TOKEN DIFFERENT D'UNE REDIRECTION ALORS TOKEN[1] PEUT ETRE UNE REDIRECTION
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
-	struct s_op					*next;//SUITE DE L'OPERATEUR
+	struct s_op					*next;//COMMANDE SUIVANT L'OPERATEUR
 	struct s_op					*prev;
 }								t_op;
 
