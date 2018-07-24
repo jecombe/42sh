@@ -332,6 +332,7 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 
 int			ft_manage_redirection(t_seq **b_seq, e_token token)
 {
+	
 	return (0);
 }
 
