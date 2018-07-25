@@ -37,14 +37,15 @@ typedef struct					s_cc
 	t_arg				*arg;
 	int					open_key;//DO THEN CASE REPERER
 	int					close_key;//FI DONE ESAC REPERER
+	struct s_cc			*parent;
 	struct s_cc			*next_in;
 	struct s_cc			*next_out;
-	struct s_cc			*parent;
 }								t_cc;
 
 typedef struct					s_op
 {
-	e_token						token[2];// token >= SEMI && token <= DLESSDASH POUR TOKEN[0] ET SI IL Y A UN TOKEN DIFFERENT D'UNE REDIRECTION ALORS TOKEN[1] PEUT ETRE UNE REDIRECTION
+	e_token						token[2];// token >= DSEMI && token <= DLESSDASH POUR TOKEN[0] ET SI IL Y A UN TOKEN DIFFERENT D'UNE REDIRECTION ALORS TOKEN[1] PEUT ETRE UNE REDIRECTION
+	e_token						not_operator_tmp;//PAS ENCORE DEFINIT, AU CAS OU UNE COMMANDE COMMENCE PAR ! POUR LE STOCKER TEMPORAIREMENT
 	t_sc						*sc;//commande sans mot cle(simple commande)
 	t_cc						*cc;//commande comprenant un mot cle(commande compose)
 	struct s_op					*next;//COMMANDE SUIVANT L'OPERATEUR

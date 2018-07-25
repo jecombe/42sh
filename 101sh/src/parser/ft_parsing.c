@@ -332,7 +332,37 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 
 int			ft_manage_redirection(t_seq **b_seq, e_token token)
 {
-	
+	t_op		*n_op;
+	t_cc		*n_cc;
+
+	if (ft_attrib_last_nop(&(*b_seq), &n_op))
+		return (1);
+	if (n_op->cc)
+	{
+		n_cc = n_op->cc;
+		if (ft_parcour_cc(&n_cc))
+			return (1);
+		if (n_cc)
+		{
+		}
+		else if ($BASH_BIZARRE_FAUDRA_M_EXPLIQUER)
+		{
+		}
+	}
+	else if (n_op->token[0] == TOKEN ||
+	(n_op->token[0] >= AND_IF && n_op->token[0] <= PIPE && n_op->token[1] == TOKEN))
+	//PEUT-ETRE MEME PIPE_AND
+	{
+		if (n_op->token[0] == TOKEN)
+			n_op->token[0] = token;
+		else
+			n_op->token[1] = token;
+	}
+	else
+	{
+		printf("bash: syntax error near unexpected token `>'\n");
+		return (1);
+	}
 	return (0);
 }
 
@@ -500,7 +530,7 @@ int			ft_open_cc(t_seq **b_seq, char *name, e_token token)
 	}
 	else
 	{
-		printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
+		printf("OPEN COMPOSED COMMANDE\n");
 		if (ft_attrib_last_key_in_cc(&(*b_seq), &n_cc))
 			return (1);
 		if (token == THEN || token == DO)
@@ -527,7 +557,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 	}
 	else if (token >= LESS && token <= DLESSDASH)
 	{
-		printf("LOGICAL OPERATOR\n");
+		printf("REDIRECTION OPERATOR\n");
 		if (ft_manage_redirection(&(*b_seq), token))
 			return (1);
 	}
