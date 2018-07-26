@@ -170,11 +170,16 @@ int			ft_attrib_last_nseq(t_seq **b_seq, t_seq **n_seq)
 
 int			ft_parcour_n_op(t_seq **b_seq, t_op **n_op)
 {
+	t_seq		*n_seq;
+
 	if (!(*b_seq))
 		return (1);
-	else if (!(*b_seq)->op)
+	n_seq = *b_seq;
+	while (n_seq->next)
+		n_seq = n_seq->next;
+	if (!n_seq->op)
 		return (2);
-	*n_op = (*b_seq)->op;
+	*n_op = n_seq->op;
 	while ((*n_op)->next)
 		*n_op = (*n_op)->next;
 	return (0);
@@ -187,12 +192,16 @@ int			ft_attrib_last_nop(t_seq **b_seq, t_op **n_op)
 	int				ret;
 
 	ret = 0;
+	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
+		return (1);
 	if ((ret = ft_parcour_n_op(&(*b_seq), &(*n_op))))
 	{
 		if (ret == 1)
 			if (!((*b_seq) = ft_malloc_seq()))
 				return (1);
 		n_seq = *b_seq;
+		while (n_seq->next)
+			n_seq = n_seq->next;
 		if (!(n_seq->op = ft_malloc_op()))
 			return (1);
 		*n_op = n_seq->op;
@@ -630,6 +639,7 @@ t_seq		*ft_manage_parsing(t_lex lex)
 {
 	int				i;
 	t_seq			*b_seq;
+	t_op			*t_op;
 
 	b_seq = NULL;
 	i = -1;
