@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 12:40:17 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 05:06:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,63 +50,74 @@
 
 struct winsize sz;
 
-typedef struct		s_shell
-{
-	int				err;
-	char			*line;
-	char			*clipboard;
-	char			**my_env;
-	char			**bin_path;
-	char			pwd[4096];
-	char			last_path[4096];
-	char			save_home[4096];
-}					t_shell;
-
 typedef struct		s_editor
 {
-	size_t first_row;
-	size_t last_row;
-	size_t prompt_size;
-	size_t cursor_str_pos;
-
+	size_t	first_row;
+	size_t	last_row;
+	size_t	prompt_size;
+	size_t	cursor_str_pos;
+	char	*clipboard;
 }					t_editor;
+
+typedef struct		s_shell
+{
+	int		err;
+	char	*line;
+	char	**my_env;
+	char	**bin_path;
+	char	pwd[4096];
+	char	last_path[4096];
+	char	save_home[4096];
+}					t_shell;
 
 int		g_bin_exit;
 char	*g_save_home;
+char	*g_save_line;
 
-/* ************************************************************************** */
-/*                              CURSOR_MOVEMENT                               */
-/* ************************************************************************** */
+/*
+*******************************************************************************
+**                              CURSOR_MOVEMENT                               *
+*******************************************************************************
+*/
+
 void	move_cursor_left(t_editor *ed);
 void	move_cursor_right(t_editor *ed, char *line);
 void	move_cursor_up(t_editor *ed);
-void	move_cursor_down(t_shell *sh, t_editor *ed);
-void	move_word_left(t_shell *sh, t_editor *ed);
-void	move_word_right(t_shell *sh, t_editor *ed);
+void	move_cursor_down(char *line, t_editor *ed);
+void	move_word_left(char *line, t_editor *ed);
+void	move_word_right(char *line, t_editor *ed);
 void	go_to_begin_of_line(t_editor *ed);
 void	go_to_end_of_line(t_editor *ed, char *line);
 int		backspace(t_editor *ed, char **line);
-/* ************************************************************************** */
-/*                                     CTRL                                   */
-/* ************************************************************************** */
+
+/*
+*******************************************************************************
+**                                     CTRL                                   *
+*******************************************************************************
+*/
+
 int		clear_window(t_shell *sh, t_editor *ed);
 void	end_of_text(char **line, t_editor *ed);
 void	myhandler_interrupt(int signal);
 
-/* ************************************************************************** */
-/*                              SAVE_RESET_CURSOR_POS                         */
-/* ************************************************************************** */
+/*
+** ****************************************************************************
+**                              SAVE_RESET_CURSOR_POS                         *
+** ****************************************************************************
+*/
+
 char	*cursor_position_escape_sequence(int row, int col);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
-int		add_char_into_line(char key, t_shell *sh, t_editor *ed);
+int		add_char_into_line(char key, char **line, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 int		display_prompt(char *pwd, char *home, int err, char *rwd);
-int		get_stdin(t_shell *sh);
+int		get_stdin(char **line, t_shell *sh);
 char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
-void	delete_from_cursor_to_end(t_shell *sh, t_editor *ed);
-void	paste_clipboard(t_shell *sh, t_editor *ed);
+void	delete_from_cursor_to_end(char **line, t_editor *ed);
+void	paste_clipboard(char **line, t_editor *ed);
+
 #endif

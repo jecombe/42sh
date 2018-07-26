@@ -6,23 +6,33 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/23 11:54:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 12:38:09 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 02:21:15 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	delete_from_cursor_to_end(t_shell *sh, t_editor *ed)
+void	delete_from_cursor_to_end(char **line, t_editor *ed)
 {
 	char tmp[ed->cursor_str_pos + 1];
 
 	ft_bzero(tmp, sizeof(tmp));
 	ft_putstr("\E[0J");
-	ft_strncpy(tmp, sh->line, ed->cursor_str_pos);
-	if (sh->clipboard)
-		ft_strdel(&(sh->clipboard));
-	sh->clipboard = ft_strdup(sh->line + ed->cursor_str_pos);
-	ft_strdel(&(sh->line));
-	sh->line = ft_strdup(tmp);
+	if (!ed->cursor_str_pos)
+	{
+		if (line)
+			ed->clipboard = ft_strdup(*line);
+		ft_strdel(line);
+	}
+	else
+	{
+		ft_strncpy(tmp, *line, ed->cursor_str_pos);
+		if (ed->clipboard)
+			ft_strdel(&(ed->clipboard));
+		ed->clipboard = ft_strdup(*line + ed->cursor_str_pos);
+		if (line)
+		ft_strdel(line);
+		*line = ft_strdup(tmp);
+	}
 }

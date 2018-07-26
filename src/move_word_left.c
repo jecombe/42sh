@@ -6,38 +6,45 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:54:46 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 08:45:12 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:17:00 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	move_word_left(t_shell *sh, t_editor *ed)
+static int		check_if_previous_word(char *line, size_t cursor_str_pos)
 {
 	size_t s_pos;
-	char *cursor_reset;
 
-	s_pos = ed->cursor_str_pos;
-	cursor_reset = cursor_position_escape_sequence(0, 0);
-	while (ed->cursor_str_pos)
+	s_pos = cursor_str_pos;
+	while (cursor_str_pos > 0)
 	{
-		if ((sh->line[ed->cursor_str_pos - 1] == ' ' || sh->line
-		[ed->cursor_str_pos - 1] == '\t') && sh->line[ed->cursor_str_pos] >= 33
-		&& sh->line[ed->cursor_str_pos] <= 126 && s_pos != ed->cursor_str_pos)
-			return ;
-		if (get_cursor_position(0) == 1)
+		if ((line[cursor_str_pos - 1] == ' ' || line
+		[cursor_str_pos - 1] == '\t') && line[cursor_str_pos] >= 33
+		&& line[cursor_str_pos] <= 126 && cursor_str_pos != s_pos)
+			return (cursor_str_pos);
+		cursor_str_pos--;
+	}
+	return (0);
+}
+
+void	move_word_left(char *line, t_editor *ed)
+{
+	size_t previous_word_pos;
+
+	previous_word_pos = check_if_previous_word(line, ed->cursor_str_pos);
+	if (previous_word_pos)
+		while (ed->cursor_str_pos > previous_word_pos)
 		{
-			tputs(tgetstr("up", NULL), 1, ft_putchar);
-			tputs(tgoto(tgetstr("ch", NULL), 0, sz.ws_col - 1), 1, ft_putchar);
+			if (get_cursor_position(0) == 1)
+			{
+				tputs(tgetstr("up", NULL), 1, ft_putchar);
+				tputs(tgoto(tgetstr("ch", NULL), 0, sz.ws_col - 1),
+				1, ft_putchar);
+			}
+			else
+				tputs(tgetstr("le", NULL), 1, ft_putchar);
+			ed->cursor_str_pos--;
 		}
-		else
-			tputs(tgetstr("le", NULL), 1, ft_putchar);
-		ed->cursor_str_pos--;
-	}
-	if (sh->line[0] == '\t' || sh->line[0] == ' ')
-	{
-		ed->cursor_str_pos = s_pos;
-		reset_cursor_position_escape_sequence(&cursor_reset);
-	}
 }

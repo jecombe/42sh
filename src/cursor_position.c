@@ -6,12 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/19 08:43:28 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/25 23:12:07 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "stdin.h"
+#include "../includes/stdin.h"
 
 static int		get_row(char *str)
 {
@@ -33,7 +33,7 @@ static int		get_col(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (str[i - 1] == ';')
+		if (i && str[i - 1] == ';')
 		{
 			ft_strcpy(tmp, str + i);
 			break ;

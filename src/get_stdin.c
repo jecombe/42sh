@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/23 12:38:03 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 00:30:17 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,35 +60,35 @@ int		get_term_raw_mode(int mode)
 	return (0);
 }
 
-int		get_keyboard_key(char *key, int *ret, t_shell *sh, t_editor *ed)
+int		get_keyboard_key(char *key, int *ret, char **line, t_editor *ed, t_shell *sh)
 {
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (CTRL_D)
 		*ret = 0;
 	else if (CTRL_C)
-		end_of_text(&(sh->line), ed);
+		end_of_text(line, ed);
 	else if (UP_KEY || DOWN_KEY)
 		return (0);
 	else if (!ft_strcmp(SHIFT_UP, key) || !ft_strcmp(SHIFT_DOWN, key))
-		!ft_strcmp(SHIFT_UP, key) ? move_cursor_up(ed) : move_cursor_down(sh, ed);
+		!ft_strcmp(SHIFT_UP, key) ? move_cursor_up(ed) : move_cursor_down(*line, ed);
 	else if (HOME_KEY || END_KEY)
-		HOME_KEY ? go_to_begin_of_line(ed) : go_to_end_of_line(ed, sh->line);
-	else if (BACKSPACE && sh->line && ed->cursor_str_pos)
-		return (backspace(ed, &(sh->line)));
+		HOME_KEY ? go_to_begin_of_line(ed) : go_to_end_of_line(ed, *line);
+	else if (BACKSPACE && line && ed->cursor_str_pos)
+		return (backspace(ed, line));
 	else if (LEFT_KEY || RIGHT_KEY)
-		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed, sh->line);
+		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed, *line);
 	else if (CTRL_L)
 		return (clear_window(sh, ed));
-	else if ((!ft_strcmp(SHIFT_RIGHT, key) || !ft_strcmp(SHIFT_LEFT, key)) && sh->line)
-		!ft_strcmp(SHIFT_LEFT, key) ? move_word_left(sh, ed) : move_word_right(sh, ed);
-	else if (ed->cursor_str_pos == ft_strlen(sh->line) && ft_strlen(key) == 1 && ft_isprint(key[0]))
+	else if ((!ft_strcmp(SHIFT_RIGHT, key) || !ft_strcmp(SHIFT_LEFT, key)) && line)
+		!ft_strcmp(SHIFT_LEFT, key) ? move_word_left(*line, ed) : move_word_right(*line, ed);
+	else if (ed->cursor_str_pos == ft_strlen(*line) && ft_strlen(key) == 1 && ft_isprint(key[0]))
 		return (add_char_to_line(key[0], ed));
-	else if (ed->cursor_str_pos != ft_strlen(sh->line) && ft_strlen(key) == 1 && ft_isprint(key[0]))
-		return (add_char_into_line(key[0], sh, ed));
-	else if (CTRL_K && ft_strlen(sh->line + ed->cursor_str_pos))
-		delete_from_cursor_to_end(sh, ed);
+	else if (ed->cursor_str_pos != ft_strlen(*line) && ft_strlen(key) == 1 && ft_isprint(key[0]))
+		return (add_char_into_line(key[0], line, ed));
+	else if (CTRL_K && ft_strlen(*line + ed->cursor_str_pos))
+		delete_from_cursor_to_end(line, ed);
 	else if (CTRL_P)
-		paste_clipboard(sh, ed);
+		paste_clipboard(line, ed);
 	return (0);
 }
 
@@ -102,7 +102,7 @@ int		line_editor_init(t_editor **ed)
 	return (1);
 }
 
-int		get_stdin(t_shell *sh)
+int		get_stdin(char **line, t_shell *sh)
 {
 	int ret;
 	char buf[10];
@@ -112,7 +112,7 @@ int		get_stdin(t_shell *sh)
 	line_editor_init(&ed);
 	g_save_home = find_var_string(sh->my_env, "HOME", 0);
 	ed->prompt_size = display_prompt(sh->pwd, g_save_home, sh->err, cut_pwd_dir(sh->pwd));
-	//printf("prompt_size: %zu\n", ed->prompt_size);
+		//printf("prompt_size: %zu\n", ed->prompt_size);
 	getcwd(sh->pwd, sizeof(sh->pwd));
 	signal(SIGWINCH, myhandler_winsize_change);
 	while ((ret = read(STDIN_FILENO, buf, BUFF_SIZE)) > 0)
@@ -120,17 +120,18 @@ int		get_stdin(t_shell *sh)
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		buf[ret] = '\0';
 	//	printf("\nbuf[0]: %d, buf[1]: %d, buf[2]: %d, buf[3]: %d, buf[4]: %d buf[5]: %d\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
-		if (get_keyboard_key(buf, &ret, sh, ed))
-			sh->line = ft_strjoin_free(sh->line, buf);
+		if (get_keyboard_key(buf, &ret, line, ed, sh))
+			*line = ft_strjoin_free(*line, buf);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
-		if (ft_strchr(buf, '\n') || (!ret && !sh->line))
+		if (ft_strchr(buf, '\n') || (!ret && !(*line)))
 			break ;
 	}
+	if (g_save_home)
 	ft_strdel(&g_save_home);
 	if ((ed->last_row - get_cursor_position(1)) != 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0, ed->last_row - get_cursor_position(1)), 1, ft_putchar);
 	get_term_raw_mode(0);
 	ft_putchar('\n');
-	printf("line:     [%s]\n", sh->line);
+	printf("line:     [%s]\n", *line);
 	return (ret);
 }

@@ -6,14 +6,14 @@
 #    By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/02/22 01:51:44 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/06/23 12:39:51 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/25 22:20:19 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all re clean fclean
 
-NAME = 21sh
+NAME = 42sh
 
 HEADER = stdin.h \
 
@@ -28,7 +28,7 @@ CC = gcc
 
 COLOR = echo
 
-CC_FLAGS = -Wall -Werror -Wextra
+CC_FLAGS = -Wall -Werror -Wextra -g
 
 SRC =		main.c \
 			get_stdin.c \
