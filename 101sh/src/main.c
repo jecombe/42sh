@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:23:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 07:02:06 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,6 +81,7 @@ void		ft_parcour_op(t_op *n_op)
 		if (n_op->sc->cmd)
 		{
 			j = 0;
+			printf("\t\tNEW CMD\n");
 			while (n_op->sc->cmd[j])
 			{
 				printf("\t\tSC ARG == %s\n", n_op->sc->cmd[j]);
@@ -90,6 +91,7 @@ void		ft_parcour_op(t_op *n_op)
 	}
 	else if (n_op->cc)
 		ft_parcour_ccfuck(n_op->cc);
+	else
 	printf("\n");
 	if (n_op->next)
 		ft_parcour_op(n_op->next);

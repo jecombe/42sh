@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:18:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 07:08:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -217,7 +217,7 @@ int			ft_parcour_cc(t_cc **n_cc)
 	return (0);
 }
 
-void		ft_attrib_last_arg(t_arg **n_arg)
+void		ft_parcour_arg(t_arg **n_arg)
 {
 	while ((*n_arg)->next)
 		*n_arg = (*n_arg)->next;
@@ -261,7 +261,7 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 		}
 		if (!n_cc->close_key)
 		{
-			ft_attrib_last_arg(&n_arg);
+			ft_parcour_arg(&n_arg);
 			if (!n_arg->cmd || n_arg->token[0] != TOKEN)
 			{
 				printf("bash: syntax error near unexpected token `;'\n");
@@ -292,6 +292,7 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 		return (1);
 	if (n_op->token[0] == TOKEN && n_op->sc)
 	{
+		printf("WTF\n");
 		n_op->token[0] = token;
 	}
 	else if (n_op->token[0] == TOKEN && n_op->cc)
@@ -305,7 +306,7 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 		else if (n_cc->arg)
 		{
 			n_arg = n_cc->arg;
-			ft_attrib_last_arg(&n_arg);
+			ft_parcour_arg(&n_arg);
 			if (n_arg->cmd && n_arg->token[0] == TOKEN)
 			{
 				n_arg->token[0] = token;
@@ -334,29 +335,54 @@ int			ft_manage_redirection(t_seq **b_seq, e_token token)
 {
 	t_op		*n_op;
 	t_cc		*n_cc;
+	t_arg		*n_arg;
 
 	if (ft_attrib_last_nop(&(*b_seq), &n_op))
 		return (1);
-	if (n_op->cc)
-	{
-		n_cc = n_op->cc;
-		if (ft_parcour_cc(&n_cc))
-			return (1);
-	/*	if (n_cc->)
-		{
-		}
-		else if ()
-		{
-		}*/
-	}
-	else if (n_op->token[0] == TOKEN ||
-	(n_op->token[0] >= AND_IF && n_op->token[0] <= PIPE && n_op->token[1] == TOKEN))
+	if (n_op->token[0] >= NOT && n_op->token[0] <= PIPE && n_op->token[1] == TOKEN)
 	//PEUT-ETRE MEME PIPE_AND
 	{
 		if (n_op->token[0] == TOKEN)
 			n_op->token[0] = token;
 		else
 			n_op->token[1] = token;
+	}
+	else if (n_op->sc && n_op->token[1] == TOKEN)
+	{
+		if (n_op->token[0] == TOKEN)
+			n_op->token[0] = token;
+		else
+			n_op->token[1] = token;
+	}
+	else if (n_op->cc)
+	{
+		n_cc = n_op->cc;
+		if (ft_parcour_cc(&n_cc))
+			return (1);
+		if (n_cc->close_key > 0 && !(n_op->token[0] >= LESS && n_op->token[0] <= DLESSDASH) && n_op->token[1] == TOKEN)
+		{
+			if (n_op->token[0] == TOKEN)
+				n_op->token[0] = token;
+			else
+				n_op->token[1] = token;
+		}
+		else if (n_cc->close_key == 0)
+		{
+			if (!n_cc->arg)
+				n_cc->arg = ft_malloc_arg();
+			n_arg = n_cc->arg;
+			while (n_arg->next)
+				n_arg = n_arg->next;
+			if (!(n_arg->token[0] >= LESS && n_arg->token[0] <= DLESSDASH) && n_arg->token[1] == TOKEN)
+			{
+				if (n_arg->token[0] == TOKEN)
+					n_op->token[0] = token;
+				else
+					n_op->token[0] = token;
+			}
+			else
+				printf("bash: syntax error near unexpected token `>'\n");
+		}
 	}
 	else
 	{
@@ -366,17 +392,17 @@ int			ft_manage_redirection(t_seq **b_seq, e_token token)
 	return (0);
 }
 
-int			ft_attrib_last_arg_in_cc(t_cc **n_cc)
+int			ft_parcour_arg_in_cc(t_cc **n_cc)
 {
 //ATTRIBUT A n_cc le dernier maillon pour une simple commande, en creer un si la commande est open et retourne une erreur de syntaxe si close_key est actif
 	if ((*n_cc)->next_out)
 	{
-		if (ft_attrib_last_arg_in_cc(&(*n_cc)->next_out))
+		if (ft_parcour_arg_in_cc(&(*n_cc)->next_out))
 			return (1);
 	}
 	else if ((*n_cc)->next_in)
 	{
-		if (ft_attrib_last_arg_in_cc(&(*n_cc)->next_in))
+		if (ft_parcour_arg_in_cc(&(*n_cc)->next_in))
 			return (1);
 	}
 	else if ((*n_cc)->close_key)
@@ -407,11 +433,11 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 
 	if (ft_attrib_last_nop(&(*b_seq), &n_op))
 		return (1);
-	if (n_op->cc)
+	if (n_op->cc && n_op->token[0] == TOKEN)
 	{
 		printf("CC == %s\n", name);
 		n_cc = n_op->cc;
-		if (ft_attrib_last_arg_in_cc(&n_cc))
+		if (ft_parcour_arg_in_cc(&n_cc))
 			return (1);
 		if (ft_malloc_cmd(&n_cc->arg->cmd, name))
 			return (1);
@@ -420,6 +446,12 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	else
 	{
 	printf("SC == %s\n", name);
+		if (n_op->token[0] != TOKEN)
+		{
+			n_op->next = ft_malloc_op();
+			n_op->next->prev = n_op;
+			n_op = n_op->next;
+		}
 		if (!n_op->sc)
 			if (!(n_op->sc = ft_malloc_sc()))
 				return (1);
