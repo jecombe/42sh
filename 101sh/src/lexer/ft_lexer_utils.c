@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/15 02:37:36 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 04:14:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:28:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,8 @@
 
 int				ft_isoperator(char *input)
 {
-	static char	*operator[] = {";", "&", "&&", "||", "!", "|", "|&", ";;",
-		"(", ")", "<", "<>", ">", ">|", ">>", ">&", "<<", "<&", "<<-"};
+	static char	*operator[] = {";", "&", ";;", "(", ")", "!", "&&", "||",
+		"|", "|&", "<", "<>", ">", ">|", ">>", ">&", "<<", "<&", "<<-"};
 	int			value;
 	int			i;
 
@@ -30,8 +30,8 @@ int				ft_isoperator(char *input)
 
 int				ft_isreserved(char *input)
 {
-	static char	*reserved[] = {"if", "then", "else", "elif", "fi", "do", "done",
-		"case", "esac", "while", "until", "for"};
+	static char	*reserved[] = {"if", "while", "for", "until", "case", "then",
+		"do", "esac", "fi", "done", "elif", "else"};
 	int			value;
 	int			i;
 
@@ -45,10 +45,10 @@ int				ft_isreserved(char *input)
 
 char			*ft_convert_token_to_string(e_token token)
 {
-	static char	*tkname[] = {";", "&", "&&", "||", "!", "|", "|&", ";;",
-		"(", ")", "<", "<>", ">", ">|", ">>", ">&", "<<", "<&", "<<-",
-		"if", "then", "else", "elif", "fi", "do", "done", "case", "esac",
-		"while", "until", "for"};
+	static char	*tkname[] = {";", "&", ";;", "(", ")", "!", "&&", "||",
+		"|", "|&", "<", "<>", ">", ">|", ">>", ">&", "<<", "<&", "<<-",
+		"if", "while", "for", "until", "case", "then", "do", "esac", "fi",
+		"done", "elif", "else"};
 	int			value;
 	int			i;
 	char		*s;
@@ -72,5 +72,3 @@ char			*ft_convert_token_to_string(e_token token)
 	}
 	return (value == 297 ? s : tkname[i]);
 }
-
-

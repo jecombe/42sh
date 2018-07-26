@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 08:58:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:23:48 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ void		ft_print_cc(t_cc *n_cc, int cmp)
 	}
 }
 
-void		ft_parcour_cc(t_cc *n_cc)
+void		ft_parcour_ccfuck(t_cc *n_cc)
 {
 	static int		cmp = 0;
 	int				pcmp = cmp;
@@ -59,14 +59,14 @@ void		ft_parcour_cc(t_cc *n_cc)
 	{
 		printf("NEXT->IN\n");
 		cmp++;
-		ft_parcour_cc(n_cc->next_in);
+		ft_parcour_ccfuck(n_cc->next_in);
 	}
 	if (n_cc->next_out)
 	{
 		printf("NEXT->OUT\n");
 		if (n_cc->next_in)
 			cmp--;
-		ft_parcour_cc(n_cc->next_out);
+		ft_parcour_ccfuck(n_cc->next_out);
 	}
 }
 
@@ -89,7 +89,7 @@ void		ft_parcour_op(t_op *n_op)
 		}
 	}
 	else if (n_op->cc)
-		ft_parcour_cc(n_op->cc);
+		ft_parcour_ccfuck(n_op->cc);
 	printf("\n");
 	if (n_op->next)
 		ft_parcour_op(n_op->next);
@@ -104,17 +104,7 @@ int			 main(int ac, char *argv[])
 	(void)ac;
 	lex = ft_lexer(argv[1]);
 	while (lex.name[++i])
-	{
-		if (!ft_strcmp(lex.name[i], "if"))
-			lex.token[i] = IF;
-		if (!ft_strcmp(lex.name[i], "fi"))
-			lex.token[i] = FI;
-		if (!ft_strcmp(lex.name[i], "then"))
-			lex.token[i] = THEN;
-		if (!ft_strcmp(lex.name[i], "ELIF"))
-			lex.token[i] = ELIF;
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-	}
 	b_seq = ft_manage_parsing(lex);
 	ft_putstr("\x1b[32m");
 	printf("-------------- PARSING -------------\n");

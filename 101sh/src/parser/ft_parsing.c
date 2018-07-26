@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 11:36:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:18:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -342,12 +342,12 @@ int			ft_manage_redirection(t_seq **b_seq, e_token token)
 		n_cc = n_op->cc;
 		if (ft_parcour_cc(&n_cc))
 			return (1);
-		if (n_cc)
+	/*	if (n_cc->)
 		{
 		}
-		else if ($BASH_BIZARRE_FAUDRA_M_EXPLIQUER)
+		else if ()
 		{
-		}
+		}*/
 	}
 	else if (n_op->token[0] == TOKEN ||
 	(n_op->token[0] >= AND_IF && n_op->token[0] <= PIPE && n_op->token[1] == TOKEN))

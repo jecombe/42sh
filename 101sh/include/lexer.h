@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 09:38:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:19:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -105,7 +105,7 @@ int			ft_lexer_break_comment(char *input, int *idx);
 **		ft_lexer_break_tokens.c
 */
 
-e_token		ft_lexer_token_rules(t_lex *lex);
+//e_token		ft_lexer_token_rules(t_lex *lex);
 
 /*
 **		ft_lexer_utils.c

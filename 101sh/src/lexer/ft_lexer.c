@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/20 06:59:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:16:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,8 @@ e_token			ft_lexer_token(char *name, char c)
 				break ;
 		if ((i == ft_strlen(name)) && (c == '>' || c == '<'))
 			tkn = IO_NUMBER;
+		if (tkn == TOKEN)
+			tkn = ft_isreserved(name);
 	}
 	return (tkn);
 }
@@ -69,7 +71,6 @@ t_lex			ft_lexer(char *input)
 		//		replace(lex.name[v]);
 		lex.token[v] = ft_lexer_token(lex.name[v], input[idx]);
 	}
-	ft_lexer_token_rules(&lex);
 	return (lex);
 }
 

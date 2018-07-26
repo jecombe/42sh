@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 02:52:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/18 04:14:26 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 03:29:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,11 +24,11 @@ int			ft_lexer_break_operator(char *input, int idx, int i)
 		return (0);
 	if ((s = ft_strsub(input, i, (idx - i))))
 	{
-		if (ft_isoperator(s) > 260)
+		if (ft_isoperator(s) > TOKEN)
 		{
 			ft_strdel(&s);
 			if ((s = ft_strsub(input, i, ((idx - i) + 1))))
-				if (ft_isoperator(s) == 260)
+				if (ft_isoperator(s) == TOKEN)
 					ret = 1;
 		}
 		else if (input[idx] == ';' || input[idx] == '&' || input[idx] == '|' ||
