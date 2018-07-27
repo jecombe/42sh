@@ -33,7 +33,6 @@ typedef struct					s_sc
 typedef struct					s_cc
 {
 	e_token				key;//Mot cle tels que "IF" "ELSE" "ELIF" "CASE" "WHILE" "UNTIL" "FOR"
-	e_token				hook_key;
 	e_token				not_operator;// AU CAS OU "! KEY"
 	t_arg				*arg;
 	int					open_key;//DO THEN CASE REPERER

@@ -151,6 +151,7 @@ int			ft_attrib_last_nseq(t_seq **b_seq, t_seq **n_seq)
 		*n_seq = *b_seq;
 		while ((*n_seq)->next)
 			*n_seq = (*n_seq)->next;
+		printf("N_SEQ->TOKEN == %u\n", (*n_seq)->token);
 		if ((*n_seq)->token != TOKEN)
 		{
 			if (!((*n_seq)->next = ft_malloc_seq()))
@@ -194,6 +195,7 @@ int			ft_attrib_last_nop(t_seq **b_seq, t_op **n_op)
 	ret = 0;
 	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
 		return (1);
+		//BUG
 	if ((ret = ft_parcour_n_op(&(*b_seq), &(*n_op))))
 	{
 		if (ret == 1)
@@ -244,14 +246,14 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 		return (1);
 	if (n_seq->token != TOKEN || !n_seq->op)
 	{
-		printf("bash: syntax error near unexpected token `;'\n");
+		printf("0bash: syntax error near unexpected token `;'\n");
 		return (1);
 	}
 	if (ft_attrib_last_nop(&(*b_seq), &n_op))
 		return (1);
 	if (n_op->token[0] != TOKEN)
 	{
-		printf("bash: syntax error near unexpected token `;'\n");
+		printf("1bash: syntax error near unexpected token `;'\n");
 		return (1);
 	}
 	else if (n_op->sc)
@@ -265,15 +267,15 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 			return (1);
 		if (!n_cc->arg)
 		{
-			printf("bash: syntax error near unexpected token `;'\n");
+			printf("2bash: syntax error near unexpected token `;'\n");
 			return (1);
 		}
 		if (!n_cc->close_key)
 		{
 			ft_parcour_arg(&n_arg);
-			if (!n_arg->cmd || n_arg->token[0] != TOKEN)
+			if (!n_arg->cmd && n_arg->token[0] != TOKEN)
 			{
-				printf("bash: syntax error near unexpected token `;'\n");
+				printf("3bash: syntax error near unexpected token `;'\n");
 				return (1);
 			}
 			else
@@ -498,59 +500,103 @@ int			ft_create_cc(t_seq **b_seq, char *name, e_token token)
 	t_seq			*n_seq;
 	t_op			*n_op;
 	t_cc			*n_cc;
+	t_arg			*n_arg;
 
 	if (ft_attrib_last_nop(&(*b_seq), &n_op))
 		return (1);
-	if (n_op->sc)
+	printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
+	if (n_op->token[0] != TOKEN)
 	{
-		printf("VU COMME UN ARGUMENT DE LA SIMPLE COMMANDE\n");
-		if (ft_malloc_cmd(&n_op->sc->cmd, name))
-			return (1);
+		printf("CREATION D'UNE NOUVELLE OP\n");
+		n_op->next = ft_malloc_op();
+		n_op->next->prev = n_op;
+		n_op->cc = ft_malloc_cc();
+		n_op->cc->key = token;
 	}
-	else
+	else if (n_op->sc)
 	{
-		printf("CREATION/CONTINUITE DE LA COMPOSED COMMANDE\n");
-		if (ft_attrib_last_key_in_cc(&(*b_seq), &n_cc))
-			return (1);
-		if (n_cc->key != TOKEN && !n_cc->arg)
+		printf("VU COMME UN NOUVELLE ARGUMENT DE LA SIMPLE CMD\n");
+		ft_malloc_cmd(&n_op->sc->cmd, name);
+	}
+	else if (n_op->cc)
+	{
+		n_cc = n_op->cc;
+		ft_parcour_cc(&n_cc);
+		if (n_cc->key == TOKEN)
 		{
-			printf("bash: syntax error near unexpected token `;'\n");
-			return (1);
+			n_cc->key = token;
 		}
-		else if (n_cc->open_key && !n_cc->close_key)
+		else if (n_cc->open_key == 0 && n_cc->arg)
 		{
-			if (!(n_cc->next_in = ft_malloc_cc()))
-				return (1);
-			n_cc->next_in->parent = n_cc;
-			n_cc = n_cc->next_in;
-		}
-		else if (n_cc->close_key)
-		{
-			if (n_op->token[0] != TOKEN)
+			printf("ARGUMENT DU IF\n");
+			n_arg = n_cc->arg;
+			while (n_arg->next)
+				n_arg = n_arg->next;
+			if (n_arg->token[0] >= LESS && n_arg->token[0] <= DLESSDASH)
 			{
-				printf("creer nouvelle OP + CC + TOKEN\n");
-				n_op->next = ft_malloc_op();
-				n_op->next->prev = n_op;
-				n_op = n_op->next;
-				n_op->cc = ft_malloc_cc();
-				n_cc = n_op->cc;
+				n_arg->next = ft_malloc_arg();
+				n_arg->next->prev = n_arg;
+				n_arg = n_arg->next;
+				printf("n_arg->cmd = name\n");
+			}
+			else if (n_arg->token[0] != TOKEN)
+			{
+				printf("UNEXPECTED TOKEN THEN BEACH");
+				return (1);
 			}
 			else
 			{
-				printf("bash: syntax error near unexpected token `if'\n");
-				return (1);
+				printf("NEW CMD = NAME");
+				ft_malloc_cmd(&n_arg->cmd, name);
 			}
 		}
-		if (n_cc->key != TOKEN && n_cc->arg)
+		else if (n_cc->open_key > 0 && n_cc->close_key == 0 && !n_cc->arg)
 		{
-			printf("ARGUMENT DU TOKEN DANS SC, TOKEN = SC\n");
-			ft_malloc_cmd(&n_cc->arg->cmd, name);
+			printf("NEW IF DANS NEXT->IN\n");
+			n_cc->next_in = ft_malloc_cc();
+			n_cc->next_in->parent = n_cc;
+			n_cc = n_cc->next_in;
+			n_cc->key = token;
+		}
+		else if (n_cc->open_key > 0 && n_cc->close_key == 0 && n_cc->arg)
+		{
+			if (n_cc->arg)
+			{
+				n_arg = n_cc->arg;
+				while (n_arg->next)
+					n_arg = n_arg->next;
+				if (n_arg->token[0] == SEMI)
+				{
+					n_cc->next_in = ft_malloc_cc();
+					n_cc->next_in->parent = n_cc;
+					n_cc = n_cc->next_in;
+					n_cc->key = token;
+				}
+				else if (n_arg->token[0] != TOKEN)
+				{
+					n_arg->next = ft_malloc_arg();
+					n_arg->next->prev = n_arg;
+					n_arg = n_arg->next;
+					ft_malloc_cmd(&n_arg->cmd, name);
+					printf("N_ARG->CMD = NAME\n");
+				}
+				else if (n_arg->not_operator == NOT)
+				{
+					ft_malloc_cmd(&n_arg->cmd, name);
+					printf("N_ARG->CMD = NAME\n");
+				}
+			}
 		}
 		else
 		{
-			printf("NEW RESERVED ENTRY\n");
-			n_cc->key = token;
+			printf("ERROR TOKEN\n");
+			return (1);
 		}
+	}
+	else
+	{
+		n_op->cc = ft_malloc_cc();
+		n_op->cc->key = token;
 	}
 	return (0);
 }
@@ -560,6 +606,7 @@ int			ft_open_cc(t_seq **b_seq, char *name, e_token token)
 	t_seq			*n_seq;
 	t_op			*n_op;
 	t_cc			*n_cc;
+	t_arg			*n_arg;
 
 	if (ft_attrib_last_nop(&(*b_seq), &n_op))
 		return (1);
@@ -569,15 +616,36 @@ int			ft_open_cc(t_seq **b_seq, char *name, e_token token)
 		if (ft_malloc_cmd(&n_op->sc->cmd, name))
 			return (1);
 	}
-	else
+	else if (n_op->cc)
 	{
 		printf("OPEN COMPOSED COMMANDE\n");
 		if (ft_attrib_last_key_in_cc(&(*b_seq), &n_cc))
 			return (1);
-		if (token == THEN || token == DO)
+		if (n_cc->key != TOKEN && n_cc->arg)
 		{
-			
+			n_arg = n_cc->arg;
+			while (n_arg->next)
+				n_arg = n_arg->next;
+			if (n_arg->cmd && n_arg->token[0] == SEMI)
+			{
+				n_cc->open_key = 1;
+			}
+			else
+			{
+				printf("bash: syntax error near unexpected token `then'\n");
+				return (1);
+			}
 		}
+		else
+		{
+			printf("bash: syntax error near unexpected token `then'\n");
+			return (1);
+		}
+	}
+	else
+	{
+		printf("bash: syntax error near unexpected token `then'\n");
+		return (1);
 	}
 	return (0);
 }
@@ -611,8 +679,13 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 	else if (token == THEN || token == IN || token == DO)
 	{
 		printf("OPEN CC\n");
-		if (ft_open_cc(&(*b_seq), name, token))
-			return (1);
+		if (token == THEN || token == DO)
+		{
+			if (ft_open_cc(&(*b_seq), name, token))
+				return (1);
+		}
+		else
+			printf("MOT CLE IN NOT AVAILABLE\n");
 	}
 	else if (token >= ESAC && token <= DONE)
 	{

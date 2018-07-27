@@ -53,8 +53,6 @@ void		ft_parcour_ccfuck(t_cc *n_cc)
 	int				pcmp = cmp;
 
 	ft_print_cc(n_cc, cmp);
-	while (pcmp-- + 2)
-		write(1, "\t", 1);
 	if (n_cc->next_in)
 	{
 		printf("NEXT->IN\n");
@@ -68,6 +66,8 @@ void		ft_parcour_ccfuck(t_cc *n_cc)
 			cmp--;
 		ft_parcour_ccfuck(n_cc->next_out);
 	}
+	else
+		printf("BBBBUUUUGGG\n");
 }
 
 void		ft_parcour_op(t_op *n_op)
