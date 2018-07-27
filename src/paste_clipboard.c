@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/23 12:38:19 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 02:54:23 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/26 08:09:30 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ void	paste_clipboard(char **line, t_editor *ed)
 {
 	char tmp[ft_strlen(*line) + ft_strlen(ed->clipboard) + 1];
 
+		//	printf("test0: %s\n", ed->clipboard);
 	if (ed->clipboard)
 	{
 		if (*line)
@@ -33,6 +34,7 @@ void	paste_clipboard(char **line, t_editor *ed)
 		}
 		else
 		{
+			printf("test: %s\n", ed->clipboard);
 			*line = ft_strdup(ed->clipboard);
 			ft_putstr(*line);
 			ed->cursor_str_pos = ft_strlen(*line);
