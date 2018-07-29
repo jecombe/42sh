@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 07:08:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/29 04:41:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,11 +92,25 @@ t_op		*ft_malloc_op(void)
 	if (!(new = malloc(sizeof(t_op))))
 		return (NULL);
 	new->cmd = NULL;
-	new->token[0] = TOKEN;
-	new->token[1] = TOKEN;
+	new->token = TOKEN;
+	new->redirect = NULL;
 	new->next = NULL;
 	new->prev = NULL;
 	return (new);
+}
+
+t_redirect	*ft_malloc_redirect()
+{
+	t_redirect	*new;
+
+	if (!(new = malloc(sizeof(t_redirect))))
+		return (NULL);
+	new->fd = NULL;
+	new->redirect = TOKEN;
+	new->file = NULL;
+	new->next = NULL;
+	new->prev = NULL;
+	return(new);
 }
 
 int			ft_attrib_last_nseq(t_seq **b_seq, t_seq **n_seq)
@@ -161,20 +175,21 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 	n_op = n_seq->op;
 	while (n_op->next)
 		n_op = n_op->next;
-	if (n_op->token[0] != TOKEN || !n_op->cmd)
+	if (n_op->token != TOKEN || !n_op->cmd)
 	{
 		ft_putstr("bash: syntax error near unexpected token `&&");
 		ft_putendl("'");
 		return (1);
 	}
-	n_op->token[0] = token;
+	n_op->token = token;
 	return (0);
 }
 
-int			ft_manage_redirection(t_seq **b_seq, e_token token)
+int			ft_manage_redirection(t_seq **b_seq, e_token token, char *name)
 {
 	t_op			*n_op;
 	t_seq			*n_seq;
+	t_redirect		*n_redirect;
 
 	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
 		return (1);
@@ -183,19 +198,34 @@ int			ft_manage_redirection(t_seq **b_seq, e_token token)
 	n_op = n_seq->op;
 	while (n_op->next)
 		n_op = n_op->next;
-	if (n_op->token[0] >= AND_IF && n_op->token[0] <= PIPE_AND && n_op->token[1] == TOKEN)
+	if (n_op->token != TOKEN)
 	{
-		n_op->token[1] = token;
+		n_op->next = ft_malloc_op();
+		n_op->next->prev = n_op;
+		n_op = n_op->next;
 	}
-	else if (n_op->token[0] == TOKEN)
+	if (!n_op->redirect)
+		if (!(n_op->redirect = ft_malloc_redirect()))
+			return (1);
+	n_redirect = n_op->redirect;
+	while (n_redirect->next)
+		n_redirect = n_redirect->next;
+	//BUG
+	if (n_redirect->redirect != TOKEN && !n_redirect->file)
 	{
-		n_op->token[0] = token;
-	}
-	else
-	{
-		ft_putendl("bash: syntax error near unexpected token `&&'");
+		printf("redirect == %u\n", n_redirect->redirect);
+		printf("redirect == %s\n", n_redirect->file);
+		ft_putendl("bash: syntax error near unexpected token `&&'111");
 		return (1);
 	}
+	if (n_redirect->file)
+	{
+		n_redirect->next = ft_malloc_redirect();
+		n_redirect->next->prev = n_redirect;
+		n_redirect = n_redirect->next;
+	}
+	//FIN DU BUG
+	n_redirect->redirect = token;
 	return (0);
 }
 
@@ -203,22 +233,35 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 {
 	t_op			*n_op;
 	t_seq			*n_seq;
+	t_redirect		*n_redirect;
 
 	if (ft_attrib_last_nseq(&(*b_seq), &n_seq))
 		return (1);
 	if (!n_seq->op)
 		n_seq->op = ft_malloc_op();
 	n_op = n_seq->op;
-		printf("BBBUUUGGG\n");
 	while (n_op->next)
 		n_op = n_op->next;
-	if (n_op->token[0] != TOKEN)
+	if (n_op->token != TOKEN || !n_op->redirect)
 	{
-		n_op->next = ft_malloc_op();
-		n_op->next->prev = n_op;
-		n_op = n_op->next;
+		if (n_op->token != TOKEN)
+		{
+			n_op->next = ft_malloc_op();
+			n_op->next->prev = n_op;
+			n_op = n_op->next;
+		}
+		ft_malloc_cmd(&n_op->cmd, name);
 	}
-	ft_malloc_cmd(&n_op->cmd, name);
+	else if (n_op->redirect)
+	{
+		n_redirect = n_op->redirect;
+		while (n_redirect->next)
+			n_redirect = n_redirect->next;
+		if (n_redirect->file)
+			ft_malloc_cmd(&n_op->cmd, name);
+		else
+			n_redirect->file = ft_strdup(name);
+	}
 	return (0);
 }
 
@@ -236,11 +279,12 @@ int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
 		printf("LOGICAL OPERATOR\n");
 		if (ft_manage_logical_and_pipe(&(*b_seq), token))
 			return (1);
+		printf("b_seq->op->token == %u\n", (*b_seq)->op->token);
 	}
 	else if (token >= LESS && token <= DLESSDASH)
 	{
 		printf("REDIRECTION OPERATOR\n");
-		if (ft_manage_redirection(&(*b_seq), token))
+		if (ft_manage_redirection(&(*b_seq), token, name))
 			return (1);
 	}
 	else

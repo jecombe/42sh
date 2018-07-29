@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 07:02:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/29 05:20:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,17 +19,34 @@
 void		ft_parcour_op(t_op *n_op)
 {
 	int		i;
+	t_redirect		*n_redirect;
 
 	while (n_op)
 	{
 		i = 0;
 		if (n_op->cmd)
+		{
 			while (n_op->cmd[i])
 			{
 				printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
 				i++;
 			}
-		printf("TOKEN[0] == %s TOKEN[1] == %s\n", cv(n_op->token[0]), cv(n_op->token[1]));
+		}
+		else
+			printf("CMD == (NULL)\n");
+		if (n_op->redirect)
+		{
+			n_redirect = n_op->redirect;
+			while (n_redirect)
+			{
+				printf("n_redirect->fd == %s\n", n_redirect->fd);
+	//	printf("BBBBBUUUUUGGGG\n");
+				printf("n_redirect->redirect == %s\n", cv(n_redirect->redirect));
+				printf("n_redirect->file == %s\n", n_redirect->file);
+				n_redirect = n_redirect->next;
+			}
+		}
+		printf("TOKEN == %s\n", cv(n_op->token));
 		n_op = n_op->next;
 	}
 }

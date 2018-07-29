@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:16:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/29 05:20:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,6 +57,34 @@ e_token			ft_lexer_token(char *name, char c)
 	return (tkn);
 }
 
+int				ft_isalias(char **name)
+{
+	int			fd;
+	char		*line;
+	char		**tab;
+
+	fd = -1;
+	line = NULL;
+	if ((fd = open(".101shrc", O_CREAT | O_RDONLY, 0666)) == -1)
+		return (1);
+	while (get_next_line(fd, &line))
+	{
+		if (!(tab = ft_strsplit(line, '=')))
+			return (1);
+		if (ft_strcmp(*name, tab[0]) == 0)
+		{
+			ft_strdel(name);
+			*name = ft_strdup(tab[1]);
+		}
+		ft_strdel(&tab[0]);
+		ft_strdel(&tab[1]);
+		ft_strdel(&line);
+	}
+	if (close(fd) == -1)
+		return (1);
+	return (0);
+}
+
 t_lex			ft_lexer(char *input)
 {
 	t_lex		lex;
@@ -67,8 +95,8 @@ t_lex			ft_lexer(char *input)
 	v = -1;
 	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
 	{
-		//if (ft_isalias(lex.name[v]))
-		//		replace(lex.name[v]);
+		if (ft_isalias(&lex.name[v]))
+			break ;
 		lex.token[v] = ft_lexer_token(lex.name[v], input[idx]);
 	}
 	return (lex);

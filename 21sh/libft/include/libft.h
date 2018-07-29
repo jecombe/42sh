@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/03 07:28:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/29 05:12:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,6 +14,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
