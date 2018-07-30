@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/29 05:20:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 09:57:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,6 +19,7 @@
 void		ft_parcour_op(t_op *n_op)
 {
 	int		i;
+	int		j = 0;
 	t_redirect		*n_redirect;
 
 	while (n_op)
@@ -37,13 +38,23 @@ void		ft_parcour_op(t_op *n_op)
 		if (n_op->redirect)
 		{
 			n_redirect = n_op->redirect;
+			i = 1;
 			while (n_redirect)
 			{
+				j = i;
+				while (j--)
+					printf("\t");
 				printf("n_redirect->fd == %s\n", n_redirect->fd);
-	//	printf("BBBBBUUUUUGGGG\n");
-				printf("n_redirect->redirect == %s\n", cv(n_redirect->redirect));
+				j = i;
+				while (j--)
+					printf("\t");
+		printf("n_redirect->redirect == %s\n", cv(n_redirect->redirect));
+				j = i;
+				while (j--)
+					printf("\t");
 				printf("n_redirect->file == %s\n", n_redirect->file);
 				n_redirect = n_redirect->next;
+				i++;
 			}
 		}
 		printf("TOKEN == %s\n", cv(n_op->token));
@@ -61,7 +72,7 @@ int			 main(int ac, char *argv[])
 	lex = ft_lexer(argv[1]);
 	while (lex.name[++i])
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-	b_seq = ft_manage_parsing(lex);
+	b_seq = ft_parsing(lex);
 	ft_putstr("\x1b[32m");
 	printf("-------------- PARSING -------------\n");
 	i = 0;
@@ -76,5 +87,7 @@ int			 main(int ac, char *argv[])
 		b_seq = b_seq->next;
 	}
 	ft_putstr("\x1b[0m");
+//	ft_free_b_seq(&b_seq);
+//	printf("B_SEQ FREE AVEC SUCCES\n");
 	return (0);
 }

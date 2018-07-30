@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/07/26 03:20:04 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/30 09:10:23 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -34,7 +34,12 @@ SRCS_NAME =	\
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_tokens.c \
 			lexer/ft_lexer_utils.c \
-			parser/ft_parsing.c
+			parser/ft_parsing.c \
+			parser/ft_manage_parsing.c \
+			parser/ft_free_parse.c \
+			parser/ft_convert_token.c \
+			parser/ft_attrib_parsing.c \
+			parser/ft_malloc_parsing.c
 
 OBJS_FOLDERS = lexer parser
 OBJS_NAME = $(SRCS_NAME:.c=.o)

@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strdup.c                                      .::    .:/ .      .::   */
+/*   ft_tabdup.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <gmadec@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/23 00:36:38 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 10:42:27 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/30 05:52:29 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/30 05:52:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-char	*ft_strdup(const char *s)
+char		**ft_tabdup(char **tab)
 {
-	char	*str_return;
-	int		i;
+	char		**ret;
+	int			i;
 
-	i = ft_strlen(s);
-	if (!(str_return = malloc(sizeof(char) * i + 1)))
-		return (0);
-	str_return[i] = '\0';
-	i = -1;
-	while (s[++i])
-		str_return[i] = s[i];
-	return (str_return);
+	i = 0;
+	ret = NULL;
+	if (tab)
+	{
+		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
+			return (NULL);
+		while (tab[i])
+		{
+			ret[i] = tab[i];
+			i++;
+		}
+		ret[i] = NULL;
+	}
+	return (ret);
 }

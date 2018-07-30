@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/29 05:12:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 05:46:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,5 +94,9 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t				ft_nbrlen(int n);
 void				ft_stradel(char ***array);
+void				ft_tabdel(char ***tab);//A RAJOUTER A LA LIB SUR MASTER
+int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MASTER
+int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
+char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 
 #endif

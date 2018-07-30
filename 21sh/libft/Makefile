@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/07/12 13:18:43 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/30 05:47:46 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,11 @@ SRCS_NAME =	\
 			ft_toupper.c \
 			ft_wordcount.c \
 			ft_wordlen.c \
-			get_next_line.c
+			get_next_line.c \
+			ft_tabdel.c \
+			ft_tabdup.c \
+			ft_tablen.c \
+			ft_malloc_cmd.c
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
