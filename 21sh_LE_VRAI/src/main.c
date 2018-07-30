@@ -73,7 +73,7 @@ int        ft_exec(t_op *tmp_op, char **env, char *bin_cmd)
 	//cmd = ft_strdup(tmp_op->cmd[0]);
 	//ft_strdel(&tmp_op->cmd[0]);
 	//tmp_op->cmd[0] = ft_strdup(ft_strrchr(cmd, '/') + 1);
-printf("1\n");
+printf("1 %s\n", tmp_op->cmd[1]);
 	if ((cpid = fork()) == 0)
 	{
 		if (execve(bin_cmd, tmp_op->cmd, env) == -1)
@@ -161,12 +161,33 @@ char			*ft_search_bin(char *cmd)
 	}
 	return (bin);
 }
+void 			ft_skip_n(char **tab)
+{
+	int i = 1;
+	int t = 0;
+	while (tab[i])
+	{
+		while (tab[i][t])
+		{
+			if (tab[i][t] == '\n')
+			{
+				tab[i][t] = '\0';
+				t = 0;
+			}
+			t++;
+
+
+		}
+		i++;
+	}
+}
 void 			ft_solver(t_op *tmp_op, char **env)
 {
 	ft_get_bin(env);
 	char *tmp_bin;
 	if (tmp_op->cmd[0])
 	{
+		ft_skip_n(tmp_op->cmd);
 		tmp_bin = ft_search_bin(tmp_op->cmd[0]);
 		//printf("LLLLLLLLLLLLLL %s\n", tmp_bin);
 		ft_exec(tmp_op, env, tmp_bin);

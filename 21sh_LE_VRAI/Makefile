@@ -73,5 +73,6 @@ fclean: clean
 	@$(MAKE) -C $(LIB_PATH) fclean
 	@$(RM) $(NAME)
 	@echo "\033[1;31m[ $(NAME) ] deleted\033[0m"
+	@rm -rf obj
 
 re: fclean all
