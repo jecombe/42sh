@@ -123,7 +123,6 @@ void 			ft_get_bin(char **env)
 
 char			*ft_search_bin(char *cmd)
 {
-	char *bin;
 	char *tmp;
 	int i = 0;
 	int u = 0;
@@ -159,7 +158,7 @@ char			*ft_search_bin(char *cmd)
 		}
 		i++;
 	}
-	return (bin);
+	return (NULL);
 }
 void 			ft_skip_n(char **tab)
 {
@@ -237,6 +236,7 @@ int			 main(int ac, char *argv[] ,char **env)
 		printf("okookokok\n");
 		ft_putstr("\x1b[0m");
 		ft_solver(tmp_op, env);
+		ft_free_b_seq(&b_seq);
 	}
 	//	ft_free_b_seq(&b_seq);
 	//	printf("B_SEQ FREE AVEC SUCCES\n");
