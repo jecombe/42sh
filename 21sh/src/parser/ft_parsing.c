@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 04:38:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 04:51:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -216,6 +216,15 @@ int			ft_attrib_last_nredirect(t_op **n_op, t_redirect **n_redirect)
 	return (0);
 }
 
+int			ft_attrib_next_nredirect(t_redirect **n_redirect)
+{
+	if (!((*n_redirect)->next = ft_malloc_redirect()))
+		return (1);
+	(*n_redirect)->next->prev = *n_redirect;
+	*n_redirect = (*n_redirect)->next;
+	return (0);
+}
+
 int			ft_manage_redirection(t_seq **b_seq, e_token token, char *name)
 {
 	t_op			*n_op;
@@ -237,11 +246,8 @@ int			ft_manage_redirection(t_seq **b_seq, e_token token, char *name)
 		return (1);
 	}
 	else if (n_redirect->file)
-	{
-		n_redirect->next = ft_malloc_redirect();
-		n_redirect->next->prev = n_redirect;
-		n_redirect = n_redirect->next;
-	}
+		if (ft_attrib_next_nredirect(&n_redirect))
+			return (1);
 	n_redirect->redirect = token;
 	return (0);
 }
