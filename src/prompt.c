@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/20 22:28:00 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 10:59:54 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,34 +34,41 @@ char	*cut_pwd_dir(char *pwd)
 	return (0);
 }
 
-int		display_prompt(char *pwd, char *home, int err, char *rwd)
+void		prompt_type(e_prompt prompt)
 {
-	int prompt_size;
+	if (prompt == S_QUOTE)
+		ft_putstr("quote>");
+	else if (prompt == B_QUOTE)
+		ft_putstr("bquote>");
+	else if (prompt == D_QUOTE)
+		ft_putstr("dquote>");
+	else if (prompt == E_PIPE)
+		ft_putstr("pipe>");
+	else if (prompt == E_HDOC)
+		ft_putstr("heredoc>");
+}
 
-	prompt_size = 1;
-	err == 2 ? ft_putstr(RED) : ft_putstr(WHITE);
+void	display_prompt(char *home, e_prompt prompt)
+{
+	char pwd[4096];
+
+	if (prompt != PROMPT)
+		return (prompt_type(prompt));
+	getcwd(pwd, sizeof(pwd));
+	//err == 2 ? ft_putstr(RED) : ft_putstr(WHITE);
+	ft_putstr(WHITE);
 	ft_putstr("101sh");
 	ft_putstr(END);
 	ft_putchar(' ');
 	ft_putstr(BLUE);
-//	prompt_size = !ft_strcmp(pwd, !home ? "" : home) ?
-//	prompt_size + 1 : prompt_size;
 	if (!ft_strcmp(pwd, !home ? "" : home))
-	{
 		ft_putstr("~");
-		prompt_size++;
-	}
-	else if (ft_strlen(pwd) == (ft_strlen(rwd) + 1))
-	{
+	else if (ft_strlen(pwd) == (ft_strlen(cut_pwd_dir(pwd)) + 1))
 			ft_putstr(pwd);
-			prompt_size += ft_strlen(pwd);
-	}
 	else
-	{
-		ft_putstr(rwd);
-		prompt_size += ft_strlen(rwd);
-	}
+		ft_putstr(cut_pwd_dir(pwd));
 	ft_putstr(END);
 	ft_putchar(' ');
-	return (prompt_size + 7);
+	if (home)
+		ft_strdel(&home);
 }

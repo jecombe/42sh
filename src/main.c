@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:45:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 02:37:45 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 13:32:30 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,8 @@ int		main(void)
 	char *line;
 	e_prompt prompt;
 
-	prompt = 1;
+	prompt = 0;
+	g_env = ft_tabdup(environ);
 	if ((xterm = getenv("TERM")) == NULL)
 	{
 		ft_putstr_fd("Please set the environment variable TERM;\n", STDERR_FILENO);
@@ -29,7 +30,7 @@ int		main(void)
 	if (tgetent(NULL, xterm) == ERR)
 		return (-1);
 	ft_putstr(tgetstr("cl", NULL));
-	while (get_stdin(&line, environ, prompt) > 0)
+	while (get_stdin(&line, prompt) > 0)
 	{
 		ft_strdel(&line);
 	}

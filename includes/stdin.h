@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 02:15:29 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 13:20:34 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,24 +18,24 @@
 # define WHITE "\033[7;49;37m"
 # define RED "\033[7;49;91m"
 # define END "\033[0m"
-# define LEFT_KEY (key[0] == 27 && key[1] == 91 && key[2] == 68)
-# define RIGHT_KEY (key[0] == 27 && key[1] == 91 && key[2] == 67)
-# define UP_KEY (key[0] == 27 && key[1] == 91 && key[2] == 65)
-# define DOWN_KEY (key[0] == 27 && key[1] == 91 && key[2] == 66)
-# define SPACE_KEY (key[0] == 32 && key[1] == 0)
-# define TAB_KEY (key[0] == 9 && key[1] == 0)
-# define BS_KEY (key[0] == 127 && key[1] == 0)
-# define ENTER_KEY (key[0] == 10 && key[1] == 0)
-# define BACKSPACE (key[0] == 127 && key[1] == 0)
-# define CTRL_C (key[0] == 3 && key[1] == 0)
-# define CTRL_D (key[0] == 4 && key[1] == 0)
-# define CTRL_L (key[0] == 12 && key[1] == 0)
-# define CTRL_K (key[0] == 11 && key[1] == 0)
-# define CTRL_U (key[0] == 21 && key[1] == 0)
-# define CTRL_W (key[0] == 23 && key[1] == 0)
-# define CTRL_P (key[0] == 16 && key[1] == 0)
-# define HOME_KEY (key[0] == 27 && key[1] == 91 && key[2] == 72 && key[3] == 0)
-# define END_KEY (key[0] == 27 && key[1] == 91 && key[2] == 70 && key[3] == 0)
+# define LEFT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 68)
+# define RIGHT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 67)
+# define UP_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 65)
+# define DOWN_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 66)
+# define SPACE_KEY (ed->key[0] == 32 && ed->key[1] == 0)
+# define TAB_KEY (ed->key[0] == 9 && ed->key[1] == 0)
+# define BS_KEY (ed->key[0] == 127 && ed->key[1] == 0)
+# define ENTER_KEY (ed->key[0] == 10 && ed->key[1] == 0)
+# define BACKSPACE (ed->key[0] == 127 && ed->key[1] == 0)
+# define CTRL_C (ed->key[0] == 3 && ed->key[1] == 0)
+# define CTRL_D (ed->key[0] == 4 && ed->key[1] == 0)
+# define CTRL_L (ed->key[0] == 12 && ed->key[1] == 0)
+# define CTRL_K (ed->key[0] == 11 && ed->key[1] == 0)
+# define CTRL_U (ed->key[0] == 21 && ed->key[1] == 0)
+# define CTRL_W (ed->key[0] == 23 && ed->key[1] == 0)
+# define CTRL_P (ed->key[0] == 16 && ed->key[1] == 0)
+# define HOME_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 72)
+# define END_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 70)
 # define SHIFT_UP "\E[1;2A"
 # define SHIFT_DOWN "\E[1;2B"
 # define SHIFT_LEFT "\E[1;2D"
@@ -48,6 +48,7 @@
 # include <curses.h>
 # include <term.h>
 
+char **g_env;
 struct winsize sz;
 
 typedef enum		s_prompt
@@ -56,12 +57,8 @@ typedef enum		s_prompt
 	B_QUOTE,
 	S_QUOTE,
 	D_QUOTE,
-	HDOC,
-	PIPE,
-	CMDSUB,
-	MATHSUB,
-	BRACEPARA,
-
+	E_HDOC,
+	E_PIPE,
 }					e_prompt;
 
 typedef struct		s_editor
@@ -71,20 +68,11 @@ typedef struct		s_editor
 	size_t	prompt_size;
 	size_t	cursor_str_pos;
 	char	*clipboard;
+	char	key[10];
 }					t_editor;
 
-typedef struct		s_shell
-{
-	int		err;
-	char	*line;
-	char	**bin_path;
-	char	pwd[4096];
-	char	last_path[4096];
-	char	save_home[4096];
-}					t_shell;
-
 int		g_bin_exit;
-char	*g_save_home;
+//char	*g_save_home;
 
 /*
 *******************************************************************************
@@ -108,7 +96,7 @@ int		backspace(t_editor *ed, char **line);
 *******************************************************************************
 */
 
-int		clear_window(t_shell *sh, t_editor *ed);
+int		clear_window(char *line, t_editor *ed, e_prompt prompt);
 void	end_of_text(char **line, t_editor *ed);
 void	myhandler_interrupt(int signal);
 
@@ -124,8 +112,8 @@ void	reset_cursor_position_escape_sequence(char **cursor_position);
 int		add_char_into_line(char key, char **line, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
-int		display_prompt(char *pwd, char *home, int err, char *rwd);
-int		get_stdin(char **line, char **env, e_prompt prompt);
+void	display_prompt(char *home, e_prompt prompt);
+int		get_stdin(char **line, e_prompt prompt);
 char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
