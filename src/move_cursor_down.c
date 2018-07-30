@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:52:03 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/23 20:46:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/27 05:40:35 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,9 +15,9 @@
 
 void	move_cursor_down(char *line, t_editor *ed)
 {
-	ioctl(0, TIOCGWINSZ, &sz);
 	if (get_cursor_position(1) != ed->last_row)
 	{
+		ioctl(0, TIOCGWINSZ, &sz);
 		if (get_cursor_position(1) + 1 == ed->last_row && (ft_strlen(line
 		+ ed->cursor_str_pos) - (sz.ws_col - get_cursor_position(0))
 		< get_cursor_position(0)))

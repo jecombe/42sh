@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 00:30:17 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 04:23:43 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -102,15 +102,29 @@ int		line_editor_init(t_editor **ed)
 	return (1);
 }
 
-int		get_stdin(char **line, t_shell *sh)
+int		shell_init(t_shell **sh)
+{
+	if (!(*sh = (t_shell*)malloc(sizeof(t_shell))))
+		return (0);
+	(*sh)->err = 0;
+	(*sh)->line = NULL;
+	g_save_home = NULL;
+	g_bin_exit = 0;
+	getcwd((*sh)->last_path, sizeof((*sh)->last_path));
+	return (1);
+}
+
+int		get_stdin(char **line, char **env, e_prompt prompt)
 {
 	int ret;
 	char buf[10];
 	t_editor *ed;
+	t_shell *sh;
 
+	shell_init(&sh);
 	get_term_raw_mode(1);
 	line_editor_init(&ed);
-	g_save_home = find_var_string(sh->my_env, "HOME", 0);
+	g_save_home = find_var_string(env, "HOME", 0);
 	ed->prompt_size = display_prompt(sh->pwd, g_save_home, sh->err, cut_pwd_dir(sh->pwd));
 		//printf("prompt_size: %zu\n", ed->prompt_size);
 	getcwd(sh->pwd, sizeof(sh->pwd));
@@ -119,7 +133,7 @@ int		get_stdin(char **line, t_shell *sh)
 	{
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		buf[ret] = '\0';
-	//	printf("\nbuf[0]: %d, buf[1]: %d, buf[2]: %d, buf[3]: %d, buf[4]: %d buf[5]: %d\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5]);
+	//	printf("\nbuf[0]: %d, buf[1]: %d, buf[2]: %d, buf[3]: %d, buf[4]: %d buf[5]: %d\n, buf[6]: %d\n", buf[0], buf[1], buf[2], buf[3], buf[4], buf[5], buf[6]);
 		if (get_keyboard_key(buf, &ret, line, ed, sh))
 			*line = ft_strjoin_free(*line, buf);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);

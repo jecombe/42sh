@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 05:06:18 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 02:15:29 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,6 +50,20 @@
 
 struct winsize sz;
 
+typedef enum		s_prompt
+{
+	PROMPT,
+	B_QUOTE,
+	S_QUOTE,
+	D_QUOTE,
+	HDOC,
+	PIPE,
+	CMDSUB,
+	MATHSUB,
+	BRACEPARA,
+
+}					e_prompt;
+
 typedef struct		s_editor
 {
 	size_t	first_row;
@@ -63,7 +77,6 @@ typedef struct		s_shell
 {
 	int		err;
 	char	*line;
-	char	**my_env;
 	char	**bin_path;
 	char	pwd[4096];
 	char	last_path[4096];
@@ -72,7 +85,6 @@ typedef struct		s_shell
 
 int		g_bin_exit;
 char	*g_save_home;
-char	*g_save_line;
 
 /*
 *******************************************************************************
@@ -113,7 +125,7 @@ int		add_char_into_line(char key, char **line, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 int		display_prompt(char *pwd, char *home, int err, char *rwd);
-int		get_stdin(char **line, t_shell *sh);
+int		get_stdin(char **line, char **env, e_prompt prompt);
 char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
