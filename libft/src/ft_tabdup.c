@@ -1,25 +1,35 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strlen.c                                      .::    .:/ .      .::   */
+/*   ft_tabdup.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:13:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:41:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/30 05:52:29 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/30 05:52:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-size_t		ft_strlen(const char *s)
+char		**ft_tabdup(char **tab)
 {
-	int		i;
+	char		**ret;
+	int			i;
 
 	i = 0;
-	if (s)
-		while (s[i])
+	ret = NULL;
+	if (tab)
+	{
+		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
+			return (NULL);
+		while (tab[i])
+		{
+			ret[i] = tab[i];
 			i++;
-	return (i);
+		}
+		ret[i] = NULL;
+	}
+	return (ret);
 }

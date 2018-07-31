@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strlen.c                                      .::    .:/ .      .::   */
+/*   ft_tablen.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:13:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:41:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/07/30 05:52:54 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/30 05:53:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-size_t		ft_strlen(const char *s)
+int			ft_tablen(char **tab)
 {
 	int		i;
 
 	i = 0;
-	if (s)
-		while (s[i])
-			i++;
+	while (tab[i])
+		i++;
 	return (i);
 }

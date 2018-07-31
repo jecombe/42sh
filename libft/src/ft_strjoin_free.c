@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strlen.c                                      .::    .:/ .      .::   */
+/*   ft_strjoin_free.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:13:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:41:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/01 23:46:11 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/31 23:37:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-size_t		ft_strlen(const char *s)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	int		i;
+	char *tmp;
 
-	i = 0;
-	if (s)
-		while (s[i])
-			i++;
-	return (i);
+	if (!s1)
+		tmp = ft_strdup(s2);
+	else
+	{
+		tmp = ft_strjoin(s1, s2);
+		ft_strdel(&s1);
+	}
+	return (tmp);
 }

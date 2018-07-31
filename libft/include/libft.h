@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/03 07:28:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/31 23:36:50 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,6 +14,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -70,6 +71,7 @@ char				*ft_strmapi(const char *s, char (*f)(unsigned int, char));
 char				*ft_strtrim(const char *s);
 char				*ft_strsub(const char *s, unsigned int start, size_t len);
 char				*ft_strjoin(const char *s1, const char *s2);
+char				*ft_strjoin_free(char *s1, char *s2);
 int					ft_putchar(int c);
 void				ft_putstr(const char *s);
 void				ft_putendl(const char *s);
@@ -93,5 +95,9 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t				ft_nbrlen(int n);
 void				ft_stradel(char ***array);
+void				ft_tabdel(char ***tab);//A RAJOUTER A LA LIB SUR MASTER
+int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MASTER
+int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
+char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 
 #endif

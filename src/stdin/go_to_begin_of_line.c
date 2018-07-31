@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strlen.c                                      .::    .:/ .      .::   */
+/*   go_to_begin_of_line.c                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:13:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:41:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/19 04:47:20 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/31 23:34:50 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/stdin.h"
 
-size_t		ft_strlen(const char *s)
+void	go_to_begin_of_line(t_editor *ed)
 {
-	int		i;
-
-	i = 0;
-	if (s)
-		while (s[i])
-			i++;
-	return (i);
+	if (ed->cursor_str_pos)
+	{
+		tputs(tgoto(tgetstr("cv", NULL), 0, ed->first_row - 1), 1, ft_putchar);
+		tputs(tgoto(tgetstr("ch", NULL), 0, ed->prompt_size - 1), 1, ft_putchar);
+		ed->cursor_str_pos = 0;
+	}
 }

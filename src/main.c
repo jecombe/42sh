@@ -6,65 +6,71 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/28 17:59:27 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 00:05:43 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "../include/stdin.h"
 #include "../include/lexer.h"
 #include "../include/parsing.h"
 
 #define cv ft_convert_token_to_string
 
-void		ft_parcour_op(t_op *n_op)
+void				ft_watch_result(char *line, t_lex lex)
 {
-	int		i;
+	int				i = -1;
 
-	while (n_op)
+	printf("%sLINE :%s\n%s\n", RED, END, line);
+	printf("%sLEXER : \n%s", RED, END);
+	while (lex.name[++i])
+		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	printf("%s PARSER : \n", RED);
+	ft_putstr(END);
+}
+
+int					ft_term_init(char **environ)
+{
+	char			*term;
+
+	g_env = ft_tabdup(environ);
+	if (!(term = getenv("TERM")))
+		term = "xterm-256color";
+	if (tgetent(NULL, term) == ERR)
+		return (1);
+	return (0);
+}
+
+void				ft_101sh(void)
+{
+	e_prompt		prompt;
+	char			*line;
+	t_lex			lex;
+
+	prompt = PROMPT;
+	line = NULL;
+	while (get_stdin(&line, prompt))
 	{
-		i = 0;
-		if (n_op->cmd)
-			while (n_op->cmd[i])
+		if (line)
+		{
+			lex = ft_lexer(line);
+		/*	ft_parser( &prompt);
+			if (ft_parser)
 			{
-				printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
-				i++;
-			}
-		printf("TOKEN[0] == %s TOKEN[1] == %s\n", cv(n_op->token[0]), cv(n_op->token[1]));
-		n_op = n_op->next;
+				
+			}*/
+			ft_watch_result(line, lex);
+			ft_strdel(&line);
+		}
 	}
 }
 
-int			 main(int ac, char *argv[])
+int					main(int ac, char *av[])
 {
-	t_lex	lex;
-	t_seq	*b_seq;
-	int		i = -1;
-	extern char **environ;
-	char buff[2048];
+	extern char		**environ;
 
-	(void)ac;
-	while (101)
-	{
-		if (!(read(0, buff, 2048)))
-			break;
-		lex = ft_lexer(buff);
-		while (lex.name[++i])
-			printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-		b_seq = ft_manage_parsing(lex);
-		ft_putstr("\x1b[32m");
-		printf("-------------- PARSING -------------\n");
-		i = 0;
-		while (b_seq)
-		{
-			printf("SEQUENCE NUMBER %d, LIST TERMINATOR == %s\n", i, ft_convert_token_to_string(b_seq->token));
-			if (b_seq->op)
-				ft_parcour_op(b_seq->op);
-			i++;
-			if (b_seq->next)
-			printf("\n");
-			b_seq = b_seq->next;
-		}
-		ft_putstr("\x1b[0m");
-	}
-	return (0);
+	if (ft_term_init(environ))
+		return (EXIT_FAILURE);
+	ft_101sh();
+	return (EXIT_SUCCESS);
 }
