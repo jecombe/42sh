@@ -103,4 +103,3 @@ t_lex			ft_lexer(char *input)
 	}
 	return (lex);
 }
-
