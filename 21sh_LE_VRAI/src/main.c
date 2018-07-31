@@ -212,8 +212,10 @@ int			 main(int ac, char *argv[] ,char **env)
 		if (!(read(0, buff, 2048)))
 			break;
 		lex = ft_lexer(buff);
+		i = -1;
 		while (lex.name[++i])
 			printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+		printf("LOOK AT THE LEX STRUCT MAN ! STOP WEED EVERIDAY X)\n");
 		b_seq = ft_parsing(lex);
 		ft_putstr("\x1b[32m");
 		printf("-------------- PARSING -------------\n");
@@ -237,6 +239,10 @@ int			 main(int ac, char *argv[] ,char **env)
 		ft_putstr("\x1b[0m");
 		ft_solver(tmp_op, env);
 		ft_free_b_seq(&b_seq);
+		if (b_seq)
+			printf("B_SEQ ENCORE EN VIE\n");
+		else
+			printf("B_SEQ MORT JE PENSE ! ! ! RIP IN PEACE !\n");
 	}
 	//	ft_free_b_seq(&b_seq);
 	//	printf("B_SEQ FREE AVEC SUCCES\n");

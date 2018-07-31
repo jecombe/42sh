@@ -25,6 +25,7 @@ void		ft_free_b_redirect(t_redirect **b_redirect)
 		ft_strdel(&n_redirect->file);
 		n_redirect = (*b_redirect)->next;
 		free(*b_redirect);
+		*b_redirect = NULL;
 	}
 }
 
@@ -40,6 +41,7 @@ void		ft_free_b_op(t_op **b_op)
 		ft_free_b_redirect(&(*b_op)->redirect);
 		n_op = (*b_op)->next;
 		free(*b_op);
+		*b_op = NULL;
 	}
 }
 
@@ -54,5 +56,6 @@ void		ft_free_b_seq(t_seq **b_seq)
 		ft_free_b_op(&(*b_seq)->op);
 		n_seq = (*b_seq)->next;
 		free(*b_seq);
+		*b_seq = NULL;
 	}
 }

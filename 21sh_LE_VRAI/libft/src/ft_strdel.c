@@ -12,6 +12,7 @@
 /* ************************************************************************** */
 
 #include "../include/libft.h"
+#include "stdio.h"
 
 void	ft_strdel(char **as)
 {
