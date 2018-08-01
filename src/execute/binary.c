@@ -6,13 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 01:49:07 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:01:06 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
-#include "../../include/parsing.h"
 
 void		ft_get_bin(char **env)
 {

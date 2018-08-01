@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 02:02:56 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/01 04:01:58 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -59,9 +59,13 @@ SRCS_NAME =	\
 			parser/ft_free_parse.c \
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
-			parser/ft_parsing.c
+			parser/ft_parsing.c \
+			execute/binary.c \
+			execute/execute.c \
+			execute/solver.c \
+			execute/utils.c
 
-OBJS_FOLDERS = stdin lexer parser
+OBJS_FOLDERS = stdin lexer parser execute redirections
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

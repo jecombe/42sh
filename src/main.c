@@ -6,26 +6,51 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 02:02:31 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 03:59:51 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/stdin.h"
 #include "../include/lexer.h"
-#include "../include/parsing.h"
+//#include "../include/parsing.h"
+#include "../include/execute.h"
 
 #define cv ft_convert_token_to_string
 
-void				ft_watch_result(char *line, t_lex lex)
+void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
+	t_op			*n_op;
+	t_redirect		*n_redirect;
 
 	printf("%sLINE :%s\n%s\n", RED, END, line);
 	printf("%sLEXER : \n%s", RED, END);
 	while (lex.name[++i])
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-	printf("%s PARSER : \n", RED);
+	while (n_seq)
+	{
+		n_op = n_seq->op;
+		while (n_op)
+		{
+			if (n_op->cmd)
+			{
+				i = -1;
+				while (n_op->cmd[++i])
+					printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
+			}
+			n_redirect = n_op->redirect;
+			while (n_redirect)
+			{
+				printf("FD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				n_redirect = n_redirect->next;
+			}
+			printf("n_op->token == %s\n", cv(n_op->token));
+			n_op = n_op->next;
+		}
+		printf("n_seq->token == %s\n", cv(n_seq->token));
+		n_seq = n_seq->next;
+	}
 	ft_putstr(END);
 }
 
@@ -46,6 +71,7 @@ void				ft_101sh(void)
 	e_prompt		prompt;
 	char			*line;
 	t_lex			lex;
+	t_seq			*b_seq;
 
 	prompt = PROMPT;
 	line = NULL;
@@ -54,14 +80,12 @@ void				ft_101sh(void)
 		if (line)
 		{
 			lex = ft_lexer(line);
-		/*	ft_parser( &prompt);
-			if (ft_parser)
-			{
-				
-			}*/
-			ft_watch_result(line, lex);
+			b_seq = ft_parsing(lex);
 			//******EXECUTER LES COMMANDES******//
+			ft_solver(b_seq, g_env);
+			ft_watch_result(line, lex, b_seq);
 			ft_strdel(&line);
+			ft_free_b_seq(&b_seq);
 		}
 	}
 }

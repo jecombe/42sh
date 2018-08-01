@@ -6,13 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 01:54:34 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:01:10 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
-#include "../../include/parsing.h"
 
 int        ft_exec(t_op *tmp_op, char **env, char *bin_cmd)
 {
