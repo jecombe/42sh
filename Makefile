@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 00:01:39 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/01 03:48:45 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -54,6 +54,7 @@ SRCS_NAME =	\
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_tokens.c \
 			lexer/ft_lexer_utils.c \
+			lexer/ft_lexer_free.c \
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \
 			parser/ft_free_parse.c \

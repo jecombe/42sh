@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 01:58:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 03:46:36 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,8 @@ char			*ft_lexer_break_input(char *input, int *idx)
 	{
 		if (ft_lexer_break_operator(input, *idx, i))
 			break ;
-		ft_lexer_break_quote(input, idx);
+		if ((s = ft_lexer_break_quote(input, idx)))
+			return (s);
 		ft_lexer_break_expansion(input, idx);
 		if ((ft_lexer_break_blank(input, idx, &i)))
 			break ;
@@ -85,16 +86,27 @@ int				ft_isalias(char **name)
 	return (0);
 }
 
+char			ft_lexer_check(char *name)
+{
+	if (ft_strcmp(name, "\"") == 0 || ft_strcmp(name, "\'") == 0 ||
+			ft_strcmp(name, "\\") == 0)
+		return (name[0]);
+	return ('\0');
+}
+
 t_lex			ft_lexer(char *input)
 {
 	t_lex		lex;
 	int			idx;
 	int			v;
 
+	lex.error = '\0';
 	idx = 0;
 	v = -1;
 	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
 	{
+		if ((lex.error = ft_lexer_check(lex.name[v])))
+			break ;
 		if (v == 0 || lex.token[v - 1] == SEMI || lex.token[v - 1] == AND ||
 				lex.token[v - 1] == PIPE)
 			if (ft_isalias(&lex.name[v]))
@@ -103,4 +115,3 @@ t_lex			ft_lexer(char *input)
 	}
 	return (lex);
 }
-

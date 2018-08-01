@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:19:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:20:20 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,6 +83,7 @@ typedef struct		s_lex
 {
 	char			*name[MAX_TAB_SIZE];
 	e_token			token[MAX_TAB_SIZE];
+	char			error;
 }					t_lex;
 
 /*
@@ -96,7 +97,7 @@ t_lex		ft_lexer(char *input);
 */
 
 int			ft_lexer_break_operator(char *input, int idx, int i);
-void		ft_lexer_break_quote(char *input, int *idx);
+char		*ft_lexer_break_quote(char *input, int *idx);
 int			ft_lexer_break_blank(char *input, int *idx, int *i);
 void		ft_lexer_break_expansion(char *input, int *idx);
 int			ft_lexer_break_comment(char *input, int *idx);
@@ -115,5 +116,10 @@ char		*ft_convert_token_to_string(e_token token);
 int			ft_isoperator(char *input);
 int			ft_isreserved(char *input);
 
+/*
+**		ft_lexer_free.c
+*/
+
+void		ft_lexer_free(t_lex *lex);
 
 #endif

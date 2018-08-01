@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 00:05:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:20:22 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,13 +54,17 @@ void				ft_101sh(void)
 		if (line)
 		{
 			lex = ft_lexer(line);
+			if (lex.error == '\0')
+			{
 		/*	ft_parser( &prompt);
 			if (ft_parser)
 			{
 				
 			}*/
-			ft_watch_result(line, lex);
-			ft_strdel(&line);
+				ft_watch_result(line, lex);
+				ft_strdel(&line);
+			}
+		//	ft_lexer_free(&lex);
 		}
 	}
 }

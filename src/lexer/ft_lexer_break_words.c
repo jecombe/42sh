@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 02:52:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 02:00:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 02:10:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ int			ft_lexer_break_operator(char *input, int idx, int i)
 	return (ret);
 }
 
-void		ft_lexer_break_quote(char *input, int *idx)
+char		*ft_lexer_break_quote(char *input, int *idx)
 {
 	char	c;
 
@@ -51,11 +51,17 @@ void		ft_lexer_break_quote(char *input, int *idx)
 	{
 		while (input[++(*idx)] != c && input[*idx])
 			;
+		return ((c == '"') ? "\"" : "\'");
 	}
 	else if (c == '\\')
 	{
 		(*idx + 1) < ft_strlen(input) ? ++(*idx) : 0;
+		if (input[*idx + 1] != '\0')
+			++(*idx);
+		else
+			return ("\\");
 	}
+	return (NULL);
 }
 
 int			ft_lexer_break_blank(char *input, int *idx, int *i)
