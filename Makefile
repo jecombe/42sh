@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 00:01:39 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/01 02:02:56 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -93,5 +93,6 @@ fclean: clean
 	@$(MAKE) -C $(LIB_PATH) fclean
 	@$(RM) $(NAME)
 	@echo "\033[1;31m[ $(NAME) ] deleted\033[0m"
+	@rm -rf obj
 
 re: fclean all

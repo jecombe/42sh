@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 00:05:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 02:02:31 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,6 +60,7 @@ void				ft_101sh(void)
 				
 			}*/
 			ft_watch_result(line, lex);
+			//******EXECUTER LES COMMANDES******//
 			ft_strdel(&line);
 		}
 	}
