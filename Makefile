@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 04:01:58 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/01 04:31:48 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -63,7 +63,8 @@ SRCS_NAME =	\
 			execute/binary.c \
 			execute/execute.c \
 			execute/solver.c \
-			execute/utils.c
+			execute/utils.c \
+			execute/check_command.c
 
 OBJS_FOLDERS = stdin lexer parser execute redirections
 OBJS_NAME = $(SRCS_NAME:.c=.o)
