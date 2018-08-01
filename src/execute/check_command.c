@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 04:29:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 04:32:29 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:34:29 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,5 +46,3 @@ void		ft_builtins(t_op *t_exec, int what)
 	if (what == 6)
 		printf("UNSETENV\n");;
 }
-
-

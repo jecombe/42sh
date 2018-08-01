@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 04:31:16 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 04:36:49 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,6 @@ void		ft_solver(t_seq *tmp_seq, char **env)
 	{
 		if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 			ft_builtins(t_exec, ok);
-		ft_skip(t_exec->cmd);
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
 		ft_exec(t_exec, env, tmp_bin);
 	}
