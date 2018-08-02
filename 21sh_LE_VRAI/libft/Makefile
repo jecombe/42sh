@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/07/30 05:47:46 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/07/31 23:37:31 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRCS_NAME =	\
 			ft_striter.c \
 			ft_striteri.c \
 			ft_strjoin.c \
+			ft_strjoin_free.c \
 			ft_strlcat.c \
 			ft_strlen.c \
 			ft_strmap.c \

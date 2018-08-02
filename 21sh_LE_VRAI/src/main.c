@@ -6,245 +6,138 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 09:57:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 03:59:51 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#include "../include/stdin.h"
 #include "../include/lexer.h"
-#include "../include/parsing.h"
+//#include "../include/parsing.h"
+#include "../include/execute.h"
 
 #define cv ft_convert_token_to_string
 
-void		ft_parcour_op(t_op *n_op)
+void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
-	int		i;
-	int		j = 0;
+	int				i = -1;
+	t_op			*n_op;
 	t_redirect		*n_redirect;
 
-	while (n_op)
+	printf("%sLINE :%s\n%s\n", RED, END, line);
+	printf("%sLEXER : \n%s", RED, END);
+	while (lex.name[++i])
+		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	while (n_seq)
 	{
-		i = 0;
-		if (n_op->cmd)
+		n_op = n_seq->op;
+		while (n_op)
 		{
-			while (n_op->cmd[i])
+			if (n_op->cmd)
 			{
-				printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
-				i++;
+				i = -1;
+				while (n_op->cmd[++i])
+					printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
 			}
-		}
-		else
-			printf("CMD == (NULL)\n");
-		if (n_op->redirect)
-		{
 			n_redirect = n_op->redirect;
-			i = 1;
 			while (n_redirect)
 			{
-				j = i;
-				while (j--)
-					printf("\t");
-				printf("n_redirect->fd == %s\n", n_redirect->fd);
-				j = i;
-				while (j--)
-					printf("\t");
-				printf("n_redirect->redirect == %s\n", cv(n_redirect->redirect));
-				j = i;
-				while (j--)
-					printf("\t");
-				printf("n_redirect->file == %s\n", n_redirect->file);
+				printf("FD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
 				n_redirect = n_redirect->next;
-				i++;
 			}
+			printf("n_op->token == %s\n", cv(n_op->token));
+			n_op = n_op->next;
 		}
-		printf("TOKEN == %s\n", cv(n_op->token));
-		n_op = n_op->next;
+		printf("n_seq->token == %s\n", cv(n_seq->token));
+		n_seq = n_seq->next;
 	}
+	ft_putstr(END);
 }
 
-int        ft_exec(t_op *tmp_op, char **env, char *bin_cmd)
+int					ft_term_init(char **environ)
 {
-	pid_t        cpid;
-	int            status;
-	int            ret;
-	char        *cmd;
+	char			*term;
 
-	ret = 0;
-	//cmd = ft_strdup(tmp_op->cmd[0]);
-	//ft_strdel(&tmp_op->cmd[0]);
-	//tmp_op->cmd[0] = ft_strdup(ft_strrchr(cmd, '/') + 1);
-printf("1 %s\n", tmp_op->cmd[1]);
-	if ((cpid = fork()) == 0)
-	{
-		if (execve(bin_cmd, tmp_op->cmd, env) == -1)
-			exit(EXIT_FAILURE);
-		else
-			exit(EXIT_SUCCESS);
-	}
-	if (cpid > 0)
-	{
-		wait(&status);
-		ret = WEXITSTATUS(status);
-	}
-	if (ret == 1)
+	g_env = ft_tabdup(environ);
+	if (!(term = getenv("TERM")))
+		term = "xterm-256color";
+	if (tgetent(NULL, term) == ERR)
 		return (1);
 	return (0);
 }
+void 			ft_separate(t_seq *b_seq)
+{
+	t_op *opera;
+	int ok = 0;
 
-char *ft_avance(char *bin)
-{
-	bin++;
-	bin++;
-	bin++;
-	bin++;
-	bin++;
-	return (bin);
-
-}
-void 			ft_get_bin(char **env)
-{
-	int  i = 0;
-	int o = 4;
-	char *bin;
-	printf("get bin\n");
-	while (env[i])
+	opera = b_seq->op;
+	if (opera->next)
 	{
-		if (ft_strncmp("PATH=", env[i], 5) == 0)
+		while (opera)
 		{
-			//env[i]++;
-			bin = ft_strdup(env[i]);
-			bin = ft_avance(bin);
-			g_bin = ft_strsplit(bin, ':');
-			printf("-%s-\n", g_bin[0]);
-		}
-		i++;
-	}
-}
-
-char			*ft_search_bin(char *cmd)
-{
-	char *tmp;
-	int i = 0;
-	int u = 0;
-	int t = 0;
-	struct stat st;
-	while (cmd[u])
-	{
-		if (cmd[u] == '\n')
-		{
-			cmd[u] = '\0';
-			break;
-		}
-		u++;
-	}
-	while (g_bin[i])
-	{
-		tmp = ft_strdup(g_bin[i]);	
-		while (tmp[t])
-		{
-			t++;
-		}
-		tmp[t] = '\0';
-		t = 0;
-		tmp = ft_strcat(tmp, "/");
-		tmp = ft_strcat(tmp, cmd);
-		printf("=+=+=+=+=+ %s-\n", tmp);
-		if (lstat(tmp, &st) == -1)
-			;
-		else
-		{
-			printf("yes %s\n" , tmp);
-			return (tmp);
-		}
-		i++;
-	}
-	return (NULL);
-}
-void 			ft_skip_n(char **tab)
-{
-	int i = 1;
-	int t = 0;
-	while (tab[i])
-	{
-		while (tab[i][t])
-		{
-			if (tab[i][t] == '\n')
+			printf("COMMAND-\n");
+			if (ft_solver(opera, g_env) == 2)
 			{
-				tab[i][t] = '\0';
-				t = 0;
+				ok = 1;
+				break;
 			}
-			t++;
-
-
+			opera = opera->next;
 		}
-		i++;
+	}
+	else
+	{
+		if (ok == 0)
+			ft_solver(opera, g_env);
 	}
 }
-void 			ft_solver(t_op *tmp_op, char **env)
+void				ft_101sh(void)
 {
-	ft_get_bin(env);
-	char *tmp_bin;
-	if (tmp_op->cmd[0])
-	{
-		ft_skip_n(tmp_op->cmd);
-		tmp_bin = ft_search_bin(tmp_op->cmd[0]);
-		//printf("LLLLLLLLLLLLLL %s\n", tmp_bin);
-		ft_exec(tmp_op, env, tmp_bin);
-	}
-	while (tmp_op)
-	{
-		printf("==============> %s\n", tmp_op->cmd[0]);
-		tmp_op = tmp_op->next;
-	}
-}
-int			 main(int ac, char *argv[] ,char **env)
-{
-	t_lex	lex;
-	t_seq	*b_seq;
-	int		i = -1;
-	char buff[2048];
-	t_op *tmp_op;
-	int p = 0;
+	e_prompt		prompt;
+	char			*line;
+	t_lex			lex;
+	t_seq			*b_seq;
 
-	(void)ac;
-	while (101)
+	prompt = PROMPT;
+	line = NULL;
+	while (get_stdin(&line, prompt))
 	{
-		if (!(read(0, buff, 2048)))
-			break;
-		lex = ft_lexer(buff);
-		i = -1;
-		while (lex.name[++i])
-			printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
-		printf("LOOK AT THE LEX STRUCT MAN ! STOP WEED EVERIDAY X)\n");
-		b_seq = ft_parsing(lex);
-		ft_putstr("\x1b[32m");
-		printf("-------------- PARSING -------------\n");
-		i = 0;
-		if (b_seq->op)
+		if (line)
 		{
-			tmp_op = b_seq->op;
-			printf("okokokokokokokokokokokokokok\n");
-		}
-		while (b_seq)
-		{
-			printf("SEQUENCE NUMBER %d, LIST TERMINATOR == %s\n", i, ft_convert_token_to_string(b_seq->token));
-			if (b_seq->op)
-				ft_parcour_op(b_seq->op);
-			i++;
+			lex = ft_lexer(line);
+			b_seq = ft_parsing(lex);
+			//******EXECUTER LES COMMANDES******//
+			//si il y a next dans t_seq
 			if (b_seq->next)
-				printf("\n");
-			b_seq = b_seq->next;
+			{
+				while (b_seq)
+				{
+					//regarde si il y a un next dans t_op
+					ft_separate(b_seq);
+					//ft_solver(b_seq, g_env);
+					b_seq = b_seq->next;
+				}
+			}
+			else
+			{
+				t_op *pp;
+				pp = b_seq->op;
+				//regarde si il y a next dans t_op
+				ft_separate(b_seq);
+			}
+
+			ft_watch_result(line, lex, b_seq);
+			ft_strdel(&line);
+			ft_free_b_seq(&b_seq);
 		}
-		printf("okookokok\n");
-		ft_putstr("\x1b[0m");
-		ft_solver(tmp_op, env);
-		ft_free_b_seq(&b_seq);
-		if (b_seq)
-			printf("B_SEQ ENCORE EN VIE\n");
-		else
-			printf("B_SEQ MORT JE PENSE ! ! ! RIP IN PEACE !\n");
 	}
-	//	ft_free_b_seq(&b_seq);
-	//	printf("B_SEQ FREE AVEC SUCCES\n");
-	return (0);
+}
+
+int					main(int ac, char *av[])
+{
+	extern char		**environ;
+
+	if (ft_term_init(environ))
+		return (EXIT_FAILURE);
+	ft_101sh();
+	return (EXIT_SUCCESS);
 }

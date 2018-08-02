@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strlen.c                                      .::    .:/ .      .::   */
+/*   move_cursor_right.c                              .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:13:32 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:41:32 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/07/31 23:34:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/stdin.h"
 
-size_t		ft_strlen(const char *s)
+void	move_cursor_right(t_editor *ed, char *line)
 {
-	int		i;
-
-	i = 0;
-	if (s)
-		while (s[i])
-			i++;
-	return (i);
+	ioctl(0, TIOCGWINSZ, &sz);
+	if (ed->cursor_str_pos < ft_strlen(line))
+	{
+		ed->cursor_str_pos++;
+		if (get_cursor_position(0) == sz.ws_col)
+			tputs(tgetstr("do", NULL), 1, ft_putchar);
+		else
+			tputs(tgetstr("nd", NULL), 1, ft_putchar);
+	}
 }
