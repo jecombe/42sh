@@ -73,13 +73,17 @@ void 			ft_separate(t_seq *b_seq)
 	opera = b_seq->op;
 	if (opera->next)
 	{
+			printf("COMMAND-\n");
 		while (opera)
 		{
 			printf("COMMAND-\n");
+			// 2 -> retour de ft_solver si il y a echec
 			if (ft_solver(opera, g_env) == 2)
 			{
 				ok = 1;
-				break;
+				//si il y a bien && alors break;
+				if (opera->token == AND_IF)
+					break;
 			}
 			opera = opera->next;
 		}
@@ -87,7 +91,10 @@ void 			ft_separate(t_seq *b_seq)
 	else
 	{
 		if (ok == 0)
+		{
+			printf("hdhdhdhdhdhdh\n");
 			ft_solver(opera, g_env);
+		}
 	}
 }
 void				ft_101sh(void)
@@ -107,7 +114,7 @@ void				ft_101sh(void)
 			b_seq = ft_parsing(lex);
 			//******EXECUTER LES COMMANDES******//
 			//si il y a next dans t_seq
-			if (b_seq->next)
+			if (b_seq->token == SEMI)
 			{
 				while (b_seq)
 				{
@@ -122,6 +129,7 @@ void				ft_101sh(void)
 				t_op *pp;
 				pp = b_seq->op;
 				//regarde si il y a next dans t_op
+				printf("laaaaaaaaa\n");
 				ft_separate(b_seq);
 			}
 
