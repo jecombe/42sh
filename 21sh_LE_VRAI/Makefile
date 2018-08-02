@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 04:31:48 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/02 15:43:38 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -70,7 +70,10 @@ SRCS_NAME =	\
 			builtins/env.c \
 			builtins/setenv.c \
 			builtins/exit.c \
-			builtins/unsetenv.c
+			builtins/unsetenv.c \
+			builtins/builtins.c \
+			redirections/open_file_redirections.c \
+			redirections/return_flag_redirections.c
 
 OBJS_FOLDERS = stdin lexer parser execute redirections builtins
 OBJS_NAME = $(SRCS_NAME:.c=.o)

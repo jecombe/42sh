@@ -1,19 +1,33 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   unsetenv.c                                       .::    .:/ .      .::   */
+/*   return_flag_redirections.c                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/02 15:34:41 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/02 15:34:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 15:38:59 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/02 15:49:00 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-int ft_unsetenv(t_op *t_exec, int flag)
+int		ft_return_flag(t_op *t_exec)
 {
-	return (0);
+	if (t_exec->redirect)
+	{
+		if (t_exec->redirect->redirect == LESS)
+			return (O_RDONLY);
+		if (t_exec->redirect->redirect == DGREAT)
+			return (O_APPEND);
+		if (t_exec->redirect->redirect == GREAT)
+			return (O_TRUNC);
+		if (t_exec->redirect->redirect == DLESS)
+		{
+			printf("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPp\n");
+			return (10);
+		}
+	}
+	return (-1);
 }

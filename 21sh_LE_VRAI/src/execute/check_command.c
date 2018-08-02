@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 04:29:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 04:34:29 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/02 15:35:14 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,27 +29,4 @@ int			ft_check_command(char *cmd)
 	else
 		return (0);
 
-}
-
-int		ft_builtins(t_op *t_exec, int what)
-{
-	if (what == 1)
-		if (ft_echo(t_exec) == 0)
-			return (0);
-	if (what == 2)
-		if (ft_cd(t_exec) == 0)
-			return (0);
-	if (what == 3)
-		if (ft_exit(t_exec) == 0)
-			return (0);
-	if (what == 4)
-		if (ft_env(t_exec) == 0)
-			return (0);
-	if (what == 5)
-		if (ft_setenv(t_exec) == 0)
-			return (0);
-	if (what == 6)
-		if (ft_unsetenv(t_exec) == 0)
-			return (0);
-	return (2);
 }
