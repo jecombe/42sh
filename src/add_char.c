@@ -6,23 +6,23 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 10:42:22 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/25 02:22:16 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/31 14:25:20 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-int		add_char_into_line(char key, char **line, t_editor *ed)
+int		add_char_into_line(char key, t_editor *ed)
 {
-	char tmp[ft_strlen(*line) + 2];
+	char tmp[ft_strlen(ed->line) + 2];
 	char *cursor_reset;
 
 	ed->cursor_str_pos++;
 	ft_bzero(tmp, sizeof(tmp));
 	ioctl(0, TIOCGWINSZ, &sz);
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	if ((!((ft_strlen(*line) + ed->prompt_size) % sz.ws_col) && ed->last_row == sz.ws_row))
+	if ((!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col) && ed->last_row == sz.ws_row))
 	{
 		if (!((get_cursor_position(0)) % sz.ws_col))
 		{
@@ -37,7 +37,7 @@ int		add_char_into_line(char key, char **line, t_editor *ed)
 		reset_cursor_position_escape_sequence(&cursor_reset);
 		ed->first_row--;
 	}
-	else if (!((ft_strlen(*line) + ed->prompt_size) % sz.ws_col))
+	else if (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col))
 	{
 		ft_putchar(key);
 		if (!(get_cursor_position(0) % sz.ws_col))
@@ -52,13 +52,13 @@ int		add_char_into_line(char key, char **line, t_editor *ed)
 	else
 		ft_putchar(key);
 	tputs(tgetstr("ei", NULL), 1, ft_putchar);
-	ft_strncpy(tmp, *line, ed->cursor_str_pos);
+	ft_strncpy(tmp, ed->line, ed->cursor_str_pos);
 	tmp[ed->cursor_str_pos - 1] = key;
-	ft_strcat(tmp, *line + ed->cursor_str_pos - 1);
-	ft_strdel(line);
-	*line = ft_strdup(tmp);
+	ft_strcat(tmp, ed->line + ed->cursor_str_pos - 1);
+	ft_strdel(&(ed->line));
+	ed->line = ft_strdup(tmp);
 	tputs(tgetstr("sc", NULL), 1, ft_putchar);
-	write(1, *line + ed->cursor_str_pos, ft_strlen(*line + ed->cursor_str_pos));
+	write(1, ed->line + ed->cursor_str_pos, ft_strlen(ed->line + ed->cursor_str_pos));
 	tputs(tgetstr("rc", NULL), 1, ft_putchar);
 	return (0);
 }

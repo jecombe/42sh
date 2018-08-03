@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 13:20:34 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/02 21:41:44 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,8 @@
 # define BS_KEY (ed->key[0] == 127 && ed->key[1] == 0)
 # define ENTER_KEY (ed->key[0] == 10 && ed->key[1] == 0)
 # define BACKSPACE (ed->key[0] == 127 && ed->key[1] == 0)
+# define CTRL_A (ed->key[0] == 1 && ed->key[1] == 0)
+# define CTRL_E (ed->key[0] == 5 && ed->key[1] == 0)
 # define CTRL_C (ed->key[0] == 3 && ed->key[1] == 0)
 # define CTRL_D (ed->key[0] == 4 && ed->key[1] == 0)
 # define CTRL_L (ed->key[0] == 12 && ed->key[1] == 0)
@@ -47,6 +49,7 @@
 # include <sys/ioctl.h>
 # include <curses.h>
 # include <term.h>
+# include <fcntl.h>
 
 char **g_env;
 struct winsize sz;
@@ -61,14 +64,25 @@ typedef enum		s_prompt
 	E_PIPE,
 }					e_prompt;
 
+typedef struct		s_hist
+{
+	char			*cmd;
+	struct s_hist	*next;
+	struct s_hist	*prev;
+}					t_hist;
+
 typedef struct		s_editor
 {
+	size_t	ws_row;
+	size_t	ws_col;
 	size_t	first_row;
 	size_t	last_row;
 	size_t	prompt_size;
 	size_t	cursor_str_pos;
 	char	*clipboard;
 	char	key[10];
+	e_prompt prompt;
+	char *line;
 }					t_editor;
 
 int		g_bin_exit;
@@ -81,14 +95,14 @@ int		g_bin_exit;
 */
 
 void	move_cursor_left(t_editor *ed);
-void	move_cursor_right(t_editor *ed, char *line);
+void	move_cursor_right(t_editor *ed);
 void	move_cursor_up(t_editor *ed);
-void	move_cursor_down(char *line, t_editor *ed);
-void	move_word_left(char *line, t_editor *ed);
-void	move_word_right(char *line, t_editor *ed);
+void	move_cursor_down(t_editor *ed);
+void	move_word_left(t_editor *ed);
+void	move_word_right(t_editor *ed);
 void	go_to_begin_of_line(t_editor *ed);
-void	go_to_end_of_line(t_editor *ed, char *line);
-int		backspace(t_editor *ed, char **line);
+void	go_to_end_of_line(t_editor *ed);
+int		backspace(t_editor *ed);
 
 /*
 *******************************************************************************
@@ -96,8 +110,8 @@ int		backspace(t_editor *ed, char **line);
 *******************************************************************************
 */
 
-int		clear_window(char *line, t_editor *ed, e_prompt prompt);
-void	end_of_text(char **line, t_editor *ed);
+int		clear_window(t_editor *ed);
+void	end_of_text(t_editor *ed);
 void	myhandler_interrupt(int signal);
 
 /*
@@ -109,7 +123,7 @@ void	myhandler_interrupt(int signal);
 char	*cursor_position_escape_sequence(int row, int col);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
-int		add_char_into_line(char key, char **line, t_editor *ed);
+int		add_char_into_line(char key, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(char *home, e_prompt prompt);
@@ -117,7 +131,12 @@ int		get_stdin(char **line, e_prompt prompt);
 char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
-void	delete_from_cursor_to_end(char **line, t_editor *ed);
-void	paste_clipboard(char **line, t_editor *ed);
+void	delete_from_cursor_to_end(t_editor *ed);
+void	paste_clipboard(t_editor *ed);
+int		get_term_raw_mode(int mode);
+void	save_ed(t_editor **ed, int mode);
+void	tabulator(t_editor *ed);
+void	historic(t_editor *ed);
+void	fill_hist_list(t_hist *hist, char *line);
 
 #endif

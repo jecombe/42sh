@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 10:59:54 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/02 16:20:48 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,15 +37,15 @@ char	*cut_pwd_dir(char *pwd)
 void		prompt_type(e_prompt prompt)
 {
 	if (prompt == S_QUOTE)
-		ft_putstr("quote>");
+		ft_putstr("quote> ");
 	else if (prompt == B_QUOTE)
-		ft_putstr("bquote>");
+		ft_putstr("bquote> ");
 	else if (prompt == D_QUOTE)
-		ft_putstr("dquote>");
+		ft_putstr("dquote> ");
 	else if (prompt == E_PIPE)
-		ft_putstr("pipe>");
+		ft_putstr("pipe> ");
 	else if (prompt == E_HDOC)
-		ft_putstr("heredoc>");
+		ft_putstr("heredoc> ");
 }
 
 void	display_prompt(char *home, e_prompt prompt)

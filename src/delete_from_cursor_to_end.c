@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/23 11:54:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 02:21:15 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/31 14:27:04 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	delete_from_cursor_to_end(char **line, t_editor *ed)
+void	delete_from_cursor_to_end(t_editor *ed)
 {
 	char tmp[ed->cursor_str_pos + 1];
 
@@ -21,18 +21,18 @@ void	delete_from_cursor_to_end(char **line, t_editor *ed)
 	ft_putstr("\E[0J");
 	if (!ed->cursor_str_pos)
 	{
-		if (line)
-			ed->clipboard = ft_strdup(*line);
-		ft_strdel(line);
+		if (ed->line)
+			ed->clipboard = ft_strdup(ed->line);
+		ft_strdel(&(ed->line));
 	}
 	else
 	{
-		ft_strncpy(tmp, *line, ed->cursor_str_pos);
+		ft_strncpy(tmp, ed->line, ed->cursor_str_pos);
 		if (ed->clipboard)
 			ft_strdel(&(ed->clipboard));
-		ed->clipboard = ft_strdup(*line + ed->cursor_str_pos);
-		if (line)
-		ft_strdel(line);
-		*line = ft_strdup(tmp);
+		ed->clipboard = ft_strdup(ed->line + ed->cursor_str_pos);
+		if (ed->line)
+		ft_strdel(&(ed->line));
+		ed->line = ft_strdup(tmp);
 	}
 }

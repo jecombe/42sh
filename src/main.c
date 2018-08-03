@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:45:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 13:32:30 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/02 21:41:38 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ int		main(void)
 	char *line;
 	e_prompt prompt;
 
-	prompt = 0;
+	prompt = 2;
 	g_env = ft_tabdup(environ);
 	if ((xterm = getenv("TERM")) == NULL)
 	{
@@ -32,7 +32,18 @@ int		main(void)
 	ft_putstr(tgetstr("cl", NULL));
 	while (get_stdin(&line, prompt) > 0)
 	{
-		ft_strdel(&line);
+		printf("line:     [%s]\nprompt: [%u]\n", line, prompt);
+		if (line)
+		if (ft_strchr(line, 'q'))
+		{
+			ft_strdel(&line);
+				prompt = 0;
+		}
+		if (prompt == PROMPT || prompt == E_PIPE)
+		{
+			ft_strdel(&line);
+			printf("OK\n");
+		}
 	}
 	sleep(150);
 }

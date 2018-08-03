@@ -1,25 +1,24 @@
-total 176
-drwxr-xr-x  24 dewalter  student   816 Jul 30 13:08 .
-drwxr-xr-x  14 dewalter  student   476 Jul 30 11:39 ..
--rw-r--r--   1 dewalter  student  3064 Jul 27 04:34 add_char.c
--rw-r--r--   1 dewalter  student  1809 Jul 27 04:34 backspace.c
--rw-r--r--   1 dewalter  student  1276 Jul 30 07:43 clear_window.c
--rw-r--r--   1 dewalter  student  1993 Jul 27 04:34 cursor_position.c
--rw-r--r--   1 dewalter  student  1466 Jul 27 04:34 delete_from_cursor_to_end.c
--rw-r--r--   1 dewalter  student  1452 Jul 30 09:45 end_of_text.c
--rw-r--r--   1 dewalter  student  1633 Jul 27 04:34 escape_sequence.c
--rw-r--r--   1 dewalter  student  1808 Jul 30 10:44 find_env_var.c
--rw-r--r--   1 dewalter  student  4107 Jul 30 12:06 get_stdin.c
--rw-r--r--   1 dewalter  student  1243 Jul 27 04:34 go_to_begin_of_line.c
--rw-r--r--   1 dewalter  student  1440 Jul 27 04:34 go_to_end_of_line.c
--rw-r--r--   1 dewalter  student  1422 Jul 30 11:35 main.c
--rw-r--r--   1 dewalter  student  1684 Jul 27 05:40 move_cursor_down.c
--rw-r--r--   1 dewalter  student  1368 Jul 27 04:34 move_cursor_left.c
--rw-r--r--   1 dewalter  student  1289 Jul 27 04:34 move_cursor_right.c
--rw-r--r--   1 dewalter  student  1488 Jul 27 04:34 move_cursor_up.c
--rw-r--r--   1 dewalter  student  1853 Jul 27 04:34 move_word_left.c
--rw-r--r--   1 dewalter  student  1774 Jul 27 04:34 move_word_right.c
--rw-r--r--   1 dewalter  student  1670 Jul 27 04:34 paste_clipboard.c
--rw-r--r--   1 dewalter  student  2097 Jul 30 10:59 prompt.c
--rw-r--r--   1 dewalter  student  1143 Jul 27 04:34 signal.c
--rw-r--r--   1 dewalter  student     0 Jul 30 13:11 test
+add_char.c
+backspace.c
+clear_window.c
+cursor_position.c
+delete_from_cursor_to_end.c
+end_of_text.c
+escape_sequence.c
+find_env_var.c
+get_stdin.c
+go_to_begin_of_line.c
+go_to_end_of_line.c
+historic.c
+main.c
+move_cursor_down.c
+move_cursor_left.c
+move_cursor_right.c
+move_cursor_up.c
+move_word_left.c
+move_word_right.c
+paste_clipboard.c
+prompt.c
+signal.c
+tabulator.c
+test
