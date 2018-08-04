@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:37:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/04 21:47:09 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/07/30 06:43:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,6 @@ int			ft_attrib_last_seq(t_seq **b_seq, t_seq **n_seq)
 	}
 	else
 	{
-		return (1);//A VOIR SI Y A PAS DE BLEMPRO
 		if (!(*b_seq = ft_malloc_seq()))
 			return (1);
 		*n_seq = *b_seq;
