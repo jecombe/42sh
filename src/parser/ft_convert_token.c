@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:54:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 07:34:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/04 21:33:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,6 @@ char		*ft_search_reserved_word(e_token token)
 
 void		ft_convert_token(char **str, e_token token)
 {
-	ft_strdel(&(*str));
 	if (token >= TOKEN && token <= IO_NUMBER)
 		*str = ft_search_simple_token(token);
 	else if (token >= SEMI && token <= PIPE_AND)
