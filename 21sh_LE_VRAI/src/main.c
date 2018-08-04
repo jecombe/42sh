@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 03:59:51 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/04 21:40:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,8 +111,9 @@ void				ft_101sh(void)
 		if (line)
 		{
 			lex = ft_lexer(line);
+			printf("PARSING\n");
 			b_seq = ft_parsing(lex);
-			i
+			printf("SEPARATE\n");
 			if (b_seq)//VOILA TON SEGSEG JECOMBE CAR B_SEQ N'EXISTERAS PAS SI IL Y A UN PARSE ERROR
 			{
 			//******EXECUTER LES COMMANDES******//
