@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/04 21:46:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 00:19:29 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 #include "../include/lexer.h"
 //#include "../include/parsing.h"
 #include "../include/execute.h"
+#include "../include/extension.h"
 
 #define cv ft_convert_token_to_string
 
@@ -85,11 +86,14 @@ void				ft_101sh(void)
 		{
 			lex = ft_lexer(line);
 			b_seq = ft_parsing(lex);
-			//******EXECUTER LES COMMANDES******//
-			if (b_seq)
-			ft_solver(b_seq, g_env);
-			ft_watch_result(line, lex, b_seq);
-			ft_strdel(&line);
+			if (!extension(&b_seq))
+			{
+				//******EXECUTER LES COMMANDES******//
+				ft_solver(b_seq, g_env);
+				ft_watch_result(line, lex, b_seq);
+			}
+			if (line)
+				ft_strdel(&line);
 			ft_free_b_seq(&b_seq);
 		}
 	}
