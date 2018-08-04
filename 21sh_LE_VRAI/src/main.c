@@ -112,6 +112,9 @@ void				ft_101sh(void)
 		{
 			lex = ft_lexer(line);
 			b_seq = ft_parsing(lex);
+			i
+			if (b_seq)//VOILA TON SEGSEG JECOMBE CAR B_SEQ N'EXISTERAS PAS SI IL Y A UN PARSE ERROR
+			{
 			//******EXECUTER LES COMMANDES******//
 			//si il y a next dans t_seq
 			if (b_seq->token == SEMI)
@@ -132,7 +135,7 @@ void				ft_101sh(void)
 				printf("laaaaaaaaa\n");
 				ft_separate(b_seq);
 			}
-
+}
 			ft_watch_result(line, lex, b_seq);
 			ft_strdel(&line);
 			ft_free_b_seq(&b_seq);

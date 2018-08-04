@@ -89,7 +89,6 @@ char		*ft_search_reserved_word(e_token token)
 
 void		ft_convert_token(char **str, e_token token)
 {
-	ft_strdel(&(*str));
 	if (token >= TOKEN && token <= IO_NUMBER)
 		*str = ft_search_simple_token(token);
 	else if (token >= SEMI && token <= PIPE_AND)
