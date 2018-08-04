@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 10:18:08 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/04 21:56:30 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,6 +25,7 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 	}
 	else
 	{
+		return (1);
 		*b_seq = ft_malloc_seq();
 		n_seq = *b_seq;
 	}

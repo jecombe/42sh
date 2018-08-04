@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 03:59:51 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/04 21:56:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,6 +81,7 @@ void				ft_101sh(void)
 		{
 			lex = ft_lexer(line);
 			b_seq = ft_parsing(lex);
+			if (b_seq)
 			//******EXECUTER LES COMMANDES******//
 			ft_solver(b_seq, g_env);
 			ft_watch_result(line, lex, b_seq);
