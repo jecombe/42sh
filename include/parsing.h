@@ -6,10 +6,13 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 09:24:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 02:47:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
+
+#ifndef PARSING_H
+# define PARSING_H
 
 #include <stdio.h>
 #include "../libft/include/libft.h"
@@ -60,3 +63,5 @@ int								ft_manage_redirection(t_seq **b_seq, e_token token, char *name);
 int								ft_manage_word(t_seq **b_seq, char *name);
 int								ft_manage_io_number(t_seq **b_seq, char *name);
 void							ft_convert_token(char **str, e_token token);
+
+#endif

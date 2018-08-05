@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/07/31 23:37:31 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/05 00:52:46 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,9 @@ SRCS_NAME =	\
 			ft_tabdel.c \
 			ft_tabdup.c \
 			ft_tablen.c \
-			ft_malloc_cmd.c
+			ft_malloc_cmd.c \
+			ft_getenv.c
+
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:36:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 01:40:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,5 +99,6 @@ void				ft_tabdel(char ***tab);//A RAJOUTER A LA LIB SUR MASTER
 int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MASTER
 int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
+char				*ft_getenv(char *str);
 
 #endif

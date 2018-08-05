@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 05:16:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 02:47:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,13 +19,32 @@ void		ft_braquet_quote(char *str, int *j)
 		*j = *j + 1;
 }
 
-int			ft_add_tild(char **str, int *j)
+int			ft_add_tild(char **str, int *index)
 {
-	return (0);
-}
+	char		*var;
+	char		*tmp;
+	int			i;
+	int			j;
 
-int			ft_echap(char *str, int *j)
-{
+	j = 1;
+	i = -1;
+	if ((var = ft_getenv("HOME")) && (!(*str)[*index + 1] || (*str)[*index + 1] == '/'))
+	{
+		tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)));
+		while (var[++i])
+			tmp[i] = var[i];
+		while ((*str)[j])
+		{
+			tmp[i] = (*str)[j];
+			j++;
+			i++;
+		}
+		tmp[i] = '\0';
+		printf("TMP == %s\n", tmp);
+//		ft_strdel(&(*str));
+		*index = i;
+		*str = ft_strdup(tmp);
+	}
 	return (0);
 }
 
@@ -36,21 +55,24 @@ int			ft_parcour_tab(char ***cmd)
 	int			k;
 
 	i = -1;
-	while ((*cmd)[++i])
-	{
-		j = -1;
-		while ((*cmd)[++j])
+	if (*cmd)
+		while ((*cmd)[++i])
 		{
-			if ((*cmd)[i][j] == '\\')
-				ft_echap((*cmd)[i], &j);
-			if ((*cmd)[i][j] == '\'')
-				ft_braquet_quote((*cmd)[i] + j, &i);
-			if ((*cmd)[i][j] == '\\')
-				ft_echap((*cmd)[i], &j);
-			if ((*cmd)[i][j] == '~')
-				if (ft_add_tild(&(*cmd)[i], &j))
-					return (1);
-		}
+			j = 0;
+			while ((*cmd)[i][j])
+			{
+				if ((*cmd)[i][j] == '\\')
+					j += 2;
+				else if ((*cmd)[i][j] == '\'')
+					ft_braquet_quote((*cmd)[i] + j, &j);
+				else if ((*cmd)[i][j] == '~' && j == 0)
+				{
+					if (ft_add_tild(&(*cmd)[i], &j))
+						return (1);
+				}
+				else
+					j++;
+			}
 	}
 	return (0);
 }
