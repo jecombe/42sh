@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 02:47:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 04:42:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,17 +34,18 @@ int			ft_add_tild(char **str, int *index)
 		while (var[++i])
 			tmp[i] = var[i];
 		while ((*str)[j])
-		{
-			tmp[i] = (*str)[j];
-			j++;
-			i++;
-		}
+			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
 		printf("TMP == %s\n", tmp);
 //		ft_strdel(&(*str));
 		*index = i;
 		*str = ft_strdup(tmp);
 	}
+	return (0);
+}
+
+int			ft_bquote(char ***cmd, int *i)
+{
 	return (0);
 }
 
@@ -69,6 +70,10 @@ int			ft_parcour_tab(char ***cmd)
 				{
 					if (ft_add_tild(&(*cmd)[i], &j))
 						return (1);
+				}
+				else if ((*cmd)[i][j] == '`')
+				{
+					ft_bquote(&(*cmd), &j);
 				}
 				else
 					j++;
