@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 04:42:22 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/05 05:29:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,8 +44,22 @@ int			ft_add_tild(char **str, int *index)
 	return (0);
 }
 
-int			ft_bquote(char ***cmd, int *i)
+int			ft_bquote(char **cmd, int *index)
 {
+	int			i;
+	char		*tmp;
+	t_lex		lex;
+	t_seq		*new_b_seq;
+
+	i = *index;
+	while ((*cmd)[i] != '`')
+		i++;
+	tmp = ft_strsub(*cmd, *index, i - *index);
+	lex = ft_lexer(tmp);
+	new_b_seq = ft_parsing(lex);
+	if (!extension(&new_b_seq))
+	{
+	}
 	return (0);
 }
 
@@ -73,7 +87,7 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else if ((*cmd)[i][j] == '`')
 				{
-					ft_bquote(&(*cmd), &j);
+					ft_bquote(&(*cmd)[i], &j);
 				}
 				else
 					j++;
