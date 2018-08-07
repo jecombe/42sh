@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/07 18:22:30 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/08 00:12:38 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -30,6 +30,9 @@ LIB_PATH = ./libft/
 
 SRCS_NAME =	\
 			main.c \
+			builtins/ft_envset.c \
+			builtins/ft_env.c \
+			builtins/ft_set.c \
 			stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \
@@ -61,6 +64,7 @@ SRCS_NAME =	\
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
 			extension/extension.c \
+			extension/ft_dollar.c \
 			execute/binary.c \
 			execute/execute.c \
 			execute/solver.c \
@@ -71,12 +75,9 @@ SRCS_NAME =	\
 			builtins/builtins.c \
 			builtins/cd.c \
 			builtins/echo.c \
-			builtins/env.c \
-			builtins/exit.c \
-			builtins/setenv.c \
-			builtins/unsetenv.c
+			builtins/exit.c 
 
-OBJS_FOLDERS = stdin lexer parser extension execute redirections builtins
+OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))
