@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:46:16 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 19:57:47 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,15 @@ void		ft_get_bin()
 	}
 }
 
+int			ft_check_direct_command(char *cmd)
+{
+	struct stat sb;
+	if (lstat(cmd, &sb) == -1)
+		return (-1);
+	else
+		return (0);
+}
+
 char		*ft_search_bin(char *cmd)
 {
 	char *tmp;
@@ -39,6 +48,8 @@ char		*ft_search_bin(char *cmd)
 	int t;
 	struct stat st;
 
+	if (ft_check_direct_command(cmd) == 0)
+		return (cmd);
 	i = 0;
 	t = 0;
 	while (g_bin[i])
