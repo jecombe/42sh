@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 05:29:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 04:48:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,29 +37,154 @@ int			ft_add_tild(char **str, int *index)
 			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
 		printf("TMP == %s\n", tmp);
-//		ft_strdel(&(*str));
+		//		ft_strdel(&(*str));
 		*index = i;
 		*str = ft_strdup(tmp);
 	}
 	return (0);
 }
 
-int			ft_bquote(char **cmd, int *index)
+int			ft_create_tmp_file(void)
 {
-	int			i;
+	static int		fd = 0;
+
+	if (fd)
+		fd = open(".tmp_file", O_CREAT, O_APPEND, O_WRONLY, S_IRWXU);
+	else
+	{
+		close(fd);
+		fd = 0;
+	}
+	return (fd);
+}
+
+#define cv ft_convert_token_to_string
+
+static void	ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
+{			
+	int		i = -1;
+	t_op	*n_op;
+	t_redirect	*n_redirect;
+
+	printf("%sL									INE :%s\n%s\n", RED, END, line);
+	printf("%sLEXER : \n%s", RED, END);
+	while (lex.name[++i])
+		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	while (n_seq)
+	{
+		n_op = n_seq->op;
+		while (n_op)
+		{
+			if (n_op->cmd)
+			{
+				i = -1;
+				while (n_op->cmd[++i])
+					printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
+			}
+			n_redirect = n_op->redirect;
+			while (n_redirect)
+			{
+				printf("FD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				n_redirect = n_redirect->next;
+			}
+			printf("n_op->token == %s\n", cv(n_op->token));
+			n_op = n_op->next;
+		}
+		printf("n_seq->token == %s\n", cv(n_seq->token));
+		n_seq = n_seq->next;
+	}
+	ft_putstr(END);
+}
+
+int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
+{
+	char	*ifs;
+	char	**tab_tmp;
+	char	**tab_tmp2;
+	int		i = 0;
+
+	ifs = ft_strdup("pa");
+	tab_tmp = NULL;
+	tab_tmp2 = NULL;
+	while (i < index)
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	i = 0;
+	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
+	//	printf("BBUUGG\n");
+	while (tab_tmp2[i])
+		ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
+	i = index + 1;
+	while ((*cmd)[i])
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	ft_tabdel(&(*cmd));
+	*cmd = ft_tabdup(tab_tmp);
+	return (0);
+}
+
+int		ft_del_cmd(char ***cmd, int i_index)
+{
+	int		i;
+	char	**tab_tmp;
+
+	tab_tmp = NULL;
+	i = 0;
+	while (i < i_index)
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	i++;
+	while ((*cmd)[i])
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	ft_tabdel(&(*cmd));
+	if (tab_tmp)
+		*cmd = ft_tabdup(tab_tmp);
+	else
+	{
+//
+	}
+	return (0);
+}
+
+int			ft_bquote(char ***cmd, int *j_index, int i_index)
+{
+	int			j;//fd
 	char		*tmp;
+	char		**tab_tmp;
 	t_lex		lex;
 	t_seq		*new_b_seq;
 
-	i = *index;
-	while ((*cmd)[i] != '`')
-		i++;
-	tmp = ft_strsub(*cmd, *index, i - *index);
-	lex = ft_lexer(tmp);
-	new_b_seq = ft_parsing(lex);
-	if (!extension(&new_b_seq))
+	*j_index = *j_index + 1;
+	j = *j_index;
+	tmp = NULL;
+	while ((*cmd)[i_index][j] != '`')
+		j++;
+	if (*j_index != j)
 	{
+		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
+		printf("TMP = %s\n", tmp);
+		*j_index = j;
+//		while ((*cmd)[i_index][*j_index] != '`')
+//			*j_index = *j_index + 1;
+		ft_bquote_replace(&(*cmd), tmp, i_index);
 	}
+	else
+		ft_del_cmd(&(*cmd), i_index);
+	printf("BUGG\n");
+	*j_index = *j_index + 1;
+//	lex = ft_lexer(tmp);
+//	new_b_seq = ft_parsing(lex);
+//	if (!extension(&new_b_seq))
+//	{
+//		i = ft_create_tmp_file();
+//	printf("BBBUUUGGG\n");
+//		ft_solver(new_b_seq, g_env);//PLUS LES FICHIER A CREER
+//		ft_watch_result(tmp, lex, new_b_seq);
+//		while (get_next_line(i, &tmp))
+//		{
+//			ft_malloc_cmd(&tab_tmp, tmp);
+//			ft_strdel(&tmp);
+//		}
+//		ft_create_tmp_file();
+//	}
+	//	ft_strdel(&tmp);
 	return (0);
 }
 
@@ -71,7 +196,7 @@ int			ft_parcour_tab(char ***cmd)
 
 	i = -1;
 	if (*cmd)
-		while ((*cmd)[++i])
+		while (*cmd && (*cmd)[++i])
 		{
 			j = 0;
 			while ((*cmd)[i][j])
@@ -87,12 +212,16 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else if ((*cmd)[i][j] == '`')
 				{
-					ft_bquote(&(*cmd)[i], &j);
+					ft_bquote(&(*cmd), &j, i);
 				}
 				else
 					j++;
+				if (!*cmd)//RESOUT LE SEGSEG
+					break ;
 			}
-	}
+			if (!*cmd)//RESOUT LE SEGSEG
+				break ;
+		}
 	return (0);
 }
 
@@ -122,5 +251,6 @@ int			extension(t_seq **b_seq)
 				return (1);
 		n_seq = n_seq->next;
 	}
+	printf("EXT FINISH\n");
 	return (0);
 }

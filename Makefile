@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 05:00:25 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/07 03:39:02 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -61,6 +61,7 @@ SRCS_NAME =	\
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
 			extension/extension.c \
+			extension/ft_split_b_quote.c \
 			execute/binary.c \
 			execute/execute.c \
 			execute/solver.c \

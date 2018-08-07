@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 00:26:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 01:05:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@
 
 #define cv ft_convert_token_to_string
 
-void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
+static void			ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
 	t_op			*n_op;
