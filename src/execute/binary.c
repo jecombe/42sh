@@ -6,25 +6,26 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 04:41:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 18:46:16 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-void		ft_get_bin(char **env)
+void		ft_get_bin()
 {
 	int  i;
 	char *bin;
 	i = 0;
-	while (env[i])
+	while (g_env[i])
 	{
-		if (ft_strncmp("PATH=", env[i], 5) == 0)
+		if (ft_strncmp("PATH=", g_env[i], 5) == 0)
 		{
-			env[i]++;
-			bin = ft_strdup(env[i]);
-			bin = ft_avance(bin);
+			g_env[i]++;
+			bin = ft_strdup(g_env[i]);
+			bin = ft_go_to(bin, 5);
+			printf("=================+< %s\n", bin);
 			g_bin = ft_strsplit(bin, ':');
 		}
 		i++;

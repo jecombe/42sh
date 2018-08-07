@@ -1,27 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.c                                          .::    .:/ .      .::   */
+/*   exit.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:53:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 15:34:28 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/07 19:16:21 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-char	*ft_go_to(char *bin, int nb)
+int 		ft_exit(t_op *t_exec, int flag)
 {
-	int i;
-
-	i = 0;
-	while (nb)
-	{
-		bin++;
-		nb--;
-	}
-	return (bin);
+	printf("EXIT\n");
+	return (0);
 }

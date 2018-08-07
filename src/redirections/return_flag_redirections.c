@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.c                                          .::    .:/ .      .::   */
+/*   return_flag_redirections.c                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:53:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 15:38:59 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/02 15:49:00 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-char	*ft_go_to(char *bin, int nb)
+int		ft_return_flag(t_op *t_exec)
 {
-	int i;
-
-	i = 0;
-	while (nb)
+	if (t_exec->redirect)
 	{
-		bin++;
-		nb--;
+		if (t_exec->redirect->redirect == LESS)
+			return (O_RDONLY);
+		if (t_exec->redirect->redirect == DGREAT)
+			return (O_APPEND);
+		if (t_exec->redirect->redirect == GREAT)
+			return (O_TRUNC);
+		if (t_exec->redirect->redirect == DLESS)
+		{
+			printf("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPp\n");
+			return (10);
+		}
 	}
-	return (bin);
+	return (-1);
 }

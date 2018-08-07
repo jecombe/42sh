@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 00:19:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 18:36:47 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,6 +71,37 @@ int					ft_term_init(char **environ)
 	return (0);
 }
 
+void		ft_separate(t_seq *b_seq)
+{
+	t_op *opera;
+	int fail;
+
+	fail = 0;
+	opera = b_seq->op;
+	if (opera->next)
+	{
+		while (opera)
+		{
+			// 2 ==> retour de ft_solver si echec
+			if (ft_solver(opera) == 2)
+			{
+				fail = 1;
+				//si il y a bien && alors break, execute pas l'autre command;
+				if (opera->token == AND_IF)
+					break;
+			}
+			opera = opera->next;
+		}
+	}
+	else
+	{
+		if (fail == 0)
+		{
+			ft_solver(opera);
+		}
+	}
+}
+
 void				ft_101sh(void)
 {
 	e_prompt		prompt;
@@ -89,7 +120,21 @@ void				ft_101sh(void)
 			if (!extension(&b_seq))
 			{
 				//******EXECUTER LES COMMANDES******//
-				ft_solver(b_seq, g_env);
+				//si il y a next dans t_seq et que c'est le ;
+				if (b_seq->token == SEMI)
+				{
+					while (b_seq)
+					{
+						//si il y a encore une separation command ==> &&
+						ft_separate(b_seq);
+						b_seq = b_seq->next;
+					}
+				}
+				else
+				{
+					//regarde si il une separation command ==> &&
+					ft_separate(b_seq);
+				}
 				ft_watch_result(line, lex, b_seq);
 			}
 			if (line)

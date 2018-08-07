@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   utils.c                                          .::    .:/ .      .::   */
+/*   open_file_redirections.c                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:53:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 15:37:51 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/07 18:12:17 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-char	*ft_go_to(char *bin, int nb)
+void			ft_open_redirect(char *file, int flag, int flag2)
 {
-	int i;
+	int ret2;
 
-	i = 0;
-	while (nb)
-	{
-		bin++;
-		nb--;
-	}
-	return (bin);
+	if (flag2 == O_WRONLY)
+				ret2 = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
+			if (flag2 == O_RDONLY)
+				ret2 = open(file, O_RDONLY);
+			if (flag2 == O_RDONLY)
+				dup2(ret2, 0);
+			else
+				dup2(ret2, 1);
 }
