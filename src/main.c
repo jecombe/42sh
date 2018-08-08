@@ -94,12 +94,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 		}
 	}
 	else
-	{
-		if (fail == 0)
-		{
 			ft_solver(opera, fd);
-		}
-	}
 }
 
 void				ft_101sh(void)

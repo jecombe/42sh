@@ -42,7 +42,7 @@ int		ft_solver(t_op *t_exec, int fd)
 	if (flag == HEREDOC)
 	{
 
-		if (ft_redirect_heredoc(t_exec, flag) == 0)
+		if (ft_redirect_heredoc(t_exec, flag) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else
 			return (EXIT_FAILURE);
@@ -50,18 +50,18 @@ int		ft_solver(t_op *t_exec, int fd)
 	//Si il y a pas < ou <<, passe en dessous
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
-		if (ft_builtins(t_exec, ok, flag) == 0)
-			return (EXIT_FAILURE);
-		else
+		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
+		else
+			return (EXIT_FAILURE);
 	}
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
 		if (ft_exec(t_exec, tmp_bin, flag, fd) == EXIT_SUCCESS)
-			return (EXIT_FAILURE);
-		else
 			return (EXIT_SUCCESS);
+		else
+			return (EXIT_FAILURE);
 	}
 	return (EXIT_FAILURE);
 }

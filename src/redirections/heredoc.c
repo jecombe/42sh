@@ -53,17 +53,17 @@ int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
 	close(fd[0]);
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
-		if (ft_builtins(t_exec, ok, flag) == 0)
-			return (0);
+		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 		else
-			return (2);
+			return (EXIT_FAILURE);
 	}
 	else
 	{
-		if (ft_exec(t_exec, bin, flag, bfd) == 0)
-			return (0);
+		if (ft_exec(t_exec, bin, flag, bfd) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 		else
-			return (2);
+			return (EXIT_FAILURE);
 	}
 }
 
@@ -78,10 +78,10 @@ int				ft_redirect_heredoc(t_op *t_exec, int flag)
 			exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
-		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == 0)
+		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == EXIT_SUCCESS)
 			;
 		else
-			return (2);
+			return (EXIT_FAILURE);
 	}
 	else
 	{
@@ -89,9 +89,9 @@ int				ft_redirect_heredoc(t_op *t_exec, int flag)
 		if (WIFEXITED(stat))
 		{
 			if (WEXITSTATUS(stat) != 0)
-				return (0);
+				return (EXIT_SUCCESS);
 		}
-		return (0);
+		//return (0);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
