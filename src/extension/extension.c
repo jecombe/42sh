@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:44:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 04:08:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,10 @@
 
 void		ft_braquet_quote(char *str, int *j)
 {
-	while (str[*j] == '\'')
+	*j = *j + 1;
+	while (str[*j] != '\'')
 		*j = *j + 1;
+	*j = *j + 1;
 }
 
 int			ft_add_tild(char **str, int *index)
