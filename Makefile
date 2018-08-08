@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/08 02:29:23 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/08 06:06:15 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -63,6 +63,7 @@ SRCS_NAME =	\
 			extension/extension.c \
 			extension/ft_split_b_quote.c \
 			extension/ft_dollar.c \
+			extension/quotes_manager.c \
 			execute/binary.c \
 			execute/execute.c \
 			execute/solver.c \

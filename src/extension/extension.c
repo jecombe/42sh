@@ -6,19 +6,35 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 04:06:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 06:15:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/extension.h"
 
-void		ft_braquet_quote(char *str, int *j)
+int			ft_strdel_in_tab(char ***tablo, int index)
 {
-	*j = *j + 1;
-	while (str[*j] != '\'')
-		*j = *j + 1;
-	*j = *j + 1;
+	int			i;
+	char		**tmp;
+
+	i = 0;
+	if ((*tablo)[i + 1])
+	{
+		while (i < index)
+			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
+				return (1);
+		i++;
+		while ((*tablo)[i])
+			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
+				return (1);
+		ft_tabdel(&(*tablo));
+		if (!(*tablo = ft_tabdup(tmp)))
+			return (1);
+	}
+	else
+		ft_tabdel(&(*tablo));
+	return (0);
 }
 
 int			ft_add_tild(char **str, int *index)
@@ -189,7 +205,7 @@ int			ft_parcour_tab(char ***cmd)
 				if ((*cmd)[i][j] == '\\')
 					j += 2;
 				else if ((*cmd)[i][j] == '\'')
-					ft_braquet_quote((*cmd)[i] + j, &j);
+					ft_manage_quote(&(*cmd), i, &j);
 				else if ((*cmd)[i][j] == '~' && j == 0)
 				{
 					if (ft_add_tild(&(*cmd)[i], &j))
