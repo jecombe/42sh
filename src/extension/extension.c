@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:44:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 04:06:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,10 @@
 
 void		ft_braquet_quote(char *str, int *j)
 {
-	while (str[*j] == '\'')
+	*j = *j + 1;
+	while (str[*j] != '\'')
 		*j = *j + 1;
+	*j = *j + 1;
 }
 
 int			ft_add_tild(char **str, int *index)
@@ -144,12 +146,12 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	}
 	else
 		ft_tabdel(&(*cmd));
-	printf("BUGG\n");
-	*j_index = *j_index + 1;
-//	lex = ft_lexer(tmp);
-//	new_b_seq = ft_parsing(lex);
-//	if (!extension(&new_b_seq))
-//	{
+	printf("000BUGG\n");
+	*j_index = j + 1;
+	lex = ft_lexer(tmp);
+	new_b_seq = ft_parsing(lex);
+	if (!extension(&new_b_seq))
+	{
 		j = ft_create_tmp_file();
 //	printf("BBBUUUGGG\n");
 	while (new_b_seq)
@@ -164,8 +166,9 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 //			ft_malloc_cmd(&tab_tmp, tmp);
 //			ft_strdel(&tmp);
 //		}
-//		ft_create_tmp_file();
-//	}
+		ft_create_tmp_file();
+	printf("111BUGG\n");
+	}
 	//	ft_strdel(&tmp);
 	return (0);
 }
@@ -213,7 +216,11 @@ int			ft_parcour_op(t_op **b_op)
 	while (n_op)
 	{
 		if (n_op->cmd)
+		{
+			printf("0000\n");
 			ft_parcour_tab(&n_op->cmd);
+			printf("1111\n");
+		}
 		n_op = n_op->next;
 	}
 	return (0);
