@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:15:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 07:13:31 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -205,7 +205,9 @@ int			ft_parcour_tab(char ***cmd)
 				if ((*cmd)[i][j] == '\\')
 					j += 2;
 				else if ((*cmd)[i][j] == '\'')
-					ft_manage_quote(&(*cmd), i, &j);
+					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
+				else if ((*cmd)[i][j] == '"')
+					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
 				else if ((*cmd)[i][j] == '~' && j == 0)
 				{
 					if (ft_add_tild(&(*cmd)[i], &j))

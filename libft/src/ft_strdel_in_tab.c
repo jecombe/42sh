@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   extension.h                                      .::    .:/ .      .::   */
+/*   ft_strdel_in_tab.c                               .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 05:16:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:55:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/08 06:17:47 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/08 06:28:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef EXTENSION_H
-# define EXTENSION_H
+#include "../include/libft.h"
 
-#include "./parsing.h"
-#include "./execute.h"
-#include "./stdin.h"
+int		ft_strdel_in_tab(char ***tablo, int index)
+{
+	int		i;
+	char	**tmp;
 
-char		**g_set;
-
-int			extension(t_seq **b_seq);
-char		**ft_split_bquote(const char *str, char *to_split);
-int			ft_dollar(char **cmd, int *j);
-int			ft_manage_quote(char ***tablo, int i, int *j, char* (*f)(char*, int*));
-char		*ft_replace_quote(char *str, int *j);
-char		*ft_replace_dquote(char *str, int *j);
-
-#endif
+	i = 0;
+	if ((*tablo)[i + 1])
+	{
+		while (i < index)
+			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
+				return (1);
+		i++;
+		while ((*tablo)[i])
+			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
+				return (1);
+		ft_tabdel(&(*tablo));
+		if (!(*tablo = ft_tabdup(tmp)))
+			return (1);
+	}
+	else
+		ft_tabdel(&(*tablo));
+	return (0);
+}
