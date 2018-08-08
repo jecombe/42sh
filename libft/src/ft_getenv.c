@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   extension.h                                      .::    .:/ .      .::   */
+/*   ft_getenv.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 05:16:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 01:56:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/03/24 20:46:06 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/08 02:15:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef EXTENSION_H
-# define EXTENSION_H
+#include "../include/libft.h"
 
-#include "./parsing.h"
-#include "./execute.h"
-#include "./stdin.h"
+char		*ft_getenv(char *str, char **env)
+{
+	int		i;
+	int		j;
 
-char		**g_set;
-
-int			extension(t_seq **b_seq);
-char		**ft_split_bquote(const char *str, char *to_split);
-int			ft_dollar(char **cmd, int *j);
-
-#endif
+	i = -1;
+	while (env[++i])
+	{
+		j = 0;
+		while (env[i][j] == str[j] && env[i][j] && str[j])
+		{
+			j++;
+		}
+		if (env[i][j] == '=' && j != 0)
+			return (ft_strdup((env[i]) + (j + 1)));
+	}
+	return (NULL);
+}

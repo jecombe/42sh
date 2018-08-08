@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:45:50 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:05:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,4 +35,5 @@ int				ft_exit(t_op *t_exec, int flag);
 int				ft_env(t_op *t_exec, int flag);
 int				ft_setenv(t_op *t_exec, int flag);
 int				ft_unsetenv(t_op *t_exec, int flag);
+
 #endif

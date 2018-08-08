@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 00:20:22 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:19:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,13 +19,149 @@ void		ft_braquet_quote(char *str, int *j)
 		*j = *j + 1;
 }
 
-int			ft_add_tild(char **str, int *j)
+int			ft_add_tild(char **str, int *index)
 {
+	char		*var;
+	char		*tmp;
+	int			i;
+	int			j;
+
+	j = 1;
+	i = -1;
+	if ((var = ft_getenv("HOME", g_env)) && (!(*str)[*index + 1] || (*str)[*index + 1] == '/'))
+	{
+		tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)));
+		while (var[++i])
+			tmp[i] = var[i];
+		while ((*str)[j])
+			tmp[i++] = (*str)[j++];
+		tmp[i] = '\0';
+		printf("TMP == %s\n", tmp);
+		//		ft_strdel(&(*str));
+		*index = i;
+		*str = ft_strdup(tmp);
+	}
 	return (0);
 }
 
-int			ft_echap(char *str, int *j)
+int			ft_create_tmp_file(void)
 {
+	static int		fd = 0;
+
+	if (fd)
+		fd = open(".tmp_file", O_CREAT, O_APPEND, O_WRONLY, S_IRWXU);
+	else
+	{
+		close(fd);
+		fd = 0;
+	}
+	return (fd);
+}
+
+#define cv ft_convert_token_to_string
+
+static void	ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
+{			
+	int		i = -1;
+	t_op	*n_op;
+	t_redirect	*n_redirect;
+
+	printf("%sLINE :%s\n%s\n", RED, END, line);
+	printf("%sLEXER : \n%s", RED, END);
+	while (lex.name[++i])
+		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	while (n_seq)
+	{
+		n_op = n_seq->op;
+		while (n_op)
+		{
+			if (n_op->cmd)
+			{
+				i = -1;
+				while (n_op->cmd[++i])
+					printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
+			}
+			n_redirect = n_op->redirect;
+			while (n_redirect)
+			{
+				printf("FD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				n_redirect = n_redirect->next;
+			}
+			printf("n_op->token == %s\n", cv(n_op->token));
+			n_op = n_op->next;
+		}
+		printf("n_seq->token == %s\n", cv(n_seq->token));
+		n_seq = n_seq->next;
+	}
+	ft_putstr(END);
+}
+
+int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
+{
+	char	*ifs;
+	char	**tab_tmp;
+	char	**tab_tmp2;
+	int		i = 0;
+
+	ifs = ft_strdup("pa");
+	tab_tmp = NULL;
+	tab_tmp2 = NULL;
+	while (i < index)
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	i = 0;
+	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
+	//	printf("BBUUGG\n");
+	while (tab_tmp2[i])
+		ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
+	i = index + 1;
+	while ((*cmd)[i])
+		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
+	ft_tabdel(&(*cmd));
+	if (tab_tmp)
+		*cmd = ft_tabdup(tab_tmp);
+	return (0);
+}
+
+int			ft_bquote(char ***cmd, int *j_index, int i_index)
+{
+	int			j;//fd
+	char		*tmp;
+	char		**tab_tmp;
+	t_lex		lex;
+	t_seq		*new_b_seq;
+
+	*j_index = *j_index + 1;
+	j = *j_index;
+	tmp = NULL;
+	while ((*cmd)[i_index][j] != '`')
+		j++;
+	if (*j_index != j)
+	{
+		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
+		printf("TMP = %s\n", tmp);
+		*j_index = j;
+		ft_bquote_replace(&(*cmd), tmp, i_index);
+	}
+	else
+		ft_tabdel(&(*cmd));
+	printf("BUGG\n");
+	*j_index = *j_index + 1;
+//	lex = ft_lexer(tmp);
+//	new_b_seq = ft_parsing(lex);
+//	if (!extension(&new_b_seq))
+//	{
+//		i = ft_create_tmp_file();
+//	printf("BBBUUUGGG\n");
+//		ft_solver(new_b_seq, g_env, i);//PLUS LES FICHIER A CREER
+//		ft_watch_result(tmp, lex, new_b_seq);
+//		while (get_next_line(i, &tmp))
+//		{
+//			ft_malloc_cmd(&tab_tmp, tmp);
+//			ft_strdel(&tmp);
+//		}
+//		ft_create_tmp_file();
+//	}
+	//	ft_strdel(&tmp);
 	return (0);
 }
 
@@ -36,28 +172,31 @@ int			ft_parcour_tab(char ***cmd)
 	int			k;
 
 	i = -1;
-	while ((*cmd)[++i])
-	{
-		j = 0;
-		while ((*cmd)[j])
+	if (*cmd)
+		while (*cmd && (*cmd)[++i])
 		{
-			if ((*cmd)[i][j] == '\\')
-				ft_echap((*cmd)[i], &j);
-			else if ((*cmd)[i][j] == '\'')
-				ft_braquet_quote((*cmd)[i] + j, &i);
-			else if ((*cmd)[i][j] == '~')
+			j = 0;
+			while ((*cmd)[i][j])
 			{
-				if (ft_add_tild(&(*cmd)[i], &j))
-					return (1);
+				if ((*cmd)[i][j] == '\\')
+					j += 2;
+				else if ((*cmd)[i][j] == '\'')
+					ft_braquet_quote((*cmd)[i] + j, &j);
+				else if ((*cmd)[i][j] == '~' && j == 0)
+				{
+					if (ft_add_tild(&(*cmd)[i], &j))
+						return (1);
+				}
+				else if ((*cmd)[i][j] == '`')
+				{
+					ft_bquote(&(*cmd), &j, i);
+				}
+				else
+					j++;
+				if (!*cmd)//RESOUT LE SEGSEG
+					return (0);
 			}
-			else if ((*cmd)[i][j] == '$')
-			{
-				ft_dollar(&(*cmd)[i], &j);
-			}
-			else
-				j++;
 		}
-	}
 	return (0);
 }
 
@@ -79,18 +218,14 @@ int			extension(t_seq **b_seq)
 {
 	t_seq		*n_seq;
 
-	if (*b_seq)
+	n_seq = *b_seq;
+	while (n_seq)
 	{
-		n_seq = *b_seq;
-		while (n_seq)
-		{
-			if (n_seq->op)
-				if (ft_parcour_op(&n_seq->op))
-					return (1);
+		if (n_seq->op)
+			if (ft_parcour_op(&n_seq->op))
+				return (1);
 		n_seq = n_seq->next;
-		}
 	}
-	else
-		return (1);
+	printf("EXT FINISH\n");
 	return (0);
 }

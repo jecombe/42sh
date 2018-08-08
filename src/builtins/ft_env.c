@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:42:06 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 01:12:31 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:12:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ int			ft_env(void)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_setenv(const char *name, const char *value, int overwrite)
+int			ft_setenv(int overwrite)
 {
 	char	*s;
 	int		i;

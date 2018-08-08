@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 04:04:19 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:30:21 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ int			ft_dollar(char **cmd, int *j)
 	ft_strdel(cmd);
 //	if ((s = ft_envset_value((const char **)g_set, tmpnext)))
 //		*cmd = ft_strjoin(tmp, s);
-	if ((s = ft_envset_value((const char **)g_env, tmpnext)))
+	if ((s = ft_getenv(tmpnext, g_env)))
 		*cmd = ft_strjoin(tmp, s);
 	else
 		*cmd = ft_strdup(tmp);
