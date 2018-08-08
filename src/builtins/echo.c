@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:12:45 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 06:43:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,6 @@ int 		ft_echo(t_op *t_exec, int flag)
 	int slash_n;
 	int ok = 0;
 
-	//printf("=========+> %s\n", t_exec->cmd[1]);
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;
@@ -34,7 +33,7 @@ int 		ft_echo(t_op *t_exec, int flag)
 	{
 		slash_n = 1;
 		i++;
-		//printf("======>--%s--\n", t_exec->cmd[i]);
+		t_exec->cmd[i] = "\0";
 	}
 	if (flag != -1)
 	{
@@ -57,8 +56,6 @@ int 		ft_echo(t_op *t_exec, int flag)
 			}
 		if (slash_n == 0)
 			ft_putchar_fd('\n', fd_open);
-		else
-			ft_putchar_fd('\0', fd_open);
 	}
 	else
 	{
