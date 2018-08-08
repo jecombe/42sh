@@ -3,10 +3,23 @@
 /*                                                              /             */
 /*   libft.h                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/08/08 06:25:53 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/08 06:25:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   libft.h                                          .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:15:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 06:25:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,5 +113,6 @@ int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MAST
 int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				*ft_getenv(char *str, char **env);
+int					ft_strdel_in_tab(char ***tablo, int index);
 
 #endif
