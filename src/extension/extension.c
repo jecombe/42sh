@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:19:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:44:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -150,9 +150,14 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 //	new_b_seq = ft_parsing(lex);
 //	if (!extension(&new_b_seq))
 //	{
-//		i = ft_create_tmp_file();
+		j = ft_create_tmp_file();
 //	printf("BBBUUUGGG\n");
-//		ft_solver(new_b_seq, g_env, i);//PLUS LES FICHIER A CREER
+	while (new_b_seq)
+	{
+		if (new_b_seq->op)
+			ft_solver(new_b_seq->op, j);//PLUS LES FICHIER A CREER
+		new_b_seq = new_b_seq->next;
+	}
 //		ft_watch_result(tmp, lex, new_b_seq);
 //		while (get_next_line(i, &tmp))
 //		{

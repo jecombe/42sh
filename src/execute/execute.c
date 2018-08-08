@@ -6,14 +6,14 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 18:41:49 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:37:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag)
+int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 {
 	pid_t		cpid;
 	int			status;
@@ -30,7 +30,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag)
 	if ((cpid = fork()) == 0)
 	{
 		if (flag != -1)
-			ft_open_redirect(tmp_op->redirect->file, flag, flag2);
+			ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else

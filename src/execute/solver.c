@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 19:32:00 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:36:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ void	ft_read_line(int fd, char *s)
 		write(fd, list[i], ft_strlen(list[i]));
 }
 
-int		ft_heredoc(t_op *t_exec, char *bin, int flag)
+int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
 {
 	printf("HEREDOC-%s-\n", t_exec->redirect->file);
 	int fd[2];
@@ -56,7 +56,7 @@ int		ft_heredoc(t_op *t_exec, char *bin, int flag)
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	ft_exec(t_exec, bin, flag);
+	ft_exec(t_exec, bin, flag, bfd);
 	return (0);
 }
 
@@ -71,7 +71,7 @@ int		ft_check_source(char *source)
 	}
 	return (0);
 }
-int		ft_solver(t_op *t_exec)
+int		ft_solver(t_op *t_exec, int fd)
 {
 	ft_get_bin();
 	char *tmp_bin;
@@ -88,7 +88,7 @@ int		ft_solver(t_op *t_exec)
 	{
 		//********************************//
 		//ca beugue de ouff ca : <<  !!!!!!!!!!!!!!!!!!!!!
-		if (ft_heredoc(t_exec, tmp_bin, flag ) == 0)
+		if (ft_heredoc(t_exec, tmp_bin, flag, fd) == 0)
 			return (0);
 		else
 			return (2);
@@ -104,7 +104,7 @@ int		ft_solver(t_op *t_exec)
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (ft_exec(t_exec, tmp_bin, flag) == 0)
+		if (ft_exec(t_exec, tmp_bin, flag, fd) == 0)
 			return (0);
 		else
 			return (2);
