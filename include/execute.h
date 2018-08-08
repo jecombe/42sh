@@ -13,7 +13,7 @@
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
-
+# define HEREDOC 10
 #include "./parsing.h"
 #include "./stdin.h"
 
@@ -36,5 +36,5 @@ int				ft_env(t_op *t_exec, int flag);
 int				ft_setenv(t_op *t_exec, int flag);
 int				ft_unsetenv(t_op *t_exec, int flag);
 int 				ft_open_redirect_builtins(char *file, int flag);
-
+int				ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd);
 #endif

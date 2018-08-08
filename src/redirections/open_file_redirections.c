@@ -26,24 +26,24 @@ void			ft_open_redirect(char *file, int flag, int flag2, int fd)
 	if (flag2 == O_RDONLY)
 		dup2(ret2, 0);
 	else
-		dup2(ret2, fd);
+		dup2(ret2, 1);
 }
 
 int        ft_open_redirect_builtins(char *file, int flag)
 {
-    int flag2;
-    
-    if (flag == O_RDONLY)
-        flag2 = O_RDONLY;
-    else
-        flag2 = O_WRONLY;
-    
-    if (flag2 == O_WRONLY)
-        return (open(file, flag2 | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR));
-    
-    else if (flag2 == O_RDONLY)
-        return (open(file, flag2));
-    else
-        return (-11);
-    
+	int flag2;
+
+	if (flag == O_RDONLY)
+		flag2 = O_RDONLY;
+	else
+		flag2 = O_WRONLY;
+
+	if (flag2 == O_WRONLY)
+		return (open(file, flag2 | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR));
+
+	else if (flag2 == O_RDONLY)
+		return (open(file, flag2));
+	else
+		return (-11);
+
 }

@@ -12,53 +12,7 @@
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
-
-void		ft_skip_n(char *line)
-{
-	int i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\n')
-			line[i] = '\0';
-		i++;
-	}
-}
-void	ft_read_line(int fd, char *s)
-{
-	char	line[100];
-	char	*list[100];
-	int		i;
-	ssize_t	retval;
-
-	ft_memset(line, 0, 100);
-	ft_memset(list, 0, 100 * sizeof(*list));
-	i = 0;
-	while ((retval = read(1, line, 4096)) > 0)
-	{
-		ft_skip_n(line);
-		if (ft_strcmp(line, s) == 0)
-			break ;
-		else
-			list[i++] = ft_strdup(line);
-		ft_memset(line, 0, 100);
-	}
-	i = -1;
-	while (list[++i])
-		write(fd, list[i], ft_strlen(list[i]));
-}
-
-int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
-{
-	printf("HEREDOC-%s-\n", t_exec->redirect->file);
-	int fd[2];
-	pipe(fd);
-	ft_read_line(fd[1], t_exec->redirect->file);
-	close(fd[1]);
-	dup2(fd[0], STDIN_FILENO);
-	close(fd[0]);
-	ft_exec(t_exec, bin, flag, bfd);
-	return (0);
-}
+#include "../../include/stdin.h"
 
 int		ft_check_source(char *source)
 {
@@ -71,11 +25,41 @@ int		ft_check_source(char *source)
 	}
 	return (0);
 }
+
+int			ft_redirect_heredoc(t_op *t_exec, int flag)
+{
+	char *tmp_bin;
+	pid_t pid;
+	int stat;
+
+	tmp_bin = ft_search_bin(t_exec->cmd[0]);
+	if ((pid = fork()) < 0)
+		exit(1);
+	else if (pid == 0)
+	{
+		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == 0)
+			;
+		else
+			return (2);
+	}
+	else
+	{
+		wait(&stat);
+		if (WIFEXITED(stat))
+		{
+			if (WEXITSTATUS(stat) != 0)
+				return (0);
+		}
+		return (0);
+	}
+	return (0);
+}
+
 int		ft_solver(t_op *t_exec, int fd)
 {
 	ft_get_bin();
 	char *tmp_bin;
-	int ok = 0;
+	int ok;
 	int flag;
 
 	flag = ft_return_flag(t_exec);
@@ -84,16 +68,15 @@ int		ft_solver(t_op *t_exec, int fd)
 		if (ft_check_source(t_exec->redirect->file) == -1)
 			return (2);
 	//Si il y a <<
-	if (flag == 10)
+	if (flag == HEREDOC)
 	{
-		//********************************//
-		//ca beugue de ouff ca : <<  !!!!!!!!!!!!!!!!!!!!!
-		if (ft_heredoc(t_exec, tmp_bin, flag, fd) == 0)
+
+		if (ft_redirect_heredoc(t_exec, flag) == 0)
 			return (0);
 		else
 			return (2);
-		//********************************//
 	}
+	//Si il y a pas < ou <<, passe en dessous
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
 		if (ft_builtins(t_exec, ok, flag) == 0)

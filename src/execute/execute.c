@@ -19,18 +19,21 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	int			status;
 	int			ret;
 	char		*cmd;
-	int ret2;
 	int			flag2;
 
-	if (flag == O_RDONLY)
-		flag2 = O_RDONLY;
-	else
-		flag2 = O_WRONLY;
+	if (fd != -12)
+	{
+		if (flag == O_RDONLY)
+			flag2 = O_RDONLY;
+		else
+			flag2 = O_WRONLY;
+	}
 	ret = 0;
 	if ((cpid = fork()) == 0)
 	{
-		if (flag != -1)
-			ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
+		if (fd != -12)
+			if (flag != -1)
+				ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else
@@ -43,13 +46,12 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	}
 	if (ret == 1)
 	{
-		printf("ok1\n");
+		//ECHEC
 		return (2);
 	}
 	else
-
 	{
-		printf("ok2\n");
+		//REUSSITE
 		return (0);
 	}
 }

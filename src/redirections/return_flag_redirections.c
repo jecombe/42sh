@@ -24,10 +24,7 @@ int		ft_return_flag(t_op *t_exec)
 		if (t_exec->redirect->redirect == GREAT)
 			return (O_TRUNC);
 		if (t_exec->redirect->redirect == DLESS)
-		{
-			printf("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPp\n");
-			return (10);
-		}
+			return (HEREDOC);
 	}
 	return (-1);
 }

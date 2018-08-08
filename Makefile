@@ -70,6 +70,7 @@ SRCS_NAME =	\
 			execute/check_command.c \
 			redirections/open_file_redirections.c \
 			redirections/return_flag_redirections.c \
+			redirections/heredoc.c \
 			builtins/builtins.c \
 			builtins/cd.c \
 			builtins/echo.c \
