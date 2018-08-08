@@ -13,6 +13,42 @@
 
 #include "../../include/execute.h"
 
+int 		ft_echo_redirect(int fd_open, char **cmd, int ok, int slash_n)
+{
+	int i = 0;
+
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], fd_open);
+		if (cmd[i + 1])
+			ft_putchar_fd(' ', fd_open);
+		i++;
+	}
+	if (slash_n == 0 && ok == 0)
+		ft_putchar_fd('\n', fd_open);
+	return (0);
+
+}
+
+int 		ft_echo_normal(t_op *t_exec, int i, int ok, int slash_n)
+{	
+	if (ok == 1)
+	{
+		ft_putchar('\n');
+		return (0);
+	}
+	while (t_exec->cmd[i])
+	{
+		ft_putstr(t_exec->cmd[i]);
+		if (t_exec->cmd[i + 1])
+			ft_putchar(' ');
+		i++;
+	}
+	if (slash_n == 0)
+		ft_putchar('\n');
+	return (0);
+
+}
 int 		ft_echo(t_op *t_exec, int flag)
 {
 	//printf("ECHO\n");
@@ -25,7 +61,8 @@ int 		ft_echo(t_op *t_exec, int flag)
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;
-		t_exec->cmd[1] = "\0";
+		t_exec->cmd[1] = "\n";
+		t_exec->cmd[2] = NULL;
 	}
 	slash_n = 0;
 	i = 1;
@@ -33,44 +70,14 @@ int 		ft_echo(t_op *t_exec, int flag)
 	{
 		slash_n = 1;
 		i++;
-		t_exec->cmd[i] = "\0";
 	}
 	if (flag != -1)
 	{
-		if (flag == O_RDONLY)
-			flag2 = O_RDONLY;
-		else
-			flag2 = O_WRONLY;
-			while (t_exec->cmd[i])
-			{
-				if (flag2 == O_WRONLY)
-				{
-					fd_open = open(t_exec->redirect->file, flag2 | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-					ft_putstr_fd(t_exec->cmd[i], fd_open);
-					if (t_exec->cmd[i + 1])
-						ft_putchar_fd(' ', fd_open);
-				}
-				if (flag2 == O_RDONLY)
-					fd_open = open(t_exec->redirect->file, flag2);
-				i++;
-			}
-		if (slash_n == 0)
-			ft_putchar_fd('\n', fd_open);
+
+		if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag)) != -11)
+			ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 	}
 	else
-	{
-		if (ok == 1)
-			ft_putchar('\n');
-	else
-		{
-			while (t_exec->cmd[i])
-			{
-				ft_putstr(t_exec->cmd[i]);
-				if (t_exec->cmd[i + 1])
-					ft_putchar(' ');
-				i++;
-			}
-		}
-	}
+		ft_echo_normal(t_exec, i, ok, slash_n);
 	return (0);
 }
