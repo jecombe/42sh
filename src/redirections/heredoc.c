@@ -75,7 +75,7 @@ int				ft_redirect_heredoc(t_op *t_exec, int flag)
 
 	tmp_bin = ft_search_bin(t_exec->cmd[0]);
 	if ((pid = fork()) < 0)
-		exit(1);
+			exit(EXIT_FAILURE);
 	else if (pid == 0)
 	{
 		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == 0)
