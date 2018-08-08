@@ -16,5 +16,5 @@
 int ft_cd(t_op *t_exec, int flag)
 {
 	printf("CD\n");
-	return (0);
+	return (EXIT_SUCCESS);
 }

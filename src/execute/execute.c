@@ -47,12 +47,12 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	if (ret == 1)
 	{
 		//ECHEC
-		return (2);
+		return (EXIT_FAILURE);
 	}
 	else
 	{
 		//REUSSITE
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 }
 

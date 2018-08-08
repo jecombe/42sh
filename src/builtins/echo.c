@@ -26,7 +26,7 @@ int 		ft_echo_redirect(int fd_open, char **cmd, int ok, int slash_n)
 	}
 	if (slash_n == 0 && ok == 0)
 		ft_putchar_fd('\n', fd_open);
-	return (0);
+	return (EXIT_SUCCESS);
 
 }
 
@@ -35,7 +35,7 @@ int 		ft_echo_normal(t_op *t_exec, int i, int ok, int slash_n)
 	if (ok == 1)
 	{
 		ft_putchar('\n');
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	while (t_exec->cmd[i])
 	{
@@ -46,7 +46,7 @@ int 		ft_echo_normal(t_op *t_exec, int i, int ok, int slash_n)
 	}
 	if (slash_n == 0)
 		ft_putchar('\n');
-	return (0);
+	return (EXIT_SUCCESS);
 
 }
 int 		ft_echo(t_op *t_exec, int flag)
@@ -79,5 +79,5 @@ int 		ft_echo(t_op *t_exec, int flag)
 	}
 	else
 		ft_echo_normal(t_exec, i, ok, slash_n);
-	return (0);
+	return (EXIT_SUCCESS);
 }

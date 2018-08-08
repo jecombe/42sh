@@ -37,31 +37,31 @@ int		ft_solver(t_op *t_exec, int fd)
 	//Si il y a <
 	if (flag == O_RDONLY)
 		if (ft_check_source(t_exec->redirect->file) == -1)
-			return (2);
+			return (EXIT_FAILURE);
 	//Si il y a <<
 	if (flag == HEREDOC)
 	{
 
 		if (ft_redirect_heredoc(t_exec, flag) == 0)
-			return (0);
+			return (EXIT_SUCCESS);
 		else
-			return (2);
+			return (EXIT_FAILURE);
 	}
 	//Si il y a pas < ou <<, passe en dessous
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
 		if (ft_builtins(t_exec, ok, flag) == 0)
-			return (0);
+			return (EXIT_FAILURE);
 		else
-			return (2);
+			return (EXIT_SUCCESS);
 	}
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (ft_exec(t_exec, tmp_bin, flag, fd) == 0)
-			return (0);
+		if (ft_exec(t_exec, tmp_bin, flag, fd) == EXIT_SUCCESS)
+			return (EXIT_FAILURE);
 		else
-			return (2);
+			return (EXIT_SUCCESS);
 	}
-	return (0);
+	return (EXIT_FAILURE);
 }

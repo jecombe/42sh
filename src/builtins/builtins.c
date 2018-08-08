@@ -16,22 +16,22 @@
 int		ft_builtins(t_op *t_exec, int what, int flag)
 {
 	if (what == 1)
-		if (ft_echo(t_exec, flag) == 0)
-			return (0);
+		if (ft_echo(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 	if (what == 2)
-		if (ft_cd(t_exec, flag) == 0)
-			return (0);
+		if (ft_cd(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 	if (what == 3)
-		if (ft_exit(t_exec, flag) == 0)
-			return (0);
+		if (ft_exit(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 	if (what == 4)
-		if (ft_env(t_exec, flag) == 0)
-			return (0);
+		if (ft_env(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 	if (what == 5)
-		if (ft_setenv(t_exec, flag) == 0)
-			return (0);
+		if (ft_setenv(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
 	if (what == 6)
-		if (ft_unsetenv(t_exec, flag) == 0)
-			return (0);
-	return (2);
+		if (ft_unsetenv(t_exec, flag) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

@@ -3,5 +3,5 @@
 int ft_setenv(t_op *t_exec, int flag)
 {
 	printf("SETENV\n");
-	return (0);
+	return (EXIT_SUCCESS);
 }

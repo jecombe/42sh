@@ -83,7 +83,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 		while (opera)
 		{
 			// 2 ==> retour de ft_solver si echec
-			if (ft_solver(opera, fd) == 2)
+			if (ft_solver(opera, fd) == EXIT_FAILURE)
 			{
 				fail = 1;
 				//si il y a bien && alors break, execute pas l'autre command;

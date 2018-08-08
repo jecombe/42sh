@@ -16,5 +16,5 @@
 int 		ft_exit(t_op *t_exec, int flag)
 {
 	printf("EXIT\n");
-	return (0);
+	return (EXIT_SUCCESS);
 }
