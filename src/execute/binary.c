@@ -6,29 +6,39 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 04:41:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/07 19:57:47 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-void		ft_get_bin(char **env)
+void		ft_get_bin()
 {
 	int  i;
 	char *bin;
 	i = 0;
-	while (env[i])
+	while (g_env[i])
 	{
-		if (ft_strncmp("PATH=", env[i], 5) == 0)
+		if (ft_strncmp("PATH=", g_env[i], 5) == 0)
 		{
-			env[i]++;
-			bin = ft_strdup(env[i]);
-			bin = ft_avance(bin);
+			g_env[i]++;
+			bin = ft_strdup(g_env[i]);
+			bin = ft_go_to(bin, 5);
+			printf("=================+< %s\n", bin);
 			g_bin = ft_strsplit(bin, ':');
 		}
 		i++;
 	}
+}
+
+int			ft_check_direct_command(char *cmd)
+{
+	struct stat sb;
+	if (lstat(cmd, &sb) == -1)
+		return (-1);
+	else
+		return (0);
 }
 
 char		*ft_search_bin(char *cmd)
@@ -38,6 +48,8 @@ char		*ft_search_bin(char *cmd)
 	int t;
 	struct stat st;
 
+	if (ft_check_direct_command(cmd) == 0)
+		return (cmd);
 	i = 0;
 	t = 0;
 	while (g_bin[i])

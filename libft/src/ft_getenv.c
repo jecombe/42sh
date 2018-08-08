@@ -6,27 +6,28 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/03/24 20:46:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 02:47:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:15:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-#include "../../include/stdin.h"
 
-char		*ft_getenv(char *str)
+char		*ft_getenv(char *str, char **env)
 {
 	int		i;
 	int		j;
 
 	i = -1;
-	while (g_env[++i])
+	while (env[++i])
 	{
 		j = 0;
-		while (g_env[i][j] == str[j] && g_env[i][j] && str[j])
+		while (env[i][j] == str[j] && env[i][j] && str[j])
+		{
 			j++;
-		if (g_env[i][j] == '=' && j != 0)
-			return (ft_strdup((g_env[i]) + (j + 1)));
+		}
+		if (env[i][j] == '=' && j != 0)
+			return (ft_strdup((env[i]) + (j + 1)));
 	}
 	return (NULL);
 }

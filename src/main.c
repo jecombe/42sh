@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 01:05:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:39:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,40 +19,44 @@
 
 #define cv ft_convert_token_to_string
 
-static void			ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
+void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
 	t_op			*n_op;
 	t_redirect		*n_redirect;
 
-	printf("%sLINE :%s\n%s\n", RED, END, line);
-	printf("%sLEXER : \n%s", RED, END);
+	printf("\n\n-------------- ANALYSE ---------------\n\n");
+	printf("%sLINE :%s\n.%s.\n\n", RED, END, line);
+	printf("%sLEXER :%s\n", RED, END);
 	while (lex.name[++i])
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
+	printf("\n%sPARSER :%s\n", RED, END);
 	while (n_seq)
 	{
+		printf("n_seq->token == %s\n", cv(n_seq->token));
 		n_op = n_seq->op;
 		while (n_op)
 		{
+			printf("\tn_op->token == %s\n", cv(n_op->token));
 			if (n_op->cmd)
 			{
 				i = -1;
 				while (n_op->cmd[++i])
-					printf("CMD[%d] == %s\n", i, n_op->cmd[i]);
+					printf("\t\tCMD[%d] == %s\n", i, n_op->cmd[i]);
 			}
 			n_redirect = n_op->redirect;
 			while (n_redirect)
 			{
-				printf("FD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				printf("\t\t\tFD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
 				n_redirect = n_redirect->next;
 			}
-			printf("n_op->token == %s\n", cv(n_op->token));
 			n_op = n_op->next;
 		}
-		printf("n_seq->token == %s\n", cv(n_seq->token));
+		ft_putchar('\n');
 		n_seq = n_seq->next;
 	}
-	ft_putstr(END);
+	printf("--------------------------------------\n\n");
+
 }
 
 int					ft_term_init(char **environ)
@@ -65,6 +69,37 @@ int					ft_term_init(char **environ)
 	if (tgetent(NULL, term) == ERR)
 		return (1);
 	return (0);
+}
+
+void		ft_separate(t_seq *b_seq, int fd)
+{
+	t_op *opera;
+	int fail;
+
+	fail = 0;
+	opera = b_seq->op;
+	if (opera->next)
+	{
+		while (opera)
+		{
+			// 2 ==> retour de ft_solver si echec
+			if (ft_solver(opera, fd) == 2)
+			{
+				fail = 1;
+				//si il y a bien && alors break, execute pas l'autre command;
+				if (opera->token == AND_IF)
+					break;
+			}
+			opera = opera->next;
+		}
+	}
+	else
+	{
+		if (fail == 0)
+		{
+			ft_solver(opera, fd);
+		}
+	}
 }
 
 void				ft_101sh(void)
@@ -85,11 +120,26 @@ void				ft_101sh(void)
 			if (!extension(&b_seq))
 			{
 				//******EXECUTER LES COMMANDES******//
-				ft_solver(b_seq, g_env);
+				//si il y a next dans t_seq et que c'est le ;
+				if (b_seq->token == SEMI)
+				{
+					while (b_seq)
+					{
+						//si il y a encore une separation command ==> &&
+						ft_separate(b_seq, 1);
+						b_seq = b_seq->next;
+					}
+				}
+				else
+				{
+					//regarde si il une separation command ==> &&
+					ft_separate(b_seq, 1);
+				}
 				ft_watch_result(line, lex, b_seq);
-				ft_strdel(&line);
-				ft_free_b_seq(&b_seq);
 			}
+			if (line)
+				ft_strdel(&line);
+			ft_free_b_seq(&b_seq);
 		}
 	}
 }

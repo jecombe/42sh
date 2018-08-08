@@ -1,35 +1,20 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_tabdup.c                                      .::    .:/ .      .::   */
+/*   cd.c                                             .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/30 05:52:29 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 05:52:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/02 15:34:07 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/07 19:15:56 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/execute.h"
 
-char		**ft_tabdup(char **tab)
+int ft_cd(t_op *t_exec, int flag)
 {
-	char		**ret;
-	int			i;
-
-	i = 0;
-	ret = NULL;
-	if (tab)
-	{
-		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
-			return (NULL);
-		while (tab[i])
-		{
-			ret[i] = tab[i];
-			i++;
-		}
-		ret[i] = NULL;
-	}
-	return (ret);
+	printf("CD\n");
+	return (0);
 }

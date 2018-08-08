@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 04:48:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 02:44:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,7 +28,7 @@ int			ft_add_tild(char **str, int *index)
 
 	j = 1;
 	i = -1;
-	if ((var = ft_getenv("HOME")) && (!(*str)[*index + 1] || (*str)[*index + 1] == '/'))
+	if ((var = ft_getenv("HOME", g_env)) && (!(*str)[*index + 1] || (*str)[*index + 1] == '/'))
 	{
 		tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)));
 		while (var[++i])
@@ -66,7 +66,7 @@ static void	ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	t_op	*n_op;
 	t_redirect	*n_redirect;
 
-	printf("%sL									INE :%s\n%s\n", RED, END, line);
+	printf("%sLINE :%s\n%s\n", RED, END, line);
 	printf("%sLEXER : \n%s", RED, END);
 	while (lex.name[++i])
 		printf(".%s. .%s.\n", lex.name[i], ft_convert_token_to_string(lex.token[i]));
@@ -117,29 +117,8 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
 	while ((*cmd)[i])
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
 	ft_tabdel(&(*cmd));
-	*cmd = ft_tabdup(tab_tmp);
-	return (0);
-}
-
-int		ft_del_cmd(char ***cmd, int i_index)
-{
-	int		i;
-	char	**tab_tmp;
-
-	tab_tmp = NULL;
-	i = 0;
-	while (i < i_index)
-		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
-	i++;
-	while ((*cmd)[i])
-		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
-	ft_tabdel(&(*cmd));
 	if (tab_tmp)
 		*cmd = ft_tabdup(tab_tmp);
-	else
-	{
-//
-	}
 	return (0);
 }
 
@@ -161,21 +140,24 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
 		printf("TMP = %s\n", tmp);
 		*j_index = j;
-//		while ((*cmd)[i_index][*j_index] != '`')
-//			*j_index = *j_index + 1;
 		ft_bquote_replace(&(*cmd), tmp, i_index);
 	}
 	else
-		ft_del_cmd(&(*cmd), i_index);
+		ft_tabdel(&(*cmd));
 	printf("BUGG\n");
 	*j_index = *j_index + 1;
 //	lex = ft_lexer(tmp);
 //	new_b_seq = ft_parsing(lex);
 //	if (!extension(&new_b_seq))
 //	{
-//		i = ft_create_tmp_file();
+		j = ft_create_tmp_file();
 //	printf("BBBUUUGGG\n");
-//		ft_solver(new_b_seq, g_env);//PLUS LES FICHIER A CREER
+	while (new_b_seq)
+	{
+		if (new_b_seq->op)
+			ft_solver(new_b_seq->op, j);//PLUS LES FICHIER A CREER
+		new_b_seq = new_b_seq->next;
+	}
 //		ft_watch_result(tmp, lex, new_b_seq);
 //		while (get_next_line(i, &tmp))
 //		{
@@ -217,10 +199,8 @@ int			ft_parcour_tab(char ***cmd)
 				else
 					j++;
 				if (!*cmd)//RESOUT LE SEGSEG
-					break ;
+					return (0);
 			}
-			if (!*cmd)//RESOUT LE SEGSEG
-				break ;
 		}
 	return (0);
 }
