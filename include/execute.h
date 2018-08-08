@@ -37,4 +37,5 @@ int				ft_setenv(t_op *t_exec, int flag);
 int				ft_unsetenv(t_op *t_exec, int flag);
 int 				ft_open_redirect_builtins(char *file, int flag);
 int				ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd);
+int				ft_redirect_heredoc(t_op *t_exec, int flag);
 #endif

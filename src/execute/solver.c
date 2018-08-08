@@ -26,35 +26,6 @@ int		ft_check_source(char *source)
 	return (0);
 }
 
-int			ft_redirect_heredoc(t_op *t_exec, int flag)
-{
-	char *tmp_bin;
-	pid_t pid;
-	int stat;
-
-	tmp_bin = ft_search_bin(t_exec->cmd[0]);
-	if ((pid = fork()) < 0)
-		exit(1);
-	else if (pid == 0)
-	{
-		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == 0)
-			;
-		else
-			return (2);
-	}
-	else
-	{
-		wait(&stat);
-		if (WIFEXITED(stat))
-		{
-			if (WEXITSTATUS(stat) != 0)
-				return (0);
-		}
-		return (0);
-	}
-	return (0);
-}
-
 int		ft_solver(t_op *t_exec, int fd)
 {
 	ft_get_bin();

@@ -30,7 +30,7 @@ void	ft_read_line(int fd, char *s)
 			break ;
 		else
 		{
-		display_prompt(NULL, prompt);
+			display_prompt(NULL, prompt);
 			ft_strcat(line, "\n");
 			list[i++] = ft_strdup(line);
 		}
@@ -65,4 +65,33 @@ int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
 		else
 			return (2);
 	}
+}
+
+int				ft_redirect_heredoc(t_op *t_exec, int flag)
+{
+	char		*tmp_bin;
+	pid_t		pid;
+	int			stat;
+
+	tmp_bin = ft_search_bin(t_exec->cmd[0]);
+	if ((pid = fork()) < 0)
+		exit(1);
+	else if (pid == 0)
+	{
+		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == 0)
+			;
+		else
+			return (2);
+	}
+	else
+	{
+		wait(&stat);
+		if (WIFEXITED(stat))
+		{
+			if (WEXITSTATUS(stat) != 0)
+				return (0);
+		}
+		return (0);
+	}
+	return (0);
 }
