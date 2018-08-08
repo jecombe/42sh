@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:32:55 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/02 21:41:41 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 01:34:16 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-void	end_of_text(t_editor *ed)
+void	end_of_text(t_editor *ed, e_prompt *prompt, char **line)
 {
 	char buf[4096];
 
@@ -24,9 +24,11 @@ void	end_of_text(t_editor *ed)
 	display_prompt(find_var_string(g_env, "HOME", 0), PROMPT);
 	ed->last_row = get_cursor_position(1);
 	ed->first_row = ed->last_row;
-	ed->prompt = 0;
 	if (ed->line)
 		ft_strdel(&(ed->line));
+	if (*line)
+		ft_strdel(line);
+	*prompt = PROMPT;
 //	ft_putchar(7);
 	ed->cursor_str_pos = 0;
 }

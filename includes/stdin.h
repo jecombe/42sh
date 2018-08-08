@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/02 21:41:44 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 01:15:25 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,7 +81,6 @@ typedef struct		s_editor
 	size_t	cursor_str_pos;
 	char	*clipboard;
 	char	key[10];
-	e_prompt prompt;
 	char *line;
 }					t_editor;
 
@@ -110,8 +109,8 @@ int		backspace(t_editor *ed);
 *******************************************************************************
 */
 
-int		clear_window(t_editor *ed);
-void	end_of_text(t_editor *ed);
+int		clear_window(t_editor *ed, e_prompt prompt);
+void	end_of_text(t_editor *ed, e_prompt *prompt, char **line);
 void	myhandler_interrupt(int signal);
 
 /*
@@ -127,7 +126,7 @@ int		add_char_into_line(char key, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(char *home, e_prompt prompt);
-int		get_stdin(char **line, e_prompt prompt);
+int		get_stdin(char **line, e_prompt *prompt);
 char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);

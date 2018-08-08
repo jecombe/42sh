@@ -6,17 +6,17 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:18:49 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/02 15:48:38 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 00:23:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "stdin.h"
 
-int		clear_window(t_editor *ed)
+int		clear_window(t_editor *ed, e_prompt prompt)
 {
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
-	display_prompt(find_var_string(g_env, "HOME", 0), ed->prompt);
+	display_prompt(find_var_string(g_env, "HOME", 0), prompt);
 	if (ed->line)
 		ft_putstr(ed->line);
 	ed->last_row = get_cursor_position(1);

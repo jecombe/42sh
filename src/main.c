@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:45:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/02 21:41:38 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 00:27:41 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ int		main(void)
 	if (tgetent(NULL, xterm) == ERR)
 		return (-1);
 	ft_putstr(tgetstr("cl", NULL));
-	while (get_stdin(&line, prompt) > 0)
+	while (get_stdin(&line, &prompt) > 0)
 	{
 		printf("line:     [%s]\nprompt: [%u]\n", line, prompt);
 		if (line)
