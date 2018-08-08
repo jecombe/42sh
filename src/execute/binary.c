@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 19:57:47 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 06:04:42 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ void		ft_get_bin()
 			g_env[i]++;
 			bin = ft_strdup(g_env[i]);
 			bin = ft_go_to(bin, 5);
-			printf("=================+< %s\n", bin);
+			//printf("=================+< %s\n", bin);
 			g_bin = ft_strsplit(bin, ':');
 		}
 		i++;
