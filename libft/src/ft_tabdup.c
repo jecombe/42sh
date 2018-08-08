@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:52:29 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 05:52:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 09:17:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ char		**ft_tabdup(char **tab)
 			return (NULL);
 		while (tab[i])
 		{
-			ret[i] = tab[i];
+			ret[i] = ft_strdup(tab[i]);
 			i++;
 		}
 		ret[i] = NULL;

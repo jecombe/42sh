@@ -6,36 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 07:13:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/08 09:53:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/extension.h"
-
-int			ft_strdel_in_tab(char ***tablo, int index)
-{
-	int			i;
-	char		**tmp;
-
-	i = 0;
-	if ((*tablo)[i + 1])
-	{
-		while (i < index)
-			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
-				return (1);
-		i++;
-		while ((*tablo)[i])
-			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
-				return (1);
-		ft_tabdel(&(*tablo));
-		if (!(*tablo = ft_tabdup(tmp)))
-			return (1);
-	}
-	else
-		ft_tabdel(&(*tablo));
-	return (0);
-}
 
 int			ft_add_tild(char **str, int *index)
 {
@@ -67,7 +43,7 @@ int			ft_create_tmp_file(void)
 	static int		fd = 0;
 
 	if (fd)
-		fd = open(".tmp_file", O_CREAT, O_APPEND, O_WRONLY, S_IRWXU);
+		fd = open(".tmp_file", O_CREAT, O_TRUNC, O_RDWR, S_IRWXU);
 	else
 	{
 		close(fd);
@@ -189,12 +165,23 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	return (0);
 }
 
+int			ft_manage_backslash(char ***cmd, int i, int *j, int d_quote)
+{
+	if (d_quote == 1)
+		backslash_in_dquote();
+	else
+		backslash_out_dquote();
+	return (0);
+}
+
 int			ft_parcour_tab(char ***cmd)
 {
 	int			i;
 	int			j;
 	int			k;
+	int			dquote;
 
+	dquote = 0;
 	i = -1;
 	if (*cmd)
 		while (*cmd && (*cmd)[++i])
@@ -203,11 +190,17 @@ int			ft_parcour_tab(char ***cmd)
 			while ((*cmd)[i][j])
 			{
 				if ((*cmd)[i][j] == '\\')
+				{
+					ft_manage_backslash(&(*cmd), i, &j, dquote);
 					j += 2;
-				else if ((*cmd)[i][j] == '\'')
+				}
+				else if ((*cmd)[i][j] == '\'' && dquote == 0)
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
 				else if ((*cmd)[i][j] == '"')
+				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
+					dquote = dquote == 1 ? 0 : 1;
+				}
 				else if ((*cmd)[i][j] == '~' && j == 0)
 				{
 					if (ft_add_tild(&(*cmd)[i], &j))
