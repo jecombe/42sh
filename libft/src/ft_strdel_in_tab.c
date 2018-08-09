@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:17:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:28:27 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 05:52:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,8 @@ int		ft_strdel_in_tab(char ***tablo, int index)
 	char	**tmp;
 
 	i = 0;
-	if ((*tablo)[i + 1])
+	tmp = NULL;
+	if ((*tablo)[1])
 	{
 		while (i < index)
 			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))

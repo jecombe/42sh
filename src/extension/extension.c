@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 04:16:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 07:14:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,8 +30,6 @@ int			ft_add_tild(char **str, int *index)
 		while ((*str)[j])
 			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
-		printf("TMP == %s\n", tmp);
-		//		ft_strdel(&(*str));
 		*index = i;
 		*str = ft_strdup(tmp);
 	}
@@ -42,8 +40,11 @@ int			ft_create_tmp_file(void)
 {
 	static int		fd = 0;
 
-	if (fd)
-		fd = open(".tmp_file", O_CREAT, O_TRUNC, O_RDWR, S_IRWXU);
+	if (!fd)
+	{
+		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
+		system("chmod 777 .tmp_file");
+	}
 	else
 	{
 		close(fd);
@@ -136,13 +137,17 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 		*j_index = j;
 		lex = ft_lexer(tmp);
 		new_b_seq = ft_parsing(lex);
+		ft_strdel(&tmp);
 		if (!extension(&new_b_seq))
 		{
 			j = ft_create_tmp_file();//
 			while (new_b_seq)
 			{
 				if (new_b_seq->op)
+				{
+					printf("JECOMBE TU GERES PAS MDRRR\n");
 					ft_solver(new_b_seq->op, j);//J EST LE FICHIER A CREER
+				}
 				new_b_seq = new_b_seq->next;
 			}
 //			ft_watch_result(tmp, lex, new_b_seq);
@@ -157,10 +162,7 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	//	ft_strdel(&tmp);
 	}
 	else
-	{
-		printf("DELETE TAB\n");
-		ft_tabdel(&(*cmd));
-	}
+		ft_strdel_in_tab(&(*cmd), i_index);
 	*j_index = j + 1;
 	return (0);
 }
@@ -239,7 +241,7 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else
 					j++;
-				if (!*cmd)//RESOUT LE SEGSEG
+				if (!(*cmd) || !(*cmd)[i])//RESOUT LE SEGSEG
 					return (0);
 			}
 		}
@@ -254,11 +256,7 @@ int			ft_parcour_op(t_op **b_op)
 	while (n_op)
 	{
 		if (n_op->cmd)
-		{
-			printf("0000\n");
 			ft_parcour_tab(&n_op->cmd);
-			printf("1111\n");
-		}
 		n_op = n_op->next;
 	}
 	return (0);
@@ -276,6 +274,7 @@ int			extension(t_seq **b_seq)
 				return (1);
 		n_seq = n_seq->next;
 	}
+	extension_error(b_seq);
 	printf("EXT FINISH\n");
 	return (0);
 }
