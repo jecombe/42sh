@@ -71,10 +71,13 @@ int					ft_term_init(char **environ)
 	return (0);
 }
 
+int g_er;
+
 void		ft_separate(t_seq *b_seq, int fd)
 {
 	t_op *opera;
 	int fail;
+	int ret;
 
 	fail = 0;
 	opera = b_seq->op;
@@ -82,19 +85,38 @@ void		ft_separate(t_seq *b_seq, int fd)
 	{
 		while (opera)
 		{
-			// 2 ==> retour de ft_solver si echec
-			if (ft_solver(opera, fd) == EXIT_FAILURE)
+			if (fail == 1)
 			{
-				fail = 1;
+
+				return ;
+			}
+			// 2 ==> retour de ft_solver si echec
+			if ((ret = ft_solver(opera, fd)) == EXIT_FAILURE)
+			{
+				if (opera->token == AND_IF)
+				{
+					fail = 1;
+					g_er = 1;
+				}
 				//si il y a bien && alors break, execute pas l'autre command;
 				if (opera->token == AND_IF)
+				{
 					break;
+				}
 			}
-			opera = opera->next;
+			if (ret == EXIT_SUCCESS && opera->token == OR_IF)
+			{
+				break;
+			}
+			if (fail == 0)
+				opera = opera->next;
 		}
 	}
 	else
+		if (fail == 0)
+		{
 			ft_solver(opera, fd);
+		}
 }
 
 void				ft_101sh(void)
@@ -120,6 +142,7 @@ void				ft_101sh(void)
 				{
 					while (b_seq)
 					{
+						printf("ANUS\n");
 						//si il y a encore une separation command ==> &&
 						ft_separate(b_seq, 1);
 						b_seq = b_seq->next;
@@ -127,9 +150,12 @@ void				ft_101sh(void)
 				}
 				else
 				{
+					printf("CHATE\n");
 					//regarde si il une separation command ==> &&
 					ft_separate(b_seq, 1);
 				}
+				if (g_er == 1)
+					return ;
 				//ft_watch_result(line, lex, b_seq);
 			}
 			if (line)
