@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:15:34 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 04:37:40 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,19 +77,78 @@ int				ft_test(t_select **sel, int ret)
 	return (0);
 }
 
-int				main(int ac, char **av)
+t_rep	*ft_free_node(t_rep *rep)
+{
+	t_rep *tmp;
+
+	if (!rep)
+		return (NULL);
+	tmp = rep->next;
+	free(rep);
+	rep = NULL;
+	return (tmp);
+}
+
+char	**list_to_tab(int size, t_rep *begin)
+{
+	char **rep;
+	int i;
+
+	i = 0;
+	rep = (char**)malloc(sizeof(char*) * size);
+	rep[size] = NULL;
+	while (begin->next)
+	{
+		rep[i++] = ft_strdup(begin->d_name);
+		begin = ft_free_node(begin);
+	}
+	return (rep);
+}
+
+char	**ft_directory_content(void)
+{
+	DIR			*dir;
+	t_dirent	*rep;
+	t_rep		*begin;
+	t_rep		*to_add;
+	t_rep		*now;
+	int			count;
+
+	count = 0;
+	begin = NULL;
+	now = NULL;
+	to_add = NULL;
+	dir = opendir(".");
+	while ((rep = readdir(dir)))
+	{
+		if (rep->d_name[0] != '.')
+		{
+			to_add = (t_rep*)malloc(sizeof(t_rep));
+			to_add->next = NULL;
+			if (now)
+				now->next = to_add;
+			now = to_add;
+			ft_strcpy(now->d_name, rep->d_name);
+			begin = !begin ? to_add : begin;
+			count++;
+		}
+	}
+	return (list_to_tab(count, begin));
+}
+
+int				main(void)
 {
 	t_select	*sel;
 	int			ret;
 	t_ws		verif;
+	char	**rep;
 
+	rep = ft_directory_content();
 	ret = 0;
 	g_sign = 1;
-	if (ac < 2)
-		return (0);
 	ft_enable_raw(&sel);
 	ft_signal();
-	ft_init_select(&sel, av);
+	ft_init_select(&sel, rep);
 	ft_get_size_term(&verif, &sel, 2);
 	ft_test(&sel, ret);
 	return (ft_print_final(&sel) + ft_disable_raw(0, &sel));
