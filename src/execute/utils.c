@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 16:47:48 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 17:15:08 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,9 @@ int		ft_check_source(char *source)
 
 	if (lstat(source, &sb) == -1)
 	{
-		ft_putendl("no such file pr directory");
+		ft_putstr("no such file or directory: ");
+		ft_putendl(source);
+
 		return (-1);
 	}
 	return (0);
