@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 09:53:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 04:00:30 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -165,12 +165,40 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	return (0);
 }
 
+int			backslash_out_dquote(char **cmd, int *j)
+{
+	char		*tmp;
+	int			i;
+	int			i2;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * ft_strlen(*cmd));
+	while (i < *j)
+	{
+		tmp[i] = (*cmd)[i];
+		i++;
+	}
+	i2 = i;
+	i++;
+	while ((*cmd)[i])
+	{
+		tmp[i2] = (*cmd)[i];
+		i++;
+		i2++;
+	}
+	tmp[i2] = '\0';
+	ft_strdel(&(*cmd));
+	*cmd = ft_strdup(tmp);
+	return (0);
+}
+
 int			ft_manage_backslash(char ***cmd, int i, int *j, int d_quote)
 {
-	if (d_quote == 1)
-		backslash_in_dquote();
+	if (d_quote == 0)
+		backslash_out_dquote(&(*cmd)[i], j);
 	else
-		backslash_out_dquote();
+		*j = *j + 1;
+	*j = *j + 1;
 	return (0);
 }
 
@@ -192,7 +220,6 @@ int			ft_parcour_tab(char ***cmd)
 				if ((*cmd)[i][j] == '\\')
 				{
 					ft_manage_backslash(&(*cmd), i, &j, dquote);
-					j += 2;
 				}
 				else if ((*cmd)[i][j] == '\'' && dquote == 0)
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
