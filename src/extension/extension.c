@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 04:00:30 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 04:16:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -134,34 +134,34 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
 		printf("TMP = %s\n", tmp);
 		*j_index = j;
-		ft_bquote_replace(&(*cmd), tmp, i_index);
+		lex = ft_lexer(tmp);
+		new_b_seq = ft_parsing(lex);
+		if (!extension(&new_b_seq))
+		{
+			j = ft_create_tmp_file();//
+			while (new_b_seq)
+			{
+				if (new_b_seq->op)
+					ft_solver(new_b_seq->op, j);//J EST LE FICHIER A CREER
+				new_b_seq = new_b_seq->next;
+			}
+//			ft_watch_result(tmp, lex, new_b_seq);
+//			while (get_next_line(i, &tmp))
+//			{
+//				ft_malloc_cmd(&tab_tmp, tmp);
+//				ft_strdel(&tmp);
+//			}
+			ft_bquote_replace(&(*cmd), tmp, i_index);
+			ft_create_tmp_file();
+		}
+	//	ft_strdel(&tmp);
 	}
 	else
+	{
+		printf("DELETE TAB\n");
 		ft_tabdel(&(*cmd));
-	printf("000BUGG\n");
+	}
 	*j_index = j + 1;
-	lex = ft_lexer(tmp);
-	new_b_seq = ft_parsing(lex);
-	if (!extension(&new_b_seq))
-	{
-		j = ft_create_tmp_file();
-//	printf("BBBUUUGGG\n");
-	while (new_b_seq)
-	{
-		if (new_b_seq->op)
-			ft_solver(new_b_seq->op, j);//PLUS LES FICHIER A CREER
-		new_b_seq = new_b_seq->next;
-	}
-//		ft_watch_result(tmp, lex, new_b_seq);
-//		while (get_next_line(i, &tmp))
-//		{
-//			ft_malloc_cmd(&tab_tmp, tmp);
-//			ft_strdel(&tmp);
-//		}
-		ft_create_tmp_file();
-	printf("111BUGG\n");
-	}
-	//	ft_strdel(&tmp);
 	return (0);
 }
 
