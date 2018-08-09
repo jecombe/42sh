@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 14:50:17 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 14:52:44 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,8 +70,6 @@ int					ft_term_init(char **environ)
 		return (1);
 	return (0);
 }
-
-int g_er;
 
 void		ft_separate(t_seq *b_seq, int fd)
 {
@@ -157,8 +155,6 @@ void				ft_101sh(void)
 						//regarde si il une separation command ==> &&
 						ft_separate(b_seq, 1);
 					}
-					if (g_er == 1)
-						return ;
 					//ft_watch_result(line, lex, b_seq);
 				}
 			if (line)
