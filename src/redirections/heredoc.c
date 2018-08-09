@@ -82,7 +82,6 @@ int				ft_redirect_heredoc(t_op *t_exec, int flag)
 			;
 		else
 		{
-			printf("ICICICIC\n");
 			return (EXIT_FAILURE);
 		}
 	}
