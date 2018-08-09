@@ -76,47 +76,51 @@ int g_er;
 void		ft_separate(t_seq *b_seq, int fd)
 {
 	t_op *opera;
-	int fail;
 	int ret;
+	int and_if;
+	int or_if;
 
-	fail = 0;
+	and_if = 0;
+	or_if = 0;
 	opera = b_seq->op;
+	ret = 0;
 	if (opera->next)
 	{
 		while (opera)
 		{
-			if (fail == 1)
+			//Condition si il y a les séparateur suivant le type de chacun
+			if (or_if == 0)
 			{
-
-				return ;
+				if (and_if == 0)
+					ret = ft_solver(opera, fd);
 			}
-			// 2 ==> retour de ft_solver si echec
-			if ((ret = ft_solver(opera, fd)) == EXIT_FAILURE)
+			//Si succées de solver
+			if (ret == EXIT_SUCCESS)
 			{
+				//Si ||
+				if (opera->token == OR_IF)
+					or_if = 1;
+				else 
+							or_if = 0;
+				ret = 0;
+			}
+			//Si echec de solver
+			else if (ret == EXIT_FAILURE)
+			{
+				//Si &&
 				if (opera->token == AND_IF)
-				{
-					fail = 1;
-					g_er = 1;
-				}
-				//si il y a bien && alors break, execute pas l'autre command;
-				if (opera->token == AND_IF)
-				{
-					break;
-				}
+					and_if = 1;
+					else
+						and_if = 0;
+						ret = 0;
 			}
-			if (ret == EXIT_SUCCESS && opera->token == OR_IF)
-			{
-				break;
-			}
-			if (fail == 0)
-				opera = opera->next;
+			opera = opera->next;
 		}
+		return ;
 	}
+	//Command sans next donc sans séparateur dans opera(b_seq->op)
 	else
-		if (fail == 0)
-		{
-			ft_solver(opera, fd);
-		}
+		ft_solver(opera, fd);
 }
 
 void				ft_101sh(void)
@@ -142,7 +146,6 @@ void				ft_101sh(void)
 				{
 					while (b_seq)
 					{
-						printf("ANUS\n");
 						//si il y a encore une separation command ==> &&
 						ft_separate(b_seq, 1);
 						b_seq = b_seq->next;
@@ -150,7 +153,6 @@ void				ft_101sh(void)
 				}
 				else
 				{
-					printf("CHATE\n");
 					//regarde si il une separation command ==> &&
 					ft_separate(b_seq, 1);
 				}
