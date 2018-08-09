@@ -60,7 +60,6 @@ int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
 	}
 	else
 	{
-		printf("=====> %s\n", bin);
 		if (ft_exec(t_exec, bin, flag, bfd) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 04:54:27 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 14:50:17 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -101,7 +101,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 				if (opera->token == OR_IF)
 					or_if = 1;
 				else 
-							or_if = 0;
+					or_if = 0;
 				ret = 0;
 			}
 			//Si echec de solver
@@ -110,9 +110,9 @@ void		ft_separate(t_seq *b_seq, int fd)
 				//Si &&
 				if (opera->token == AND_IF)
 					and_if = 1;
-					else
-						and_if = 0;
-						ret = 0;
+				else
+					and_if = 0;
+				ret = 0;
 			}
 			opera = opera->next;
 		}
@@ -138,28 +138,29 @@ void				ft_101sh(void)
 		{
 			lex = ft_lexer(line);
 			b_seq = ft_parsing(lex);
-			if (!extension(&b_seq))
-			{
-				//******EXECUTER LES COMMANDES******//
-				//si il y a next dans t_seq et que c'est le ;
-				if (b_seq->token == SEMI)
+			if (b_seq != NULL)
+				if (!extension(&b_seq))
 				{
-					while (b_seq)
+					//******EXECUTER LES COMMANDES******//
+					//si il y a next dans t_seq et que c'est le ;
+					if (b_seq->token == SEMI)
 					{
-						//si il y a encore une separation command ==> &&
-						ft_separate(b_seq, 1);
-						b_seq = b_seq->next;
+						while (b_seq)
+						{
+							//si il y a encore une separation command ==> &&
+							ft_separate(b_seq, 1);
+							b_seq = b_seq->next;
+						}
 					}
+					else
+					{
+						//regarde si il une separation command ==> &&
+						ft_separate(b_seq, 1);
+					}
+					if (g_er == 1)
+						return ;
+					//ft_watch_result(line, lex, b_seq);
 				}
-				else
-				{
-					//regarde si il une separation command ==> &&
-					ft_separate(b_seq, 1);
-				}
-				if (g_er == 1)
-					return ;
-				//ft_watch_result(line, lex, b_seq);
-			}
 			if (line)
 				ft_strdel(&line);
 			ft_free_b_seq(&b_seq);
