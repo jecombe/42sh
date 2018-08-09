@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/08 02:29:23 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/09 23:28:51 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -41,6 +41,7 @@ SRCS_NAME =	\
 			stdin/get_stdin.c \
 			stdin/go_to_begin_of_line.c \
 			stdin/go_to_end_of_line.c \
+			stdin/historic.c \
 			stdin/move_cursor_down.c \
 			stdin/move_cursor_left.c \
 			stdin/move_cursor_right.c \
@@ -50,6 +51,7 @@ SRCS_NAME =	\
 			stdin/paste_clipboard.c \
 			stdin/prompt.c \
 			stdin/signal.c \
+			stdin/tabulator.c \
 			lexer/ft_lexer.c \
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_tokens.c \

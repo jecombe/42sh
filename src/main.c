@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 16:10:10 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:29:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -130,11 +130,12 @@ void				ft_101sh(void)
 
 	prompt = PROMPT;
 	line = NULL;
-	while (get_stdin(&line, prompt))
+	while (get_stdin(&line, &prompt))
 	{
 		if (line)
+			lex = ft_lexer(line, &prompt);
+		if (!(prompt))
 		{
-			lex = ft_lexer(line);
 			b_seq = ft_parsing(lex);
 			if (b_seq != NULL)
 				if (!extension(&b_seq))

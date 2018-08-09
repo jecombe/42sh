@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 22:39:45 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:34:44 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:27:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,10 @@ void	myhandler_interrupt(int signal)
 
 void	myhandler_winsize_change(int signal)
 {
+	t_editor *ed;
+
 	if (signal == SIGWINCH)
 	{
-
+		save_ed(&ed, 1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/26 03:19:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:13:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 
 # include <stdio.h>
 # include "../libft/include/libft.h"
+# include "./stdin.h"
 
 # define MAX_TAB_SIZE 4096
 
@@ -89,14 +90,14 @@ typedef struct		s_lex
 **		ft_lexer.c
 */
 
-t_lex		ft_lexer(char *input);
+t_lex		ft_lexer(char *input, e_prompt *prompt);
 
 /*
 **		ft_lexer_break_words.c
 */
 
 int			ft_lexer_break_operator(char *input, int idx, int i);
-void		ft_lexer_break_quote(char *input, int *idx);
+e_prompt	ft_lexer_break_quote(char *input, int *idx);
 int			ft_lexer_break_blank(char *input, int *idx, int *i);
 void		ft_lexer_break_expansion(char *input, int *idx);
 int			ft_lexer_break_comment(char *input, int *idx);

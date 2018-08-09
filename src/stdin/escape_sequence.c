@@ -6,13 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:17:49 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:34:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:27:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/stdin.h"
-
 
 char	*cursor_position_escape_sequence(int row, int col)
 {
