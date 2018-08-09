@@ -6,14 +6,16 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:37:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 14:58:22 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #ifndef EXECUTE_H
 # define EXECUTE_H
+
 # define HEREDOC 10
+# define NOTHING -1
 #include "./parsing.h"
 #include "./stdin.h"
 

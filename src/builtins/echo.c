@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:43:43 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 14:58:36 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ int 		ft_echo(t_op *t_exec, int flag)
 		slash_n = 1;
 		i++;
 	}
-	if (flag != -1)
+	if (flag != NOTHING)
 	{
 
 		if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag)) != -11)

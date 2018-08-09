@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 04:33:41 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 15:01:12 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	if ((cpid = fork()) == 0)
 	{
 		if (fd != -12)
-			if (flag != -1)
+			if (flag != NOTHING)
 				ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);

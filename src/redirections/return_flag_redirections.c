@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:38:59 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:04:56 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 15:00:39 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,5 +26,5 @@ int		ft_return_flag(t_op *t_exec)
 		if (t_exec->redirect->redirect == DLESS)
 			return (HEREDOC);
 	}
-	return (-1);
+	return (NOTHING);
 }

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 14:52:44 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 14:54:17 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,17 +95,17 @@ void		ft_separate(t_seq *b_seq, int fd)
 			//Si succées de solver
 			if (ret == EXIT_SUCCESS)
 			{
-				//Si ||
+				//****Si ||*******//
 				if (opera->token == OR_IF)
 					or_if = 1;
-				else 
+				else
 					or_if = 0;
 				ret = 0;
 			}
 			//Si echec de solver
 			else if (ret == EXIT_FAILURE)
 			{
-				//Si &&
+				//****Si &&****//
 				if (opera->token == AND_IF)
 					and_if = 1;
 				else
