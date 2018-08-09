@@ -6,25 +6,13 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 15:00:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 16:25:58 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 #include "../../include/stdin.h"
-
-int		ft_check_source(char *source)
-{
-	struct stat sb;
-
-	if (lstat(source, &sb) == -1)
-	{
-		ft_putendl("ERROR\n");
-		return (-1);
-	}
-	return (0);
-}
 
 int		ft_solver(t_op *t_exec, int fd)
 {

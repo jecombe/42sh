@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 15:01:12 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 16:25:52 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,13 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	int			ret;
 	char		*cmd;
 	int			flag2;
+	int folder;
 
+	if (flag != NOTHING)
+	{
+		if (ft_check_file_is_directory(tmp_op->redirect->file) == -1)
+			return (EXIT_FAILURE);
+	}
 	if (fd != -12)
 	{
 		if (flag == O_RDONLY)
@@ -33,7 +39,9 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
 	{
 		if (fd != -12)
 			if (flag != NOTHING)
+			{
 				ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
+			}
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:04:42 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 15:46:51 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,15 +30,6 @@ void		ft_get_bin()
 		}
 		i++;
 	}
-}
-
-int			ft_check_direct_command(char *cmd)
-{
-	struct stat sb;
-	if (lstat(cmd, &sb) == -1)
-		return (-1);
-	else
-		return (0);
 }
 
 char		*ft_search_bin(char *cmd)

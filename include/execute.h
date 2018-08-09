@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 14:58:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 16:19:46 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,9 @@
 # define HEREDOC 10
 # define NOTHING -1
 #include "./parsing.h"
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 #include "./stdin.h"
 
 char			**g_bin;
@@ -40,4 +43,7 @@ int				ft_unsetenv(t_op *t_exec, int flag);
 int 				ft_open_redirect_builtins(char *file, int flag);
 int				ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd);
 int				ft_redirect_heredoc(t_op *t_exec, int flag);
+int			ft_check_direct_command(char *cmd);
+int				ft_check_file_is_directory(char *file);
+int				ft_check_source(char *source);
 #endif
