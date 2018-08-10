@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/05 00:19:30 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 07:33:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ typedef struct					s_seq
 }								t_seq;
 
 t_seq							*ft_parsing(t_lex lex);
-int								ft_parse_error(e_token token);
+int								ft_parse_exit(e_token token);
 void							ft_free_b_seq(t_seq **b_seq);
 void							ft_free_b_op(t_op **b_op);
 void							ft_free_b_redirect(t_redirect **b_redirect);

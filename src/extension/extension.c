@@ -6,20 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:07:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 04:31:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/extension.h"
-
-void		ft_braquet_quote(char *str, int *j)
-{
-	*j = *j + 1;
-	while (str[*j] != '\'')
-		*j = *j + 1;
-	*j = *j + 1;
-}
 
 int			ft_add_tild(char **str, int *index)
 {
@@ -38,8 +30,6 @@ int			ft_add_tild(char **str, int *index)
 		while ((*str)[j])
 			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
-		printf("TMP == %s\n", tmp);
-		//		ft_strdel(&(*str));
 		*index = i;
 		*str = ft_strdup(tmp);
 	}
@@ -50,8 +40,11 @@ int			ft_create_tmp_file(void)
 {
 	static int		fd = 0;
 
-	if (fd)
-		fd = open(".tmp_file", O_CREAT, O_APPEND, O_WRONLY, S_IRWXU);
+	if (!fd)
+	{
+		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
+		system("chmod 777 .tmp_file");
+	}
 	else
 	{
 		close(fd);
@@ -112,9 +105,9 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
 	i = 0;
 	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
-	//	printf("BBUUGG\n");
 	while (tab_tmp2[i])
 		ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
+		printf("BBUUGG\n");
 	i = index + 1;
 	while ((*cmd)[i])
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
@@ -127,48 +120,97 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
 int			ft_bquote(char ***cmd, int *j_index, int i_index)
 {
 	int			j;//fd
-	char		*tmp;
+	char		*tmp = NULL;
+	char		*tmp2 = NULL;
 	char		**tab_tmp;
 	t_lex		lex;
 	t_seq		*new_b_seq;
 
 	*j_index = *j_index + 1;
 	j = *j_index;
-	tmp = NULL;
 	while ((*cmd)[i_index][j] != '`')
 		j++;
 	if (*j_index != j)
 	{
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
 		printf("TMP = %s\n", tmp);
-		*j_index = j;
-		ft_bquote_replace(&(*cmd), tmp, i_index);
+//		*j_index = j;
+//		lex = ft_lexer(tmp);
+//		new_b_seq = ft_parsing(lex);
+		ft_strdel(&tmp);
+//		if (!extension(&new_b_seq))
+//		{
+			printf("BBBUUUUGGGGGG\n");
+	//		j = ft_create_tmp_file();
+//			while (new_b_seq)
+//			{
+//				if (new_b_seq->op)
+//				{
+//					printf("JECOMBE TU GERES PAS MDRRR\n");
+//					ft_solver(new_b_seq->op, j);//J EST LE FICHIER A CREER
+//				}
+//				new_b_seq = new_b_seq->next;
+//			}
+//			ft_watch_result(tmp, lex, new_b_seq);
+			j = open(".tmp_file", O_CREAT, O_RDONLY);
+			while (get_next_line(j, &tmp))
+			{
+				if (tmp2)
+				{
+					tmp2 = ft_strjoin(tmp2, "\n");
+					tmp2 = ft_strjoin(tmp2, tmp);
+				}
+				else
+					tmp2 = ft_strdup(tmp);
+				ft_strdel(&tmp);
+			}
+			ft_bquote_replace(&(*cmd), tmp2, i_index);
+//			printf("TMP2 FILE == %s\n", tmp2);
+			close(j);
+			//ft_create_tmp_file();
+//		}
+	//	ft_strdel(&tmp);
 	}
 	else
-		ft_tabdel(&(*cmd));
-	printf("BUGG\n");
-	*j_index = *j_index + 1;
-//	lex = ft_lexer(tmp);
-//	new_b_seq = ft_parsing(lex);
-//	if (!extension(&new_b_seq))
-//	{
-		j = ft_create_tmp_file();
-//	printf("BBBUUUGGG\n");
-	while (new_b_seq)
+		ft_strdel_in_tab(&(*cmd), i_index);
+	*j_index = j + 1;
+	return (0);
+}
+
+int			backslash_out_dquote(char **cmd, int *j)
+{
+	char		*tmp;
+	int			i;
+	int			i2;
+
+	i = 0;
+	tmp = malloc(sizeof(char) * ft_strlen(*cmd));
+	while (i < *j)
 	{
-		if (new_b_seq->op)
-			ft_solver(new_b_seq->op, j);//PLUS LES FICHIER A CREER
-		new_b_seq = new_b_seq->next;
+		tmp[i] = (*cmd)[i];
+		i++;
 	}
-//		ft_watch_result(tmp, lex, new_b_seq);
-//		while (get_next_line(i, &tmp))
-//		{
-//			ft_malloc_cmd(&tab_tmp, tmp);
-//			ft_strdel(&tmp);
-//		}
-//		ft_create_tmp_file();
-//	}
-	//	ft_strdel(&tmp);
+	i2 = i;
+	i++;
+	while ((*cmd)[i])
+	{
+		tmp[i2] = (*cmd)[i];
+		i++;
+		i2++;
+	}
+	tmp[i2] = '\0';
+	ft_strdel(&(*cmd));
+	*cmd = ft_strdup(tmp);
+	return (0);
+}
+
+int			ft_manage_backslash(char ***cmd, int i, int *j, int d_quote)
+{
+	if (d_quote == 0)
+		backslash_out_dquote(&(*cmd)[i], j);
+	else
+		*j = *j + 1;
+	*j = *j + 1;
 	return (0);
 }
 
@@ -177,7 +219,9 @@ int			ft_parcour_tab(char ***cmd)
 	int			i;
 	int			j;
 	int			k;
+	int			dquote;
 
+	dquote = 0;
 	i = -1;
 	if (*cmd)
 		while (*cmd && (*cmd)[++i])
@@ -186,9 +230,18 @@ int			ft_parcour_tab(char ***cmd)
 			while ((*cmd)[i][j])
 			{
 				if ((*cmd)[i][j] == '\\')
-					j += 2;
-				else if ((*cmd)[i][j] == '\'')
-					ft_braquet_quote((*cmd)[i] + j, &j);
+				{
+					ft_manage_backslash(&(*cmd), i, &j, dquote);
+				}
+				else if ((*cmd)[i][j] == '\'' && dquote == 0)
+				{
+					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
+				}
+				else if ((*cmd)[i][j] == '"')
+				{
+					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
+					dquote = dquote == 1 ? 0 : 1;
+				}
 				else if ((*cmd)[i][j] == '~' && j == 0)
 				{
 					if (ft_add_tild(&(*cmd)[i], &j))
@@ -200,7 +253,7 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else
 					j++;
-				if (!*cmd)//RESOUT LE SEGSEG
+				if (!(*cmd) || !(*cmd)[i])//RESOUT LE SEGSEG
 					return (0);
 			}
 		}
@@ -233,6 +286,7 @@ int			extension(t_seq **b_seq)
 				return (1);
 		n_seq = n_seq->next;
 	}
-	//printf("EXT FINISH\n");
+	extension_error(b_seq);
+	printf("EXT FINISH\n");
 	return (0);
 }

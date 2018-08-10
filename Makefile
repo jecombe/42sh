@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/09 23:28:51 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/10 04:56:13 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -62,6 +62,9 @@ SRCS_NAME =	\
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
+			extension/dquotes_manager.c \
+			extension/extension_error.c \
+			extension/quotes_manager.c \
 			extension/extension.c \
 			extension/ft_split_b_quote.c \
 			extension/ft_dollar.c \

@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 09:59:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 07:30:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-int			ft_parse_error(e_token token)
+int			ft_parse_exit(e_token token)
 {
 	char		*name;
 	t_lex		clear_b_seq;
