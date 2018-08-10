@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 07:09:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 02:37:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,8 +26,7 @@ char		*ft_replace_dquote(char *str, int *j)
 		ret[j_tmp] = str[j_tmp];
 		j_tmp++;
 	}
-	*j += 1;
-	j_tmp2 = *j;
+	j_tmp2 = *j + 1;
 	while (str[j_tmp2])
 		ret[j_tmp++] = str[j_tmp2++];
 	ret[j_tmp] = '\0';
@@ -48,14 +47,12 @@ char		*ft_replace_quote(char *str, int *j)
 		ret[j_tmp] = str[j_tmp];
 		j_tmp++;
 	}
-	*j += 1;
-	while (str[*j] != '\'')
+	while (str[*j + 1] != '\'')
 	{
-		ret[j_tmp++] = str[*j];
+		ret[j_tmp++] = str[*j + 1];
 		*j += 1;
 	}
-	*j += 1;
-	j_tmp2 = *j;
+	j_tmp2 = *j + 2;
 	while (str[j_tmp2])
 		ret[j_tmp++] = str[j_tmp2++];
 	ret[j_tmp] = '\0';

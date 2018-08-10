@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 07:14:08 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 02:35:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -224,11 +224,15 @@ int			ft_parcour_tab(char ***cmd)
 					ft_manage_backslash(&(*cmd), i, &j, dquote);
 				}
 				else if ((*cmd)[i][j] == '\'' && dquote == 0)
+				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
+				}
 				else if ((*cmd)[i][j] == '"')
 				{
+					printf("DEBUT == %c DQUOTE == %d\n", (*cmd)[i][j], dquote);
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
 					dquote = dquote == 1 ? 0 : 1;
+					printf("FIN == %c DQUOTE == %d\n", (*cmd)[i][j], dquote);
 				}
 				else if ((*cmd)[i][j] == '~' && j == 0)
 				{
