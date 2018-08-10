@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 04:31:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 05:15:04 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,7 +107,6 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
 	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
 	while (tab_tmp2[i])
 		ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
-		printf("BBUUGG\n");
 	i = index + 1;
 	while ((*cmd)[i])
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
@@ -140,7 +139,6 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 		ft_strdel(&tmp);
 //		if (!extension(&new_b_seq))
 //		{
-			printf("BBBUUUUGGGGGG\n");
 	//		j = ft_create_tmp_file();
 //			while (new_b_seq)
 //			{
@@ -164,6 +162,7 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 					tmp2 = ft_strdup(tmp);
 				ft_strdel(&tmp);
 			}
+			printf("BBBUUUUGGGGGG\n");
 			ft_bquote_replace(&(*cmd), tmp2, i_index);
 //			printf("TMP2 FILE == %s\n", tmp2);
 			close(j);
