@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 05:15:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 06:01:40 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,7 +132,9 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	if (*j_index != j)
 	{
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
+		tmp = ft_strjoin(tmp, " > .tmp_file");
 		printf("TMP = %s\n", tmp);
+		system(tmp);
 //		*j_index = j;
 //		lex = ft_lexer(tmp);
 //		new_b_seq = ft_parsing(lex);
