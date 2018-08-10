@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/23 11:54:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 14:27:04 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 02:05:25 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ void	delete_from_cursor_to_end(t_editor *ed)
 			ft_strdel(&(ed->clipboard));
 		ed->clipboard = ft_strdup(ed->line + ed->cursor_str_pos);
 		if (ed->line)
-		ft_strdel(&(ed->line));
+			ft_strdel(&(ed->line));
 		ed->line = ft_strdup(tmp);
 	}
 }

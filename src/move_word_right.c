@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:56:50 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 14:23:45 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 02:15:12 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ static int		check_if_next_word(char *line)
 	return (0);
 }
 
-void	move_word_right(t_editor *ed)
+void			move_word_right(t_editor *ed)
 {
 	size_t next_word_pos;
 

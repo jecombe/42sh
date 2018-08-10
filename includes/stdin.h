@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 01:15:25 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 03:59:58 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -122,7 +122,7 @@ void	myhandler_interrupt(int signal);
 char	*cursor_position_escape_sequence(int row, int col);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
-int		add_char_into_line(char key, t_editor *ed);
+void	add_char_into_line(char key, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(char *home, e_prompt prompt);
@@ -137,5 +137,7 @@ void	save_ed(t_editor **ed, int mode);
 void	tabulator(t_editor *ed);
 void	historic(t_editor *ed);
 void	fill_hist_list(t_hist *hist, char *line);
+int		term_reinit(struct termios *raw_mode);
+int		get_term_raw_mode(int mode);
 
 #endif

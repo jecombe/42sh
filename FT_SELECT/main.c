@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 22:21:53 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 03:48:59 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -151,5 +151,6 @@ int				main(void)
 	ft_init_select(&sel, rep);
 	ft_get_size_term(&verif, &sel, 2);
 	ft_test(&sel, ret);
+	printf("line: %d\n", sel->nbl);
 	return (ft_print_final(&sel) + ft_disable_raw(0, &sel));
 }

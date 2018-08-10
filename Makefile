@@ -6,7 +6,7 @@
 #    By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/02/22 01:51:44 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/08/01 10:17:28 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/10 03:25:27 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -53,6 +53,7 @@ SRC =		main.c \
 			paste_clipboard.c \
 			tabulator.c \
 			historic.c \
+			term_init.c \
 
 OBJ = $(addprefix $(OBJ_PATH), $(SRC:.c=.o))
 

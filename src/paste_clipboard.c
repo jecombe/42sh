@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/23 12:38:19 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 14:38:59 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/10 02:21:22 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ static void	paste_clipboard_into_line(t_editor *ed)
 	ed->line = ft_strdup(tmp);
 }
 
-void	paste_clipboard(t_editor *ed)
+void		paste_clipboard(t_editor *ed)
 {
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (ed->clipboard)
@@ -40,7 +40,8 @@ void	paste_clipboard(t_editor *ed)
 			ed->line = ft_strjoin_free(ed->line, ed->clipboard);
 			ed->cursor_str_pos = ft_strlen(ed->line);
 			ft_putstr(ed->clipboard);
-			if (get_cursor_position(0) == sz.ws_col && get_cursor_position(1) != sz.ws_row)
+			if (get_cursor_position(0) == sz.ws_col &&
+			get_cursor_position(1) != sz.ws_row)
 			{
 				tputs(tgetstr("do", NULL), 1, ft_putchar);
 				ed->last_row = get_cursor_position(1);
