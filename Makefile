@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/10 04:56:13 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/11 07:28:24 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -59,6 +59,7 @@ SRCS_NAME =	\
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \
 			parser/ft_free_parse.c \
+			parser/parse_error.c \
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
