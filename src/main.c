@@ -47,7 +47,7 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 			n_redirect = n_op->redirect;
 			while (n_redirect)
 			{
-				printf("\t\t\tFD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				printf("\t\t\tFD == %d, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
 				n_redirect = n_redirect->next;
 			}
 			n_op = n_op->next;

@@ -20,7 +20,7 @@
 
 typedef struct					s_redirect
 {
-	char						*fd;
+	int							fd;
 	e_token						redirect;//< << > >> >| >& <& <<
 	char						*file;
 	struct s_redirect			*next;

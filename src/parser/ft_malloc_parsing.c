@@ -6,7 +6,7 @@ t_redirect	*ft_malloc_redirect(void)
 
 	if (!(new = malloc(sizeof(t_redirect))))
 		return (NULL);
-	new->fd = NULL;
+	new->fd = 1;
 	new->redirect = TOKEN;
 	new->file = NULL;
 	new->next = NULL;

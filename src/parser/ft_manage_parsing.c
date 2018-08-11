@@ -119,6 +119,6 @@ int			ft_manage_io_number(t_seq **b_seq, char *name)
 		n_redirect->next->prev = n_redirect;
 		n_redirect = n_redirect->next;
 	}
-	n_redirect->fd = ft_strdup(name);
+	n_redirect->fd = ft_atoi(name);
 	return (0);
 }
