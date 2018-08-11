@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/10 07:14:23 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/11 07:33:46 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -63,7 +63,6 @@ SRCS_NAME =	\
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
 			parser/parse_error.c \
-			extension/dquotes_manager.c \
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/extension.c \
