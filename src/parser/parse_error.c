@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 07:14:41 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/11 05:13:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,13 +17,11 @@ static int		error_n_redirect(t_redirect **b_redirect)
 {
 	t_redirect	*n_redirect;
 
+	n_redirect = *b_redirect;
 	while (n_redirect)
 	{
 		if (!n_redirect->file)
-		{
-			ft_putendl("bash: ambiguous redirect");
-			return (1);
-		}
+			return (ft_parse_exit(NEWLINE));
 		n_redirect = n_redirect->next;
 	}
 	return (0);
@@ -36,15 +34,6 @@ static int		error_n_op(t_op **b_op)
 	n_op = *b_op;
 	while (n_op)
 	{
-		if (!n_op->cmd && !n_op->redirect)
-		{
-			if (n_op->prev)
-				n_op->prev->token = n_op->token;
-			if (n_op->next && !n_op->prev)
-				*b_op = (*b_op)->next;
-			else if (n_op->next && n_op->prev)
-				n_op->prev->next = n_op->next;
-		}
 		if (n_op->redirect)
 			if (error_n_redirect(&n_op->redirect))
 				return (1);
@@ -64,18 +53,14 @@ int				parse_error(t_seq **b_seq)
 		{
 			if (error_n_op(&n_seq->op))
 			{
-				ft_free_b_seq(b_seq);
+				ft_free_b_seq(&(*b_seq));
 				return (1);
 			}
 		}
-		if (n_seq->token == TOKEN && !n_seq->op)
+		if (n_seq->token != TOKEN && !n_seq->op)
 		{
-			if (n_seq->prev && n_seq->next)
-				n_seq->prev->next = n_seq->next;
-			else if (!n_seq->prev && n_seq->next)
-				*b_seq = (*b_seq)->next;
-			free(n_seq);
-			n_seq = NULL;
+			ft_putendl("bash: syntax error near unexpected token `newline'");
+			ft_free_b_seq(b_seq);
 			return (1);
 		}
 		n_seq = n_seq->next;

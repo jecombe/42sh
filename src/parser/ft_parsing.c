@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 07:30:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/11 05:13:04 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,5 +71,6 @@ t_seq		*ft_parsing(t_lex lex)
 			return (NULL);
 		}
 	}
+	parse_error(&b_seq);
 	return (b_seq);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 08:03:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/11 05:33:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ static int		error_n_redirect(t_redirect **b_redirect)
 {
 	t_redirect	*n_redirect;
 
+	n_redirect = *b_redirect;
 	while (n_redirect)
 	{
 		if (!n_redirect->file)
