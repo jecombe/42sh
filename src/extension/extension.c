@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 05:56:45 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/11 07:26:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -288,6 +288,5 @@ int			extension(t_seq **b_seq)
 		n_seq = n_seq->next;
 	}
 	extension_error(b_seq);
-	printf("EXT FINISH\n");
 	return (0);
 }
