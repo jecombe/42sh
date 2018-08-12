@@ -35,7 +35,7 @@ t_seq		*ft_malloc_seq(void)
 	if (!(new = malloc(sizeof(t_seq))))
 		return (NULL);
 	new->token = TOKEN;
-	new->default_fd = 1;
+	new->default_fd = -1;
 	new->op = NULL;
 	new->next = NULL;
 	new->prev = NULL;
