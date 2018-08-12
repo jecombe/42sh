@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 05:41:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 05:44:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -218,11 +218,12 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 			}
 			printf("FIN DU GNL\n");
 			if (tmp2)
+			{
 				printf("TMP2 == %s\n", tmp2);
+				ft_bquote_replace(&(*cmd), tmp2, i_index);
+			}
 			else
-				printf("TMP2 == NULL\n");
-			ft_bquote_replace(&(*cmd), tmp2, i_index);
-			printf("ft_bquote_replace FINIT\n");
+				printf("TMP2 == NULL, REMPLACEMENT DES BQUOTES IMPOSSIBLE\n");
 			//			printf("TMP2 FILE == %s\n", tmp2);
 			//			close(j);
 			ft_create_tmp_file();
