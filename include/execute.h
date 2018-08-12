@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 16:19:46 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 05:31:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,10 +40,10 @@ int				ft_exit(t_op *t_exec, int flag);
 int				ft_env(t_op *t_exec, int flag);
 int				ft_setenv(t_op *t_exec, int flag);
 int				ft_unsetenv(t_op *t_exec, int flag);
-int 				ft_open_redirect_builtins(char *file, int flag);
+int 			ft_open_redirect_builtins(char *file, int flag);
 int				ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd);
 int				ft_redirect_heredoc(t_op *t_exec, int flag);
-int			ft_check_direct_command(char *cmd);
+int				ft_check_direct_command(char *cmd);
 int				ft_check_file_is_directory(char *file);
 int				ft_check_source(char *source);
 #endif

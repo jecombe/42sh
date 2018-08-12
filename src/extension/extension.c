@@ -6,12 +6,59 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 03:02:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 05:41:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/extension.h"
+#include "../../include/init.h"
+
+//JECOMBE
+static void		ft_separate(t_seq *b_seq, int fd)
+{
+	t_op *opera;
+	int ret;
+	int and_if;
+	int or_if;
+
+	and_if = 0;
+	or_if = 0;
+	opera = b_seq->op;
+	ret = 0;
+	if (opera->next)
+	{
+		while (opera)
+		{
+			if (or_if == 0)
+			{
+				if (and_if == 0)
+					ret = ft_solver(opera, fd);
+			}
+			if (ret == EXIT_SUCCESS)
+			{
+				if (opera->token == OR_IF)
+					or_if = 1;
+				else
+					or_if = 0;
+				ret																		= 0;
+			}
+			else if (ret == EXIT_FAILURE)
+			{												
+				if (opera->token == AND_IF)
+					and_if = 1;													
+				else
+					and_if = 0;
+				ret = 0;
+			}
+			opera = opera->next;
+		}
+		return ;
+	}
+	else
+		ft_solver(opera, fd);
+}
+//JECOMBE
 
 int			ft_add_tild(char **str, int *index)
 {
@@ -107,7 +154,6 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int index)
 	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
 	while (tab_tmp2[i])
 		ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
-		printf("BBUUGG\n");
 	i = index + 1;
 	while ((*cmd)[i])
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
@@ -125,6 +171,9 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	char		**tab_tmp;
 	t_lex		lex;
 	t_seq		*new_b_seq;
+	t_seq		*new_n_seq;
+	e_prompt	prompt;
+	prompt = PROMPT;
 
 	*j_index = *j_index + 1;
 	j = *j_index;
@@ -133,28 +182,26 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	if (*j_index != j)
 	{
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
-		tmp = ft_strjoin(tmp, " > .tmp_file");
+		//		tmp = ft_strjoin(tmp, " > .tmp_file");
 		printf("TMP = %s\n", tmp);
-		system(tmp);
-//		*j_index = j;
-//		lex = ft_lexer(tmp);
-//		new_b_seq = ft_parsing(lex);
-		ft_strdel(&tmp);
-//		if (!extension(&new_b_seq))
-//		{
-	//		j = ft_create_tmp_file();
-//			while (new_b_seq)
-//			{
-//				if (new_b_seq->op)
-//				{
-//					printf("JECOMBE TU GERES PAS MDRRR\n");
-//					ft_solver(new_b_seq->op, j);//J EST LE FICHIER A CREER
-//				}
-//				new_b_seq = new_b_seq->next;
-//			}
+		//		system(tmp);
+		*j_index = j;
+		lex = ft_lexer(tmp, &prompt);
+		new_b_seq = ft_parsing(lex);
+		//		ft_strdel(&tmp);
+		if (!extension(&new_b_seq))
+		{
+			j = ft_create_tmp_file();
+			new_n_seq = new_b_seq;
+			while (new_n_seq)
+			{
+				new_n_seq->default_fd = j;
+				ft_separate(new_n_seq, j);//J EST LE FICHIER A CREER
+				new_n_seq = new_n_seq->next;
+			}
 //			ft_watch_result(tmp, lex, new_b_seq);
-			j = open(".tmp_file", O_CREAT, O_RDONLY);
-			while (get_next_line(j, &tmp))
+			printf("DEBUT DU GNL\n");
+			while (get_next_line(j, &tmp) > 1)
 			{
 				if (tmp2)
 				{
@@ -163,14 +210,24 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 				}
 				else
 					tmp2 = ft_strdup(tmp);
+				if (tmp)
+					printf("TMP == %s\n", tmp);
+				else
+					printf("TMP == NULL\n");
 				ft_strdel(&tmp);
 			}
+			printf("FIN DU GNL\n");
+			if (tmp2)
+				printf("TMP2 == %s\n", tmp2);
+			else
+				printf("TMP2 == NULL\n");
 			ft_bquote_replace(&(*cmd), tmp2, i_index);
-//			printf("TMP2 FILE == %s\n", tmp2);
-			close(j);
-			//ft_create_tmp_file();
-//		}
-	//	ft_strdel(&tmp);
+			printf("ft_bquote_replace FINIT\n");
+			//			printf("TMP2 FILE == %s\n", tmp2);
+			//			close(j);
+			ft_create_tmp_file();
+		}
+		ft_strdel(&tmp);
 	}
 	else
 		ft_strdel_in_tab(&(*cmd), i_index);
