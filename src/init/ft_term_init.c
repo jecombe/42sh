@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 10:34:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 10:53:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,6 +14,7 @@
 #include "../../include/init.h"
 #include <sys/types.h>
 #include <pwd.h>
+#include <sys/utsname.h>
 
 int					ft_get_user_info()
 {
@@ -66,6 +67,7 @@ int					ft_init_set()
 	char		*str;
 	char		*str2;
 	int			i = 0;
+	struct utsname t_utsname;
 
 	str = ft_strjoin("PWD=", getcwd(buff, sizeof(buff)));
 	ft_malloc_cmd(&g_set, str);
@@ -97,6 +99,11 @@ int					ft_init_set()
 		printf("%s\n", pwd->pw_name);
 	else
 		printf("%d\n", statbuf.st_uid);
+	uname(&t_utsname);
+	printf("SYSNAME == %s\n", t_utsname.sysname);
+	getdomainname(buff, sizeof(buff));
+	printf("DOMAINE == %s\n", buff);
+	ft_malloc_cmd(&g_set, buff);
 //	ft_get_user_info();
 //	str = ft_strjoin("LINE=", get_size_yterm);
 //	ft_malloc_cmd(&g_set, get_size_Xterm());
