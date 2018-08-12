@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 05:44:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 06:08:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -183,9 +183,9 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 	{
 		tmp = ft_strsub((*cmd)[i_index], *j_index, j - *j_index);
 		//		tmp = ft_strjoin(tmp, " > .tmp_file");
-		printf("TMP = %s\n", tmp);
+//		printf("TMP = %s\n", tmp);
 		//		system(tmp);
-		*j_index = j;
+		*j_index = j + 1;
 		lex = ft_lexer(tmp, &prompt);
 		new_b_seq = ft_parsing(lex);
 		//		ft_strdel(&tmp);
@@ -200,7 +200,7 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 				new_n_seq = new_n_seq->next;
 			}
 //			ft_watch_result(tmp, lex, new_b_seq);
-			printf("DEBUT DU GNL\n");
+//			printf("DEBUT DU GNL\n");
 			while (get_next_line(j, &tmp) > 1)
 			{
 				if (tmp2)
@@ -210,29 +210,27 @@ int			ft_bquote(char ***cmd, int *j_index, int i_index)
 				}
 				else
 					tmp2 = ft_strdup(tmp);
-				if (tmp)
-					printf("TMP == %s\n", tmp);
-				else
-					printf("TMP == NULL\n");
+//				if (tmp)
+//					printf("TMP == %s\n", tmp);
+//				else
+//					printf("TMP == NULL\n");
 				ft_strdel(&tmp);
 			}
-			printf("FIN DU GNL\n");
+//			printf("FIN DU GNL\n");
 			if (tmp2)
 			{
-				printf("TMP2 == %s\n", tmp2);
+//				printf("TMP2 == %s\n", tmp2);
 				ft_bquote_replace(&(*cmd), tmp2, i_index);
 			}
-			else
-				printf("TMP2 == NULL, REMPLACEMENT DES BQUOTES IMPOSSIBLE\n");
-			//			printf("TMP2 FILE == %s\n", tmp2);
-			//			close(j);
+//			else
+//				printf("TMP2 == NULL, REMPLACEMENT DES BQUOTES IMPOSSIBLE\n");
 			ft_create_tmp_file();
 		}
 		ft_strdel(&tmp);
 	}
 	else
 		ft_strdel_in_tab(&(*cmd), i_index);
-	*j_index = j + 1;
+//	*j_index = j + 1;
 	return (0);
 }
 
@@ -312,6 +310,7 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else
 					j++;
+				printf("CMD[i][j] == %c\n", (*cmd)[i][j]);
 				if (!(*cmd) || !(*cmd)[i])//RESOUT LE SEGSEG
 					return (0);
 			}
