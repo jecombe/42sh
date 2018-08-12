@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 04:59:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 07:51:21 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -131,19 +131,12 @@ void				ft_101sh(void)
 				{
 					//******EXECUTER LES COMMANDES******//
 					//si il y a next dans t_seq et que c'est le ;
-					if (b_seq->token == SEMI)
+		printf("DENIS SEG SEG\n");
+					while (b_seq)
 					{
-						while (b_seq)
-						{
-							//si il y a encore une separation command ==> &&
-							ft_separate(b_seq, 1);
-							b_seq = b_seq->next;
-						}
-					}
-					else
-					{
-						//regarde si il une separation command ==> &&
+						//si il y a encore une separation command ==> &&
 						ft_separate(b_seq, 1);
+						b_seq = b_seq->next;
 					}
 					//ft_watch_result(line, lex, b_seq);
 				}
