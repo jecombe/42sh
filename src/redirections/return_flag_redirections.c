@@ -6,24 +6,43 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:38:59 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 15:00:39 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 08:10:36 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-int		ft_return_flag(t_op *t_exec)
+int		ft_return_flag(t_redirect *redirect)
 {
-	if (t_exec->redirect)
+	if (redirect)
 	{
-		if (t_exec->redirect->redirect == LESS)
+		printf("REDIRECT\n");
+		if (redirect->redirect == LESS)
 			return (O_RDONLY);
-		if (t_exec->redirect->redirect == DGREAT)
+		if (redirect->redirect == DGREAT)
 			return (O_APPEND);
-		if (t_exec->redirect->redirect == GREAT)
+		if (redirect->redirect == GREAT)
 			return (O_TRUNC);
-		if (t_exec->redirect->redirect == DLESS)
+		if (redirect->redirect == DLESS)
+		{
+			printf("OKKKKKKKKK\n");
+			return (HEREDOC);
+		}
+	}
+	return (NOTHING);
+}
+int		ft_return_flag2(t_op *op)
+{
+	if (op->redirect)
+	{
+		if (op->redirect->redirect == LESS)
+			return (O_RDONLY);
+		if (op->redirect->redirect == DGREAT)
+			return (O_APPEND);
+		if (op->redirect->redirect == GREAT)
+			return (O_TRUNC);
+		if (op->redirect->redirect == DLESS)
 			return (HEREDOC);
 	}
 	return (NOTHING);

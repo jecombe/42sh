@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 04:59:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 08:20:32 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,6 +71,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 	or_if = 0;
 	opera = b_seq->op;
 	ret = 0;
+	printf("okok\n");
 	if (opera->next)
 	{
 		while (opera)
@@ -143,6 +144,7 @@ void				ft_101sh(void)
 					else
 					{
 						//regarde si il une separation command ==> &&
+						printf("ooooooooooooO\n");
 						ft_separate(b_seq, 1);
 					}
 					//ft_watch_result(line, lex, b_seq);

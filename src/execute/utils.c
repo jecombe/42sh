@@ -53,6 +53,7 @@ int		ft_check_source(char *source)
 {
 	struct stat sb;
 
+printf("OKOKOKOKO\n");
 	if (lstat(source, &sb) == -1)
 	{
 		ft_putstr("no such file or directory: ");
