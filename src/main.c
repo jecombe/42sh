@@ -6,12 +6,13 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 02:51:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 04:59:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/stdin.h"
+#include "../include/init.h"
 #include "../include/lexer.h"
 //#include "../include/parsing.h"
 #include "../include/execute.h"
@@ -47,7 +48,7 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 			n_redirect = n_op->redirect;
 			while (n_redirect)
 			{
-				printf("\t\t\tFD == %s, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
+				printf("\t\t\tFD == %d, redirect == %s FILE == %s\n", n_redirect->fd, cv(n_redirect->redirect), n_redirect->file);
 				n_redirect = n_redirect->next;
 			}
 			n_op = n_op->next;
@@ -57,18 +58,6 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	}
 	printf("--------------------------------------\n\n");
 
-}
-
-int					ft_term_init(char **environ)
-{
-	char			*term;
-
-	g_env = ft_tabdup(environ);
-	if (!(term = getenv("TERM")))
-		term = "xterm-256color";
-	if (tgetent(NULL, term) == ERR)
-		return (1);
-	return (0);
 }
 
 void		ft_separate(t_seq *b_seq, int fd)

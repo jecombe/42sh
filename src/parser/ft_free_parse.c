@@ -21,7 +21,6 @@ void		ft_free_b_redirect(t_redirect **b_redirect)
 	while (n_redirect)
 	{
 		*b_redirect = n_redirect;
-		ft_strdel(&n_redirect->fd);
 		ft_strdel(&n_redirect->file);
 		n_redirect = (*b_redirect)->next;
 		free(*b_redirect);

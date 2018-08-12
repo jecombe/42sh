@@ -18,10 +18,7 @@ void			ft_open_redirect(char *file, int flag, int flag2, int fd)
 	int ret2;
 	if (flag2 == O_WRONLY)
 	{
-		if (fd == 1)
-		{
 			ret2 = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR);
-		}
 	}
 	if (flag2 == O_RDONLY)
 	{
@@ -29,7 +26,7 @@ void			ft_open_redirect(char *file, int flag, int flag2, int fd)
 		dup2(ret2, 0);
 	}
 	else
-		dup2(ret2, 1);
+		dup2(ret2, fd);
 }
 
 int				ft_open_redirect_builtins(char *file, int flag)

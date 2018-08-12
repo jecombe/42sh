@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_tabdup.c                                      .::    .:/ .      .::   */
+/*   ft_term_init.c                                   .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/30 05:52:29 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 04:10:08 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/12 04:46:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../../include/init.h"
 
-char		**ft_tabdup(char **tab)
+int					ft_term_init(char **environ)
 {
-	char		**ret;
-	int			i;
+	char			*term;
 
-	i = 0;
-	ret = NULL;
-	if (tab)
-	{
-		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
-			return (NULL);
-		while (tab[i])
-		{
-			ret[i] = ft_strdup(tab[i]);
-			i++;
-		}
-		ret[i] = NULL;
-	}
-	return (ret);
+	g_env = ft_tabdup(environ);
+	if (!(term = getenv("TERM")))
+		term = "xterm-256color";
+	if (tgetent(NULL, term) == ERR)
+		return (1);
+	return (0);
 }

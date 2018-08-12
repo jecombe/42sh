@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/11 04:21:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 02:56:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@
 
 typedef struct					s_redirect
 {
-	char						*fd;
+	int							fd;
 	e_token						redirect;//< << > >> >| >& <& <<
 	char						*file;
 	struct s_redirect			*next;
@@ -38,6 +38,7 @@ typedef struct					s_op
 
 typedef struct					s_seq
 {
+	int							default_fd;
 	e_token						token;//LIST TERMINATOR
 	t_op						*op;
 	struct s_seq				*next;

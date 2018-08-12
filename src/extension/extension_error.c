@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/11 07:56:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/11 07:25:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,10 +45,8 @@ static int		error_n_op(t_op **b_op)
 				*b_op = (*b_op)->next;
 			else if (n_op->next && n_op->prev)
 				n_op->prev->next = n_op->next;
-			free(n_op);
-			n_op = NULL;
 		}
-		else if (n_op->redirect)
+		if (n_op->redirect)
 			if (error_n_redirect(&n_op->redirect))
 				return (1);
 		n_op = n_op->next;

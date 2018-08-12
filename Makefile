@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/11 07:33:46 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/12 04:41:25 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -59,10 +59,11 @@ SRCS_NAME =	\
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \
 			parser/ft_free_parse.c \
+			parser/parse_error.c \
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
-			parser/parse_error.c \
+			extension/dquotes_manager.c \
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/extension.c \
@@ -82,9 +83,10 @@ SRCS_NAME =	\
 			builtins/exit.c \
 			builtins/env.c \
 			builtins/setenv.c \
-			builtins/unsetenv.c
+			builtins/unsetenv.c \
+			init/ft_term_init.c
 
-OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections
+OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections init
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

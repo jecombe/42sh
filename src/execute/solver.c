@@ -14,6 +14,16 @@
 #include "../../include/execute.h"
 #include "../../include/stdin.h"
 
+int		ft_return_fd(t_op *t_exec, int flag)
+{
+	int fd;
+
+	if (flag != NOTHING)
+	{
+		return (t_exec->redirect->fd);
+	}
+	return (NOTHING);
+}
 int		ft_solver(t_op *t_exec, int fd)
 {
 	ft_get_bin();
@@ -21,7 +31,10 @@ int		ft_solver(t_op *t_exec, int fd)
 	int ok;
 	int flag;
 
+	int fd_test;
+
 	flag = ft_return_flag(t_exec);
+	fd_test = ft_return_fd(t_exec, flag);
 	//Si il y a <
 	if (flag == O_RDONLY)
 		if (ft_check_source(t_exec->redirect->file) == -1)
@@ -46,7 +59,7 @@ int		ft_solver(t_op *t_exec, int fd)
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (ft_exec(t_exec, tmp_bin, flag, fd) == EXIT_SUCCESS)
+		if (ft_exec(t_exec, tmp_bin, flag, fd_test) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else
 			return (EXIT_FAILURE);

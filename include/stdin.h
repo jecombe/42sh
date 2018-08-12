@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 02:35:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/12 05:46:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,6 @@
 # include <fcntl.h>
 
 char **g_env;
-char **g_set;
 struct winsize sz;
 
 typedef enum		s_prompt
