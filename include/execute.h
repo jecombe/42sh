@@ -48,5 +48,5 @@ int				ft_check_file_is_directory(char *file);
 int				ft_check_source(char *source);
 int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
-int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int built, char **cmd);
+int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int built, char **cmd, t_op *op);
 #endif

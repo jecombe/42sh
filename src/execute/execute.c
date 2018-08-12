@@ -13,14 +13,28 @@
 
 #include "../../include/execute.h"
 
+void			ft_write_fd(int fd, char **cmd)
+{
+	int i = 1;
 
-int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int buil, char **cmd)
+	while (cmd[i])
+	{
+		ft_putstr_fd(cmd[i], fd);
+		if (cmd[i + 1])
+			ft_putchar_fd(' ', fd);
+		i++;
+	}
+}
+
+
+int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int buil, char **cmd, t_op *op)
 {	
 	int fd;
 	int flag;
 	int flag2;
+	int fd_open;
 
-//Gestion des multiples redirections
+	//Gestion des multiples redirections
 	if (redirect != NULL)
 	{
 		while (redirect)
@@ -60,10 +74,21 @@ int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bu
 			//Pour l'instant si ce n'est pas des command builtins
 			if (buil == 0)
 				ft_open_redirect(redirect->file, flag, flag2, fd);
-			redirect = redirect->next;
+			else
+			{
+				fd_open = ft_open_redirect_builtins(redirect->file, flag, op->redirect->fd);
+			printf("ecrit\n");
+			}
+				redirect = redirect->next;
+		}
+		if (buil == 1)
+		{
+			printf("ecrit\n");
+			return (fd_open);
 		}
 	}
 	return(EXIT_SUCCESS);
+
 }
 int				ft_exec(t_op *tmp_op, char *bin_cmd)
 {
@@ -80,11 +105,11 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd)
 	if ((cpid = fork()) == 0)
 	{
 		//Gestion des multiples redirections
-		if (ft_while_redirect(redirect, bin_cmd, cpid, 0, tmp_op->cmd) == EXIT_SUCCESS)
+		if (ft_while_redirect(redirect, bin_cmd, cpid, 0, tmp_op->cmd, tmp_op) == EXIT_SUCCESS)
 			;
 		else
 			return(EXIT_FAILURE);
-			//EXECVE
+		//EXECVE
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else

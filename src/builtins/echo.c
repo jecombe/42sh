@@ -73,19 +73,25 @@ int 		ft_echo(t_op *t_exec, int flag)
 	}
 	if (flag != NOTHING)
 	{
-		printf("jhgfghjkjhgfdfghjkjhgf\n");
 		//***********Gestion des mutliples redirections, pour bientot*********//
-		/*pid_t pid;
-		  if ((fd_open = ft_while_redirect(t_exec->redirect, NULL, pid, 1, t_exec->cmd + i)) == EXIT_FAILURE)
-		  return (EXIT_FAILURE);*/
-		/////**********************************************************////
-		if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag, t_exec->redirect->fd)) != -11)
-		{
-			//Gestion des redirection dans une autre sortie que 1 par exemple si echo 2> fichier.txt ou echo > fichier.txt
+		pid_t pid;
+		if ((fd_open = ft_while_redirect(t_exec->redirect, NULL, pid, 1, t_exec->cmd + i, t_exec)) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		else
+		{	
 			if (t_exec->redirect->fd > 1)
 				fd_open = t_exec->redirect->fd;
 			ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 		}
+		/////**********************************************************////
+		/*if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag, t_exec->redirect->fd)) != -11)
+		  {
+		//Gestion des redirection dans une autre sortie que 1 par exemple si echo 2> fichier.txt ou echo > fichier.txt
+		if (t_exec->redirect->fd > 1)
+		fd_open = t_exec->redirect->fd;
+		ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+		}*/
+		//printf("NEININININ\n");
 	}
 	else
 		ft_echo_normal(t_exec, i, ok, slash_n);
