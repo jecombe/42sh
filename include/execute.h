@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 07:09:21 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 08:16:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,4 +47,5 @@ int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
 int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int built, char **cmd, t_op *op, int fd);
 void			ft_separate(t_seq *b_seq, int fd);
+void			ft_sequence(t_seq *b_seq, int fd);
 #endif

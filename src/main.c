@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 04:17:20 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 08:16:20 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,6 +111,25 @@ void		ft_separate(t_seq *b_seq, int fd)
 		ft_solver(opera, fd);
 }
 
+void				ft_sequence(t_seq *b_seq, int fd)
+{
+	if (b_seq->token == SEMI)
+	{
+		while (b_seq)
+		{
+			//si il y a encore une separation command ==> &&
+			ft_separate(b_seq, fd);
+			b_seq = b_seq->next;
+		}
+	}
+	else
+	{
+		//regarde si il une separation command ==> &&
+		printf("ooooooooooooO\n");
+		ft_separate(b_seq, fd);
+	}
+
+}
 void				ft_101sh(void)
 {
 	e_prompt		prompt;
@@ -131,26 +150,10 @@ void				ft_101sh(void)
 			if (b_seq != NULL)
 				if (!extension(&b_seq))
 				{
-					//******EXECUTER LES COMMANDES******//
-					//si il y a next dans t_seq et que c'est le ;
-					if (b_seq->token == SEMI)
-					{
-						while (b_seq)
-						{
-							//si il y a encore une separation command ==> &&
-							ft_separate(b_seq, 1);
-							b_seq = b_seq->next;
-						}
-					}
-					else
-					{
-						//regarde si il une separation command ==> &&
-						printf("ooooooooooooO\n");
-						ft_separate(b_seq, 1);
-					}
+					ft_sequence(b_seq, 1);
 					//ft_watch_result(line, lex, b_seq);
 				}
-			
+
 			if (line)
 				ft_strdel(&line);
 			ft_free_b_seq(&b_seq);
