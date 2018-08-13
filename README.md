@@ -1,2 +1,2 @@
-# 21sh
+# 42sh
 Shell améliorée
