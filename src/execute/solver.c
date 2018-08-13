@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 08:04:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 04:41:48 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,6 +33,7 @@ int		ft_solver(t_op *t_exec, int fd)
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
+		printf("%s\n", tmp_bin);
 		if (ft_exec(t_exec, tmp_bin) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else

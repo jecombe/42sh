@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/12 04:41:25 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/13 04:10:47 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -78,12 +78,13 @@ SRCS_NAME =	\
 			redirections/return_flag_redirections.c \
 			redirections/heredoc.c \
 			builtins/builtins.c \
+			builtins/ft_env_tools.c \
+			builtins/ft_env.c \
+			builtins/ft_setenv.c \
+			builtins/ft_unsetenv.c \
 			builtins/cd.c \
 			builtins/echo.c \
 			builtins/exit.c \
-			builtins/env.c \
-			builtins/setenv.c \
-			builtins/unsetenv.c \
 			init/ft_term_init.c
 
 OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections init

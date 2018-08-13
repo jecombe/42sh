@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 08:20:32 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 04:17:20 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -122,6 +122,7 @@ void				ft_101sh(void)
 	line = NULL;
 	while (get_stdin(&line, &prompt))
 	{
+		ft_memset(&lex, 0, sizeof(t_lex));
 		if (line)
 			lex = ft_lexer(line, &prompt);
 		if (!(prompt))
@@ -149,6 +150,7 @@ void				ft_101sh(void)
 					}
 					//ft_watch_result(line, lex, b_seq);
 				}
+			
 			if (line)
 				ft_strdel(&line);
 			ft_free_b_seq(&b_seq);

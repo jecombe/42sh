@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 02:29:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 03:48:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,21 +18,23 @@
 #include "./stdin.h"
 
 /*
-**			ft_envset.c
+**			ft_env_tools.c
 */
 
-//char		*ft_envset_line(const char **envset, const char *name);
+char		*ft_envset_line(const char **envset, const char *name);
 //char		*ft_envset_value(const char **envset, const char *name);
-//char		*ft_envset_join(const char *name, const char *value);
+char		*ft_envset_join(const char *name, const char *value);
+int			ft_env_error(const char *prgm, const char *error);
 
 /*
 **			ft_env.c
 */
-/*
-int			ft_env(void);
-int			ft_setenv(const char *name, const char *value, int overwrite);
+
+int			ft_env(t_op *exec);
+
+
+int			ft_setenv(const char *name, const char *value);
 int			ft_unsetenv(const char *name);
-*/
 /*
 **			ft_set.c
 */

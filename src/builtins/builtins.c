@@ -6,32 +6,37 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 14:56:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 04:48:36 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
+#include "../../include/builtins.h"
 
-int		ft_builtins(t_op *t_exec, int what, int flag)
+int		ft_builtins(t_op *exec, int what, int flag)
 {
-	if (what == 1)
-		if (ft_echo(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	if (what == 2)
-		if (ft_cd(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	if (what == 3)
-		if (ft_exit(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	if (what == 4)
-		if (ft_env(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	if (what == 5)
-		if (ft_setenv(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	if (what == 6)
-		if (ft_unsetenv(t_exec, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+	if (ft_strcmp(exec->cmd[0], "echo") == 0)
+		if (ft_echo(exec, flag))
+			return (EXIT_FAILURE);
+	if (ft_strcmp(exec->cmd[0], "cd") == 0)
+		if (ft_cd(exec, flag))
+			return (EXIT_FAILURE);
+	if (ft_strcmp(exec->cmd[0], "exit") == 0)
+		if (ft_exit(exec, flag))
+			return (EXIT_FAILURE);
+	if (ft_strcmp(exec->cmd[0], "env") == 0)
+		if (ft_env(exec))
+			return (EXIT_FAILURE);
+	if (ft_strcmp(exec->cmd[0], "setenv") == 0)
+	{
+		if (!exec->cmd[1])
+			return (ft_setenv(NULL, NULL));
+		if (exec->cmd[2] && exec->cmd[3])
+				return (ft_env_error("setenv", "Too many arguments."));
+		ft_setenv(exec->cmd[1], exec->cmd[2]);
+	}
+	if (ft_strcmp(exec->cmd[0], "unsetenv") == 0)
+		return (ft_unsetenv(exec->cmd[1]));
+	return (EXIT_SUCCESS);
 }
