@@ -24,7 +24,7 @@ int		ft_solver(t_op *t_exec, int fd)
 
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
-		flag = ft_return_flag2(t_exec);
+		//flag = ft_return_flag2(t_exec);
 		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else

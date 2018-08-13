@@ -71,7 +71,6 @@ void		ft_separate(t_seq *b_seq, int fd)
 	or_if = 0;
 	opera = b_seq->op;
 	ret = 0;
-	printf("okok\n");
 	if (opera->next)
 	{
 		while (opera)
@@ -125,7 +124,6 @@ void				ft_sequence(t_seq *b_seq, int fd)
 	else
 	{
 		//regarde si il une separation command ==> &&
-		printf("ooooooooooooO\n");
 		ft_separate(b_seq, fd);
 	}
 

@@ -32,7 +32,7 @@ int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bu
 	int fd;
 	int flag;
 	int flag2;
-	int fd_open;
+	int fd_open = 0;
 
 	if (fd2 > 1)
 	{
@@ -56,7 +56,7 @@ int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bu
 			if (flag == HEREDOC)
 			{
 				//HEREDOC MARCHE PAS EN MULTIPLES
-				if (ft_redirect_heredoc(redirect, flag, bin_cmd, cpid) == EXIT_SUCCESS)
+				if (ft_redirect_heredoc(redirect, flag, bin_cmd, cpid, buil) == EXIT_SUCCESS)
 					;
 				else
 					break;
@@ -81,9 +81,7 @@ int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bu
 			if (buil == 0)
 				ft_open_redirect(redirect->file, flag, flag2, fd);
 			else
-			{
-				fd_open = ft_open_redirect_builtins(redirect->file, flag, op->redirect->fd);
-			}
+				fd_open = ft_open_redirect_builtins(redirect->file, flag, flag2);
 				redirect = redirect->next;
 		}
 		if (buil == 1)

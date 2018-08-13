@@ -17,7 +17,6 @@ int		ft_return_flag(t_redirect *redirect)
 {
 	if (redirect)
 	{
-		printf("REDIRECT\n");
 		if (redirect->redirect == LESS)
 			return (O_RDONLY);
 		if (redirect->redirect == DGREAT)
@@ -26,7 +25,6 @@ int		ft_return_flag(t_redirect *redirect)
 			return (O_TRUNC);
 		if (redirect->redirect == DLESS)
 		{
-			printf("OKKKKKKKKK\n");
 			return (HEREDOC);
 		}
 	}

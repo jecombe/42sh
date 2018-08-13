@@ -71,7 +71,7 @@ int 		ft_echo(t_op *t_exec, int flag)
 		slash_n = 1;
 		i++;
 	}
-	if (flag != NOTHING)
+	if (t_exec->redirect)
 	{
 		//***********Gestion des mutliples redirections, pour bientot*********//
 		pid_t pid;
