@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 03:47:16 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 07:09:21 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ char			*ft_search_bin(char *cmd);
 char			*ft_go_to(char *bin, int nb);
 void			ft_skip(char **ttab);
 void			ft_get_bin();
-int				ft_exec(t_op *tmp_op, char *bin_cmd);
+int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd);
 int				ft_builtins(t_op *t_exec, int what, int flag);
 int				ft_check_command(char *cmd);
 void			ft_open_redirect(char *file, int flag, int flag2, int fd);
@@ -45,5 +45,6 @@ int				ft_check_file_is_directory(char *file);
 int				ft_check_source(char *source);
 int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
-int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int built, char **cmd, t_op *op);
+int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int built, char **cmd, t_op *op, int fd);
+void			ft_separate(t_seq *b_seq, int fd);
 #endif

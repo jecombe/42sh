@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 08:27:14 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 07:13:07 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,13 +27,19 @@ void			ft_write_fd(int fd, char **cmd)
 }
 
 
-int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int buil, char **cmd, t_op *op)
-{	
+int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int buil, char **cmd, t_op *op, int fd2)
+{
 	int fd;
 	int flag;
 	int flag2;
 	int fd_open;
 
+	if (fd2 > 1)
+	{
+		flag = O_TRUNC;
+		flag2 = O_WRONLY;
+		ft_open_redirect(".tmp_file", flag, flag2, 1);
+	}
 	//Gestion des multiples redirections
 	if (redirect != NULL)
 	{
@@ -77,26 +83,23 @@ int				ft_while_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bu
 			else
 			{
 				fd_open = ft_open_redirect_builtins(redirect->file, flag, op->redirect->fd);
-			printf("ecrit\n");
 			}
 				redirect = redirect->next;
 		}
 		if (buil == 1)
 		{
-			printf("ecrit\n");
 			return (fd_open);
 		}
 	}
 	return(EXIT_SUCCESS);
 
 }
-int				ft_exec(t_op *tmp_op, char *bin_cmd)
+int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd)
 {
 	pid_t		cpid;
 	int			status;
 	int			ret;
 	t_redirect *redirect;
-	int fd;
 
 	redirect = NULL;
 	ret = 0;
@@ -105,7 +108,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd)
 	if ((cpid = fork()) == 0)
 	{
 		//Gestion des multiples redirections
-		if (ft_while_redirect(redirect, bin_cmd, cpid, 0, tmp_op->cmd, tmp_op) == EXIT_SUCCESS)
+		if (ft_while_redirect(redirect, bin_cmd, cpid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
 			;
 		else
 			return(EXIT_FAILURE);

@@ -6,59 +6,13 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 06:08:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/13 07:15:03 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/extension.h"
 #include "../../include/init.h"
-
-//JECOMBE
-static void		ft_separate(t_seq *b_seq, int fd)
-{
-	t_op *opera;
-	int ret;
-	int and_if;
-	int or_if;
-
-	and_if = 0;
-	or_if = 0;
-	opera = b_seq->op;
-	ret = 0;
-	if (opera->next)
-	{
-		while (opera)
-		{
-			if (or_if == 0)
-			{
-				if (and_if == 0)
-					ret = ft_solver(opera, fd);
-			}
-			if (ret == EXIT_SUCCESS)
-			{
-				if (opera->token == OR_IF)
-					or_if = 1;
-				else
-					or_if = 0;
-				ret																		= 0;
-			}
-			else if (ret == EXIT_FAILURE)
-			{												
-				if (opera->token == AND_IF)
-					and_if = 1;													
-				else
-					and_if = 0;
-				ret = 0;
-			}
-			opera = opera->next;
-		}
-		return ;
-	}
-	else
-		ft_solver(opera, fd);
-}
-//JECOMBE
 
 int			ft_add_tild(char **str, int *index)
 {
