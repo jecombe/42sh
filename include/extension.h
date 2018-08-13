@@ -25,5 +25,7 @@ int			ft_manage_quote(char ***tablo, int i, int *j, char* (*f)(char*, int*));
 char		*ft_replace_quote(char *str, int *j);
 char		*ft_replace_dquote(char *str, int *j);
 int			extension_error(t_seq **b_seq);
+int			bquote_manager(char ***cmd, int *j_index, int *i_index);
+int			backslash_manager(char ***cmd, int i, int *j, int d_quote);
 
 #endif

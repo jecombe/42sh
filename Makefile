@@ -63,10 +63,11 @@ SRCS_NAME =	\
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
-			extension/dquotes_manager.c \
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/extension.c \
+			extension/bquote_manager.c \
+			extension/backslash_manager.c \
 			extension/ft_split_b_quote.c \
 			extension/ft_dollar.c \
 			execute/binary.c \
