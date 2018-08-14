@@ -1,4 +1,4 @@
-#include "../../include/extension.h"
+#include "../../include/heart.h"
 
 int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index)
 {
@@ -77,69 +77,77 @@ char		*recup_after_bquote(char *cmd, int j_index)
 	return (ret);
 }
 
-char		*recup_tmp_file()
+char		*recup_tmp_file(char *cmd, int begin, int j_index)
 {
 	char		*ret;
+	char		*tmp;
+	char		*line;
+	int			fd;
 
+	fd = open(".tmp_file", O_CREAT, O_RDONLY);
 	ret = NULL;
+	while (get_next_line(fd, &line) > 0)
+	{
+		if (ret)
+		{
+			tmp = ft_strjoin(ret, "\n");
+			ft_strdel(&ret);
+			ret = ft_strjoin(tmp, line);
+		}
+		else
+		{
+			if ((tmp = recup_before_bquote(cmd, begin)))
+			{
+				printf("BEFORE BQUOTE == %s\n", tmp);
+				ret = ft_strjoin(tmp, line);
+			}
+			else
+				ret = ft_strdup(line);
+		}
+		tmp ? ft_strdel(&tmp) : 0;
+		ft_strdel(&line);
+	}
+	if ((tmp = recup_after_bquote(cmd, j_index)))
+	{
+		printf("AFTER BQUOTE == %s\n", tmp);
+		if (ret)
+		{
+			line = ft_strdup(ret);
+			ft_strdel(&ret);
+			ret = ft_strjoin(line, tmp);
+			ft_strdel(&line);
+		}
+		else
+			ret = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
+	close(fd);
 	return (ret);
 }
 
 int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 {
 	int			fd;
-	char		*tmp = NULL;
+	char		*line = NULL;
 	char		*before_bquote = NULL;
 	char		*after_bquote = NULL;
-	char		*tmp2 = NULL;
-	char		**tab_tmp;
-	t_lex		lex;
-	t_seq		*new_b_seq;
-	t_seq		*new_n_seq;
 	e_prompt	prompt;
-	prompt = PROMPT;
 
+	prompt = PROMPT;
 	printf("BEGIN == %d J_INDEX == %d\n", begin, *j_index);
 	fflush(NULL);
-	if ((before_bquote = recup_before_bquote((*cmd)[*i_index], begin)))
-		printf("BEFORE BQUOTE == %s\n", before_bquote);
-	if ((after_bquote = recup_after_bquote((*cmd)[*i_index], *j_index)))
-		printf("AFTER BQUOTE == %s\n", after_bquote);
-	if ((tmp = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
+	if ((line = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
 	{
-		printf("INSIDE BQUOTE == %s\n", tmp);
+		printf("INSIDE BQUOTE == %s\n", line);
 		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
-
-		/*
-		lex = ft_lexer(tmp, &prompt);
-		new_b_seq = ft_parsing(lex);
-		if (!extension(&new_b_seq))
-		{
-			new_n_seq = new_b_seq;
-			while (new_n_seq)
-			{
-				new_n_seq->default_fd = fd;
-				ft_sequence(new_n_seq, fd);//J EST LE FICHIER A CREER
-				new_n_seq = new_n_seq->next;
-			}
-		}*/
-		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
-		while (get_next_line(fd, &tmp) > 0)
-		{
-			if (tmp2)
-			{
-				tmp2 = ft_strjoin(tmp2, "\n");
-				tmp2 = ft_strjoin(tmp2, tmp);
-			}
-			else
-				tmp2 = ft_strdup(tmp);
-			ft_strdel(&tmp);
-		}
-		close(fd);
+		heart_of_101sh(line, &prompt, fd);
+		ft_strdel(&line);
+		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
+	line = recup_tmp_file((*cmd)[*i_index], begin, *j_index);
 	printf("--------------\n");
-	printf("TMP2 == %s\n", tmp2);
+	printf("LINE == %s\n", line);
 	printf("--------------\n");
-	ft_bquote_replace(&(*cmd), tmp2, i_index, j_index);
+//	ft_bquote_replace(&(*cmd), line, i_index, j_index);
 	return (0);
 }
