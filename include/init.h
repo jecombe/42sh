@@ -11,9 +11,14 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#ifndef INIT_H
+# define INIT_H
+
 #include "./stdin.h"
 
 char **g_set;
 char **g_env;
 
 int			ft_term_init(char **environ);
+
+#endif

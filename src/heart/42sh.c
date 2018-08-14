@@ -10,14 +10,15 @@
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
-
+/*
 #include "../../include/stdin.h"
 #include "../../include/init.h"
 #include "../../include/lexer.h"
 //#include "../include/parsing.h"
 #include "../../include/execute.h"
 #include "../../include/extension.h"
-
+*/
+#include "../../include/heart.h"
 #define cv ft_convert_token_to_string
 
 void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
