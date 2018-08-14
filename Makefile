@@ -29,7 +29,7 @@ INCS_PATH = ./include/
 LIB_PATH = ./libft/
 
 SRCS_NAME =	\
-			main.c \
+			heart/42sh.c \
 			stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \
@@ -88,7 +88,9 @@ SRCS_NAME =	\
 			builtins/exit.c \
 			init/ft_term_init.c
 
-OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections init
+OBJS_FOLDERS = \
+			builtins stdin lexer parser extension execute redirections init \
+			heart
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

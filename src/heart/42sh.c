@@ -11,12 +11,12 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/stdin.h"
-#include "../include/init.h"
-#include "../include/lexer.h"
+#include "../../include/stdin.h"
+#include "../../include/init.h"
+#include "../../include/lexer.h"
 //#include "../include/parsing.h"
-#include "../include/execute.h"
-#include "../include/extension.h"
+#include "../../include/execute.h"
+#include "../../include/extension.h"
 
 #define cv ft_convert_token_to_string
 
@@ -126,36 +126,42 @@ void				ft_sequence(t_seq *b_seq, int fd)
 		//regarde si il une separation command ==> &&
 		ft_separate(b_seq, fd);
 	}
-
 }
+
+int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
+{
+	t_lex			lex;
+	t_seq			*b_seq;
+
+	ft_memset(&lex, 0, sizeof(t_lex));
+	if (line)
+		lex = ft_lexer(line, prompt);
+	if (!(*prompt))
+	{
+		b_seq = ft_parsing(lex);
+		if (b_seq != NULL)
+			if (!extension(&b_seq))
+			{
+				ft_sequence(b_seq, fd_base);
+				//ft_watch_result(line, lex, b_seq);
+			}
+		ft_free_b_seq(&b_seq);
+	}
+	return (0);
+}
+
 void				ft_101sh(void)
 {
 	e_prompt		prompt;
 	char			*line;
-	t_lex			lex;
-	t_seq			*b_seq;
 
 	prompt = PROMPT;
 	line = NULL;
 	while (get_stdin(&line, &prompt))
 	{
-		ft_memset(&lex, 0, sizeof(t_lex));
+		heart_of_101sh(line, &prompt, 1);
 		if (line)
-			lex = ft_lexer(line, &prompt);
-		if (!(prompt))
-		{
-			b_seq = ft_parsing(lex);
-			if (b_seq != NULL)
-				if (!extension(&b_seq))
-				{
-					ft_sequence(b_seq, 1);
-					//ft_watch_result(line, lex, b_seq);
-				}
-
-			if (line)
-				ft_strdel(&line);
-			ft_free_b_seq(&b_seq);
-		}
+			ft_strdel(&line);
 	}
 }
 

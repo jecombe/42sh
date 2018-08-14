@@ -43,7 +43,9 @@ int			ft_parcour_tab(char ***cmd)
 	int			j;
 	int			k;
 	int			dquote;
+	int			begin_bquote;
 
+	begin_bquote = 0;
 	dquote = 0;
 	i = -1;
 	if (*cmd)
@@ -56,11 +58,11 @@ int			ft_parcour_tab(char ***cmd)
 				{
 					backslash_manager(&(*cmd), i, &j, dquote);
 				}
-				else if ((*cmd)[i][j] == '\'' && dquote == 0)
+				else if ((*cmd)[i][j] == '\'' && !dquote && !begin_bquote)
 				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
 				}
-				else if ((*cmd)[i][j] == '"')
+				else if ((*cmd)[i][j] == '"' && !begin_bquote)
 				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
 					dquote = dquote == 1 ? 0 : 1;
@@ -72,7 +74,15 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else if ((*cmd)[i][j] == '`')
 				{
-					bquote_manager(&(*cmd), &j, &i);
+					if (begin_bquote == 0)
+						begin_bquote = j == 0 ? -1 : j;
+					else
+					{
+						begin_bquote = begin_bquote == -1 ? 0 : begin_bquote;
+						bquote_manager(&(*cmd), &j, &i, begin_bquote);
+						begin_bquote = 0;
+					}
+					j++;
 				}
 				else
 					j++;

@@ -15,7 +15,7 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 	while (i < *i_index)
 		ft_malloc_cmd(&tab_tmp, (*cmd)[i++]);
 	i = 0;
-	str_tmp1 = ft_return_back_b_quote();
+//	str_tmp1 = ft_return_back_b_quote();
 	tab_tmp2 = ft_split_bquote(in_bquote, ifs);
 	while (tab_tmp2[i])
 	{
@@ -30,7 +30,7 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 			ft_malloc_cmd(&tab_tmp, tab_tmp2[i++]);
 	}
 	i = *i_index + 1;
-	str_tmp1 = ft_return_after_b_quote();
+//	str_tmp1 = ft_return_after_b_quote();
 	while ((*cmd)[i])
 	{
 		if ((*cmd)[i + 1] || (!(*cmd)[i + 1] && !str_tmp1))
@@ -47,10 +47,50 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 	return (0);
 }
 
-int			bquote_manager(char ***cmd, int *j_index, int *i_index)
+char		*recup_inside_bquote(char *cmd, int begin, int j_index)
 {
-	int			j;//fd
+	char		*ret;
+
+	ret = NULL;
+	if (begin + 1 < j_index)
+		ret = ft_strsub(cmd, begin + 1, j_index - (begin + 1));
+	return (ret);
+}
+
+char		*recup_before_bquote(char *cmd, int begin)
+{
+	char		*ret;
+
+	ret = NULL;
+	if (begin > 0)
+		ret = ft_strsub(cmd, 0, begin);
+	return (ret);
+}
+
+char		*recup_after_bquote(char *cmd, int j_index)
+{
+	char		*ret;
+
+	ret = NULL;
+	if (j_index < ft_strlen(cmd) - 1)
+		ret = ft_strsub(cmd, j_index + 1, ft_strlen(cmd) - j_index + 1);
+	return (ret);
+}
+
+char		*recup_tmp_file()
+{
+	char		*ret;
+
+	ret = NULL;
+	return (ret);
+}
+
+int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
+{
+	int			fd;
 	char		*tmp = NULL;
+	char		*before_bquote = NULL;
+	char		*after_bquote = NULL;
 	char		*tmp2 = NULL;
 	char		**tab_tmp;
 	t_lex		lex;
@@ -59,14 +99,18 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index)
 	e_prompt	prompt;
 	prompt = PROMPT;
 
-	j = *j_index + 1;
-	while ((*cmd)[*i_index][j] != '`')
-		j++;
-	if (*j_index + 1 != j)
+	printf("BEGIN == %d J_INDEX == %d\n", begin, *j_index);
+	fflush(NULL);
+	if ((before_bquote = recup_before_bquote((*cmd)[*i_index], begin)))
+		printf("BEFORE BQUOTE == %s\n", before_bquote);
+	if ((after_bquote = recup_after_bquote((*cmd)[*i_index], *j_index)))
+		printf("AFTER BQUOTE == %s\n", after_bquote);
+	if ((tmp = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
 	{
-		tmp = ft_strsub((*cmd)[*i_index], *j_index + 1, j - *j_index + 1);
-		//		tmp = ft_strjoin(tmp, " > .tmp_file");
-		//		system(tmp);
+		printf("INSIDE BQUOTE == %s\n", tmp);
+		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
+
+		/*
 		lex = ft_lexer(tmp, &prompt);
 		new_b_seq = ft_parsing(lex);
 		if (!extension(&new_b_seq))
@@ -74,36 +118,28 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index)
 			new_n_seq = new_b_seq;
 			while (new_n_seq)
 			{
-				new_n_seq->default_fd = j;
-				ft_sequence(new_n_seq, j);//J EST LE FICHIER A CREER
+				new_n_seq->default_fd = fd;
+				ft_sequence(new_n_seq, fd);//J EST LE FICHIER A CREER
 				new_n_seq = new_n_seq->next;
 			}
-			j = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
-			while (get_next_line(j, &tmp) > 0)
-			{
-				if (tmp2)
-				{
-					tmp2 = ft_strjoin(tmp2, "\n");
-					tmp2 = ft_strjoin(tmp2, tmp);
-				}
-				else
-					tmp2 = ft_strdup(tmp);
-				ft_strdel(&tmp);
-			}
-			close(j);
+		}*/
+		fd = open(".tmp_file", O_CREAT, O_RDONLY, O_WRONLY);
+		while (get_next_line(fd, &tmp) > 0)
+		{
 			if (tmp2)
 			{
-				printf("--------------\n");
-				printf("TMP2 == %s\n", tmp2);
-				printf("--------------\n");
-				ft_bquote_replace(&(*cmd), tmp2, i_index, j_index);
+				tmp2 = ft_strjoin(tmp2, "\n");
+				tmp2 = ft_strjoin(tmp2, tmp);
 			}
 			else
-				printf("TMP2 == NULL, REMPLACEMENT DES BQUOTES IMPOSSIBLE\n");
+				tmp2 = ft_strdup(tmp);
+			ft_strdel(&tmp);
 		}
-		ft_strdel(&tmp);
+		close(fd);
 	}
-	else
-		ft_strdel_in_tab(&(*cmd), *i_index);
+	printf("--------------\n");
+	printf("TMP2 == %s\n", tmp2);
+	printf("--------------\n");
+	ft_bquote_replace(&(*cmd), tmp2, i_index, j_index);
 	return (0);
 }
