@@ -14,7 +14,7 @@
 #include "../../include/execute.h"
 #include "../../include/stdin.h"
 
-int		ft_solver(t_op *t_exec, int fd)
+int		ft_solver(t_op *t_exec, int fd, pid_t pid)
 {
 	ft_get_bin();
 	char *tmp_bin;
@@ -32,7 +32,9 @@ int		ft_solver(t_op *t_exec, int fd)
 	else
 	{
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (ft_exec(t_exec, tmp_bin, fd) == EXIT_SUCCESS)
+		if (t_exec->token != PIPE)
+			pid = fork();
+		if (ft_exec(t_exec, tmp_bin, fd, pid) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else
 			return (EXIT_FAILURE);

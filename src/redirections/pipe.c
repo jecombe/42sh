@@ -15,39 +15,53 @@
 
 int		ft_count_pipe(t_op *tmp)
 {
+	t_op *tmpp = tmp;
 	int i =  0;
-	while (tmp->token == PIPE)
+	while (tmpp->token == PIPE)
 	{
 		i++;
-		tmp = tmp->next;
+		tmpp = tmpp->next;
 	}
 	return (i);
 }
 
-int		ft_pipe_execute(int i, t_op *op)
+int		ft_pipe_execute(int i, t_op *op, pid_t pid)
 {
 	t_op *tmp;
 	int fd[2];
 	int ret = 0;
 	int fdd = 0;
-	pid_t pid;
+	//pid_t pid;
 
-	fdd = 0;
 	tmp = op;
 	ret = 0;
 	while (i != 0)
 	{
-		ret = ft_solver(tmp, i);
-		tmp = tmp->next;
+		pipe(fd);
+		pid = fork();
+		if (pid == 0)
+		{	dup2(fdd, 0);
+			if (i - 1 != 0)
+				dup2(fd[1], 1);
+			close(fd[0]);
+			ret = ft_solver(tmp, -1, pid);
+		}
+		if (pid > 0)
+		{
+			wait(0);
+			close(fd[1]);
+			fdd = dup(fd[0]);
+		}
 		i--;
+		tmp = tmp->next;
 	}
 	return (ret);
 }
 
-int		ft_pipe(t_op *opera, int i)
+int		ft_pipe(t_op *opera, int i, pid_t pid)
 {
 	int ret;
 
-	ret = ft_pipe_execute(i + 1, opera);
+	ret = ft_pipe_execute(i + 1, opera, pid);
 	return (ret);
 }

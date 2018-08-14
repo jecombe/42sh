@@ -59,6 +59,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 {
 	t_lex			lex;
 	t_seq			*b_seq;
+	pid_t pid;
 
 	ft_memset(&lex, 0, sizeof(t_lex));
 	if (line)
@@ -69,7 +70,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		if (b_seq != NULL)
 			if (!extension(&b_seq))
 			{
-				ft_sequence(b_seq, fd_base);
+				ft_sequence(b_seq, fd_base, pid);
 				//ft_watch_result(line, lex, b_seq);
 			}
 		ft_free_b_seq(&b_seq);

@@ -13,7 +13,7 @@
 
 #include "../../include/heart.h"
 
-void		ft_separate(t_seq *b_seq, int fd)
+void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 {
 	t_op *opera;
 	int ret;
@@ -43,7 +43,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 					//Compte combien de pipe
 					i = ft_count_pipe(opera);
 					//Execute les command, en boucle sur opera tant au'il y  a des pipes
-					ret = ft_pipe(opera, i);
+					ret = ft_pipe(opera, i, pid);
 				}
 				while (i != 0)
 				{
@@ -80,7 +80,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 					if (or_if == 0)
 					{
 						if (and_if == 0)
-							ret = ft_solver(opera, fd);
+							ret = ft_solver(opera, fd, pid);
 					}
 				if (ret == EXIT_SUCCESS)
 				{
@@ -111,7 +111,7 @@ void		ft_separate(t_seq *b_seq, int fd)
 				if (or_if == 0 && i == 0)
 				{
 					if (and_if == 0)
-						ret = ft_solver(opera, fd);
+						ret = ft_solver(opera, fd, pid);
 				}
 				//Si succées de solver
 				if (ret == EXIT_SUCCESS)
@@ -141,5 +141,5 @@ void		ft_separate(t_seq *b_seq, int fd)
 	}
 	//Command sans next donc sans séparateur dans opera(b_seq->op)
 	else
-		ft_solver(opera, fd);
+		ft_solver(opera, fd, pid);
 }

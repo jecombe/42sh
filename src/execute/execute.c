@@ -13,9 +13,9 @@
 
 #include "../../include/execute.h"
 
-int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd)
+int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 {
-	pid_t		cpid;
+	//pid_t		cpid;
 	int			status;
 	int			ret;
 	t_redirect *redirect;
@@ -23,12 +23,17 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd)
 	redirect = NULL;
 	ret = 0;
 	if (tmp_op->redirect)
+	{
 		redirect = tmp_op->redirect;
-	if ((cpid = fork()) == 0)
+	}
+		//Gestion des multiples redirections
+	if (pid == 0)
 	{
 		//Gestion des multiples redirections
-		if (ft_loop_redirect(redirect, bin_cmd, cpid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
+			if (ft_loop_redirect(redirect, bin_cmd, pid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
+		{
 			;
+		}
 		else
 			return(EXIT_FAILURE);
 		//EXECVE
@@ -37,7 +42,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd)
 		else
 			exit(EXIT_SUCCESS);
 	}
-	if (cpid > 0)
+	if (pid > 0)
 	{
 		wait(&status);
 		ret = WEXITSTATUS(status);

@@ -29,16 +29,17 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 	//Gestion des multiples redirections
 	if (redirect != NULL)
 	{
+		printf("---> %s\n", op->cmd[0]);
 		while (redirect)
 		{
 			flag = ft_return_flag(redirect);
-			//************** SI < ****************//
+			//************** SI < ****************
 			if (flag == O_RDONLY)
 				if (ft_check_source(redirect->file) == -1)
 					return (EXIT_FAILURE);
-			//*************************************/
+			//*************************************
 
-			//*********** SI << ******************//
+			//*********** SI << ******************
 			if (flag == HEREDOC)
 			{
 				//HEREDOC MARCHE PAS EN MULTIPLES
@@ -47,7 +48,7 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 				else
 					break;
 			}
-			//*******************************************************//
+			//*******************************************************
 			fd = redirect->fd;
 			if (flag != NOTHING && flag != HEREDOC)
 			{
