@@ -57,27 +57,47 @@ char		*recup_inside_bquote(char *cmd, int begin, int j_index)
 	return (ret);
 }
 
-char		*recup_before_bquote(char *cmd, int begin)
+char		*manage_begin_line(char *cmd, int begin, char *line)
 {
 	char		*ret;
+	char		*tmp;
 
 	ret = NULL;
 	if (begin > 0)
-		ret = ft_strsub(cmd, 0, begin);
+	{
+		tmp = ft_strsub(cmd, 0, begin);
+		ret = ft_strjoin(tmp, line);
+		ft_strdel(&tmp);
+	}
+	else
+		ret = ft_strdup(line);
 	return (ret);
 }
 
-char		*recup_after_bquote(char *cmd, int j_index)
+int			add_after_bquote(char *cmd, int j_index, char **ret)
 {
-	char		*ret;
+	char		*tmp;
+	char		*tmp2;
 
-	ret = NULL;
+	tmp = NULL;
 	if (j_index < ft_strlen(cmd) - 1)
-		ret = ft_strsub(cmd, j_index + 1, ft_strlen(cmd) - j_index + 1);
-	return (ret);
+	{
+		tmp = ft_strsub(cmd, j_index + 1, ft_strlen(cmd) - j_index + 1);
+		if (*ret)
+		{
+			tmp2 = ft_strjoin(*ret, tmp);
+			ft_strdel(ret);
+			*ret = ft_strdup(tmp2);
+			ft_strdel(&tmp2);
+		}
+		else
+			*ret = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
+	return (0);
 }
 
-char		*recup_tmp_file(char *cmd, int begin, int j_index)
+char		*get_tmp_file(char *cmd, int begin, int j_index)
 {
 	char		*ret;
 	char		*tmp;
@@ -85,7 +105,6 @@ char		*recup_tmp_file(char *cmd, int begin, int j_index)
 	int			fd;
 
 	fd = open(".tmp_file", O_CREAT, O_RDONLY);
-	ret = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (ret)
@@ -93,35 +112,14 @@ char		*recup_tmp_file(char *cmd, int begin, int j_index)
 			tmp = ft_strjoin(ret, "\n");
 			ft_strdel(&ret);
 			ret = ft_strjoin(tmp, line);
+			ft_strdel(&tmp);
 		}
 		else
-		{
-			if ((tmp = recup_before_bquote(cmd, begin)))
-			{
-				printf("BEFORE BQUOTE == %s\n", tmp);
-				ret = ft_strjoin(tmp, line);
-			}
-			else
-				ret = ft_strdup(line);
-		}
-		tmp ? ft_strdel(&tmp) : 0;
+			ret = manage_begin_line(cmd, begin, line);
 		ft_strdel(&line);
 	}
-	if ((tmp = recup_after_bquote(cmd, j_index)))
-	{
-		printf("AFTER BQUOTE == %s\n", tmp);
-		if (ret)
-		{
-			line = ft_strdup(ret);
-			ft_strdel(&ret);
-			ret = ft_strjoin(line, tmp);
-			ft_strdel(&line);
-		}
-		else
-			ret = ft_strdup(tmp);
-		ft_strdel(&tmp);
-	}
 	close(fd);
+	add_after_bquote(cmd, j_index, &ret);
 	return (ret);
 }
 
@@ -144,10 +142,11 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 		ft_strdel(&line);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
-	line = recup_tmp_file((*cmd)[*i_index], begin, *j_index);
+		printf("HEART FINISH\n");
+	line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
 	printf("--------------\n");
 	printf("LINE == %s\n", line);
 	printf("--------------\n");
-//	ft_bquote_replace(&(*cmd), line, i_index, j_index);
+	ft_bquote_replace(&(*cmd), line, i_index, j_index);
 	return (0);
 }
