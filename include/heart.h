@@ -4,7 +4,7 @@
 #include "./include/stdin.h"
 #include "./include/init.h"
 #include "./include/lexer.h"
-//#include "./include/parsing.h"
+#include "./include/parsing.h"
 #include "./include/execute.h"
 #include "./include/extension.h"
 
