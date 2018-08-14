@@ -5,15 +5,15 @@ Shell améliorée
 Affichage d’un prompt.
 lecture de la ligne de commande, sans édition de ligne.
 Exécution de commandes simples avec leurs paramètres et gestion du PATH.
-Les opérateurs de redirection suivants : ">", ">>", "<" et "|"
+Les opérateurs de redirection suivants : ">", ">>", "<"
 Les opérateurs logiques "&&" et "||".
 Le séparateur ";".
+Builtins : echo
 
 								Partie Obligatoire en cours
 Gestion correcte des espaces et des tabulations.
 Gestion des erreurs et de la valeur de retour des commandes
 cd
-echo
 exit
 env
 setenv
