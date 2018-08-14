@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 12:57:20 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 14:56:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,10 +46,8 @@ int		ft_pipe_execute(int i, t_op *op)
 
 int		ft_pipe(t_op *opera, int i)
 {
-	t_op *tmp;
 	int ret;
 
-	tmp = opera;
 	ret = ft_pipe_execute(i + 1, opera);
 	return (ret);
 }

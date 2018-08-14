@@ -60,12 +60,14 @@ int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *tmp_bin, pid_t 
 
 	if (buil == 1)
 	{
+		printf("NE PASSE PAS\n");
 		if ((pid = fork()) < 0)
-			exit(EXIT_FAILURE);	
+			exit(EXIT_FAILURE);
 	}
 
 	if (pid == 0)
 	{
+		printf("OKOK\n");
 		ft_heredoc(redirect, tmp_bin, flag);
 	}
 	else
