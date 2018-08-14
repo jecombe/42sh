@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 08:17:50 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 14:46:37 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -122,7 +122,6 @@ int			extension(t_seq **b_seq)
 	}
 	while ((*b_seq)->op->cmd[i])
 	{
-		printf("CMD[%d] == %s\n", i, (*b_seq)->op->cmd[i]);
 		i++;
 	}
 	extension_error(b_seq);

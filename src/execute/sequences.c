@@ -1,41 +1,32 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   solver.c                                         .::    .:/ .      .::   */
+/*   sequences.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 14:42:49 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/14 14:43:59 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/stdin.h"
+#include "../../include/heart.h"
 
-int		ft_solver(t_op *t_exec, int fd)
+void				ft_sequence(t_seq *b_seq, int fd)
 {
-	ft_get_bin();
-	char *tmp_bin;
-	int ok;
-	int flag;
-
-
-	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
+	if (b_seq->token == SEMI)
 	{
-		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
+		while (b_seq)
+		{
+			//si il y a encore une separation command ==> &&
+			ft_separate(b_seq, fd);
+			b_seq = b_seq->next;
+		}
 	}
 	else
 	{
-		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (ft_exec(t_exec, tmp_bin, fd) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
+		//regarde si il une separation command ==> &&
+		ft_separate(b_seq, fd);
 	}
-	return (EXIT_FAILURE);
 }

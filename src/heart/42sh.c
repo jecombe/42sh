@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 08:16:20 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 14:43:18 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,74 +53,6 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	}
 	printf("--------------------------------------\n\n");
 
-}
-
-void		ft_separate(t_seq *b_seq, int fd)
-{
-	t_op *opera;
-	int ret;
-	int and_if;
-	int or_if;
-
-	and_if = 0;
-	or_if = 0;
-	opera = b_seq->op;
-	ret = 0;
-	if (opera->next)
-	{
-		while (opera)
-		{
-			//Condition si il y a les séparateur suivant le type de chacun
-			if (or_if == 0)
-			{
-				if (and_if == 0)
-					ret = ft_solver(opera, fd);
-			}
-			//Si succées de solver
-			if (ret == EXIT_SUCCESS)
-			{
-				//****Si ||*******//
-				if (opera->token == OR_IF)
-					or_if = 1;
-				else
-					or_if = 0;
-				ret = 0;
-			}
-			//Si echec de solver
-			else if (ret == EXIT_FAILURE)
-			{
-				//****Si &&****//
-				if (opera->token == AND_IF)
-					and_if = 1;
-				else
-					and_if = 0;
-				ret = 0;
-			}
-			opera = opera->next;
-		}
-		return ;
-	}
-	//Command sans next donc sans séparateur dans opera(b_seq->op)
-	else
-		ft_solver(opera, fd);
-}
-
-void				ft_sequence(t_seq *b_seq, int fd)
-{
-	if (b_seq->token == SEMI)
-	{
-		while (b_seq)
-		{
-			//si il y a encore une separation command ==> &&
-			ft_separate(b_seq, fd);
-			b_seq = b_seq->next;
-		}
-	}
-	else
-	{
-		//regarde si il une separation command ==> &&
-		ft_separate(b_seq, fd);
-	}
 }
 
 int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)

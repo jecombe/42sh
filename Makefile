@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/13 04:10:47 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/14 14:45:16 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -75,9 +75,13 @@ SRCS_NAME =	\
 			execute/solver.c \
 			execute/utils.c \
 			execute/check_command.c \
+			execute/sequences.c \
+			execute/separate.c \
 			redirections/open_file_redirections.c \
 			redirections/return_flag_redirections.c \
 			redirections/heredoc.c \
+			redirections/loop_redirections.c \
+			redirections/pipe.c \
 			builtins/builtins.c \
 			builtins/ft_env_tools.c \
 			builtins/ft_env.c \
