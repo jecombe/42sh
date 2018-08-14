@@ -32,13 +32,17 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 		{
 			ok = 0;
 			//***************** Si il y a un PIPE ******************************//
+			if (or_if == 0)
+			{
+				if (and_if == 0)
+				{
 			if (opera->token == PIPE)
 			{
 				//Si il y a un PIPE alors le compteur revient a 0;
 				if (opera->prev)
 					if (opera->prev->token != PIPE)
 						i = 0;
-				if (opera->token == PIPE && i == 0)
+				if (opera->token == PIPE)
 				{
 					//Compte combien de pipe
 					i = ft_count_pipe(opera);
@@ -102,8 +106,10 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 					ret = 0;
 				}
 			}
+				}
+			}
 			//***********************************************************************//
-			else
+			if (opera->token != PIPE)
 			{
 				//******************* Si pas de PIPE ***********************************//
 				//***********************************************************************//
