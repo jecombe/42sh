@@ -29,7 +29,6 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 	//Gestion des multiples redirections
 	if (redirect != NULL)
 	{
-		printf("---> %s\n", op->cmd[0]);
 		while (redirect)
 		{
 			flag = ft_return_flag(redirect);

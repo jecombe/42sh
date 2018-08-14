@@ -44,7 +44,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pid)
 			if (i - 1 != 0)
 				dup2(fd[1], 1);
 			close(fd[0]);
-			ret = ft_solver(tmp, -1, pid);
+			ret = ft_solver(tmp, -3, pid);
 		}
 		if (pid > 0)
 		{
