@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 14:41:20 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 15:59:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,7 +81,10 @@ int 		ft_echo(t_op *t_exec, int flag)
 		{	
 			if (t_exec->redirect->fd > 1)
 				fd_open = t_exec->redirect->fd;
-			ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+			if (t_exec->redirect->redirect == DLESS)
+				ft_echo_normal(t_exec, i, ok, slash_n);
+			else
+				ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 		}
 		/////**********************************************************////
 		/*if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag, t_exec->redirect->fd)) != -11)
