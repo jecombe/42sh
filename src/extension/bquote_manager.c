@@ -258,10 +258,10 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 	{
 		printf("INSIDE BQUOTE == %s\n", line);
 		fd = open(".tmp_file", O_CREAT | O_TRUNC | 0644);
-		system("ls -l .tmp_file");
+//		system("ls -l .tmp_file");
 		system("chmod 777 .tmp_file");
 		heart_of_101sh(line, &prompt, fd);
-		system("ls -l .tmp_file");
+//		system("ls -l .tmp_file");
 		ft_strdel(&line);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}

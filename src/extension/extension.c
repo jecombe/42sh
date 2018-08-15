@@ -75,7 +75,10 @@ int			ft_parcour_tab(char ***cmd)
 				else if ((*cmd)[i][j] == '`')
 				{
 					if (begin_bquote == 0)
+					{
 						begin_bquote = j == 0 ? -1 : j;
+						j++;
+					}
 					else
 					{
 						printf("BEGIN == %d, J == %d\n", begin_bquote, j);
