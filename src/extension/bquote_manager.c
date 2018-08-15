@@ -18,17 +18,17 @@ int			add_after_bquote(char *cmd, int j_index, char ***tablo)
 	char		*tmp;
 	char		*tmp2;
 	int			tab_index;
-	int			ret_j;
 
-	ret_j = 0;
+printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
 	tab_index = 0;
 	tmp = NULL;
-	if (j_index < ft_strlen(cmd) - 1)
+	if (j_index < ft_strlen(cmd))
 	{
-		tmp = ft_strsub(cmd, j_index + 1, ft_strlen(cmd) - j_index + 1);
-		ret_j = ft_strlen(tmp);
+		tmp = ft_strsub(cmd, j_index, ft_strlen(cmd) - j_index);
+		printf("TTTTMMMMPPP ====== %s\n", tmp);
 		if (*tablo)
 		{
+			printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa\n");
 			tab_index = ft_tablen(*tablo) - 1;
 			tmp2 = ft_strjoin((*tablo)[tab_index], tmp);
 			tmp2 = ft_strjoin((*tablo)[tab_index], tmp);
@@ -36,12 +36,15 @@ int			add_after_bquote(char *cmd, int j_index, char ***tablo)
 			(*tablo)[tab_index] = ft_strdup(tmp2);
 		}
 		else
+		{
+			printf("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n");
 			ft_malloc_cmd(tablo, tmp);
+		}
 		ft_strdel(&tmp);
 	}
 	else
 		printf("PAS DE ADD AFTER QUOTE\n");
-	return (ret_j);
+	return (0);
 }
 
 int			add_before_bquote(char *line, int begin, char ***cmd)
@@ -88,19 +91,6 @@ char		**search_prev(char **cmd, int i_max)
 	return (ret);
 }
 
-char		**search_next(char **cmd, int after)
-{
-	char		**ret;
-
-	tab = NULL;
-	while (cmd[after])
-	{
-		ft_malloc_cmd(&ret, cmd[after]);
-		after++;
-	}
-	return (ret);
-}
-
 char		**first_copy(char **cmd, int i_index, char *in_bquote, int begin)
 {
 	char	**ret;
@@ -140,15 +130,29 @@ void		search_index(char **begin_copy, int *i, int *j)
 	}
 }
 
+char		**search_next(char **cmd, int after)
+{
+	char		**ret;
+
+	ret = NULL;
+	while (cmd[after])
+	{
+		ft_malloc_cmd(&ret, cmd[after]);
+		after++;
+	}
+	return (ret);
+}
+
 int			last_copy(char ***begin_copy, char **cmd, int i_index, int j_index)
 {
 	int			i;
 	char		**next_cmd;
 
 	i = 0;
-	add_after_bquote(cmd[i_index], j_index, begin_copy);
-	printf("BBBBBBBBBBBBBBUUUUUUUUUUUUUUGGGGGGGGGGGGGG\n");
-	next_cmd = search_next(cmd, i_index);
+	next_cmd = NULL;
+//	add_after_bquote(cmd[i_index], j_index + 1, begin_copy);
+printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
+	next_cmd = search_next(cmd, i_index + 1);
 	if (next_cmd)
 		while (next_cmd[i])
 		{
@@ -181,12 +185,13 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 	int			tmp_i;
 	int			tmp_j;
 
+printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", *j_index);
 	tmp_i = 0;
 	tmp_j = 0;
 	begin_copy = first_copy(*cmd, *i_index, in_bquote, begin);
 	search_index(begin_copy, &tmp_i, &tmp_j);
 	printf("TMP_I == %d, TMP_J == %d\n", tmp_i, tmp_j);
-//	last_copy(&begin_copy, *cmd, *i_index, *j_index);
+	last_copy(&begin_copy, *cmd, *i_index, *j_index);
 	replace_cmd(begin_copy, cmd);
 	if (*cmd)
 		while ((*cmd)[i])
@@ -206,6 +211,8 @@ char		*recup_inside_bquote(char *cmd, int begin, int j_index)
 	char		*ret;
 
 	ret = NULL;
+	printf("CCCCCCCCCC == %s\n", cmd);
+	printf("j_index == %d, begin == %d\n", j_index, begin);
 	if (begin + 1 < j_index)
 		ret = ft_strsub(cmd, begin + 1, j_index - (begin + 1));
 	return (ret);
@@ -251,10 +258,10 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 	{
 		printf("INSIDE BQUOTE == %s\n", line);
 		fd = open(".tmp_file", O_CREAT | O_TRUNC | 0644);
-//		system("ls -l .tmp_file");
+		system("ls -l .tmp_file");
 		system("chmod 777 .tmp_file");
 		heart_of_101sh(line, &prompt, fd);
-//		system("ls -l .tmp_file");
+		system("ls -l .tmp_file");
 		ft_strdel(&line);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
