@@ -82,7 +82,7 @@ int			ft_parcour_tab(char ***cmd)
 						bquote_manager(&(*cmd), &j, &i, begin_bquote);
 						begin_bquote = 0;
 					}
-					j++;
+			//		j++;
 				}
 				else
 					j++;

@@ -186,16 +186,16 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 	begin_copy = first_copy(*cmd, *i_index, in_bquote, begin);
 	search_index(begin_copy, &tmp_i, &tmp_j);
 	printf("TMP_I == %d, TMP_J == %d\n", tmp_i, tmp_j);
-	last_copy(&begin_copy, *cmd, *i_index, *j_index);
-	if (begin_copy)
-		while (begin_copy[i])
+//	last_copy(&begin_copy, *cmd, *i_index, *j_index);
+	replace_cmd(begin_copy, cmd);
+	if (*cmd)
+		while ((*cmd)[i])
 		{
-			printf("BEGIN_COPY[%d] == %s\n", i, begin_copy[i]);
+			printf("CMD[%d] == %s\n", i, (*cmd)[i]);
 			i++;
 		}
 	else
 		printf("NNNNNNNNNNNNNNNNNNNNNNNNN\n");
-//	replace_cmd(begin_copy, cmd);
 	*i_index = tmp_i;
 	*j_index = tmp_j;
 	return (0);
