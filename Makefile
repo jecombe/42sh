@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/14 14:45:16 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/15 04:36:00 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -87,7 +87,7 @@ SRCS_NAME =	\
 			builtins/ft_env.c \
 			builtins/ft_setenv.c \
 			builtins/ft_unsetenv.c \
-			builtins/cd.c \
+			builtins/ft_cd.c \
 			builtins/echo.c \
 			builtins/exit.c \
 			init/ft_term_init.c

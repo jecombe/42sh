@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:30:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/11 04:22:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/15 05:33:19 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,27 @@ char		*ft_envset_line(const char **envset, const char *name)
 		tmp = ft_strsub(envset[i], 0, ft_strlen(name));
 		if (ft_strcmp(name, tmp) == 0 && envset[i][ft_strlen(name)] == '=')
 			s = ft_strdup(envset[i]);
+		ft_strdel(&tmp);
+		if (s)
+			break ;
+	}
+	return (s);
+}
+
+char		*ft_envset_value(const char **envset, const char *name)
+{
+	int		i;
+	char	*tmp;
+	char	*s;
+
+	i = -1;
+	tmp = NULL;
+	s = NULL;
+	while (envset[++i])
+	{
+		tmp = ft_strsub(envset[i], 0, ft_strlen(name));
+		if (ft_strcmp(name, tmp) == 0 && envset[i][ft_strlen(name)] == '=')
+			s = ft_strdup(ft_strchr(envset[i], '=') + 1);
 		ft_strdel(&tmp);
 		if (s)
 			break ;
