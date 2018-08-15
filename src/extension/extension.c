@@ -81,7 +81,7 @@ int			ft_parcour_tab(char ***cmd)
 					}
 					else
 					{
-						printf("BEGIN == %d, J == %d\n", begin_bquote, j);
+//						printf("BEGIN == %d, J == %d\n", begin_bquote, j);
 						begin_bquote = begin_bquote == -1 ? 0 : begin_bquote;
 						bquote_manager(&(*cmd), &j, &i, begin_bquote);
 						begin_bquote = 0;

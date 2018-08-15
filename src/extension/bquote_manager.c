@@ -19,16 +19,16 @@ int			add_after_bquote(char *cmd, int j_index, char ***tablo)
 	char		*tmp2;
 	int			tab_index;
 
-printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
+//printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
 	tab_index = 0;
 	tmp = NULL;
 	if (j_index < ft_strlen(cmd))
 	{
 		tmp = ft_strsub(cmd, j_index, ft_strlen(cmd) - j_index);
-		printf("TTTTMMMMPPP ====== %s\n", tmp);
+//		printf("TTTTMMMMPPP ====== %s\n", tmp);
 		if (*tablo)
 		{
-			printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa\n");
+//			printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAa\n");
 			tab_index = ft_tablen(*tablo) - 1;
 			tmp2 = ft_strjoin((*tablo)[tab_index], tmp);
 			tmp2 = ft_strjoin((*tablo)[tab_index], tmp);
@@ -37,13 +37,13 @@ printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
 		}
 		else
 		{
-			printf("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n");
+//			printf("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\n");
 			ft_malloc_cmd(tablo, tmp);
 		}
 		ft_strdel(&tmp);
 	}
-	else
-		printf("PAS DE ADD AFTER QUOTE\n");
+//	else
+//		printf("PAS DE ADD AFTER QUOTE\n");
 	return (0);
 }
 
@@ -70,8 +70,8 @@ int			add_before_bquote(char *line, int begin, char ***cmd)
 			(*cmd)[0] = ft_strdup(before_bquote);
 		ft_strdel(&before_bquote);
 	}
-	else
-		printf("PAS DE ADD BEFORE QUOTE\n");
+//	else
+//		printf("PAS DE ADD BEFORE QUOTE\n");
 	return (0);
 }
 
@@ -150,8 +150,8 @@ int			last_copy(char ***begin_copy, char **cmd, int i_index, int j_index)
 
 	i = 0;
 	next_cmd = NULL;
-//	add_after_bquote(cmd[i_index], j_index + 1, begin_copy);
-printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
+	add_after_bquote(cmd[i_index], j_index + 1, begin_copy);
+//printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", j_index);
 	next_cmd = search_next(cmd, i_index + 1);
 	if (next_cmd)
 		while (next_cmd[i])
@@ -185,22 +185,22 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 	int			tmp_i;
 	int			tmp_j;
 
-printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", *j_index);
+//printf("J_INDDDDDDDDDEEEEEEEEXXXX == %d\n", *j_index);
 	tmp_i = 0;
 	tmp_j = 0;
 	begin_copy = first_copy(*cmd, *i_index, in_bquote, begin);
 	search_index(begin_copy, &tmp_i, &tmp_j);
-	printf("TMP_I == %d, TMP_J == %d\n", tmp_i, tmp_j);
+//	printf("TMP_I == %d, TMP_J == %d\n", tmp_i, tmp_j);
 	last_copy(&begin_copy, *cmd, *i_index, *j_index);
 	replace_cmd(begin_copy, cmd);
-	if (*cmd)
-		while ((*cmd)[i])
-		{
-			printf("CMD[%d] == %s\n", i, (*cmd)[i]);
-			i++;
-		}
-	else
-		printf("NNNNNNNNNNNNNNNNNNNNNNNNN\n");
+//	if (*cmd)
+//		while ((*cmd)[i])
+//		{
+//			printf("CMD[%d] == %s\n", i, (*cmd)[i]);
+//			i++;
+//		}
+//	else
+//		printf("NNNNNNNNNNNNNNNNNNNNNNNNN\n");
 	*i_index = tmp_i;
 	*j_index = tmp_j;
 	return (0);
@@ -211,8 +211,8 @@ char		*recup_inside_bquote(char *cmd, int begin, int j_index)
 	char		*ret;
 
 	ret = NULL;
-	printf("CCCCCCCCCC == %s\n", cmd);
-	printf("j_index == %d, begin == %d\n", j_index, begin);
+//	printf("CCCCCCCCCC == %s\n", cmd);
+//	printf("j_index == %d, begin == %d\n", j_index, begin);
 	if (begin + 1 < j_index)
 		ret = ft_strsub(cmd, begin + 1, j_index - (begin + 1));
 	return (ret);
@@ -252,11 +252,11 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 	e_prompt	prompt;
 
 	prompt = PROMPT;
-	printf("BEGIN == %d J_INDEX == %d\n", begin, *j_index);
+//	printf("BEGIN == %d J_INDEX == %d\n", begin, *j_index);
 	fflush(NULL);
 	if ((line = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
 	{
-		printf("INSIDE BQUOTE == %s\n", line);
+//		printf("INSIDE BQUOTE == %s\n", line);
 		fd = open(".tmp_file", O_CREAT | O_TRUNC | 0644);
 //		system("ls -l .tmp_file");
 		system("chmod 777 .tmp_file");
@@ -265,11 +265,11 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 		ft_strdel(&line);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
-	printf("HEART FINISH\n");
+//	printf("HEART FINISH\n");
 	line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
-	printf("--------------\n");
-	printf("LINE == %s\n", line);
-	printf("--------------\n");
+//	printf("--------------\n");
+//	printf("LINE == %s\n", line);
+//	printf("--------------\n");
 	ft_bquote_replace(&(*cmd), line, i_index, j_index, begin);
 	printf("FINISH BQUOTE_MANAGER\n");
 	return (0);
