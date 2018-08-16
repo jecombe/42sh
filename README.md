@@ -22,8 +22,7 @@
 | setenv | X |
 | unsetenv | X |
 | Les pipes "\|" | X |
-| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie
-d’erreur | X |
+| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | X |
 
 | <h2>Bonus Finis</h2> |
 | :-----------:|
