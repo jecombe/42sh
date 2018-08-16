@@ -6,8 +6,7 @@
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
 | Affichage d’un prompt. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| lecture de la ligne de commande, sans édition de ligne. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+)
-|
+| lecture de la ligne de commande, sans édition de ligne. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Les opérateurs de redirection suivants : ">", ">>", "<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Les opérateurs logiques "&&" et "\|\|". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
