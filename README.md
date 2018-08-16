@@ -34,5 +34,7 @@
 | Les back quotes "‘". | X |
 | Rechercher dans l’historique avec ctrl+R | X |
 | La complétion simple ou avancée avec tab. | X |
-`RGB(0%,100%,0%)`
+
+`RGB(0%,100%,0%)` ergdf
+<h1 `RGB(0%,100%,0%)`>echo</h1>
 `#F00`
