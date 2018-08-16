@@ -33,4 +33,5 @@
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
 | Les back quotes "‘". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
 | Rechercher dans l’historique avec ctrl+R | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| La complétion simple ou avancée avec tab. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |❌
+| La complétion simple ou avancée avec tab. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+❌
