@@ -7,7 +7,7 @@ Les opérateurs logiques "&&" et "||".
 Le séparateur ";"
 Builtins : echo
 
-								**Partie Obligatoire en cours**
+<h1>**Partie Obligatoire en cours**</h1>
 Gestion correcte des espaces et des tabulations.
 Gestion des erreurs et de la valeur de retour des commandes
 cd
