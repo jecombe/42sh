@@ -35,8 +35,6 @@
 | Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
 | La complétion simple ou avancée avec tab. | [X](#) |
 
-# 2014, The year of ![](https://thumbs.dreamstime.com/b/course-de-peinture-brosse-la-croix-rouge-x-101780946.jpg)
-
 # 2014, The year of [Blue](#)
 
 `RGB(0%,100%,0%)` ergdf
