@@ -61,3 +61,4 @@ Name           Size  Material      Color
 All Business      9  leather       brown
 Roundabout       10  hemp canvas   natural
 Cinderella       11  glass         transparent
+<span style="color:blue">some *blue* text</span>
