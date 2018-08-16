@@ -62,6 +62,8 @@ All Business      9  leather       brown
 Roundabout       10  hemp canvas   natural
 Cinderella       11  glass         transparent
 <span style="color:blue">some *blue* text</span>
+```css
+
 /* The animation code */
 
 @keyframes example {
@@ -78,3 +80,4 @@ div {
 				    animation-name: example;
 					    animation-duration: 4s;
 } 
+```
