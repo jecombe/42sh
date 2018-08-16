@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/16 12:41:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/16 14:10:34 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -255,6 +255,7 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 		heart_of_101sh(line, &prompt, fd);
 //		system("ls -l .tmp_file");
 		ft_strdel(&line);
+		close(fd);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
 //	printf("HEART FINISH\n");
