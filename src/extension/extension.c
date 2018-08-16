@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 14:46:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 01:22:31 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,12 +86,15 @@ int			ft_parcour_tab(char ***cmd)
 						bquote_manager(&(*cmd), &j, &i, begin_bquote);
 						begin_bquote = 0;
 					}
-			//		j++;
+		//			j++;
 				}
 				else
 					j++;
 				if (!(*cmd) || !(*cmd)[i])//RESOUT LE SEGSEG
+				{
+					printf("!CMD\n");
 					return (0);
+				}
 			}
 		}
 	return (0);
@@ -105,7 +108,9 @@ int			ft_parcour_op(t_op **b_op)
 	while (n_op)
 	{
 		if (n_op->cmd)
+		{
 			ft_parcour_tab(&n_op->cmd);
+		}
 		n_op = n_op->next;
 	}
 	return (0);
@@ -124,10 +129,13 @@ int			extension(t_seq **b_seq)
 				return (1);
 		n_seq = n_seq->next;
 	}
-	while ((*b_seq)->op->cmd[i])
-	{
-		i++;
-	}
-	extension_error(b_seq);
-	return (0);
+	if ((*b_seq)->op->cmd)
+		while ((*b_seq)->op->cmd[i])
+		{
+			i++;
+		}
+	i = extension_error(b_seq);
+		printf("IIIII == %d\n", i);
+		fflush(NULL);
+	return (i);
 }

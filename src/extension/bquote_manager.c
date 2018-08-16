@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/16 15:50:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/16 23:26:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,7 +63,7 @@ int			add_before_bquote(char *line, int begin, char ***cmd)
 			ft_strdel(&tmp);
 		}
 		else
-			(*cmd)[0] = ft_strdup(before_bquote);
+			ft_malloc_cmd(cmd, before_bquote);
 		ft_strdel(&before_bquote);
 	}
 //	else
@@ -106,8 +106,12 @@ char		**first_copy(char **cmd, int i_index, char *in_bquote, int begin)
 			ft_malloc_cmd(&ret, prev_cmd[i++]);
 	i = 0;
 	if (result_bquote)
+	{
 		while (result_bquote[i])
 			ft_malloc_cmd(&ret, result_bquote[i++]);
+	}
+//	else
+//		ft_malloc_cmd(&ret, " ");
 	return (ret);
 }
 
@@ -187,14 +191,19 @@ int			ft_bquote_replace(char ***cmd, char *in_bquote, int *i_index, int *j_index
 //	printf("TMP_I == %d, TMP_J == %d\n", tmp_i, tmp_j);
 	last_copy(&begin_copy, *cmd, *i_index, *j_index);
 	replace_cmd(begin_copy, cmd);
-/*	if (*cmd)
+	if (*cmd)
 		while ((*cmd)[i])
 		{
 			printf("CMD[%d] == %s\n", i, (*cmd)[i]);
 			i++;
 		}
 	else
-		printf("NNNNNNNNNNNNNNNNNNNNNNNNN\n");*/
+	{
+		*i_index = tmp_i;
+		*j_index = tmp_j;
+		printf("I == %d, J == %d\n", tmp_i, tmp_j);
+		return (1);
+	}
 	*i_index = tmp_i;
 	*j_index = tmp_j;
 	return (0);
@@ -256,14 +265,18 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 //		system("ls -l .tmp_file");
 		ft_strdel(&line);
 		close(fd);
+		line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
 		//A VOIR AVEC JECOMBE SI IL CLOSE LE FD
 	}
 //	printf("HEART FINISH\n");
-	line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
 //	printf("--------------\n");
 //	printf("LINE == %s\n", line);
 //	printf("--------------\n");
-	ft_bquote_replace(&(*cmd), line, i_index, j_index, begin);
-//	printf("FINISH BQUOTE_MANAGER\n");
+	if (ft_bquote_replace(&(*cmd), line, i_index, j_index, begin))
+	{
+		printf("FINISH BQUOTE_MANAGER\n");
+		return (1);
+	}
+	printf("FINISH BQUOTE_MANAGER\n");
 	return (0);
 }
