@@ -32,7 +32,7 @@
 | Complétion dynamique. | X |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | X |
 | Les back quotes "‘". | X |
-| Rechercher dans l’historique avec ctrl+R | X |
+| Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
 | La complétion simple ou avancée avec tab. | ==X== |
 
 `RGB(0%,100%,0%)` ergdf
