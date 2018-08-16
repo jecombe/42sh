@@ -1,6 +1,3 @@
-# 42sh
-Shell améliorée
-
 								**Partie Obligatoire finis**
 Affichage d’un prompt.
 lecture de la ligne de commande, sans édition de ligne.
