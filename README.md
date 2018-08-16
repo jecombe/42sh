@@ -33,7 +33,7 @@
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | X |
 | Les back quotes "‘". | X |
 | Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
-| La complétion simple ou avancée avec tab. | ==X== |
+| La complétion simple ou avancée avec tab. | X (#) |
 
 # 2014, The year of [Blue](#)
 
