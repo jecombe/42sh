@@ -5,15 +5,15 @@
 
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| Affichage d’un prompt. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| lecture de la ligne de commande, sans édition de ligne. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Les opérateurs de redirection suivants : ">", ">>", "<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Les opérateurs logiques "&&" et "\|\|". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Le séparateur ";" | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Affichage d’un prompt. | ✅ |
+| lecture de la ligne de commande, sans édition de ligne. | ✅ |
+| Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ✅ |
+| Les opérateurs de redirection suivants : ">", ">>", "<". | ✅ |
+| Les opérateurs logiques "&&" et "\|\|". | ✅ |
+| Le séparateur ";" | ✅ |
 | Gestion correcte des espaces et des tabulations. | ❌ |
 | Gestion des erreurs et de la valeur de retour des commandes | ❌ |
-| echo | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| echo | ✅ |
 | cd | ❌ |
 | exit | ❌ |
 | env | ❌ |
@@ -24,9 +24,9 @@
 
 | <h2>Partie Bonus</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Edition de ligne telle que demandée dans le ftsh3. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). | ✅ |
+| Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | ✅ |
+| Edition de ligne telle que demandée dans le ftsh3. | ✅ |
 | les variables locales et les builtin unset et export. | ❌ |
 | L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ❌ |
 | Complétion dynamique. | ❌ |
