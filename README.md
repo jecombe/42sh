@@ -10,7 +10,7 @@
 | Affichage d’un prompt. | √ |
 | lecture de la ligne de commande, sans édition de ligne. | √ |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | √ |
-| Les opérateurs de redirection suivants : ">", ">>", "<", "|" | √ |
+| Les opérateurs de redirection suivants : ">", ">>", "<". | √ |
 | Les opérateurs logiques "&&" et "||". | √ |
 | Le séparateur ";" | √ |
 | Builtins : echo | √ |
