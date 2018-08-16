@@ -1,20 +1,19 @@
 | <h1>42SH</h1> |
 | :-----------:|
 | <h2>Description</h2> |
-| :-----------|
 | path to data files to supply the data that will be passed into templates. |
 | engine to be used for processing templates. Handlebars is the default. |
 | extension to be used for dest files. |
 
-| <h2>Partie Obligatoire finis</h2> |
-| :-----------:|
-| Affichage d’un prompt. |
-| lecture de la ligne de commande, sans édition de ligne. |
-| Exécution de commandes simples avec leurs paramètres et gestion du PATH. |
-| Les opérateurs de redirection suivants : ">", ">>", "<", "|" |
-| Les opérateurs logiques "&&" et "||". |
-| Le séparateur ";" |
-| Builtins : echo |
+| <h2>Partie Obligatoire finis</h2> | <h2>status</h2> |
+| :-----------: | :-----------:|
+| Affichage d’un prompt. | √ |
+| lecture de la ligne de commande, sans édition de ligne. | √ |
+| Exécution de commandes simples avec leurs paramètres et gestion du PATH. | √ |
+| Les opérateurs de redirection suivants : ">", ">>", "<", "|" | √ |
+| Les opérateurs logiques "&&" et "||". | √ |
+| Le séparateur ";" | √ |
+| Builtins : echo | √ |
 
 | <h2>Partie Obligatoire en cours</h2> |
 | :-----------:|
