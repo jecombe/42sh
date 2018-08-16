@@ -35,6 +35,8 @@
 | Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
 | La complétion simple ou avancée avec tab. | [X](#) |
 
+- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
+
 # 2014, The year of [Blue](#)
 
 <!-- background: #fff4e3 -->
