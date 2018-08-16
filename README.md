@@ -12,7 +12,7 @@
 		<h1 color:blue>42SH</h1>
 </head>
 <body>
-<h2>Partie Obligatoire finis</h2>
+| <h2>Partie Obligatoire finis</h2> |
 | :-----------:|
 | Affichage d’un prompt. |
 | lecture de la ligne de commande, sans édition de ligne. |
@@ -22,7 +22,7 @@
 | Le séparateur ";" |
 | Builtins : echo |
 
-<h2>Partie Obligatoire en cours</h2>
+| <h2>Partie Obligatoire en cours</h2> |
 | :-----------:|
 | Gestion correcte des espaces et des tabulations. |
 | Gestion des erreurs et de la valeur de retour des commandes |
@@ -35,13 +35,13 @@
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie
 d’erreur |
 
-<h2>Bonus Finis</h2>
+| <h2>Bonus Finis</h2> |
 | :-----------:|
 | Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). |
 | Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". |
 | Edition de ligne telle que demandée dans le ftsh3. |
 
-<h2>Bonus en cours</h2>
+| <h2>Bonus en cours</h2> |
 | :-----------:|
 | les variables locales et les builtin unset et export. |
 | L’historique des commandes et les builtins history et "!" avec toutes leurs options
