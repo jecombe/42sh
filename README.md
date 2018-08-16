@@ -49,7 +49,7 @@ si elles en ont.</li>
 <li>La complétion simple ou avancée avec tab.</li>
 </body>
 </html>
----
+
 | Option | Description |
 | ------:| -----------:|
 | data   | path to data files to supply the data that will be passed into templates. |
