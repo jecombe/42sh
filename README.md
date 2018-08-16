@@ -35,7 +35,7 @@
 | Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
 | La complétion simple ou avancée avec tab. | ==X== |
 
-<h1>2014, The year of <span style="color:red">Red</span></h1>
+# 2014, The year of [Blue](#)
 
 `RGB(0%,100%,0%)` ergdf
 <h1 `RGB(0%,100%,0%)`>echo</h1>
