@@ -50,36 +50,8 @@ si elles en ont.</li>
 </body>
 </html>
 
-|# Option | ##Description |
+| Option | <h2>Description</h2> |
 | ------:| :-----------:|
 | data   | path to data files to supply the data that will be passed into templates. |
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
-
-Name           Size  Material      Color
-------------- -----  ------------  ------------
-All Business      9  leather       brown
-Roundabout       10  hemp canvas   natural
-Cinderella       11  glass         transparent
-
-<span style="color:blue">some *blue* text</span>
-```css
-
-/* The animation code */
-
-@keyframes example {
-	    from {background-color: red;}
-		    to {background-color: yellow;}
-}
-
-/* The element to apply the animation to */
-
-div {
-	    width: 100px;
-		    height: 100px;
-			    background-color: red;
-				    animation-name: example;
-					    animation-duration: 4s;
-} 
-```
-<span style="color:red">red</span>
