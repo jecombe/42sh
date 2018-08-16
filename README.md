@@ -4,10 +4,10 @@
 <head>
 	<meta charset="utf-8" />
 		<h1>42SH</h1>
-	</head>
+</head>
 <body>
 </html>
-<h2>							Partie Obligatoire finis</h2>
+<h2 margin-left=42px>Partie Obligatoire finis</h2>
 <li>Affichage d’un prompt.</li>
 <li>lecture de la ligne de commande, sans édition de ligne.</li>
 <li>Exécution de commandes simples avec leurs paramètres et gestion du PATH.</li>
