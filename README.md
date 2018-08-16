@@ -81,3 +81,4 @@ div {
 					    animation-duration: 4s;
 } 
 ```
+<span style="color:red">red</span>
