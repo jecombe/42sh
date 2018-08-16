@@ -27,7 +27,7 @@ Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash).
 Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<".
 Edition de ligne telle que demandée dans le ftsh3.
 
-								**Bonus en cours**
+								*Bonus en cours*
 les variables locales et les builtin unset et export.
 L’historique des commandes et les builtins history et "!" avec toutes leurs options
 si elles en ont.
