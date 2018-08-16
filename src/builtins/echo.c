@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 17:09:43 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 15:59:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,7 @@ int 		ft_echo(t_op *t_exec, int flag)
 	int i;
 	int slash_n;
 	int ok = 0;
-
+	t_op *op = NULL;
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;
@@ -71,11 +71,30 @@ int 		ft_echo(t_op *t_exec, int flag)
 		slash_n = 1;
 		i++;
 	}
-	if (flag != NOTHING)
+	if (t_exec->redirect)
 	{
-
-		if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag)) != -11)
-			ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+		//***********Gestion des mutliples redirections, pour bientot*********//
+		pid_t pid;
+		if ((fd_open = ft_loop_redirect(t_exec->redirect, NULL, pid, 1, t_exec->cmd + i, op, -1)) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		else
+		{	
+			if (t_exec->redirect->fd > 1)
+				fd_open = t_exec->redirect->fd;
+			if (t_exec->redirect->redirect == DLESS)
+				ft_echo_normal(t_exec, i, ok, slash_n);
+			else
+				ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+		}
+		/////**********************************************************////
+		/*if ((fd_open = ft_open_redirect_builtins(t_exec->redirect->file, flag, t_exec->redirect->fd)) != -11)
+		  {
+		//Gestion des redirection dans une autre sortie que 1 par exemple si echo 2> fichier.txt ou echo > fichier.txt
+		if (t_exec->redirect->fd > 1)
+		fd_open = t_exec->redirect->fd;
+		ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+		}*/
+		//printf("NEININININ\n");
 	}
 	else
 		ft_echo_normal(t_exec, i, ok, slash_n);

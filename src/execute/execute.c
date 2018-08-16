@@ -6,48 +6,43 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 17:08:58 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/14 15:49:25 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-int				ft_exec(t_op *tmp_op, char *bin_cmd, int flag, int fd)
+int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 {
-	pid_t		cpid;
+	//pid_t		cpid;
 	int			status;
 	int			ret;
-	char		*cmd;
-	int			flag2;
-	int folder;
+	t_redirect *redirect;
 
-	if (flag != NOTHING)
-	{
-		if (ft_check_file_is_directory(tmp_op->redirect->file) == -1)
-			return (EXIT_FAILURE);
-	}
-	if (fd != -12)
-	{
-		if (flag == O_RDONLY)
-			flag2 = O_RDONLY;
-		else
-			flag2 = O_WRONLY;
-	}
+	redirect = NULL;
 	ret = 0;
-	if ((cpid = fork()) == 0)
+	if (tmp_op->redirect)
 	{
-		if (fd != -12)
-			if (flag != NOTHING)
-			{
-				ft_open_redirect(tmp_op->redirect->file, flag, flag2, fd);
-			}
+		redirect = tmp_op->redirect;
+	}
+		//Gestion des multiples redirections
+	if (pid == 0)
+	{
+		//Gestion des multiples redirections
+			if (ft_loop_redirect(redirect, bin_cmd, pid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
+		{
+			;
+		}
+		else
+			return(EXIT_FAILURE);
+		//EXECVE
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else
 			exit(EXIT_SUCCESS);
 	}
-	if (cpid > 0)
+	if (pid > 0)
 	{
 		wait(&status);
 		ret = WEXITSTATUS(status);

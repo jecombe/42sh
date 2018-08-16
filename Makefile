@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/12 04:41:25 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/15 04:36:00 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -29,7 +29,7 @@ INCS_PATH = ./include/
 LIB_PATH = ./libft/
 
 SRCS_NAME =	\
-			main.c \
+			heart/42sh.c \
 			stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \
@@ -63,10 +63,11 @@ SRCS_NAME =	\
 			parser/ft_malloc_parsing.c \
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
-			extension/dquotes_manager.c \
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/extension.c \
+			extension/bquote_manager.c \
+			extension/backslash_manager.c \
 			extension/ft_split_b_quote.c \
 			extension/ft_dollar.c \
 			execute/binary.c \
@@ -74,19 +75,26 @@ SRCS_NAME =	\
 			execute/solver.c \
 			execute/utils.c \
 			execute/check_command.c \
+			execute/sequences.c \
+			execute/separate.c \
 			redirections/open_file_redirections.c \
 			redirections/return_flag_redirections.c \
 			redirections/heredoc.c \
+			redirections/loop_redirections.c \
+			redirections/pipe.c \
 			builtins/builtins.c \
-			builtins/cd.c \
+			builtins/ft_env_tools.c \
+			builtins/ft_env.c \
+			builtins/ft_setenv.c \
+			builtins/ft_unsetenv.c \
+			builtins/ft_cd.c \
 			builtins/echo.c \
 			builtins/exit.c \
-			builtins/env.c \
-			builtins/setenv.c \
-			builtins/unsetenv.c \
 			init/ft_term_init.c
 
-OBJS_FOLDERS = builtins stdin lexer parser extension execute redirections init
+OBJS_FOLDERS = \
+			builtins stdin lexer parser extension execute redirections init \
+			heart
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

@@ -41,49 +41,34 @@ void	ft_read_line(int fd, char *s)
 		ft_putstr_fd(list[i], fd);
 }
 
-int		ft_heredoc(t_op *t_exec, char *bin, int flag, int bfd)
+void		ft_heredoc(t_redirect *redirect, char *bin, int flag)
 {
 	int fd[2];
 	int ok;
 
 	pipe(fd);
-	ft_read_line(fd[1], t_exec->redirect->file);
+	ft_read_line(fd[1], redirect->file);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
-	{
-		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
-	}
-	else
-	{
-		if (ft_exec(t_exec, bin, flag, bfd) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
-		else
-			return (EXIT_FAILURE);
-	}
 }
 
-int				ft_redirect_heredoc(t_op *t_exec, int flag)
+int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *tmp_bin, pid_t pid, int buil)
 {
-	char		*tmp_bin;
-	pid_t		pid;
+
 	int			stat;
 
-	tmp_bin = ft_search_bin(t_exec->cmd[0]);
-	if ((pid = fork()) < 0)
-			exit(EXIT_FAILURE);
-	else if (pid == 0)
+	if (buil == 1)
 	{
-		if (ft_heredoc(t_exec, tmp_bin, flag, -12) == EXIT_SUCCESS)
-			;
-		else
-		{
-			return (EXIT_FAILURE);
-		}
+		printf("NE PASSE PAS\n");
+		if ((pid = fork()) < 0)
+			exit(EXIT_FAILURE);
+	}
+
+	if (pid == 0)
+	{
+		printf("OKOK\n");
+		ft_heredoc(redirect, tmp_bin, flag);
 	}
 	else
 	{
@@ -93,7 +78,6 @@ int				ft_redirect_heredoc(t_op *t_exec, int flag)
 			if (WEXITSTATUS(stat) != 0)
 				return (EXIT_SUCCESS);
 		}
-		//return (0);
 	}
 	return (EXIT_SUCCESS);
 }
