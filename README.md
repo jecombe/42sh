@@ -1,6 +1,7 @@
 | <h1>42SH</h1> |
 | :-----------:|
 | <h2>Description</h2> |
+| :-----------|
 | path to data files to supply the data that will be passed into templates. |
 | engine to be used for processing templates. Handlebars is the default. |
 | extension to be used for dest files. |
