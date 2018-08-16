@@ -34,5 +34,5 @@
 | Les back quotes "‘". | X |
 | Rechercher dans l’historique avec ctrl+R | X |
 | La complétion simple ou avancée avec tab. | X |
-
+`RGB(0%,100%,0%)`
 `#F00`
