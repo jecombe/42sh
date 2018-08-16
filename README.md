@@ -21,7 +21,7 @@
 | env | X |
 | setenv | X |
 | unsetenv | X |
-| Les pipes “|” | X |
+| Les pipes "\|" | X |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie
 d’erreur | X |
 
