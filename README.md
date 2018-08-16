@@ -5,7 +5,7 @@
 
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| Affichage d’un prompt. | √ |
+| Affichage d’un prompt. | - ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | lecture de la ligne de commande, sans édition de ligne. | √ |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | √ |
 | Les opérateurs de redirection suivants : ">", ">>", "<". | √ |
@@ -39,7 +39,7 @@
 
 - [X](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
 
-- ![#f03c15](https://placehold.it/15/c5f015/000000?text=+)`
+- ![#f03c15](https://placehold.it/15/c5f015/000000?text=+)
 
 # 2014, The year of [Blue](#)
 
