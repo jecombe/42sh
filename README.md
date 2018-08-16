@@ -7,7 +7,7 @@ Les opérateurs logiques "&&" et "||".
 Le séparateur ";"
 Builtins : echo
 
-**<h1>Partie Obligatoire en cours</h1>**
+<h1>Partie Obligatoire en cours</h1>
 Gestion correcte des espaces et des tabulations.
 Gestion des erreurs et de la valeur de retour des commandes
 cd
@@ -19,12 +19,12 @@ Les pipes “|”
 Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie
 d’erreur
 
-								**Bonus Finis**
+<h1>**Bonus Finis**</h1>
 Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash).
 Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<".
 Edition de ligne telle que demandée dans le ftsh3.
 
-								_Bonus en cours_
+_Bonus en cours_
 les variables locales et les builtin unset et export.
 L’historique des commandes et les builtins history et "!" avec toutes leurs options
 si elles en ont.
