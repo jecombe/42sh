@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 
 <html>
-
 <head>
-
-<meta charset="utf-8" />
-
-<title>Titre</title>
-
-</head>
-
-
+	<meta charset="utf-8" />
+		<title>42SH</title>
+	</head>
 <body>
-
-
-
-</body>
-
 </html>
 <h1>							Partie Obligatoire finis</h1>
 <li>Affichage d’un prompt.</li>
@@ -53,3 +42,4 @@ si elles en ont.</li>
 <li>Les back quotes "‘".</li>
 <li>Rechercher dans l’historique avec ctrl+R</li>
 <li>La complétion simple ou avancée avec tab.</li>
+</body>
