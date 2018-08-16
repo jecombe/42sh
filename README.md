@@ -50,7 +50,7 @@ si elles en ont.</li>
 </body>
 </html>
 
-| Option | <h2>Description</h2> |
+| Option | <h1>Description</h1> |
 | ------:| :-----------:|
 | data   | path to data files to supply the data that will be passed into templates. |
 | engine | engine to be used for processing templates. Handlebars is the default. |
