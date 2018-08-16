@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+
+<title>Titre</title>
+
+</head>
+
+
+<body>
+
+
+
+</body>
+
+</html>
 <h1>							Partie Obligatoire finis</h1>
 <li>Affichage d’un prompt.</li>
 <li>lecture de la ligne de commande, sans édition de ligne.</li>
