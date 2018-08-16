@@ -37,6 +37,8 @@
 
 # 2014, The year of [Blue](#)
 
+<!-- color: #fefe69 -->
+
 `RGB(0%,100%,0%)` ergdf
 <h1 `RGB(0%,100%,0%)`>echo</h1>
 `#F00`
