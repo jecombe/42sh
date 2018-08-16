@@ -9,7 +9,7 @@
 			color: blue;
 		}
 	</style>
-		<h1>42SH</h1>
+		<h1 color:blue>42SH</h1>
 </head>
 <body>
 </html>
