@@ -48,10 +48,10 @@ si elles en ont.</li>
 <li>Rechercher dans l’historique avec ctrl+R</li>
 <li>La complétion simple ou avancée avec tab.</li>
 </body>
-</html>
 
 | Option | <h1>Description</h1> |
 | ------:| :-----------:|
 | data   | path to data files to supply the data that will be passed into templates. |
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
+</html>
