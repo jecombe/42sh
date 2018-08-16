@@ -1,17 +1,12 @@
-<!DOCTYPE html>
+| <h1>42SH</h1> |
+| :-----------:|
 
-<html>
-<head>
-	<meta charset="utf-8" />
-	<style>
-		h1
-		{
-			color: blue;
-		}
-	</style>
-		<h1 color:blue>42SH</h1>
-</head>
-<body>
+| <h2>Description</h2> |
+| :-----------:|
+| path to data files to supply the data that will be passed into templates. |
+| engine to be used for processing templates. Handlebars is the default. |
+| extension to be used for dest files. |
+
 | <h2>Partie Obligatoire finis</h2> |
 | :-----------:|
 | Affichage d’un prompt. |
@@ -51,9 +46,3 @@ si elles en ont. |
 | Les back quotes "‘". |
 | Rechercher dans l’historique avec ctrl+R |
 | La complétion simple ou avancée avec tab. |
-
-| <h2>Description</h2> |
-| :-----------:|
-| path to data files to supply the data that will be passed into templates. |
-| engine to be used for processing templates. Handlebars is the default. |
-| extension to be used for dest files. |
