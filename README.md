@@ -12,7 +12,6 @@
 		<h1 color:blue>42SH</h1>
 </head>
 <body>
-</html>
 <h2 margin-left:42px>Partie Obligatoire finis</h2>
 <li>Affichage d’un prompt.</li>
 <li>lecture de la ligne de commande, sans édition de ligne.</li>
@@ -49,3 +48,4 @@ si elles en ont.</li>
 <li>Rechercher dans l’historique avec ctrl+R</li>
 <li>La complétion simple ou avancée avec tab.</li>
 </body>
+</html>
