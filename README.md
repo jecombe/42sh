@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <h1>							Partie Obligatoire finis</h1>
 <li>Affichage d’un prompt.</li>
 <li>lecture de la ligne de commande, sans édition de ligne.</li>
