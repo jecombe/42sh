@@ -11,27 +11,26 @@
 | Les opérateurs de redirection suivants : ">", ">>", "<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Les opérateurs logiques "&&" et "\|\|". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Le séparateur ";" | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| Gestion correcte des espaces et des tabulations. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Gestion des erreurs et de la valeur de retour des commandes | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Gestion correcte des espaces et des tabulations. | ❌ |
+| Gestion des erreurs et de la valeur de retour des commandes | ❌ |
 | echo | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| cd | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| exit | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| env | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| setenv | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| unsetenv | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Les pipes "\|" | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| cd | ❌ |
+| exit | ❌ |
+| env | ❌ |
+| setenv | ❌ |
+| unsetenv | ❌ |
+| Les pipes "\|" | ❌ |
+| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | ❌ |
 
 | <h2>Partie Bonus</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
 | Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
 | Edition de ligne telle que demandée dans le ftsh3. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| les variables locales et les builtin unset et export. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Complétion dynamique. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Les back quotes "‘". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| Rechercher dans l’historique avec ctrl+R | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-| La complétion simple ou avancée avec tab. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
-❌
+| les variables locales et les builtin unset et export. | ❌ |
+| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ❌ |
+| Complétion dynamique. | ❌ |
+| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | ❌ |
+| Les back quotes "‘". | ❌ |
+| Rechercher dans l’historique avec ctrl+R | ❌ |
+| La complétion simple ou avancée avec tab. | ❌ |
