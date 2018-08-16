@@ -5,7 +5,7 @@
 | engine to be used for processing templates. Handlebars is the default. |
 | extension to be used for dest files. |
 
-| <h2>Partie Obligatoire finis</h2> | <h2>status</h2> |
+| <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
 | Affichage d’un prompt. | √ |
 | lecture de la ligne de commande, sans édition de ligne. | √ |
@@ -14,19 +14,16 @@
 | Les opérateurs logiques "&&" et "\|\|". | √ |
 | Le séparateur ";" | √ |
 | Builtins : echo | √ |
-
-| <h2>Partie Obligatoire en cours</h2> |
-| :-----------:|
-| Gestion correcte des espaces et des tabulations. |
-| Gestion des erreurs et de la valeur de retour des commandes |
-| cd |
-| exit |
-| env |
-| setenv |
-| unsetenv |
-| Les pipes “|” |
+| Gestion correcte des espaces et des tabulations. | X |
+| Gestion des erreurs et de la valeur de retour des commandes | X |
+| cd | X |
+| exit | X |
+| env | X |
+| setenv | X |
+| unsetenv | X |
+| Les pipes “|” | X |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie
-d’erreur |
+d’erreur | X |
 
 | <h2>Bonus Finis</h2> |
 | :-----------:|
