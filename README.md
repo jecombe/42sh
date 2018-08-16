@@ -5,47 +5,33 @@
 
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| Affichage d’un prompt. | - ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
-| lecture de la ligne de commande, sans édition de ligne. | √ |
-| Exécution de commandes simples avec leurs paramètres et gestion du PATH. | √ |
-| Les opérateurs de redirection suivants : ">", ">>", "<". | √ |
-| Les opérateurs logiques "&&" et "\|\|". | √ |
-| Le séparateur ";" | √ |
-| Gestion correcte des espaces et des tabulations. | X |
-| Gestion des erreurs et de la valeur de retour des commandes | X |
-| echo | √ |
-| cd | X |
-| exit | X |
-| env | X |
-| setenv | X |
-| unsetenv | X |
-| Les pipes "\|" | X |
-| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | X |
+| Affichage d’un prompt. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| lecture de la ligne de commande, sans édition de ligne. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+)
+|
+| Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Les opérateurs de redirection suivants : ">", ">>", "<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Les opérateurs logiques "&&" et "\|\|". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Le séparateur ";" | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Gestion correcte des espaces et des tabulations. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Gestion des erreurs et de la valeur de retour des commandes | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| echo | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| cd | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| exit | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| env | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| setenv | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| unsetenv | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Les pipes "\|" | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
 
 | <h2>Partie Bonus</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). | √ |
-| Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | √ |
-| Edition de ligne telle que demandée dans le ftsh3. | √ |
-| les variables locales et les builtin unset et export. | X |
-| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | X |
-| Complétion dynamique. | X |
-| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | X |
-| Les back quotes "‘". | X |
-| Rechercher dans l’historique avec ctrl+R | <s>this is strike through text</s> |
-| La complétion simple ou avancée avec tab. | [X](#) |
-
-- ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
-
-- [X](https://placehold.it/15/f03c15/000000?text=+) `#f03c15`
-
-- ![#f03c15](https://placehold.it/15/c5f015/000000?text=+)
-
-# 2014, The year of [Blue](#)
-
-<!-- background: #fff4e3 -->
-<!-- color: #2d2422 -->
-
-`RGB(0%,100%,0%)` ergdf
-<h1 `RGB(0%,100%,0%)`>echo</h1>
-`#F00`
+| Les inhibiteurs """ (double quote), "’" (simple quote) et "\" (backslash). | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| Edition de ligne telle que demandée dans le ftsh3. | ![#f03c15](https://placehold.it/15/c5f015/000000?text=+) |
+| les variables locales et les builtin unset et export. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Complétion dynamique. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Les back quotes "‘". | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| Rechercher dans l’historique avec ctrl+R | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
+| La complétion simple ou avancée avec tab. | ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) |
