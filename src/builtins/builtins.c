@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 04:48:36 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 06:19:54 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,9 @@
 
 int		ft_builtins(t_op *exec, int what, int flag)
 {
+	t_hashtable *hashtable = NULL;
+
+	ft_save_hash(&hashtable);
 	if (ft_strcmp(exec->cmd[0], "echo") == 0)
 		if (ft_echo(exec, flag))
 			return (EXIT_FAILURE);
@@ -38,5 +41,10 @@ int		ft_builtins(t_op *exec, int what, int flag)
 	}
 	if (ft_strcmp(exec->cmd[0], "unsetenv") == 0)
 		return (ft_unsetenv(exec->cmd[1]));
+	if (ft_strcmp(exec->cmd[0], "hash") == 0)
+	{
+		ft_hash_print(hashtable);
+		return (EXIT_SUCCESS);
+	}
 	return (EXIT_SUCCESS);
 }

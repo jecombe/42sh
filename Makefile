@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/15 04:36:00 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/17 06:17:03 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -90,11 +90,13 @@ SRCS_NAME =	\
 			builtins/ft_cd.c \
 			builtins/echo.c \
 			builtins/exit.c \
-			init/ft_term_init.c
+			init/ft_term_init.c \
+			hashtable/hashtable.c \
+			hashtable/ft_hashtable_manage.c
 
 OBJS_FOLDERS = \
 			builtins stdin lexer parser extension execute redirections init \
-			heart
+			heart hashtable
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

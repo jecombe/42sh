@@ -6,59 +6,60 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 04:43:58 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 05:08:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 
-void		ft_get_bin()
+static int		ft_check_direct_bin(const char *cmd)
 {
-	int  i;
-	char *bin;
-	i = 0;
-	while (g_env[i])
-	{
-		if (ft_strncmp("PATH=", g_env[i], 5) == 0)
-		{
-			g_env[i]++;
-			bin = ft_strdup(g_env[i]);
-			bin = ft_go_to(bin, 5);
-			//printf("=================+< %s\n", bin);
-			g_bin = ft_strsplit(bin, ':');
-		}
-		i++;
-	}
+	if (access(cmd, F_OK) == -1)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
+
+static char		*ft_check_path_bin(const char *cmd)
+{
+	char		*path;
+	char		**grid;
+	int			i;
+	char		buff[4096];
+
+	path = NULL;
+	grid = NULL;
+	i = -1;
+	ft_strclr(buff);
+	if (!(path = ft_getenv("PATH", g_env)))
+		return (NULL);
+	if (!(grid = ft_strsplit(path, ':')))
+		return (NULL);
+	ft_strdel(&path);
+	while (grid[++i])
+	{
+		ft_strcpy(buff, grid[i]);
+		(buff[ft_strlen(buff) - 1] != '/') ? ft_strcat(buff, "/") : 0;
+		if (access(ft_strcat(buff, cmd), F_OK) == 0)
+			path = ft_strdup(buff);
+		ft_strclr(buff);
+		ft_strdel(&grid[i]);
+	}
+	free(grid);
+	return (path);
+}
+
 
 char		*ft_search_bin(char *cmd)
 {
-	char *tmp;
-	int i;
-	int t;
-	struct stat st;
+	char	*buff;
 
-	if (ft_check_direct_command(cmd) == 0)
+	buff = NULL;
+	if (!(ft_check_direct_bin(cmd)))
 		return (cmd);
-	i = 0;
-	t = 0;
-	while (g_bin[i])
-	{
-		tmp = ft_strdup(g_bin[i]);
-		while (tmp[t])
-		{
-			t++;
-		}
-		tmp[t] = '\0';
-		t = 0;
-		tmp = ft_strcat(tmp, "/");
-		tmp = ft_strcat(tmp, cmd);
-		if (lstat(tmp, &st) == -1)
-			;
-		else
-			return (tmp);
-		i++;
-	}
-	return (NULL);
+	//if (!(ft_is_hash_bin(cmd, &buff)))
+	//	return ();
+	if (!(buff = ft_check_path_bin(cmd)))
+		return (NULL);
+	return (buff);
 }

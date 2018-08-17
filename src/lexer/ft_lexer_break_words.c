@@ -6,17 +6,17 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/22 02:52:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:13:54 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 03:00:34 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
-int			ft_lexer_break_operator(char *input, int idx, int i)
+int				ft_lexer_break_operator(char *input, int idx, int i)
 {
-	char	*s;
-	int		ret;
+	char		*s;
+	int			ret;
 
 	s = NULL;
 	ret = 0;
@@ -44,7 +44,7 @@ int			ft_lexer_break_operator(char *input, int idx, int i)
 
 e_prompt		ft_lexer_break_quote(char *input, int *idx)
 {
-	char	c;
+	char		c;
 	e_prompt	prompt;
 
 	c = input[*idx];
@@ -68,9 +68,9 @@ e_prompt		ft_lexer_break_quote(char *input, int *idx)
 	return (prompt);
 }
 
-int			ft_lexer_break_blank(char *input, int *idx, int *i)
+int				ft_lexer_break_blank(char *input, int *idx, int *i)
 {
-	int		ret;
+	int			ret;
 
 	ret = 0;
 	if (ft_isblank(input[*idx]))
@@ -83,11 +83,11 @@ int			ft_lexer_break_blank(char *input, int *idx, int *i)
 	return (ret);
 }
 
-void		ft_lexer_break_expansion(char *input, int *idx)
+void			ft_lexer_break_expansion(char *input, int *idx)
 {
-	char	c;
-	char	d;
-	char	e;
+	char		c;
+	char		d;
+	char		e;
 
 	c = input[*idx];
 	d = ((*idx + 1) < ft_strlen(input) - 1) ? input[*idx + 1] : '\0';
@@ -103,9 +103,9 @@ void		ft_lexer_break_expansion(char *input, int *idx)
 			;
 }
 
-int			ft_lexer_break_comment(char *input, int *idx)
+int				ft_lexer_break_comment(char *input, int *idx)
 {
-	int		ret;
+	int			ret;
 
 	ret = 0;
 	if (input[*idx] == '#')

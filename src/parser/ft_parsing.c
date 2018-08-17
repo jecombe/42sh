@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 05:01:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 03:08:36 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-int			ft_parse_exit(e_token token)
+int			ft_parse_exit(t_token token)
 {
 	char		*name;
 	t_lex		clear_b_seq;
@@ -27,7 +27,7 @@ int			ft_parse_exit(e_token token)
 	return (1);
 }
 
-int			ft_attribute_token(t_seq **b_seq, char *name, e_token token)
+int			ft_attribute_token(t_seq **b_seq, char *name, t_token token)
 {
 	if (token == SEMI || token == AND)
 	{

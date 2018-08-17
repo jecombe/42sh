@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 06:57:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 03:08:28 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-int			ft_manage_seq(t_seq **b_seq, e_token token)
+int			ft_manage_seq(t_seq **b_seq, t_token token)
 {
 	t_seq		*n_seq;
 
@@ -35,7 +35,7 @@ int			ft_manage_seq(t_seq **b_seq, e_token token)
 	return (0);
 }
 
-int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
+int			ft_manage_logical_and_pipe(t_seq **b_seq, t_token token)
 {
 	t_op			*n_op;
 	t_seq			*n_seq;
@@ -48,7 +48,7 @@ int			ft_manage_logical_and_pipe(t_seq **b_seq, e_token token)
 	return (0);
 }
 
-int			ft_manage_redirection(t_seq **b_seq, e_token token, char *name)
+int			ft_manage_redirection(t_seq **b_seq, t_token token, char *name)
 {
 	t_op			*n_op;
 	t_seq			*n_seq;

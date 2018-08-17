@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 14:41:25 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 04:43:47 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include "./stdin.h"
+#include "./hashtable.h"
 
 char			**g_bin;
 

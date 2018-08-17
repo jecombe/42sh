@@ -6,17 +6,17 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:20:41 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 03:00:25 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
-char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
+static char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
 {
-	int			i;
-	char		*s;
+	int				i;
+	char			*s;
 
 	i = *idx;
 	while (input[*idx])
@@ -38,10 +38,10 @@ char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
 	return (s);
 }
 
-e_token			ft_lexer_token(char *name, char c)
+static t_token		ft_lexer_token(char *name, char c)
 {
-	e_token		tkn;
-	int			i;
+	t_token			tkn;
+	int				i;
 
 	tkn = TOKEN;
 	i = -1;
@@ -58,40 +58,12 @@ e_token			ft_lexer_token(char *name, char c)
 	return (tkn);
 }
 
-int				ft_isalias(char **name)
+t_lex				ft_lexer(char *input, e_prompt *prompt)
 {
-	int			fd;
-	char		*line;
-	char		**grid;
-
-	fd = -1;
-	line = NULL;
-	if ((fd = open("./.101sh_aliases", O_CREAT | O_RDONLY, 0666)) == -1)
-		return (1);
-	while (get_next_line(fd, &line))
-	{
-		if (!(grid = ft_strsplit(line, '=')))
-			return (1);
-		if (ft_strcmp(*name, grid[0]) == 0)
-		{
-			ft_strdel(name);
-			*name = ft_strdup(grid[1]);
-		}
-		ft_strdel(&grid[0]);
-		ft_strdel(&grid[1]);
-		ft_strdel(&line);
-	}
-	if (close(fd) == -1)
-		return (1);
-	return (0);
-}
-
-t_lex			ft_lexer(char *input, e_prompt *prompt)
-{
-	t_lex		lex;
-	e_prompt	p;
-	int			idx;
-	int			v;
+	t_lex			lex;
+	e_prompt		p;
+	int				idx;
+	int				v;
 
 	p = PROMPT;
 	idx = 0;
@@ -109,4 +81,3 @@ t_lex			ft_lexer(char *input, e_prompt *prompt)
 	}
 	return (lex);
 }
-
