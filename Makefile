@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/17 06:17:03 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/17 06:33:47 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -54,7 +54,6 @@ SRCS_NAME =	\
 			stdin/tabulator.c \
 			lexer/ft_lexer.c \
 			lexer/ft_lexer_break_words.c \
-			lexer/ft_lexer_tokens.c \
 			lexer/ft_lexer_utils.c \
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 05:08:12 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 06:33:13 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,6 +49,22 @@ static char		*ft_check_path_bin(const char *cmd)
 	return (path);
 }
 
+int			ft_check_hash_bin(const char *cmd, char **buff)
+{
+	t_hashtable	*hashtable;
+	int			hash;
+
+	hashtable = NULL;
+	hash = 0;
+	ft_save_hash(&hashtable);
+	hash = ft_hash(cmd);
+	if (hashtable[hash].hashcase)
+	{
+		*buff = ft_strdup(hashtable[hash].hashcase->command);
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
 
 char		*ft_search_bin(char *cmd)
 {
@@ -57,8 +73,8 @@ char		*ft_search_bin(char *cmd)
 	buff = NULL;
 	if (!(ft_check_direct_bin(cmd)))
 		return (cmd);
-	//if (!(ft_is_hash_bin(cmd, &buff)))
-	//	return ();
+	if (!(ft_check_hash_bin(cmd, &buff)))
+		return (buff);
 	if (!(buff = ft_check_path_bin(cmd)))
 		return (NULL);
 	return (buff);

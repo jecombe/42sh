@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/17 04:38:30 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:17:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 06:30:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ void		ft_hash_print(t_hashtable *hashtable)
 	}
 }
 
-void				ft_hashtable(char *cmd)
+void				ft_hashtable(char *cmd, char *raccmd)
 {
 	t_hashtable		*hashtable;
 	t_hashcase		*hashcase;
@@ -65,7 +65,7 @@ void				ft_hashtable(char *cmd)
 	hashcase = NULL;
 	hash = 0;
 	ft_save_hash(&hashtable);
-	hash = ft_hash(cmd);
+	hash = ft_hash(raccmd);
 	hashcase = ft_create_case(cmd);
 	hashtable[hash].key = hash;
 	ft_hash_add(&(hashtable[hash].hashcase), hashcase);

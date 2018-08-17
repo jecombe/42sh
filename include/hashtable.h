@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/17 04:39:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:13:16 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 06:30:25 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,7 @@ typedef struct			s_hashtable
 *******************************************************************************
 */
 
-void					ft_hashtable(char *cmd);
+void					ft_hashtable(char *cmd, char *raccmd);
 int						ft_hash(const char *cmd);
 void					ft_hash_print(t_hashtable *hashtable);
 
