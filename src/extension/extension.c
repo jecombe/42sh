@@ -130,12 +130,18 @@ int			extension(t_seq **b_seq)
 		n_seq = n_seq->next;
 	}
 	if ((*b_seq)->op->cmd)
-		while ((*b_seq)->op->cmd[i])
-		{
-			i++;
-		}
-	i = extension_error(b_seq);
-		printf("IIIII == %d\n", i);
-		fflush(NULL);
+	{
+//		while ((*b_seq)->op->cmd[i])
+//		{
+//			printf("B_SEQ->CMD[%d] == %s\n", i, (*b_seq)->op->cmd[i]);
+//			i++;
+//		}
+		i = extension_error(&(*b_seq));
+	}
+	else//PROVISOIRE
+	{
+		ft_free_b_seq(b_seq);
+		i = 1;
+	}
 	return (i);
 }

@@ -42,7 +42,7 @@ static int		error_n_op(t_op **b_op)
 	{
 		if (!n_op->cmd && !n_op->redirect)
 		{
-			printf("N_OP A DEL\n");
+//			printf("N_OP A DEL\n");
 			tmp = n_op;
 			if (n_op->prev)
 				n_op->prev->token = n_op->token;
@@ -51,30 +51,32 @@ static int		error_n_op(t_op **b_op)
 			else if (n_op->next && n_op->prev)
 				n_op->prev->next = n_op->next;
 		}
-		else
-			printf("TOUT EST NORMAL\n");
-		if (n_op->redirect)
+		else if (n_op->redirect)
+		{
 			if (error_n_redirect(&n_op->redirect))
 				return (1);
+		}
+//		else
+//			printf("TOUT EST NORMAL\n");
 		n_op = n_op->next;
 		if (tmp)
 		{
-			printf("0\n");
+//			printf("0\n");
 			free(tmp);
 			tmp = NULL;
-			printf("1\n");
+//			printf("1\n");
 		}
-		if (tmp)
+/*		if (tmp)
 			printf("TMP EXIST TOUJOURS\n");
 		else
 			printf("TMP N'EXIST PLUS\n");
 		if (n_op)
 			printf("N_OP EXIST TOUJOURS\n");
 		else
-			printf("N_OP N'EXIST PLUS\n");
+			printf("N_OP N'EXIST PLUS\n"); */
 		i++;
 	}
-	printf("I == %d\n", i);
+//	printf("I == %d\n", i);
 	return (0);
 }
 
@@ -96,20 +98,24 @@ int				extension_error(t_seq **b_seq)
 //		if (n_seq->token == TOKEN && !n_seq->op)
 		if (!n_seq->op)
 		{
-			printf("N_SEQ A DEL\n");
+//			printf("N_SEQ A DEL\n");
 			if (n_seq->prev && n_seq->next)
+			{
 				n_seq->prev->next = n_seq->next;
+				n_seq->next->prev = n_seq->prev;
+			}
 			else if (!n_seq->prev && n_seq->next)
 				*b_seq = (*b_seq)->next;
 			free(n_seq);
 			n_seq = NULL;
 			return (1);
 		}
-		n_seq = n_seq->next;
+		if (n_seq)
+			n_seq = n_seq->next;
 	}
-	if (*b_seq)
+/*	if (*b_seq)
 		printf("BSEQ EXIST\n");
 	else
-		printf("BSEQ EST DEAD\n");
+		printf("BSEQ EST DEAD\n");*/
 	return (*b_seq ? 0 : 1);
 }
