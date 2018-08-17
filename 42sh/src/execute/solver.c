@@ -38,10 +38,15 @@ int		ft_solver(t_op *t_exec, int fd, pid_t pid, int *fd_pipe)
 			pipe(fd_pipe);
 		}*/
 		//pid = fork();
+		//if (pid == 0)
+		//{
 		if (ft_exec(t_exec, tmp_bin, fd, pid, fd_pipe) == EXIT_SUCCESS)
 			return (EXIT_SUCCESS);
 		else
 			return (EXIT_FAILURE);
+		//}
+		//else
+			//wait(0);
 	}
 	return (EXIT_FAILURE);
 }

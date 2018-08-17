@@ -52,8 +52,10 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 								printf("GO PIPE %d\n", g_i);
 								//Execute les command, en boucle sur opera tant au'il y  a des pipes
 								ret = ft_pipe(opera, g_i, pid, fd_pipe);
+						printf("returnnnnnnn\n");
 						}
-						//return ;
+						printf("returnnnnnnn\n");
+						return ;
 						while (g_i != 0)
 						{
 							opera = opera->next;
