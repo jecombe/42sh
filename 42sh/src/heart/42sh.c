@@ -82,15 +82,26 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 void				ft_101sh(void)
 {
 	e_prompt		prompt;
+	char			ret[1];
 	char			*line;
 
-	prompt = PROMPT;
 	line = NULL;
-	while (get_stdin(&line, &prompt))
+	prompt = PROMPT;
+	while (101)
 	{
-		heart_of_101sh(line, &prompt, 1);
-		if (line)
-			ft_strdel(&line);
+		if (!line)
+			ft_putstr("JECOMBE_PROMPT> ");
+		read(0, ret, 1);
+		if (ret[0] == '\n')
+		{
+			heart_of_101sh(line, &prompt, 1);
+			if (line)
+				ft_strdel(&line);
+		}
+		else if (!line)
+			line = ft_strdup(ret);
+		else
+			line = ft_strjoin(line, ret);
 	}
 }
 
