@@ -7,6 +7,7 @@
 #include "./include/parsing.h"
 #include "./include/execute.h"
 #include "./include/extension.h"
+#include "./include/builtins.h"
 
 int		heart_of_101sh(char *line, e_prompt *prompt, int fd_base);
 

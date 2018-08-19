@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "../../include/heart.h"
-#include "../../include/hashtable.h"
 
 #define cv ft_convert_token_to_string
 

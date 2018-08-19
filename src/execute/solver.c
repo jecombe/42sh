@@ -13,7 +13,7 @@
 
 #include "../../include/execute.h"
 #include "../../include/stdin.h"
-
+#include "../../include/builtins.h"
 
 
 int		ft_solver(t_op *t_exec, int fd, pid_t pid)
