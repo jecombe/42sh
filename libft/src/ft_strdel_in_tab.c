@@ -26,10 +26,8 @@ int		ft_strdel_in_tab(char ***tablo, int index)
 		if ((*tablo)[1])
 		{
 			while (i < index)
-	//			ft_malloc_cmd(&tmp, (*tablo)[i++]);
 				if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
 					return (1);
-		printf("0000DDDEEELLL\n");
 			i++;
 			while ((*tablo)[i])
 				if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
@@ -39,11 +37,7 @@ int		ft_strdel_in_tab(char ***tablo, int index)
 				return (1);
 		}
 		else
-		{
-			printf("1111DDDEEELLL\n");
 			ft_tabdel(&(*tablo));
-			return (1);
-		}
 	}
 	return (0);
 }

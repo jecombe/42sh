@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/18 19:53:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 01:22:31 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,13 +55,9 @@ int			ft_parcour_tab(char ***cmd)
 			while ((*cmd)[i][j])
 			{
 				if ((*cmd)[i][j] == '\\')
-				{
 					backslash_manager(&(*cmd), i, &j, dquote);
-				}
 				else if ((*cmd)[i][j] == '\'' && !dquote && !begin_bquote)
-				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_quote);
-				}
 				else if ((*cmd)[i][j] == '"' && !begin_bquote)
 				{
 					ft_manage_quote(&(*cmd), i, &j, ft_replace_dquote);
@@ -103,9 +99,7 @@ int			ft_parcour_op(t_op **b_op)
 	while (n_op)
 	{
 		if (n_op->cmd)
-		{
 			ft_parcour_tab(&n_op->cmd);
-		}
 		n_op = n_op->next;
 	}
 	return (0);
@@ -124,12 +118,19 @@ int			extension(t_seq **b_seq)
 				return (1);
 		n_seq = n_seq->next;
 	}
-/*	if ((*b_seq)->op->cmd)
-		while ((*b_seq)->op->cmd[i])
-		{
-			printf("B_SEQ->OP->CMD[%d] == %s\n", i, (*b_seq)->op->cmd[i]);
-			i++;
-		}*/
-	i = extension_error(b_seq);
+	if ((*b_seq)->op->cmd)
+	{
+//		while ((*b_seq)->op->cmd[i])
+//		{
+//			printf("B_SEQ->CMD[%d] == %s\n", i, (*b_seq)->op->cmd[i]);
+//			i++;
+//		}
+		i = extension_error(&(*b_seq));
+	}
+	else//PROVISOIR OU PAS ! ! !
+	{
+		ft_free_b_seq(b_seq);
+		i = 1;
+	}
 	return (i);
 }
