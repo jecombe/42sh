@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 02:37:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 02:31:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,8 +27,9 @@ char		*ft_replace_dquote(char *str, int *j)
 		j_tmp++;
 	}
 	j_tmp2 = *j + 1;
-	while (str[j_tmp2])
-		ret[j_tmp++] = str[j_tmp2++];
+	if (str[j_tmp2])
+		while (str[j_tmp2])
+			ret[j_tmp++] = str[j_tmp2++];
 	ret[j_tmp] = '\0';
 	printf("RET == %s\n", ret);
 	return (ret);
@@ -63,7 +64,7 @@ int			ft_manage_quote(char ***tablo, int i, int *j, char* (*f)(char*, int*))
 {
 	char		*tmp;
 
-	if (ft_strlen((*tablo)[i]) > 2)
+	if ((ft_strlen((*tablo)[i]) > 1 && (*tablo)[i][*j] == '"') || ft_strlen((*tablo)[i]) > 2)
 	{
 		tmp = f((*tablo)[i], j);
 		ft_strdel(&(*tablo)[i]);
@@ -71,8 +72,12 @@ int			ft_manage_quote(char ***tablo, int i, int *j, char* (*f)(char*, int*))
 	}
 	else
 	{
-		ft_strdel_in_tab(&(*tablo), *j);
+		printf("I == %d\n", i);
 		printf("STRDEL_IN_TAB\n");
+		*j = 0;
+		if (ft_strdel_in_tab(&(*tablo), i))
+			return (1);
+		//ft_strdel_in_tab(&(*tablo), *j);
 	}
 	return (0);
 }
