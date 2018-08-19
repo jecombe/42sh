@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/11 04:13:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 04:37:20 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 09:05:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ int			ft_unsetenv(const char *name)
 	i = -1;
 	env = NULL;
 	if (name == NULL)
-		return (ft_env_error("unsetenv", "Too few arguments."));
+		return (ft_bierrors("unsetenv", NULL, BITOFEW));
 	if (!(s = ft_envset_line((const char **)g_env, name)))
 		return (EXIT_SUCCESS);
 	env = ft_tabdup(g_env);

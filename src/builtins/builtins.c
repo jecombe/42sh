@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:19:54 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 08:58:29 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int		ft_builtins(t_op *exec, int what, int flag)
 		if (!exec->cmd[1])
 			return (ft_setenv(NULL, NULL));
 		if (exec->cmd[2] && exec->cmd[3])
-				return (ft_env_error("setenv", "Too many arguments."));
+				return (ft_bierrors("setenv", NULL, BITOMANY));
 		ft_setenv(exec->cmd[1], exec->cmd[2]);
 	}
 	if (ft_strcmp(exec->cmd[0], "unsetenv") == 0)

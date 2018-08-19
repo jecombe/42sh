@@ -6,20 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:30:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/15 05:33:19 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 09:03:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
-
-int			ft_env_error(const char *prgm, const char *error)
-{
-	ft_putstr_fd(prgm, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(error, STDERR_FILENO);
-	return (EXIT_FAILURE);
-}
 
 char		*ft_envset_line(const char **envset, const char *name)
 {

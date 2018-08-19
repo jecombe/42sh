@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/17 06:33:47 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/19 09:15:33 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -82,6 +82,7 @@ SRCS_NAME =	\
 			redirections/loop_redirections.c \
 			redirections/pipe.c \
 			builtins/builtins.c \
+			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \
 			builtins/ft_env.c \
 			builtins/ft_setenv.c \
@@ -89,9 +90,9 @@ SRCS_NAME =	\
 			builtins/ft_cd.c \
 			builtins/echo.c \
 			builtins/exit.c \
-			init/ft_term_init.c \
-			hashtable/hashtable.c \
-			hashtable/ft_hashtable_manage.c
+			builtins/hashtable.c \
+			builtins/ft_hashtable_manage.c \
+			init/ft_term_init.c
 
 OBJS_FOLDERS = \
 			builtins stdin lexer parser extension execute redirections init \

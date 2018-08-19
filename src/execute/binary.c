@@ -3,10 +3,23 @@
 /*                                                              /             */
 /*   binary.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/08/19 06:15:14 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/19 07:28:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   binary.c                                         .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:33:13 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 06:09:43 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,16 +65,26 @@ static char		*ft_check_path_bin(const char *cmd)
 int			ft_check_hash_bin(const char *cmd, char **buff)
 {
 	t_hashtable	*hashtable;
+	t_hashcase	*hashcase;
 	int			hash;
 
 	hashtable = NULL;
+	hashcase = NULL;
 	hash = 0;
 	ft_save_hash(&hashtable);
 	hash = ft_hash(cmd);
 	if (hashtable[hash].hashcase)
 	{
-		*buff = ft_strdup(hashtable[hash].hashcase->command);
-		return (EXIT_SUCCESS);
+		hashcase = hashtable[hash].hashcase;
+		while (hashcase)
+		{
+			if (ft_strcmp(cmd, hashcase->raccmd) == 0)
+			{
+				*buff = ft_strdup(hashtable[hash].hashcase->command);
+				return (EXIT_SUCCESS);
+			}
+			hashcase = hashcase->next;
+		}
 	}
 	return (EXIT_FAILURE);
 }

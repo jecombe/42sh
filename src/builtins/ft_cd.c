@@ -6,13 +6,31 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 02:28:45 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/19 09:13:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/execute.h"
 #include "../../include/builtins.h"
+
+static int	ft_cd_error(const char *cmd, const int stat)
+{
+	ft_putstr_fd("101sh: cd: ", 2);
+	if (stat == 1)
+	{
+		ft_putchar_fd('-', 2);
+		ft_putchar_fd(*cmd, 2);
+		ft_putendl_fd(": invalid option", 2);
+		ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", 2);
+	}
+	if (stat == 2)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
+	return (EXIT_FAILURE);
+}
 
 int		ft_flags(const char **cmd, char *flag, int *idx)
 {
@@ -30,7 +48,7 @@ int		ft_flags(const char **cmd, char *flag, int *idx)
 		while (cmd[i][++j])
 		{
 			if (cmd[i][j] != 'P' && cmd[i][j] != 'L')
-				return (EXIT_FAILURE);
+				return (ft_bierrors("cd", &cmd[i][j], BIFLAG));
 			if (*flag)
 				*flag = (*flag == 'P') ? 'L' : 'P';
 			else
@@ -45,10 +63,10 @@ int		ft_flags(const char **cmd, char *flag, int *idx)
 
 char		*ft_create_curpath(char *cmd, char flag)
 {
-	char	curpath[PATH_MAX];
-	char	operand[PATH_MAX];
+	char	curpath[BI_MAX];
+	char	operand[BI_MAX];
 	char	*home;
-	char	cwd[PATH_MAX];
+	char	cwd[BI_MAX];
 
 	ft_strclr(curpath);
 	ft_strclr(operand);
@@ -72,9 +90,27 @@ char		*ft_create_curpath(char *cmd, char flag)
 	return (ft_strdup(curpath));
 }
 
+static int	ft_chdir(char **curpath, const char *cmd)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	if (chdir(*curpath) == -1)
+	{
+		ft_strdel(&(*curpath));
+		return (ft_bierrors("cd", cmd, BINOFOUND));
+	}
+	if (cmd && ft_strcmp(cmd, "-") == 0)
+		ft_putendl(*curpath);
+	pwd = ft_envset_value((const char **)g_env, "PWD");
+	ft_setenv("PWD", *curpath);
+	ft_setenv("OLDPWD", pwd);
+	ft_strdel(&pwd);
+	return (EXIT_SUCCESS);
+}
+
 int			ft_cd(t_op *exec, int flags)
 {
-	t_cd	*cd;
 	char	flag;
 	int		j;
 	char	*curpath;
@@ -90,8 +126,8 @@ int			ft_cd(t_op *exec, int flags)
 		curpath = ft_create_curpath(exec->cmd[j], flag);
 	if (!(curpath))
 		return (EXIT_FAILURE);
-	ft_putendl(curpath);
-	chdir(curpath);
+	if (ft_chdir(&curpath, exec->cmd[j]))
+		return (EXIT_FAILURE);
 	ft_strdel(&curpath);
 	return (EXIT_SUCCESS);
 }
