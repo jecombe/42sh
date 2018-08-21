@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:21:00 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/21 05:27:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,11 +100,15 @@ void				ft_101sh(void)
 	}
 }
 
-int					main(int ac, char *av[])
+int					main(int ac, char *argv[])
 {
 	extern char		**environ;
+	char			**av;
 
-	if (ft_term_init(environ))
+	printf("ARGV[0] == %s\n", argv[0]);
+	av = ft_tabdup(argv);
+	printf("AV[0] == %s\n", av[0]);
+	if (ft_term_init(ac, av))
 		return (EXIT_FAILURE);
 	ft_101sh();
 	return (EXIT_SUCCESS);
