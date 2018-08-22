@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 02:08:11 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/21 18:47:19 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,7 @@ static int		cursor_position(int mode)
 	int		ret;
 	char	*cursor_position;
 
+	cursor_position = NULL;
 	write(1, "\E[6n", 4);
 	while ((ret = read(0, buf, 1)) > 0)
 	{

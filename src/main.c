@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:45:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 00:27:41 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/22 21:47:29 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,6 +20,7 @@ int		main(void)
 	char *line;
 	e_prompt prompt;
 
+	line = NULL;
 	prompt = 2;
 	g_env = ft_tabdup(environ);
 	if ((xterm = getenv("TERM")) == NULL)
@@ -45,5 +46,5 @@ int		main(void)
 			printf("OK\n");
 		}
 	}
-	sleep(150);
+//	sleep(150);
 }

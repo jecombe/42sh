@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 03:59:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/22 21:41:37 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ typedef struct		s_editor
 	size_t	prompt_size;
 	size_t	cursor_str_pos;
 	char	*clipboard;
-	char	key[10];
+	char	key[BUFF_SIZE];
 	char *line;
 }					t_editor;
 

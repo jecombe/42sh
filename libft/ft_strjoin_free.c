@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 23:46:11 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/01 23:49:54 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/21 18:50:26 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ char	*ft_strjoin_free(char *s1, char *s2)
 {
 	char *tmp;
 
+	tmp = NULL;
 	if (!s1)
 		tmp = ft_strdup(s2);
 	else

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 03:23:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/22 21:47:44 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,6 +92,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 	int			ret;
 	t_editor	*ed;
 
+	ed = NULL;
 	get_term_raw_mode(1);
 	line_editor_init(line, *prompt, &ed);
 	display_prompt(prompt == 0 ?
@@ -104,7 +105,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 		ed->key[ret] = '\0';
 		if (get_keyboard_key(&ret, ed, prompt, line))
 			ed->line = ft_strjoin_free(ed->line, ed->key);
-		save_ed(&ed, 0);
+	//	save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
 		if (ft_strchr(ed->key, '\n') || (!ret && !(ed->line) && *prompt == 0))
 			break ;
