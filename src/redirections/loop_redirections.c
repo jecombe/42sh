@@ -68,14 +68,19 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 				fd_open = ft_open_redirect(redirect->file, flag, flag2, fd);
 			else if (buil == 1 && redirect->redirect != DLESS)
 				fd_open = ft_open_redirect_builtins(redirect->file, flag, flag2);
-			redirect = redirect->next;
+					redirect = redirect->next;
 		}
 		if (buil == 1)
 			return (fd_open);
 	}
+	if (redirect == NULL && flag == HEREDOC)
+		return (EXIT_SUCCESS);
+	if (fd != NOTHING)
+	{
 	if (flag2 == O_RDONLY)
 		dup2(fd_open, 0);
 		else
 			dup2(fd_open, fd);
+	}
 	return(EXIT_SUCCESS);
 }
