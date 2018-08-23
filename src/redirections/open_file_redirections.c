@@ -13,7 +13,7 @@
 
 #include "../../include/execute.h"
 
-void			ft_open_redirect(char *file, int flag, int flag2, int fd)
+int			ft_open_redirect(char *file, int flag, int flag2, int fd)
 {
 	int ret2;
 	if (flag2 == O_WRONLY)
@@ -25,8 +25,9 @@ void			ft_open_redirect(char *file, int flag, int flag2, int fd)
 		ret2 = open(file, O_RDONLY);
 		dup2(ret2, 0);
 	}
-	else
-		dup2(ret2, fd);
+	return (ret2);
+	/*else
+		dup2(ret2, fd);*/
 }
 
 int				ft_open_redirect_builtins(char *file, int flag, int flag2)

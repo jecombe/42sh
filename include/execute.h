@@ -32,7 +32,7 @@ void			ft_get_bin();
 int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid);
 int				ft_builtins(t_op *t_exec, int what, int flag);
 int				ft_check_command(char *cmd);
-void			ft_open_redirect(char *file, int flag, int flag2, int fd);
+int			ft_open_redirect(char *file, int flag, int flag2, int fd);
 int				ft_return_flag(t_redirect *redirect);
 int				ft_echo(t_op *t_exec, int flag);
 int				ft_cd(t_op *t_exec, int flag);
