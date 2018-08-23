@@ -36,6 +36,7 @@ int 	ft_children_fork(t_op *op, int *fd, int fd_out, int i)
 	close(fd[0]);
 	pid_t pid;
 	//execve(bin, op->cmd, g_env);
+	//return (0);
 	return ((ret = ft_solver(op, -88, pid, 1)));
 }
 
