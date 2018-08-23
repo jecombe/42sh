@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 06:00:45 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 06:07:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,9 +75,7 @@ int					add_to_env(char *name, char *value, char ***env)
 			}
 		}
 		else
-		{
 			ft_malloc_cmd(&(*env), to_add);
-		}
 	}
 	return (0);
 }
@@ -197,7 +195,6 @@ int					ft_init_env(int ac, char **av)
 	char			*tmp;
 	char			*tmp2;
 	extern char		**environ;
-	int				i = 0;
 
 	tmp = NULL;
 	g_env = ft_tabdup(environ);
@@ -210,15 +207,6 @@ int					ft_init_env(int ac, char **av)
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
-	if (g_env)
-	{
-		while (g_env[i])
-		{
-			printf("%s\n", g_env[i]);
-			i++;
-		}
-	}
-
 	return (0);
 }
 
@@ -227,6 +215,7 @@ int					ft_init_set()
 	char		buff[4096];
 	char		*str;
 	struct		utsname t_utsname;
+
 	str = ft_itoa(getpid());
 	add_to_env("PID", str, &g_set);
 	if (str)
