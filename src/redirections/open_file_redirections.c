@@ -22,8 +22,8 @@ int			ft_open_redirect(char *file, int flag, int flag2, int fd)
 	}
 	if (flag2 == O_RDONLY)
 	{
-		ret2 = open(file, O_RDONLY);
-		dup2(ret2, 0);
+		return (ret2 = open(file, O_RDONLY));
+		//dup2(ret2, 0);
 	}
 	return (ret2);
 	/*else

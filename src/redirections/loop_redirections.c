@@ -41,14 +41,13 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 			//*********** SI << ******************
 			if (flag == HEREDOC)
 			{
-				//HEREDOC MARCHE PAS EN MULTIPLES
+				//HEREDOC
 				if (ft_redirect_heredoc(redirect, flag, bin_cmd, cpid, buil) == EXIT_SUCCESS)
-					printf("SUCCES\n");
+					;
 				else
 					break;
 			}
 			//*******************************************************
-			printf("ensuite\n");
 			fd = redirect->fd;
 			if (flag != NOTHING && flag != HEREDOC)
 			{
@@ -66,18 +65,17 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 			}
 			//Pour l'instant si ce n'est pas des command builtins
 			if (buil == 0 && redirect->redirect != DLESS)
-			{
-				printf("retur ficier\n");
 				fd_open = ft_open_redirect(redirect->file, flag, flag2, fd);
-			}
 			else if (buil == 1 && redirect->redirect != DLESS)
 				fd_open = ft_open_redirect_builtins(redirect->file, flag, flag2);
 			redirect = redirect->next;
-			//dup2(fd_open, fd);
 		}
 		if (buil == 1)
 			return (fd_open);
 	}
-	dup2(fd_open, fd);
+	if (flag2 == O_RDONLY)
+		dup2(fd_open, 0);
+		else
+			dup2(fd_open, fd);
 	return(EXIT_SUCCESS);
 }
