@@ -19,7 +19,7 @@
 | env | ❌ |
 | setenv | ❌ |
 | unsetenv | ❌ |
-| Les pipes "\|" | ❌ |
+| Les pipes "\|" | ✅ |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | ❌ |
 
 | <h2>Partie Bonus</h2> | <h2>status</h2> |
@@ -31,6 +31,6 @@
 | L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ❌ |
 | Complétion dynamique. | ❌ |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | ❌ |
-| Les back quotes "‘". | ❌ |
+| Les back quotes "‘". | ✅ |
 | Rechercher dans l’historique avec ctrl+R | ❌ |
 | La complétion simple ou avancée avec tab. | ❌ |
