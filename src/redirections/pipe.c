@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 17:24:59 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 17:55:59 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -87,15 +87,9 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 	status = waitstat(&status);
 	ret = WEXITSTATUS(status);
 	if (ret == 1)
-	{
-		printf("EXIT_FAILURE\n");
 		return (EXIT_FAILURE);
-	}
 	else
-	{
-		printf("EXIT_SUCCESS\n");
 		return (EXIT_SUCCESS);
-	}
 }
 
 
