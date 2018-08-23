@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:15:19 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 17:02:52 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,8 @@
 #include "./stdin.h"
 
 char			**g_bin;
-
-int				ft_solver(t_op *tmp_exec, int fd, pid_t pid);
+int g_p;
+int				ft_solver(t_op *tmp_exec, int fd, pid_t pid, int pipe);
 char			*ft_search_bin(char *cmd);
 char			*ft_go_to(char *bin, int nb);
 void			ft_skip(char **ttab);
