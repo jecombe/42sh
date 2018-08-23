@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/04 01:20:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 04:38:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,6 +73,7 @@ typedef struct			s_select
 	t_line				*line;
 }						t_select;
 
+char					*ft_select(char **av, int *line);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_disable_raw(int ret, t_select **t);
@@ -88,7 +89,6 @@ void					ft_init_select(t_select **sel, char **av);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);
-int						ft_del_maillon(t_select **t);
 void					ft_first_sort(t_line **line, char *av);
 int						ft_count_params(t_line *line);
 int						ft_char_by_line(t_select **sel);
@@ -99,7 +99,6 @@ void					ft_print_select(t_line *str, int j, int bp, int v);
 void					ft_decremente_select(int select, t_select **t);
 void					ft_place_cursor(int nb_ret, int len_line, int v);
 int						ft_free_t_select(t_select **t);
-void					ft_signal(void);
 void					ft_save_shell(t_select **t, int version);
 int						ft_test(t_select **sel, int ret);
 int						ft_searchdyn(t_select **t, char ret);

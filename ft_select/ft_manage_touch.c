@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 03:41:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 04:24:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,8 +45,6 @@ int			ft_manage_touch(char **ret, t_select **t)
 	else if (((*ret)[0] == 27 && (*ret)[1] == 91) ||
 	((*ret)[0] == 9 && (*ret)[1] == 0))
 		return (ft_arrows((*ret)[0] == 9 ? 67 : (*ret)[2], &(*t)));
-	//else if ((*ret)[0] == 32 && (*ret)[1] == 0)
-	//	return (ft_select_sp(&(*t)));
 	else if ((*ret)[0] == 13)
 		return (ft_select_sp(&(*t)));
 	return (-1);

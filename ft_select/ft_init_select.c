@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/02 17:56:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 04:36:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ void			ft_init_select(t_select **sel, char **av)
 	int		i;
 	t_line	*now;
 
-	i = 0;
+	i = -1;
 	if (av[1])
 	{
 		*sel = malloc(sizeof(t_select));
