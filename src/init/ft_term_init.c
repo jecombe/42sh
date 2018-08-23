@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 02:46:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 06:00:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,7 +59,7 @@ int					add_to_env(char *name, char *value, char ***env)
 	}
 	else
 	{
-		if (*env)
+		if (*env && (*env)[0])
 		{
 			j = ft_tablen(*env) - 1;
 			if (!ft_strncmp((*env)[j], "_=", 2))
@@ -75,7 +75,9 @@ int					add_to_env(char *name, char *value, char ***env)
 			}
 		}
 		else
-			ft_malloc_cmd(env, to_add);
+		{
+			ft_malloc_cmd(&(*env), to_add);
+		}
 	}
 	return (0);
 }
@@ -190,6 +192,36 @@ int					ft_get_user_info()
 	return (0);
 }
 
+int					ft_init_env(int ac, char **av)
+{
+	char			*tmp;
+	char			*tmp2;
+	extern char		**environ;
+	int				i = 0;
+
+	tmp = NULL;
+	g_env = ft_tabdup(environ);
+	ft_get_user_info();
+	if ((tmp = search_path_of_101sh(av[0])))
+	{
+		tmp2 = ft_strjoin(tmp, "/.TMPDIR");
+		add_to_env("TMPDIR", tmp2, &g_env);
+		add_to_env("_", tmp, &g_env);
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+	}
+	if (g_env)
+	{
+		while (g_env[i])
+		{
+			printf("%s\n", g_env[i]);
+			i++;
+		}
+	}
+
+	return (0);
+}
+
 int					ft_init_set()
 {
 	char		buff[4096];
@@ -219,36 +251,6 @@ int					ft_init_set()
 	struct passwd *pwd;
 	uname(&t_utsname);
 	add_to_env("SYSNAME", t_utsname.sysname, &g_set);
-	return (0);
-}
-
-int					ft_init_env(int ac, char **av)
-{
-	char			*tmp;
-	char			*tmp2;
-	extern char		**environ;
-	int				i = 0;
-
-	tmp = NULL;
-	g_env = ft_tabdup(environ);
-	ft_get_user_info();
-	if ((tmp = search_path_of_101sh(av[0])))
-	{
-		tmp2 = ft_strjoin(tmp, "/.TMPDIR");
-		add_to_env("TMPDIR", tmp2, &g_env);
-		add_to_env("_", tmp, &g_env);
-		ft_strdel(&tmp);
-		ft_strdel(&tmp2);
-	}
-	if (g_env)
-	{
-		while (g_env[i])
-		{
-			printf("%s\n", g_env[i]);
-			i++;
-		}
-	}
-
 	return (0);
 }
 
