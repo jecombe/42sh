@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 06:07:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 06:18:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -203,7 +203,9 @@ int					ft_init_env(int ac, char **av)
 	{
 		tmp2 = ft_strjoin(tmp, "/.TMPDIR");
 		add_to_env("TMPDIR", tmp2, &g_env);
-		add_to_env("_", tmp, &g_env);
+		ft_strdel(&tmp2);
+		tmp2 = ft_strjoin(tmp, "/101sh");
+		add_to_env("_", tmp2, &g_env);
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
