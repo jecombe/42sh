@@ -49,25 +49,6 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 							i++;
 							//Execute les command, en boucle sur opera tant au'il y  a des pipes
 							ret = ft_pipe(opera, i, pid);
-							if (ret == EXIT_SUCCESS)
-							{
-								//****Si ||*******//
-								if (opera->token == OR_IF)
-									or_if = 1;
-								else
-									or_if = 0;
-								ret = 0;
-							}
-							//Si echec de solver
-							else if (ret == EXIT_FAILURE)
-							{
-								//****Si &&****//
-								if (opera->token == AND_IF)
-									and_if = 1;
-								else
-									and_if = 0;
-								ret = 0;
-							}
 						}
 						while (i != 0)
 						{
