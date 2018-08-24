@@ -19,7 +19,9 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 	int flag;
 	int flag2;
 	int fd_open = 0;
+	int i;
 
+	i = 0;
 	if (fd2 > 1)
 	{
 		flag = O_TRUNC;
@@ -31,6 +33,7 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 	{
 		while (redirect)
 		{
+			i++;
 			flag = ft_return_flag(redirect);
 			//************** SI < ****************
 			if (flag == O_RDONLY)
@@ -73,14 +76,11 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 		if (buil == 1)
 			return (fd_open);
 	}
-	if (redirect == NULL && flag == HEREDOC)
+	if (redirect == NULL && flag == HEREDOC && i == 1)
 		return (EXIT_SUCCESS);
-	if (fd != NOTHING)
-	{
 	if (flag2 == O_RDONLY)
 		dup2(fd_open, 0);
 		else
 			dup2(fd_open, fd);
-	}
 	return(EXIT_SUCCESS);
 }
