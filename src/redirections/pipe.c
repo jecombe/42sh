@@ -59,6 +59,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 	int fd_in = 0;
 	int stat;
 	int ret;
+	char *bin;
 
 	while (i != 0)
 	{
@@ -66,6 +67,9 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 		fd_out =  1;
 		fd_in = 0;
 		status = 0;
+		bin = ft_search_bin(op->cmd[0]);
+		if (bin == NULL)
+			break;
 		if ((fork()) == 0)
 		{
 			dup2(fd_save, STDIN_FILENO);

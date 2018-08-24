@@ -49,11 +49,12 @@ int		ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 			}
 			else
 			{
-				printf("NULL\n");
 				ft_strdel(&raccmd);
 				return (EXIT_FAILURE);
 			}
 		}
+		else
+			printf("ERREUR COMMAND INTROUVABLE\n");
 	}
 	return (EXIT_FAILURE);
 }
