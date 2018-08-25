@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/23 07:03:12 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/25 06:21:19 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -93,7 +93,10 @@ SRCS_NAME =	\
 			builtins/hashtable.c \
 			builtins/ft_hashtable_manage.c \
 			init/ft_term_init.c \
+			init/init_env.c \
+			init/unset.c \
 			init/add_to_env.c \
+			init/add_to_set.c \
 			init/utils.c
 
 OBJS_FOLDERS = \

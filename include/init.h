@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:41:57 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 08:00:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 05:35:28 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,8 @@ char **g_env;
 int			ft_term_init(int ac, char **av);
 char		*concat_name_value(char *name, char *value);
 int			add_to_env(char *name, char *value);
+int			add_to_set(char *name, char *value);
 char		*search_path_of_101sh(char *bin);
+int			init_env(int ac, char **av);
 
 #endif
