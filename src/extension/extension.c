@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 12:11:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 18:13:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,13 +41,11 @@ int			ft_parcour_tab(char ***cmd)
 {
 	int			i;
 	int			j;
-	int			dollar;
 	int			dquote;
 	int			begin_bquote;
 
 	begin_bquote = 0;
 	dquote = 0;
-	dollar = 0;
 	i = -1;
 	if (*cmd)
 		while (*cmd && (*cmd)[++i])
@@ -85,17 +83,9 @@ int			ft_parcour_tab(char ***cmd)
 				}
 				else if ((*cmd)[i][j] == '$')
 				{
-					if (dollar == 0)
-					{
-						dollar = j;
-						j++;
-					}
-					else
-					{
-						ft_dollar(cmd, dollar, j);
-						j = dollar;
-						dollar = 0;
-					}
+					printf("BEFORE I == %d, J == %d\n", i, j);
+					ft_dollar(cmd, &i, &j);
+					printf("AFTER I == %d, J == %d\n", i, j);
 				}
 				else
 					j++;

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/08/25 15:53:23 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/25 20:19:09 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,8 @@ SRCS_NAME =	\
 			ft_strdel_in_tab.c \
 			ft_str_isalnum.c \
 			ft_malloc_cmd.c \
-			ft_putstr_color.c
+			ft_putstr_color.c \
+			ft_isquote.c
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 

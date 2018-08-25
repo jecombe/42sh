@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/16 23:26:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 15:52:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -257,31 +257,16 @@ int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
 	int			fd;
 	char		*line = NULL;
 	e_prompt	prompt;
-//	int			**index;//FORR THE NORME
 
 	prompt = PROMPT;
-	fflush(NULL);
 	if ((line = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
 	{
-//		printf("BEFORE LINE == %s\n", line);
-//		system("chmod 777 .tmp_file");
 		fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
-//		system("ls -l .tmp_file");
 		heart_of_101sh(line, &prompt, fd);
-//		system("ls -l .tmp_file");
 		ft_strdel(&line);
 		close(fd);
 		line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
 	}
-//	printf("--------------\n");
-//	printf("LINE == %s\n", line);
-//	printf("--------------\n");
-/* //FOR THE NORME A INT ** ANS A INT *** FT_IN BQUOTE_REPLACE
-	index = (int**)malloc(sizeof(int*) * 2);
-	index[0] = i_index;
-	index[1] = j_index;
-	printf("INDEX[0] == %d\n", *index[0]);
-	printf("IINDEX == %d\n", *i_index);*/
 	if (ft_bquote_replace(&(*cmd), line, i_index, j_index, begin))
 		return (1);
 	return (0);
