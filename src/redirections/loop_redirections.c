@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 16:06:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 18:00:32 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,7 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 			if (flag != NOTHING && flag != HEREDOC)
 			{
 				//Si il y a des redirections, alors va checker si le fichier ne soit pas une directory
+				if (flag != O_RDONLY)
 				if (ft_check_file_is_directory(redirect->file) == -1)
 					return (EXIT_FAILURE);
 			}

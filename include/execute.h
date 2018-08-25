@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 15:51:26 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 16:30:49 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ int				ft_echo(t_op *t_exec, int flag);
 int				ft_cd(t_op *t_exec, int flag);
 int				ft_exit(t_op *t_exec, int flag);
 int 			ft_open_redirect_builtins(char *file, int flag, int flag2);
-void			ft_heredoc(t_redirect *redirect, char *bin, int flag);
+void			ft_heredoc(t_redirect *redirect, char *bin, int flag, int buil);
 int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *bin, pid_t pid, int buil);
 int				ft_check_direct_command(char *cmd);
 int				ft_check_file_is_directory(char *file);
