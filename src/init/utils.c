@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 06:42:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 10:08:34 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 12:22:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,7 @@ int					index_to_var(char *name, char **env)
 				return (i);
 		}
 	}
-	return (i);
+	return (-1);
 }
 
 static char			*found_slash(int i[2], char *bin, char **tmp_1, char **tmp)

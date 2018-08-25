@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 11:14:09 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 12:23:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,6 @@ int		ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 	int ok;
 	int flag;
 
-	printf("CMD[1] == %s\n", t_exec->cmd[1]);
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
 		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)

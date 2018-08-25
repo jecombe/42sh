@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 07:04:27 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 12:47:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -110,11 +110,36 @@ int					get_sysname(void)
 	return (0);
 }
 
-int					ft_init_set(char *av)
+int					add_info_params(int ac, char **av)
+{
+	char		*tmp;
+	char		*tmp2;
+	int			i;
+
+	i = 0;
+	if ((tmp = ft_itoa(ac)))
+	{
+		add_to_set("$#", tmp);
+		ft_strdel(&tmp);
+	}
+	while (av[i])
+	{
+		tmp2 = ft_itoa(i);
+		tmp = ft_strjoin("$", tmp2);
+		add_to_set(tmp, av[i]);
+		ft_strdel(&tmp);
+		ft_strdel(&tmp2);
+		i++;
+	}
+	return (0);
+}
+
+int					ft_init_set(int ac, char **av)
 {
 	char		buff[4096];
 	char		*str;
 
+	add_info_params(ac, av);
 	g_set = ft_tabdup(g_env);
 	str = ft_itoa(getpid());
 	add_to_set("PID", str);
@@ -135,7 +160,7 @@ int					ft_init_set(char *av)
 	add_to_set("IFS", " \t\n");
 	gethostname(buff, sizeof(buff));
 	add_to_set("HOSTNAME", buff);
-	manage_info_history(av);
+	manage_info_history(av[0]);
 	get_sysname();
 	return (0);
 }
@@ -146,7 +171,7 @@ int					ft_term_init(int ac, char **av)
 
 	if (init_env(ac, av))
 		return (1);
-	if (ft_init_set(av[0]))
+	if (ft_init_set(ac, av))
 		return (1);
 	if (!(term = getenv("TERM")))
 		term = "xterm-256color";
