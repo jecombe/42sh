@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 04:29:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 06:18:34 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 06:42:24 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,6 +28,12 @@ int			ft_check_command(char *cmd)
 		return (6);
 	else if (ft_strcmp("hash", cmd) == 0)
 		return (7);
+	else if (ft_strcmp("set", cmd) == 0)
+		return (8);
+	else if (ft_strcmp("unset", cmd) == 0)
+		return (9);
+	else if (ft_strcmp("export", cmd) == 0)
+		return (10);
 	else
 		return (0);
 }

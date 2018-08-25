@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 08:58:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 08:36:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,6 +41,12 @@ int		ft_builtins(t_op *exec, int what, int flag)
 	}
 	if (ft_strcmp(exec->cmd[0], "unsetenv") == 0)
 		return (ft_unsetenv(exec->cmd[1]));
+	if (ft_strcmp(exec->cmd[0], "set") == 0)
+		return (set(exec));
+	if (ft_strcmp(exec->cmd[0], "unset") == 0)
+		return (unset(exec));
+	if (ft_strcmp(exec->cmd[0], "export") == 0)
+		return (ft_export(exec));
 	if (ft_strcmp(exec->cmd[0], "hash") == 0)
 	{
 		ft_hash_print(hashtable);

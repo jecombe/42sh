@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   init.h                                           .::    .:/ .      .::   */
+/*   set.c                                            .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/12 04:41:57 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 10:03:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/25 06:50:50 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/25 06:55:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../include/builtins.h"
 
-#include "./stdin.h"
+/*
+ * LES REDIRECTIONS NE SONT PAS FAITES
+*/
 
-char **g_set;
-char **g_env;
+int		set(t_op *exec)
+{
+	int		i;
 
-int			ft_term_init(int ac, char **av);
-char		*concat_name_value(char *name, char *value);
-int			add_to_env(char *name, char *value);
-int			add_to_set(char *name, char *value);
-char		*search_path_of_101sh(char *bin);
-int			init_env(int ac, char **av);
-int			index_to_var(char *name, char **env);
-
-#endif
+	i = 0;
+	if (!exec->cmd[1])
+		while (g_set[i])
+			ft_putendl(g_set[i++]);
+	return (0);
+}

@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   init.h                                           .::    .:/ .      .::   */
+/*   manage_assignement_word.c                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/12 04:41:57 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 10:03:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/25 10:34:46 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/25 11:10:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef INIT_H
-# define INIT_H
+#include "../../include/heart.h"
 
-#include "./stdin.h"
+int			manage_assignement_word(t_lex lex, int *i)
+{
+	char	*name;
+	char	*value;
 
-char **g_set;
-char **g_env;
-
-int			ft_term_init(int ac, char **av);
-char		*concat_name_value(char *name, char *value);
-int			add_to_env(char *name, char *value);
-int			add_to_set(char *name, char *value);
-char		*search_path_of_101sh(char *bin);
-int			init_env(int ac, char **av);
-int			index_to_var(char *name, char **env);
-
-#endif
+	name = NULL;
+	value = NULL;
+	while (lex.name[*i])
+	{
+		if (lex.token[*i] == ASSIGNEMENT_WORD)
+			*i = *i + 1;
+		else
+			return (0);
+	}
+	*i = 0;
+	while (lex.name[*i])
+	{
+		name = ft_get_var(lex.name[*i]);
+		value = ft_get_value(lex.name[*i]);
+		add_to_set(name, value);
+		ft_strdel(&name);
+		ft_strdel(&value);
+		*i = *i + 1;
+	}
+	return (0);
+}

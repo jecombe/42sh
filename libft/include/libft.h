@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:25:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/08 06:25:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 08:42:01 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,5 +114,6 @@ int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				*ft_getenv(char *str, char **env);
 int					ft_strdel_in_tab(char ***tablo, int index);
+int					ft_str_isalnum(char *str);
 
 #endif

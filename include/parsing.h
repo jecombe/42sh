@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:15:19 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 10:42:28 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,5 +65,6 @@ int								ft_manage_word(t_seq **b_seq, char *name);
 int								ft_manage_io_number(t_seq **b_seq, char *name);
 void							ft_convert_token(char **str, t_token token);
 int								parse_error(t_seq **b_seq);
+int								manage_assignement_word(t_lex lex, int *i);
 
 #endif

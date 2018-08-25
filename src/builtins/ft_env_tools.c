@@ -6,12 +6,42 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:30:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:03:07 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 10:28:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
+
+char		*ft_get_var(char *line)
+{
+	int		i;
+
+	i = 0;
+	if (line)
+		while (line[i])
+		{
+			if (line[i] == '=')
+				return (ft_strsub(line, 0, i));
+			i++;
+		}
+	return (NULL);
+}
+
+char		*ft_get_value(char *line)
+{
+	int		i;
+
+	i = 0;
+	if (line)
+		while (line[i])
+		{
+			if (line[i] == '=' && line[i] + 1)
+				return (ft_strdup(line + (i + 1)));
+			i++;
+		}
+	return (NULL);
+}
 
 char		*ft_envset_line(const char **envset, const char *name)
 {

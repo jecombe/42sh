@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 03:08:36 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 11:09:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,7 @@ int			ft_parse_exit(t_token token)
 	ft_putendl("'");
 	if (name)
 		ft_strdel(&name);
-	return (1);
+	return (2);
 }
 
 int			ft_attribute_token(t_seq **b_seq, char *name, t_token token)
@@ -60,16 +60,22 @@ t_seq		*ft_parsing(t_lex lex)
 	int				i;
 	t_seq			*b_seq;
 	t_op			*t_op;
+	int				error;
 
-	i = -1;
+	error = 0;
+	i = 0;
 	b_seq = NULL;
-	while (lex.name[++i])
+	manage_assignement_word(lex, &i);
+	while (lex.name[i])
 	{
-		if (ft_attribute_token(&b_seq, lex.name[i], lex.token[i]))
+		printf("NAME == %s\n", lex.name[i]);
+		if ((error = ft_attribute_token(&b_seq, lex.name[i], lex.token[i])))
 		{
-			ft_putendl("MALLOC ERROR");
+			if (error == 1)
+				ft_putendl("MALLOC ERROR");
 			return (NULL);
 		}
+		i++;
 	}
 	parse_error(&b_seq);
 	return (b_seq);

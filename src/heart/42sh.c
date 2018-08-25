@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/22 06:35:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/25 07:26:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,6 +77,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		ft_memset(&lex, 0, sizeof(t_lex));
 	}
 	ft_lexer_del(&lex);
+	printf("C EST QUI QUI SEGFAULT QUAND IL Y A UN ENVIRONNEMENT VIDE ?\n");
 	return (0);
 }
 
