@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 15:52:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 20:48:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,7 +97,8 @@ char		**first_copy(char **cmd, int i_index, char *in_bquote, int begin, int *ok)
 
 	i = 0;
 	ret = NULL;
-	ifs = ft_strdup("Ilham");
+	if (!(ifs = ft_getenv("IFS", g_set)))
+		ifs = ft_strdup("\n \t");
 //	printf("IN_BQUOTE == %s\n", in_bquote);
 	prev_cmd = search_prev(cmd, i_index);
 	result_bquote = ft_split_bquote(in_bquote, ifs);
