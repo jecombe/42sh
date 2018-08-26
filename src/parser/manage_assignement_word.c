@@ -6,12 +6,33 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 10:34:46 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 11:10:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 15:58:06 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/heart.h"
+
+static int	is_assig(char *cmd)
+{
+	int		i;
+	int		egale;
+
+	egale = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		if (ft_isalnum(cmd[i]) || cmd[i] == '=')
+		{
+			if (cmd[i] == '=')
+				egale++;
+			i++;
+		}
+		else
+			return (1);
+	}
+	return (egale ? 0 : 1);
+}
 
 int			manage_assignement_word(t_lex lex, int *i)
 {
@@ -22,7 +43,7 @@ int			manage_assignement_word(t_lex lex, int *i)
 	value = NULL;
 	while (lex.name[*i])
 	{
-		if (lex.token[*i] == ASSIGNEMENT_WORD)
+		if (lex.token[*i] == ASSIGNEMENT_WORD || !is_assig(lex.name[*i]))
 			*i = *i + 1;
 		else
 			return (0);
