@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strncpy.c                                     .::    .:/ .      .::   */
+/*   ft_error.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/22 21:39:25 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 03:36:39 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/25 10:59:49 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/26 00:18:58 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/ft_select.h"
 
-char	*ft_strncpy(char *dst, const char *src, size_t len)
+void	ft_error(const char *s, t_select **t)
 {
-	size_t i;
-
-	i = 0;
-	while (src[i] && i < len)
+	if (s[0])
 	{
-		dst[i] = src[i];
-		i++;
+		ft_putstr_fd("ERROR :", 2);
+		ft_putstr_fd(s, 2);
+		ft_putchar_fd(2, '\n');
 	}
-	while (i < len)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
+	exit(ft_disable_raw(1, &(*t)));
 }

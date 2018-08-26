@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strncpy.c                                     .::    .:/ .      .::   */
+/*   ft_manage_entry.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/22 21:39:25 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 03:36:39 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/27 13:29:05 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/05/03 03:40:48 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/ft_select.h"
+#include <stdio.h>
 
-char	*ft_strncpy(char *dst, const char *src, size_t len)
+int		ft_manage_entry(char **entry, t_select **sel)
 {
-	size_t i;
+	int		ret;
 
-	i = 0;
-	while (src[i] && i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	while (i < len)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
+	ret = 1;
+	(*entry) = ft_read_entry(&(*sel));
+	if ((*entry)[0] != -1)
+		ret = ft_manage_touch(&(*entry), &(*sel));
+	return (ret);
 }

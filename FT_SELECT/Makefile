@@ -6,7 +6,7 @@
 #    By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/05/04 01:34:45 by gmadec       #+#   ##    ##    #+#        #
-#    Updated: 2018/05/04 01:34:48 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/25 22:30:19 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -20,10 +20,10 @@ SRCS =	 main.c ft_error.c ft_disable_raw.c \
 		ft_read_entry.c ft_print_params.c ft_get_size_term.c \
 		ft_manage_touch.c ft_arrows.c ft_outc.c \
 		ft_init_select.c ft_count_line.c ft_search_big_param.c \
-		ft_is_file.c ft_del_maillon.c ft_first_sort.c \
+		ft_is_file.c ft_first_sort.c ft_select.c\
 		ft_count_params.c ft_char_by_line.c \
 		ft_prepare_print.c ft_params_by_line.c ft_select_sp.c \
-		ft_free_t_select.c ft_signal.c ft_save_shell.c ft_searchdyn.c
+		ft_free_t_select.c ft_save_shell.c ft_searchdyn.c
 OBJS	= ${SRCS:.c=.o}
 INC		= ./
 FLAGS	= -Wall -Wextra -Werror

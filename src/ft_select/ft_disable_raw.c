@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strncpy.c                                     .::    .:/ .      .::   */
+/*   ft_disable_raw.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/11/22 21:39:25 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 03:36:39 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/25 10:59:35 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/26 00:35:55 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/ft_select.h"
 
-char	*ft_strncpy(char *dst, const char *src, size_t len)
+int		ft_disable_raw(int ret, t_select **t)
 {
-	size_t i;
+	t_term		raw_off;
 
-	i = 0;
-	while (src[i] && i < len)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	while (i < len)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (dst);
+	raw_off = ft_save_raw_off(&(*t));
+	tputs(tgetstr("ve", NULL), 1, ft_outc);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw_off) == -1)
+		ft_error("tcsetattr", &(*t));
+	if (!(ret == -42))
+		ft_free_t_select(&(*t));
+	return (ret);
 }
