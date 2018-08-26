@@ -49,17 +49,14 @@ void		ft_heredoc(t_redirect *redirect, char *bin, int flag, int buil)
 	int statu;
 
 	pipe(fd);
-	pid = fork();
-	if (pid == 0)
-	{
-	dup2(fd[1], STDIN_FILENO);
-	close(fd[0]);
 	ft_read_line(fd[1], redirect->file);
-	dup2(fd[0], STDIN_FILENO);
 	close(fd[1]);
+	//ft_read_line(fd[1], redirect->file);
+	if (buil == 0)
+	{
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	}
-	else
-		wait(0);
 }
 
 int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *tmp_bin, pid_t pid, int buil)
@@ -72,7 +69,6 @@ int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *tmp_bin, pid_t 
 		if ((pid = fork()) < 0)
 			exit(EXIT_FAILURE);
 	}
-
 	if (pid == 0)
 	{
 		ft_heredoc(redirect, tmp_bin, flag, buil);
