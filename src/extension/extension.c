@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 18:13:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 14:22:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,11 +82,7 @@ int			ft_parcour_tab(char ***cmd)
 					}
 				}
 				else if ((*cmd)[i][j] == '$')
-				{
-					printf("BEFORE I == %d, J == %d\n", i, j);
 					ft_dollar(cmd, &i, &j);
-					printf("AFTER I == %d, J == %d\n", i, j);
-				}
 				else
 					j++;
 				if (!(*cmd) || !(*cmd)[i])//RESOUT LE SEGSEG

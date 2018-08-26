@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 13:56:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 14:24:40 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,7 +116,6 @@ int					add_info_params(int ac, char **av)
 	char		*tmp2;
 	int			i;
 
-	printf("BBBBBBB\n");
 	i = 0;
 	if ((tmp = ft_itoa(ac)))
 	{

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 18:52:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 14:21:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,9 +31,7 @@ int			dollar_end(char *str, int debut)
 	i = debut;
 	while (str[i] && !ft_isquote(str[i]) && !ft_isblank(str[i]) && str[i] != '\\' && str[i] != '$')
 		i++;
-	printf("I == %d, debut == %d, I - debut == %d\n", i, debut, i - debut);
-	printf("STR == %s\n", str);
-	return (i > debut ? i - debut  + 1 : i);
+	return (i > debut ? i - debut : i);
 }
 
 int			replace_line(char ***cmd, int *i, int *j, char *line, int at)
@@ -43,40 +41,36 @@ int			replace_line(char ***cmd, int *i, int *j, char *line, int at)
 	char	*tmp2;
 	char	*tmp3;
 
+	tmp = NULL;
 	if (*j > 0)
 		tmp = ft_strsub((*cmd)[*i], 0, *j);
-	len = (int)ft_strlen((*cmd)[*i]);
+	len = (int)ft_strlen((*cmd)[*i]) - 1;
 	if (line)
 	{
-		printf("BBBBBUUUUUGGGGG\n");
 		if (tmp)
 		{
 			tmp2 = ft_strjoin(tmp, line);
 			ft_strdel(&tmp);
 			tmp = ft_strdup(tmp2);
+	//		ft_strdel(&tmp2);
 		}
 		else
 			tmp = ft_strdup(line);
 	}
-	printf("AT == %d, J == %d, len == %d\n", at, *j, len);
-	////BUG ICI
-	if (at + *j < len)
+	if (at + 1 + *j < len)
 	{
 		if (tmp)
 		{
-			tmp2 = ft_strsub((*cmd)[*i], at + *j, len - at - *j + 1);
-		//	printf("\n", tmp2);
+			tmp2 = ft_strsub((*cmd)[*i], at + *j + 1, len - at - *j + 1);
 			tmp3 = ft_strjoin(tmp, tmp2);
 			ft_strdel(&tmp);
 			ft_strdel(&tmp2);
 			tmp = ft_strdup(tmp3);
-			printf("APRES == %s\n", tmp3);
 			ft_strdel(&tmp3);
 		}
 		else
-			tmp = ft_strsub((*cmd)[*i], at + *j, len - at - *j);
+			tmp = ft_strsub((*cmd)[*i], at + *j + 1, len - at - *j);
 	}
-	//BUG ICIII
 	if (tmp)
 	{
 		ft_strdel(&(*cmd)[*i]);
@@ -97,20 +91,14 @@ int			ft_dollar(char ***cmd, int *i, int *j)
 	int			tablo[2];
 
 	ret = NULL;
-	if ((at = dollar_end((*cmd)[*i], *j + 1)) >= 2)
+	if ((at = dollar_end((*cmd)[*i], *j + 1)) >= 1)
 	{
-		tmp = ft_strsub((*cmd)[*i], *j + 1, at - 1);
-		printf("TMP == %s\n", tmp);
-//		printf("IN DOLLAR == %s\n", tmp);
+		tmp = ft_strsub((*cmd)[*i], *j + 1, at);
 		line = dollar_replace(tmp);
-		replace_line(cmd, i, j, line, at);
-		printf("LINE == %s\n", line);
-//		if(!replace_line(cmd, i, j, line, at))
-//			del_string_in_tab();
+		if(replace_line(cmd, i, j, line, at))
+			ft_strdel_in_tab(cmd, *i);
 		if (line)
-			*j = *j + (int)ft_strlen(line) - 1;
-		printf("J == %d\n", *j);
-		printf("CMD == %s\n", (*cmd)[*i]);
+			*j = *j + (int)ft_strlen(line);
 	}
 	else
 		*j = *j + 1;

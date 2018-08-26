@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 11:09:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 14:23:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,7 +68,6 @@ t_seq		*ft_parsing(t_lex lex)
 	manage_assignement_word(lex, &i);
 	while (lex.name[i])
 	{
-		printf("NAME == %s\n", lex.name[i]);
 		if ((error = ft_attribute_token(&b_seq, lex.name[i], lex.token[i])))
 		{
 			if (error == 1)
