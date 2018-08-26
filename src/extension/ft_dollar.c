@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 17:02:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 17:06:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ int			replace_in_and_after(int k[3], char ***cmd, char **tmp, char **tmp2)
 	char	*tmp3;
 	int		len;
 
-	len = (int)ft_strlen((*cmd)[k[0]]) - 1;
+	len = (int)ft_strlen((*cmd)[k[0]]) ;
 	if (k[2] + 1 + k[1] < len)
 	{
 		if (*tmp)
