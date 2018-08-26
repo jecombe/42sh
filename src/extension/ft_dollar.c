@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 14:21:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 15:11:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,20 +31,48 @@ int			dollar_end(char *str, int debut)
 	i = debut;
 	while (str[i] && !ft_isquote(str[i]) && !ft_isblank(str[i]) && str[i] != '\\' && str[i] != '$')
 		i++;
-	return (i > debut ? i - debut : i);
+	return (i > debut ? i - debut : 0);
 }
 
-int			replace_line(char ***cmd, int *i, int *j, char *line, int at)
+int			replace_in_and_after(int k[3], char ***cmd, char **tmp, char **tmp2)
 {
+	char	*tmp3;
 	int		len;
+
+	len = (int)ft_strlen((*cmd)[k[0]]) - 1;
+	if (k[2] + 1 + k[1] < len)
+	{
+		if (*tmp)
+		{
+			*tmp2 = ft_strsub((*cmd)[k[0]], k[2] + k[1] + 1, len - k[2] - k[1]);
+			tmp3 = ft_strjoin(*tmp, *tmp2);
+			ft_strdel(tmp);
+			ft_strdel(tmp2);
+			*tmp = ft_strdup(tmp3);
+			ft_strdel(&tmp3);
+		}
+		else
+			*tmp = ft_strsub((*cmd)[k[0]], k[2] + k[1] + 1, len - k[2] - k[1]);
+	}
+	if (*tmp)
+	{
+		ft_strreplace(cmd, k[0], *tmp);
+		ft_strdel(tmp);
+		return (0);
+	}
+	else
+		return (1);
+	return (0);
+}
+
+int			replace_line(char ***cmd, char *line, int k[3])
+{
 	char	*tmp;
 	char	*tmp2;
-	char	*tmp3;
 
 	tmp = NULL;
-	if (*j > 0)
-		tmp = ft_strsub((*cmd)[*i], 0, *j);
-	len = (int)ft_strlen((*cmd)[*i]) - 1;
+	if (k[1] > 0)
+		tmp = ft_strsub((*cmd)[k[0]], 0, k[1]);
 	if (line)
 	{
 		if (tmp)
@@ -52,50 +80,30 @@ int			replace_line(char ***cmd, int *i, int *j, char *line, int at)
 			tmp2 = ft_strjoin(tmp, line);
 			ft_strdel(&tmp);
 			tmp = ft_strdup(tmp2);
-	//		ft_strdel(&tmp2);
+			ft_strdel(&tmp2);
 		}
 		else
 			tmp = ft_strdup(line);
 	}
-	if (at + 1 + *j < len)
-	{
-		if (tmp)
-		{
-			tmp2 = ft_strsub((*cmd)[*i], at + *j + 1, len - at - *j + 1);
-			tmp3 = ft_strjoin(tmp, tmp2);
-			ft_strdel(&tmp);
-			ft_strdel(&tmp2);
-			tmp = ft_strdup(tmp3);
-			ft_strdel(&tmp3);
-		}
-		else
-			tmp = ft_strsub((*cmd)[*i], at + *j + 1, len - at - *j);
-	}
-	if (tmp)
-	{
-		ft_strdel(&(*cmd)[*i]);
-		(*cmd)[*i] = ft_strdup(tmp);
-		ft_strdel(&tmp);
-		return (0);
-	}
-	else
-		return (1);
+	return (replace_in_and_after(k, cmd, &tmp, &tmp2));
 }
 
 int			ft_dollar(char ***cmd, int *i, int *j)
 {
 	char		*tmp;
 	char		*line;
-	int			at;
 	char		**ret;
-	int			tablo[2];
+	int			k[3];
 
 	ret = NULL;
-	if ((at = dollar_end((*cmd)[*i], *j + 1)) >= 1)
+	k[0] = *i;
+	k[1] = *j;
+	k[2] = 0;
+	if ((k[2] = dollar_end((*cmd)[*i], *j + 1)) >= 1)
 	{
-		tmp = ft_strsub((*cmd)[*i], *j + 1, at);
+		tmp = ft_strsub((*cmd)[*i], *j + 1, k[2]);
 		line = dollar_replace(tmp);
-		if(replace_line(cmd, i, j, line, at))
+		if(replace_line(cmd, line, k))
 			ft_strdel_in_tab(cmd, *i);
 		if (line)
 			*j = *j + (int)ft_strlen(line);
