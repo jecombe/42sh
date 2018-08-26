@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 15:11:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 17:02:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ int			dollar_end(char *str, int debut)
 	int		i;
 
 	i = debut;
-	while (str[i] && !ft_isquote(str[i]) && !ft_isblank(str[i]) && str[i] != '\\' && str[i] != '$')
+	while ((str[i] && !ft_isquote(str[i]) && !ft_isblank(str[i]) && str[i] != '\\' && str[i] != '$') || (str[i] == '$' && i == debut))
 		i++;
 	return (i > debut ? i - debut : 0);
 }

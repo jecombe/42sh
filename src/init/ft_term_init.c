@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 14:24:40 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 17:00:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -139,10 +139,11 @@ int					ft_init_set(int ac, char **av)
 	char		buff[4096];
 	char		*str;
 
-	add_info_params(ac, av);
 	g_set = ft_tabdup(g_env);
+	add_info_params(ac, av);
 	str = ft_itoa(getpid());
 	add_to_set("PID", str);
+	add_to_set("$", str);
 	if (str)
 		ft_strdel(&str);
 	str = ft_itoa(getppid());
