@@ -11,8 +11,8 @@
 | Les opérateurs de redirection suivants : ">", ">>", "<". | ✅ |
 | Les opérateurs logiques "&&" et "\|\|". | ✅ |
 | Le séparateur ";" | ✅ |
-| Gestion correcte des espaces et des tabulations. | ❌ |
-| Gestion des erreurs et de la valeur de retour des commandes | ❌ |
+| Gestion correcte des espaces et des tabulations. | ✅ |
+| Gestion des erreurs et de la valeur de retour des commandes | ✅ |
 | echo | ✅ |
 | cd | ❌ |
 | exit | ❌ |
