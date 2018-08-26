@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 19:33:51 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/26 19:38:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,6 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 	i = 0;
 	if (fd2 > 1)
 	{
-		no_red = 1;
 		flag = O_TRUNC;
 		flag2 = O_WRONLY;
 		fd_open = ft_open_redirect(".tmp_file", flag, flag2, 1);
