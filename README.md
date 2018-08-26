@@ -5,6 +5,7 @@
 
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
+| NORME. | 🐌 |
 | Affichage d’un prompt. | ✅ |
 | lecture de la ligne de commande, sans édition de ligne. | ✅ |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ✅ |
@@ -32,5 +33,5 @@
 | Complétion dynamique. | 🐢 |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Les back quotes "‘". | ✅ |
-| Rechercher dans l’historique avec ctrl+R | ❌ |
+| Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
