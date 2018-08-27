@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 04:39:32 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 20:26:37 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 05:11:33 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,6 @@ int				ft_test(t_select **sel, int ret)
 	t_ws		verif;
 	int			refresh;
 
-	ret = 0;
 	refresh = 0;
 	entry = NULL;
 	ft_get_size_term(&verif, &(*sel), 2);
@@ -69,7 +68,6 @@ int				ft_test(t_select **sel, int ret)
 		{
 			g_sign = 0;
 			ft_get_size_term(&verif, &(*sel), 2);
-	printf("OK\n");
 			ft_print_params(&(*sel));
 		}
 		refresh == 2 ? ft_putstr_fd("\E[0J", 2) : 0;
@@ -79,23 +77,23 @@ int				ft_test(t_select **sel, int ret)
 	return (0);
 }
 
-char			*ft_select(char **av, int *line)
+char			*ft_select(char **av, int *line, int *pos)
 {
 	t_select	*sel;
 	int			ret;
-	t_ws		verif;
+	//t_ws		verif;
 	char		*test = NULL;
 
-	sel = NULL;
 	ret = 0;
 	g_sign = 1;
 	if (!av)
 		return (0);
-//	ft_enable_raw(&sel);
-	ft_init_select(&sel, av);
-	ft_get_size_term(&verif, &sel, 2);
+	ft_enable_raw(&sel);
+	ft_init_select(&sel, av, pos);
+//	ft_get_size_term(&verif, &sel, 2);
+//	if ()
 	ft_test(&sel, ret);
 	test = ft_print_final(&sel, line);
-//	ft_disable_raw(0, &sel);
+	ft_disable_raw(0, &sel);
 	return (test);
 }

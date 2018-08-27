@@ -6,7 +6,7 @@
 /*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/11/22 21:41:56 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/06/17 03:33:16 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 01:48:36 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,5 +97,6 @@ char				**ft_tabdup(char **tab);
 int					ft_putc(int c);
 char				*ft_strjoin_free(char *s1, char *s2);
 int					ft_nbrlen(int nbr);
+int					ft_malloc_cmd(char ***cmd, char *new_arg);
 
 #endif

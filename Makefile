@@ -6,7 +6,7 @@
 #    By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/02/22 01:51:44 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/08/25 23:23:49 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/27 01:03:44 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -80,9 +80,7 @@ SRC_NAME =		editor/main.c \
 				ft_select/ft_searchdyn.c \
 				ft_select/ft_select.c \
 				ft_select/ft_select_sp.c \
-				ft_select/ft_signal.c \
 
-OBJ_NAME = 
 OBJ = $(addprefix $(OBJ_PATH), $(SRC_NAME:.c=.o))
 OBJ_FOLDERS = editor ft_select
 OBJ_FOLDERS_BIS = $(addprefix $(OBJ_PATH), $(OBJ_FOLDERS))

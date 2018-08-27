@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 23:00:40 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 05:15:17 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,19 +17,15 @@
 # include <sys/ioctl.h>
 # include "../../../includes/stdin.h"
 
-//# define END "\x1b[0m"
 # define BOLD "\x1b[1m"
 # define UNDER "\x1b[4m"
 # define REV "\x1b[7m"
 
 # define GREY "\x1b[30m"
-//# define RED "\x1b[31m"
 # define GREEN "\x1b[32m"
 # define YELLOW "\x1b[33m"
-//# define BLUE "\x1b[34m"
 # define PURPLE "\x1b[35m"
 # define CYAN "\x1b[36m"
-//# define WHITE "\x1b[37m"
 
 # define IGREY "\x1b[40m"
 # define IRED "\x1b[41m"
@@ -68,11 +64,13 @@ typedef struct			s_select
 	int					pbl;
 	int					nbl;
 	int					nbp;
+	int				cur_col_pos;
+	int				cur_row_pos;
 	char				*ds;
 	t_line				*line;
 }						t_select;
 
-char					*ft_select(char **av, int *line);
+char					*ft_select(char **av, int *line, int *pos);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_disable_raw(int ret, t_select **t);
@@ -84,7 +82,7 @@ void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
 int						ft_manage_touch(char **ret, t_select **t);
 int						ft_arrows(char arrows, t_select **t);
 int						ft_outc(int c);
-void					ft_init_select(t_select **sel, char **av);
+void					ft_init_select(t_select **sel, char **av, int *pos);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);

@@ -6,7 +6,7 @@
 #    By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/22 21:31:56 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/08/25 23:02:07 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/27 01:47:35 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -93,6 +93,7 @@ SRC = ft_atoi.c \
 	  ft_putc.c \
 	  ft_strjoin_free.c \
 	  ft_nbrlen.c \
+	  ft_malloc_cmd.c \
 
 OBJ = $(SRC:.c=.o)
 

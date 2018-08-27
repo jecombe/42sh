@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 02:50:42 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 05:27:04 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,6 +85,12 @@ typedef struct		s_editor
 	char	key[BUFF_SIZE];
 	char *line;
 }					t_editor;
+
+typedef struct		s_tab
+{
+	char	d_name[4096];
+	struct s_tab	*next;
+}					t_tab;
 
 int		g_bin_exit;
 //char	*g_save_home;
