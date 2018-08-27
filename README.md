@@ -35,6 +35,3 @@
 | Les back quotes "‘". | ✅ |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
-|Single backticks|`'Isn't this fun?'`            |
-|Quotes          |`"Isn't this fun?"`            |
-|Dashes          |`-- is en-dash, --- is em-dash`|
