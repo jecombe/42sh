@@ -47,7 +47,6 @@ qui vous plaira.| ✅ |
 | Complétion dynamique. | 🐢 |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Les back quotes "‘". | ✅ |
-| Edition de ligne telle que demandée dans le ftsh3. | ✅ |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
 | Rechercher dans l’historique avec ctrl+R | ❌ |
