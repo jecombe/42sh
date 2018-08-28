@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 08:33:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 09:47:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,9 +47,12 @@ int					init_env(int ac, char **av)
 	char			*tmp2;
 	extern char		**environ;
 
-	tmp = NULL;
 	g_env = ft_tabdup(environ);
 	ft_get_user_info();
+	if (!(index_to_var("TERM", g_env)))
+		add_to_env("TERM", "xterm-256color");
+	if (tgetent(NULL, "xterm-256color") == ERR)
+		return (1);
 	if ((tmp = search_path_of_101sh(av[0])))
 	{
 		tmp2 = ft_strjoin(tmp, "/.TMPDIR");

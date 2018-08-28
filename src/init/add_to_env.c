@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 06:52:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 12:22:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 09:25:06 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,7 @@ static int			not_found(char *to_add)
 			ft_strdel(&g_env[j]);
 			g_env[j] = ft_strdup(to_add);
 			ft_malloc_cmd(&g_env, tmp);
+			ft_strdel(&tmp);
 		}
 		else
 			ft_malloc_cmd(&g_env, to_add);
@@ -60,6 +61,6 @@ int					add_to_env(char *name, char *value)
 	}
 	else
 		not_found(to_add);
-	ft_strdel(&to_add);
+	to_add ? ft_strdel(&to_add) : 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 06:42:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 12:22:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 09:48:21 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,5 +106,6 @@ char				*concat_name_value(char *name, char *value)
 		str = ft_strjoin(str2, value);
 		ft_strdel(&str2);
 	}
+	str ? ft_strdel(&str2) : 0;
 	return (str ? str : str2);
 }

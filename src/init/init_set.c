@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:06:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 09:41:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,37 +16,45 @@
 #include <pwd.h>
 #include <sys/utsname.h>
 
-void				historic_not_found(void)
+void				historic_found(char *str)
 {
-	add_to_set("HISTFILESIZE", "NULL");
-	add_to_set("HISTFILE", "UNKNOW");
+	int			fd;
+	int			i;
+	char		*line;
+
+	i = 0;
+	line = NULL;
+	add_to_set("HISTFILE", str);
+	fd = open(str, O_RDONLY);
+	while (get_next_line(fd, &line) > 0)
+	{
+		ft_strdel(&line);
+		i++;
+	}
+	close(fd);
+	line = ft_itoa(i);
+	add_to_set("HISTFILESIZE", line);
+	ft_strdel(&line);
 }
 
 int					manage_info_history(char *av)
 {
 	char		*str;
 	char		buff[4096];
-	int			fd;
-	int			i;
 
-	i = 0;
 	add_to_set("HISTSIZE", "500");
 	str = ft_strjoin(search_path_of_101sh(av), "/.historic");
 	if (!access(str, F_OK))
 	{
-		add_to_set("HISTFILE", str);
-		fd = open(str, O_RDONLY);
-		while (get_next_line(fd, &str) > 0)
-		{
-			ft_strdel(&str);
-			i++;
-		}
-		close(fd);
-		str = ft_itoa(i);
-		add_to_set("HISTFILESIZE", str);
+		historic_found(str);
 	}
 	else
-		historic_not_found();
+	{
+		add_to_set("HISTFILESIZE", "NULL");
+		add_to_set("HISTFILE", "UNKNOW");
+	}
+	if (str)
+		ft_strdel(&str);
 	return (0);
 }
 
@@ -97,7 +105,7 @@ int					add_info_params(int ac, char **av)
 		i++;
 	}
 	add_to_set("*", etoile);
-	ft_strdel(&etoile);
+	etoile ? ft_strdel(&etoile) : 0;
 	return (0);
 }
 

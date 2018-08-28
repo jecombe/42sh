@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 04:40:33 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 05:51:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 09:26:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,11 +42,8 @@ static void			sort_set(void)
 	}
 }
 
-static int			not_found(char *to_add, int index)
+static int			not_found(char *to_add)
 {
-	int			j;
-	char		*tmp;
-
 	if (to_add)
 		ft_malloc_cmd(&g_set, to_add);
 	sort_set();
@@ -77,7 +74,7 @@ int					add_to_set(char *name, char *value)
 		g_set[i] = ft_strdup(to_add);
 	}
 	else
-		not_found(to_add, i);
-	ft_strdel(&to_add);
+		not_found(to_add);
+	to_add ? ft_strdel(&to_add) : 0;
 	return (0);
 }
