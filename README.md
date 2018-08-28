@@ -52,6 +52,8 @@ PROBLEMES A RESOUDRE:<br/>
 \_\`\` > 2<br/>
 \_  > 2<br/>
 \_\`echo ls\`
+\_ls-l
+\_!d
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE

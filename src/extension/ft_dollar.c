@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 17:06:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 08:18:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,9 +60,7 @@ int			replace_in_and_after(int k[3], char ***cmd, char **tmp, char **tmp2)
 		ft_strdel(tmp);
 		return (0);
 	}
-	else
-		return (1);
-	return (0);
+	return (1);
 }
 
 int			replace_line(char ***cmd, char *line, int k[3])

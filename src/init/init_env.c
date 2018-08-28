@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 12:22:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 08:33:13 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,10 +33,8 @@ static int				ft_get_user_info(void)
 		i = ft_atoi(str);
 		ft_strdel(&str);
 		if ((str = ft_itoa(i + 1)))
-		{
 			add_to_env("SHLVL", str);
-			ft_strdel(&str);
-		}
+		str ? ft_strdel(&str) : 0;
 	}
 	else
 		add_to_env("SHLVL", "1");

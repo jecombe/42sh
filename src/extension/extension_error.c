@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 07:09:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 08:54:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,12 +33,8 @@ static int		error_n_redirect(t_redirect **b_redirect)
 static int				is_assign(char *cmd)
 {
 	int			i;
-//	int			egale;
-//	int			letter;
 
 	i = 0;
-//	egale = 0;
-//	letter = ft_isalpha(cmd[0]);
 	while (cmd[i])
 	{
 		if (ft_isalnum(cmd[i]) || cmd[i] == '=')
@@ -51,7 +47,6 @@ static int				is_assign(char *cmd)
 		i++;
 	}
 	return (0);
-//	return (egale && letter && i > egale ? 1 : 0);
 }
 
 static int		manage_var_builtin(char ***tablo)
@@ -64,21 +59,13 @@ static int		manage_var_builtin(char ***tablo)
 		while ((*tablo)[i] && is_assign((*tablo)[i]))
 			i++;
 		if (i == ft_tablen((*tablo)))
-		{
-//			printf("OUI\n");
 			ft_add_str_at(tablo, "ft_assign", 0);
-		}
 		else if (i)
-		{
-//			printf("DEL\n");
 			while (i)
 			{
 				ft_strdel_in_tab(tablo, 0);
 				i--;
 			}
-		}
-//		else
-//			printf("NON\n");
 	}
 	return (0);
 }

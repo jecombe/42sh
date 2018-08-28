@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/23 17:36:38 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 08:08:28 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,7 +89,10 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 				if (or_if == 0 && i == 0)
 				{
 					if (and_if == 0)
+					{
 						ret = ft_solver(opera, fd, pid, 0);
+						add_to_set("?", ft_itoa(ret));
+					}
 				}
 				//Si succées de solver
 				if (ret == EXIT_SUCCESS)
@@ -119,5 +122,8 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 	}
 	//Command sans next donc sans séparateur dans opera(b_seq->op)
 	else
-		ft_solver(opera, fd, pid, 0);
+	{
+		ret = ft_solver(opera, fd, pid, 0);
+		add_to_set("?", ft_itoa(ret));
+	}
 }
