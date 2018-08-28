@@ -48,7 +48,6 @@ qui vous plaira.| ✅ |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Les back quotes "‘". | ✅ |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
-| Rechercher dans l’historique avec ctrl+R | ❌ |
 
 PROBLEMES A RESOUDRE:<br/>
 \_TABLE DE HASH<br/>
