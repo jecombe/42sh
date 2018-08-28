@@ -24,13 +24,10 @@
 | Les pipes "\|" | ✅ |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | 🐢 |
 | Editer la ligne à l’endroit où se trouve le curseur. | ✅ |
-| Déplacer le curseur vers la gauche et vers la droite pour pouvoir éditer la ligne à
-un endroit précis. Les nouveaux caractères doivent bien entendu s’insérer entre les
+| Déplacer le curseur vers la gauche et vers la droite pour pouvoir éditer la ligne à un endroit précis. Les nouveaux caractères doivent bien entendu s’insérer entre les
 caractères existants de la même manière que dans un shell ordinaire.| ✅ |
-| Utiliser les fleches du haut et du bas pour naviguer dans l’historique des commandes
-que l’on pourra alors éditer si le coeur nous en dit (la ligne, pas l’historique, hein).| ✅ |
-| Couper, copier et/ou coller tout ou partie d’une ligne avec la séquence de touches
-qui vous plaira.| ✅ |
+| Utiliser les fleches du haut et du bas pour naviguer dans l’historique des commandes que l’on pourra alors éditer si le coeur nous en dit (la ligne, pas l’historique, hein).| ✅ |
+| Couper, copier et/ou coller tout ou partie d’une ligne avec la séquence de touches qui vous plaira.| ✅ |
 | Se déplacer par "mot" vers la gauche et vers la droite avec ctrl+LEFT et ctrl+RIGHT ou toute autre combinaison de touche raisonnable.| ✅ |
 | Aller directement au début et à la fin d’une ligne avec home et end. | ✅ |
 | Ecrire ET éditer une commande sur plusieurs lignes. Dans ce cas, on apprecierait que ctrl+UP et ctrl+DOWN permettent de passer d’une ligne à l’autre de la commande en restant sur la même colonne ou la colonne la plus appropriée sinon.| ✅ |
