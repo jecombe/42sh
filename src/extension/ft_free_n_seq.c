@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_str_isalnum.c                                 .::    .:/ .      .::   */
+/*   ft_free_n_seq.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/25 08:40:32 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 00:09:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/28 00:33:33 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/28 01:55:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
-#include <stdio.h>
+#include "../../include/extension.h"
 
-int		ft_str_isalnum(char *str)
+void		ft_free_n_seq(t_seq **n_seq)
 {
-	int		i;
-
-	i = 0;
-	while (str[i])
+	if (*n_seq)
 	{
-		if (!ft_isalnum(str[i]))
-			return (0);
-		i++;
+		if ((*n_seq)->op)
+			ft_free_b_op(&(*n_seq)->op);
+		if ((*n_seq)->next && (*n_seq)->prev)
+		{
+			(*n_seq)->next->prev = (*n_seq)->prev;
+			(*n_seq)->prev->next = (*n_seq)->next;
+		}
+		free(*n_seq);
+		*n_seq = NULL;
 	}
-	return (1);
 }

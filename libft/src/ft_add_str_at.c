@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_str_isalnum.c                                 .::    .:/ .      .::   */
+/*   ft_add_str_at.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/25 08:40:32 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 00:09:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/08/28 03:40:49 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/08/28 03:50:13 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-#include <stdio.h>
 
-int		ft_str_isalnum(char *str)
+int			ft_add_str_at(char ***tablo, char *str, int at)
 {
-	int		i;
+	char		**tmp;
+	int			i;
 
 	i = 0;
-	while (str[i])
+	tmp = NULL;
+	while ((*tablo)[i])
 	{
-		if (!ft_isalnum(str[i]))
-			return (0);
-		i++;
+		if (i == at)
+		{
+			ft_malloc_cmd(&tmp, str);
+			at = -1;
+		}
+		else
+		{
+			ft_malloc_cmd(&tmp, (*tablo)[i]);
+			i++;
+		}
 	}
-	return (1);
+	*tablo ? ft_tabdel(tablo) : 0;
+	if (tmp)
+	{
+		*tablo = ft_tabdup(tmp);
+		ft_tabdel(&tmp);
+	}
+	return (0);
 }

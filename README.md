@@ -6,6 +6,7 @@
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
 | NORME. | 🐌 |
+| LEAKS. | 🐌 |
 | Affichage d’un prompt. | ✅ |
 | lecture de la ligne de commande, sans édition de ligne. | ✅ |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ✅ |
@@ -35,3 +36,11 @@
 | Les back quotes "‘". | ✅ |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
+
+PROBLEMES A RESOUDRE:
+\_TABLE DE HASH
+\_\> l
+\_\`\` > 2
+
+SEGFAULT A RESOUDRE:
+\_ENVIRONNEMENT VIDE

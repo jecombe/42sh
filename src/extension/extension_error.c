@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 01:20:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 03:59:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,92 +30,114 @@ static int		error_n_redirect(t_redirect **b_redirect)
 	return (0);
 }
 
+int				is_assign(char *cmd)
+{
+	int			i;
+	int			egale;
+
+	i = 0;
+	egale = 0;
+	while (cmd[i])
+	{
+		if (ft_isalnum(cmd[i]) || cmd[i] == '=')
+		{
+			if (cmd[i] == '=')
+				egale++;
+			i++;
+		}
+		else
+			return (0);
+	}
+	return (egale && i > egale ? 1 : 0);
+}
+
+static int		manage_var_builtin(char ***tablo)
+{
+	int			i;
+
+	i = 0;
+	while (is_assign((*tablo)[i]))
+		i++;
+	if (i == ft_tablen((*tablo)))
+	{
+		printf("IS A ASSIGNEMENT NAME\n");
+		ft_add_str_at(tablo, "ft_assign", 0);
+	}
+	else if (i)
+	{
+		printf(" SUPPRESSION D ASSIGNEMENT\n");
+		while (i)
+		{
+			ft_strdel_in_tab(tablo, 0);
+			i--;
+		}
+	}
+	else
+		printf("PAS D ASSIGNEMENT\n");
+	return (0);
+}
+
 static int		error_n_op(t_op **b_op)
 {
 	t_op		*n_op;
 	t_op		*tmp;
-	int i = 0;
 
 	n_op = *b_op;
-	tmp = NULL;
 	while (n_op)
 	{
-		if (!n_op->cmd && !n_op->redirect)
+		tmp = NULL;
+		if (error_n_redirect(&n_op->redirect))
+			return (1);
+		manage_var_builtin(&n_op->cmd);
+		if (!n_op->redirect && !n_op->cmd)
 		{
-//			printf("N_OP A DEL\n");
-			tmp = n_op;
-			if (n_op->prev)
-				n_op->prev->token = n_op->token;
-			if (n_op->next && !n_op->prev)
-				*b_op = (*b_op)->next;
-			else if (n_op->next && n_op->prev)
-				n_op->prev->next = n_op->next;
+			if (n_op->token == TOKEN || n_op->token == AND_IF)
+			{
+				printf("SUPPP\n");
+				if (n_op->next || n_op->prev)
+				{
+					tmp = n_op->next ? n_op->next : NULL;
+					*b_op = !(*b_op)->prev ? *b_op = (*b_op)->next: *b_op;
+					ft_free_n_op(&n_op);
+				}
+				else
+					return (1);
+			}
 		}
-		else if (n_op->redirect)
-		{
-			if (error_n_redirect(&n_op->redirect))
-				return (1);
-		}
-//		else
-//			printf("TOUT EST NORMAL\n");
-		n_op = n_op->next;
-		if (tmp)
-		{
-//			printf("0\n");
-			free(tmp);
-			tmp = NULL;
-//			printf("1\n");
-		}
-/*		if (tmp)
-			printf("TMP EXIST TOUJOURS\n");
-		else
-			printf("TMP N'EXIST PLUS\n");
-		if (n_op)
-			printf("N_OP EXIST TOUJOURS\n");
-		else
-			printf("N_OP N'EXIST PLUS\n"); */
-		i++;
+		n_op = n_op ? n_op->next : tmp;
 	}
-//	printf("I == %d\n", i);
 	return (0);
 }
 
 int				extension_error(t_seq **b_seq)
 {
 	t_seq		*n_seq;
+	t_seq		*tmp;
 
 	n_seq = *b_seq;
 	while (n_seq)
 	{
+		tmp = NULL;
 		if (n_seq->op)
-		{
 			if (error_n_op(&n_seq->op) == 1)
 			{
-				ft_free_b_seq(b_seq);
-				return (1);
+				if (n_seq->prev || n_seq->next)
+				{
+					tmp = n_seq->next ? n_seq->next : NULL;
+					*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
+					ft_free_n_seq(&n_seq);
+				}
+				else
+				{
+					ft_free_b_seq(b_seq);
+					return (1);
+				}
 			}
-		}
-//		if (n_seq->token == TOKEN && !n_seq->op)
-		if (!n_seq->op)
-		{
-//			printf("N_SEQ A DEL\n");
-			if (n_seq->prev && n_seq->next)
-			{
-				n_seq->prev->next = n_seq->next;
-				n_seq->next->prev = n_seq->prev;
-			}
-			else if (!n_seq->prev && n_seq->next)
-				*b_seq = (*b_seq)->next;
-			free(n_seq);
-			n_seq = NULL;
-			return (1);
-		}
-		if (n_seq)
-			n_seq = n_seq->next;
+		n_seq = n_seq ? n_seq->next : tmp;
 	}
-/*	if (*b_seq)
+	if (*b_seq)
 		printf("BSEQ EXIST\n");
 	else
-		printf("BSEQ EST DEAD\n");*/
-	return (*b_seq ? 0 : 1);
+		printf("BSEQ EST DEAD\n");
+	return (0);
 }

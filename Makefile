@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/25 10:46:33 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/28 02:00:25 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -70,6 +70,9 @@ SRCS_NAME =	\
 			extension/backslash_manager.c \
 			extension/ft_split_b_quote.c \
 			extension/ft_dollar.c \
+			extension/ft_free_n_seq.c \
+			extension/ft_free_n_op.c \
+			extension/ft_free_n_redirect.c \
 			execute/binary.c \
 			execute/execute.c \
 			execute/solver.c \
