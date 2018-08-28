@@ -15,7 +15,7 @@
 | Le séparateur ";" | ✅ |
 | Gestion correcte des espaces et des tabulations. | ✅ |
 | Gestion des erreurs et de la valeur de retour des commandes | ✅ |
-| echo | ✅ |
+| echo | ❌ |
 | cd | ❌ |
 | exit | ❌ |
 | env | ❌ |
@@ -51,6 +51,7 @@ PROBLEMES A RESOUDRE:<br/>
 \_\> l<br/>
 \_\`\` > 2<br/>
 \_  > 2<br/>
+\_\`echo ls\`
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE
