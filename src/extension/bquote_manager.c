@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 20:48:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 07:08:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,6 +94,7 @@ char		**first_copy(char **cmd, int i_index, char *in_bquote, int begin, int *ok)
 	char	*ifs;
 	char	**result_bquote;
 	int		i;
+	char *tmp = NULL;
 
 	i = 0;
 	ret = NULL;
@@ -115,10 +116,16 @@ char		**first_copy(char **cmd, int i_index, char *in_bquote, int begin, int *ok)
 		*ok = 1;
 		while (result_bquote[i])
 		{
+//			if (tmp)
+//				tmp = ft_strjoin(tmp, result_bquote[i]);
+//			else
+//				tmp = ft_strdup(result_bquote[i]);
 //			printf("RESULT_BQUOTE[%d] == %s\n", i, result_bquote[i]);
 			ft_malloc_cmd(&ret, result_bquote[i++]);
+//			i++;
 		}
 	}
+//	ft_malloc_cmd(&ret, tmp);
 	return (ret);
 }
 

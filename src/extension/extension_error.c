@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 05:48:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 07:09:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,13 +64,21 @@ static int		manage_var_builtin(char ***tablo)
 		while ((*tablo)[i] && is_assign((*tablo)[i]))
 			i++;
 		if (i == ft_tablen((*tablo)))
+		{
+//			printf("OUI\n");
 			ft_add_str_at(tablo, "ft_assign", 0);
+		}
 		else if (i)
+		{
+//			printf("DEL\n");
 			while (i)
 			{
 				ft_strdel_in_tab(tablo, 0);
 				i--;
 			}
+		}
+//		else
+//			printf("NON\n");
 	}
 	return (0);
 }

@@ -21,6 +21,7 @@
 | env | ❌ |
 | setenv | ❌ |
 | unsetenv | ❌ |
+| GESTION DE LA VARIABLE PATH | ❌ |
 | Les pipes "\|" | ✅ |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | 🐢 |
 | Editer la ligne à l’endroit où se trouve le curseur. | ✅ |
