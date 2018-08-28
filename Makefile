@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/28 11:08:56 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/28 22:45:44 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -94,14 +94,15 @@ SRCS_NAME =	\
 			builtins/ft_setenv.c \
 			builtins/ft_unsetenv.c \
 			builtins/ft_cd.c \
+			builtins/ft_cd_utils.c \
 			builtins/echo.c \
 			builtins/exit.c \
 			builtins/unset.c \
 			builtins/set.c \
 			builtins/ft_export.c \
 			builtins/ft_assign.c \
-			builtins/hashtable.c \
-			builtins/ft_hashtable_manage.c \
+			builtins/ft_hash.c \
+			builtins/ft_hash_utils.c \
 			init/ft_term_init.c \
 			init/init_env.c \
 			init/add_to_env.c \

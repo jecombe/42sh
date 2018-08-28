@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/15 02:37:36 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 03:01:45 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 15:56:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ int				ft_isalias(char **name)
 	while (get_next_line(fd, &line))
 	{
 		if (!(grid = ft_strsplit(line, '=')))
-			return (1);
+			return (EXIT_FAILURE);
 		if (ft_strcmp(*name, grid[0]) == 0)
 		{
 			ft_strdel(name);

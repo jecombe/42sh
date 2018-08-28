@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:13:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 22:44:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,35 +61,6 @@ int		ft_flags(const char **cmd, char *flag, int *idx)
 	return (EXIT_SUCCESS);
 }
 
-char		*ft_create_curpath(char *cmd, char flag)
-{
-	char	curpath[BI_MAX];
-	char	operand[BI_MAX];
-	char	*home;
-	char	cwd[BI_MAX];
-
-	ft_strclr(curpath);
-	ft_strclr(operand);
-	ft_strclr(cwd);
-	if (!cmd && !(home = ft_getenv("HOME", g_env)))
-		return (EXIT_SUCCESS);
-	else if (!cmd && home)
-		ft_strcpy(operand, home);
-	else
-		ft_strcpy(operand, cmd);
-	ft_strcpy(curpath, operand);
-	if (flag != 'P' && curpath[0] != '/')
-	{
-		ft_strclr(curpath);
-		if (!getcwd(cwd, sizeof(cwd)))
-			return (NULL);
-		ft_strcpy(curpath, cwd);
-		curpath[ft_strlen(curpath) - 1 ] != '/' ? ft_strcat(curpath, "/") : 0;
-		ft_strcat(curpath, operand);
-	}
-	return (ft_strdup(curpath));
-}
-
 static int	ft_chdir(char **curpath, const char *cmd)
 {
 	char	*pwd;
@@ -115,15 +86,19 @@ int			ft_cd(t_op *exec, int flags)
 	int		j;
 	char	*curpath;
 
-	j = 1;
 	flag = '\0';
-	if (exec->cmd[j])
-		if (ft_flags((const char **)exec->cmd, &flag, &j))
-			return (EXIT_FAILURE);
-	if (exec->cmd[j] && ft_strcmp(exec->cmd[j], "-") == 0)
-		curpath = ft_envset_value((const char **)g_env, "OLDPWD");
-	else
-		curpath = ft_create_curpath(exec->cmd[j], flag);
+	j = 1;
+	curpath = NULL;
+	if (exec->cmd[j] && ft_flags((const char **)exec->cmd, &flag, &j))
+		return (EXIT_FAILURE);
+	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
+			ft_getenv("HOME", g_env)))
+		return (EXIT_SUCCESS);
+	if (flag != 'P')
+	{
+		ft_canonical(&curpath);
+		ft_rules(&curpath);
+	}
 	if (!(curpath))
 		return (EXIT_FAILURE);
 	if (ft_chdir(&curpath, exec->cmd[j]))
