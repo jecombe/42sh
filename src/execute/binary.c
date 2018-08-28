@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 06:09:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 15:33:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,7 @@ static char		*ft_check_path_bin(const char *cmd)
 	return (path);
 }
 
-int			ft_check_hash_bin(const char *cmd, char **buff)
+int				ft_check_hash_bin(const char *cmd, char **buff)
 {
 	t_hashtable	*hashtable;
 	t_hashcase	*hashcase;
@@ -68,7 +68,7 @@ int			ft_check_hash_bin(const char *cmd, char **buff)
 		{
 			if (ft_strcmp(cmd, hashcase->raccmd) == 0)
 			{
-				*buff = ft_strdup(hashtable[hash].hashcase->command);
+				*buff = ft_strdup(hashcase->command);
 				return (EXIT_SUCCESS);
 			}
 			hashcase = hashcase->next;

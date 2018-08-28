@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:54:03 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 15:39:56 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,6 +66,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		lex = ft_lexer(line, prompt);
 	if (!(*prompt))
 	{
+		ft_strdel(&line);
 		b_seq = ft_parsing(lex);
 		if (b_seq != NULL)
 			if (!extension(&b_seq))
@@ -97,8 +98,6 @@ void				ft_101sh(void)
 	while (get_stdin(&line, &prompt))
 	{
 		heart_of_101sh(line, &prompt, 1);
-		if (line)
-			ft_strdel(&line);
 	}
 }
 

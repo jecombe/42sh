@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/17 04:38:30 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:16:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 15:35:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,7 +47,7 @@ void			ft_hash_print(t_hashtable *hashtable)
 				while (blank--)
 					ft_putchar(' ');
 				ft_putnbr(hashcase->hits);
-				ft_putstr("\t");
+				ft_putchar('\t');
 				ft_putendl(hashcase->command);
 				hashcase = hashcase->next;
 			}
