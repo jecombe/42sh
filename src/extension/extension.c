@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:51:28 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 05:43:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,7 +100,9 @@ int			ft_parcour_op(t_op **b_op)
 	while (n_op)
 	{
 		if (n_op->cmd)
+		{
 			ft_parcour_tab(&n_op->cmd);
+		}
 		n_op = n_op->next;
 	}
 	return (0);

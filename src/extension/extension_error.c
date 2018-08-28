@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:52:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 05:48:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,27 +30,28 @@ static int		error_n_redirect(t_redirect **b_redirect)
 	return (0);
 }
 
-int				is_assign(char *cmd)
+static int				is_assign(char *cmd)
 {
 	int			i;
-	int			egale;
-	int			letter;
+//	int			egale;
+//	int			letter;
 
 	i = 0;
-	egale = 0;
-	letter = ft_isalpha(cmd[0]);
+//	egale = 0;
+//	letter = ft_isalpha(cmd[0]);
 	while (cmd[i])
 	{
 		if (ft_isalnum(cmd[i]) || cmd[i] == '=')
 		{
 			if (cmd[i] == '=')
-				egale++;
+				return (ft_isalpha(cmd[0]) ? 1 : 0);
 		}
 		else
 			return (0);
 		i++;
 	}
-	return (egale && letter && i > egale ? 1 : 0);
+	return (0);
+//	return (egale && letter && i > egale ? 1 : 0);
 }
 
 static int		manage_var_builtin(char ***tablo)
