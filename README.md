@@ -35,7 +35,6 @@ qui vous plaira.| ✅ |
 | Aller directement au début et à la fin d’une ligne avec home et end. | ✅ |
 | Ecrire ET éditer une commande sur plusieurs lignes. Dans ce cas, on apprecierait que ctrl+UP et ctrl+DOWN permettent de passer d’une ligne à l’autre de la commande en restant sur la même colonne ou la colonne la plus appropriée sinon.| ✅ |
 | Gérer complètement les quotes et doubles quotes, même sur plusieurs lignes (hors expansions).| ✅ |
-| Rechercher dans l’historique avecctrl+R | ❌ |
 
 
 | <h2>Partie Bonus</h2> | <h2>status</h2> |
@@ -51,6 +50,7 @@ qui vous plaira.| ✅ |
 | Edition de ligne telle que demandée dans le ftsh3. | ✅ |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
+| Rechercher dans l’historique avec ctrl+R | ❌ |
 
 PROBLEMES A RESOUDRE:<br/>
 \_TABLE DE HASH<br/>
