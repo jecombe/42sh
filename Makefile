@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/28 02:00:25 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/28 04:29:08 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -97,6 +97,7 @@ SRCS_NAME =	\
 			builtins/unset.c \
 			builtins/set.c \
 			builtins/ft_export.c \
+			builtins/ft_assign.c \
 			builtins/hashtable.c \
 			builtins/ft_hashtable_manage.c \
 			init/ft_term_init.c \

@@ -37,10 +37,11 @@
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 | La complétion simple ou avancée avec tab. | 🐢 |
 
-PROBLEMES A RESOUDRE:
-\_TABLE DE HASH
-\_\> l
-\_\`\` > 2
+PROBLEMES A RESOUDRE:<br/>
+\_TABLE DE HASH<br/>
+\_\> l<br/>
+\_\`\` > 2<br/>
+\_  > 2<br/>
 
 SEGFAULT A RESOUDRE:
 \_ENVIRONNEMENT VIDE

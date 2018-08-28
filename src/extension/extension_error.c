@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 03:59:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 04:40:03 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,21 +34,23 @@ int				is_assign(char *cmd)
 {
 	int			i;
 	int			egale;
+	int			letter;
 
 	i = 0;
 	egale = 0;
+	letter = ft_isalpha(cmd[0]);
 	while (cmd[i])
 	{
 		if (ft_isalnum(cmd[i]) || cmd[i] == '=')
 		{
 			if (cmd[i] == '=')
 				egale++;
-			i++;
 		}
 		else
 			return (0);
+		i++;
 	}
-	return (egale && i > egale ? 1 : 0);
+	return (egale && letter && i > egale ? 1 : 0);
 }
 
 static int		manage_var_builtin(char ***tablo)
@@ -56,16 +58,16 @@ static int		manage_var_builtin(char ***tablo)
 	int			i;
 
 	i = 0;
-	while (is_assign((*tablo)[i]))
+	while ((*tablo)[i] && is_assign((*tablo)[i]))
 		i++;
 	if (i == ft_tablen((*tablo)))
 	{
-		printf("IS A ASSIGNEMENT NAME\n");
+		printf("FT_ASSIGN\n");
 		ft_add_str_at(tablo, "ft_assign", 0);
 	}
 	else if (i)
 	{
-		printf(" SUPPRESSION D ASSIGNEMENT\n");
+		printf("ASSIGNEMENT DEL\n");
 		while (i)
 		{
 			ft_strdel_in_tab(tablo, 0);
