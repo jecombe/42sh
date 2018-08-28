@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:40:03 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 04:52:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,24 +58,19 @@ static int		manage_var_builtin(char ***tablo)
 	int			i;
 
 	i = 0;
-	while ((*tablo)[i] && is_assign((*tablo)[i]))
-		i++;
-	if (i == ft_tablen((*tablo)))
+	if (*tablo)
 	{
-		printf("FT_ASSIGN\n");
-		ft_add_str_at(tablo, "ft_assign", 0);
+		while ((*tablo)[i] && is_assign((*tablo)[i]))
+			i++;
+		if (i == ft_tablen((*tablo)))
+			ft_add_str_at(tablo, "ft_assign", 0);
+		else if (i)
+			while (i)
+			{
+				ft_strdel_in_tab(tablo, 0);
+				i--;
+			}
 	}
-	else if (i)
-	{
-		printf("ASSIGNEMENT DEL\n");
-		while (i)
-		{
-			ft_strdel_in_tab(tablo, 0);
-			i--;
-		}
-	}
-	else
-		printf("PAS D ASSIGNEMENT\n");
 	return (0);
 }
 
@@ -95,7 +90,6 @@ static int		error_n_op(t_op **b_op)
 		{
 			if (n_op->token == TOKEN || n_op->token == AND_IF)
 			{
-				printf("SUPPP\n");
 				if (n_op->next || n_op->prev)
 				{
 					tmp = n_op->next ? n_op->next : NULL;
@@ -137,9 +131,5 @@ int				extension_error(t_seq **b_seq)
 			}
 		n_seq = n_seq ? n_seq->next : tmp;
 	}
-	if (*b_seq)
-		printf("BSEQ EXIST\n");
-	else
-		printf("BSEQ EST DEAD\n");
 	return (0);
 }

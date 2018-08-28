@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 02:58:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/28 04:51:28 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -120,20 +120,4 @@ int			extension(t_seq **b_seq)
 		n_seq = n_seq->next;
 	}
 	return (extension_error(b_seq));
-	/*
-	if ((*b_seq)->op->cmd)
-	{
-//		while ((*b_seq)->op->cmd[i])
-//		{
-//			printf("B_SEQ->CMD[%d] == %s\n", i, (*b_seq)->op->cmd[i]);
-//			i++;
-//		}
-		i = extension_error(&(*b_seq));
-	}
-	else//PROVISOIR OU PAS ! ! !
-	{
-		ft_free_b_seq(b_seq);
-		i = 1;
-	}*/
-	return (i);
 }
