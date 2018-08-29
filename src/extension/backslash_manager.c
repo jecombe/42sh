@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 20:13:12 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:50:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 05:26:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,8 @@ int			backslash_out_dquote(char **cmd, int *j)
 	int			i2;
 
 	i = 0;
-	tmp = malloc(sizeof(char) * ft_strlen(*cmd));
+	if (!(tmp = malloc(sizeof(char) * ft_strlen(*cmd))))
+		return (1);
 	while (i < *j)
 	{
 		tmp[i] = (*cmd)[i];
@@ -41,12 +42,19 @@ int			backslash_out_dquote(char **cmd, int *j)
 	return (0);
 }
 
-int			backslash_manager(char ***cmd, int i, int *j, int d_quote)
+int			backslash_manager(char ***cmd, t_bquote **i, int d_quote)
 {
-	if (d_quote == 0)
-		backslash_out_dquote(&(*cmd)[i], j);
-	else
-		*j = *j + 1;
-	*j = *j + 1;
+	if ((*cmd)[(*i)->i][(*i)->j] == '\\')
+	{
+		if (d_quote == 0)
+		{
+			if (backslash_out_dquote(&(*cmd)[(*i)->i], &(*i)->j))
+				return (-1);
+		}
+		else
+			(*i)->j = (*i)->j + 1;
+		(*i)->j = (*i)->j + 1;
+		return (1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 10:56:19 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 11:20:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 03:55:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../../include/extension.h"
 #include "../../include/init.h"
 
-int			add_tild(char **str, int *index)
+static int	add_tild(char **str, int *index)
 {
 	char		*var;
 	char		*tmp;
@@ -23,7 +23,8 @@ int			add_tild(char **str, int *index)
 
 	j = 1;
 	i = -1;
-	if ((var = ft_getenv("HOME", g_env)) && (!(*str)[*index + 1] || (*str)[*index + 1] == '/'))
+	if ((var = ft_getenv("HOME", g_env)) && (!(*str)[*index + 1] ||
+	(*str)[*index + 1] == '/'))
 	{
 		tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)));
 		while (var[++i])
@@ -41,7 +42,16 @@ int			add_tild(char **str, int *index)
 	return (0);
 }
 
-int			manage_tilde_and_dollars()
+int			manage_tild_and_dollars(char ***cmd, t_bquote **i)
 {
+	if ((*cmd)[(*i)->i][(*i)->j] == '~' && (*i)->j == 0)
+	{
+		if (add_tild(&(*cmd)[(*i)->i], &(*i)->j))
+			return (1);
+	}
+	else if ((*cmd)[(*i)->i][(*i)->j] == '$')
+		ft_dollar(cmd, &(*i)->i, &(*i)->j);
+	else
+		(*i)->j++;
 	return (0);
 }
