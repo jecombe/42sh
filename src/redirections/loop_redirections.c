@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/26 19:38:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 16:49:42 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,11 +70,9 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 					flag2 = O_WRONLY;
 			}
 			//Pour l'instant si ce n'est pas des command builtins
-			if (buil == 0 && redirect->redirect != DLESS)
+			if (redirect->redirect != DLESS)
 				fd_open = ft_open_redirect(redirect->file, flag, flag2, fd);
-			else if (buil == 1 && redirect->redirect != DLESS)
-				fd_open = ft_open_redirect_builtins(redirect->file, flag, flag2);
-					redirect = redirect->next;
+			redirect = redirect->next;
 		}
 		if (buil == 1)
 			return (fd_open);
