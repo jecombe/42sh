@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 10:28:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:36:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,8 @@ int			ft_manage_seq(t_seq **b_seq, t_token token)
 			n_seq = n_seq->next;
 	}
 	else
-		return (2);
+		return (ft_parse_exit(token));
+//		return (2);
 	if (n_seq->token != TOKEN)
 		return (ft_parse_exit(token));
 	n_seq->token = token;

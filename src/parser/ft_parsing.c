@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 10:17:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:39:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,10 +30,7 @@ int			ft_parse_exit(t_token token)
 int			ft_attribute_token(t_seq **b_seq, char *name, t_token token)
 {
 	if (token == SEMI || token == AND)
-	{
-		if (ft_manage_seq(&(*b_seq), token))
-			return (1);
-	}
+		return(ft_manage_seq(&(*b_seq), token));
 	else if (token >= AND_IF && token <= PIPE_AND)
 	{
 		if (ft_manage_logical_and_pipe(&(*b_seq), token))
