@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:01:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 16:57:31 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,5 +47,5 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 		wait(&status);
 		ret = WEXITSTATUS(status);
 	}
-	return (ret == 1 ? EXIT_FAILURE : EXIT_SUCCESS);
+	return (ret > 0 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
