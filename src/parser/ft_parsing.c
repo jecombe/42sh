@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 17:39:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:41:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,24 +32,13 @@ int			ft_attribute_token(t_seq **b_seq, char *name, t_token token)
 	if (token == SEMI || token == AND)
 		return(ft_manage_seq(&(*b_seq), token));
 	else if (token >= AND_IF && token <= PIPE_AND)
-	{
-		if (ft_manage_logical_and_pipe(&(*b_seq), token))
-			return (1);
-	}
+		return (ft_manage_logical_and_pipe(&(*b_seq), token));
 	else if (token >= LESS && token <= DLESSDASH)
-	{
-		if (ft_manage_redirection(&(*b_seq), token, name))
-			return (1);
-	}
+		return (ft_manage_redirection(&(*b_seq), token, name));
 	else if (token == IO_NUMBER)
-	{
-		if (ft_manage_io_number(&*(b_seq), name))
-			return (1);
-	}
+		return (ft_manage_io_number(&*(b_seq), name));
 	else
-		if (ft_manage_word(&(*b_seq), name))
-			return (1);
-	return (0);
+		return (ft_manage_word(&(*b_seq), name));
 }
 
 t_seq		*ft_parsing(t_lex lex)
