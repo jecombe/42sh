@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:52:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 08:36:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 15:05:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-static int			ft_unset_var(char *cmd)
+int				ft_unset_var(char *cmd)
 {
 	int			i;
 	int			j;

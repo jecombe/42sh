@@ -54,6 +54,7 @@ PROBLEMES A RESOUDRE:<br/>
 \_\`echo ls\`
 \_ls-l
 \_!d
+\_cat 101sh
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE

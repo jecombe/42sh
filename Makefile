@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/28 22:45:44 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/29 14:31:50 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -30,6 +30,7 @@ LIB_PATH = ./libft/
 
 SRCS_NAME =	\
 			heart/42sh.c \
+			heart/ft_signal.c \
 			stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \

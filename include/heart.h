@@ -10,5 +10,6 @@
 #include "./include/builtins.h"
 
 int		heart_of_101sh(char *line, e_prompt *prompt, int fd_base);
+void	ft_signal(void);
 
 #endif

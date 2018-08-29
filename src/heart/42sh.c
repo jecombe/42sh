@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 11:25:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 14:36:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,6 +107,9 @@ int					main(int ac, char **argv)
 {
 	char			**av;
 
+	if (!isatty(0))
+		return (0);
+	ft_signal();
 	av = ft_tabdup(argv);
 	if (ft_term_init(ac, av))
 		return (EXIT_FAILURE);
