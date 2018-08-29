@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 03:40:49 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 03:50:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 10:50:21 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,19 +24,19 @@ int			ft_add_str_at(char ***tablo, char *str, int at)
 	{
 		if (i == at)
 		{
-			ft_malloc_cmd(&tmp, str);
+			if (ft_malloc_cmd(&tmp, str))
+				return (1);
 			at = -1;
 		}
 		else
-		{
-			ft_malloc_cmd(&tmp, (*tablo)[i]);
-			i++;
-		}
+			if (ft_malloc_cmd(&tmp, (*tablo)[i++]))
+				return (1);
 	}
 	*tablo ? ft_tabdel(tablo) : 0;
 	if (tmp)
 	{
-		*tablo = ft_tabdup(tmp);
+		if (!(*tablo = ft_tabdup(tmp)))
+			return (1);
 		ft_tabdel(&tmp);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 10:59:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 10:28:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,16 +80,19 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 		if (n_op->token != TOKEN)
 			if (ft_attrib_next_op(&n_op))
 				return (1);
-		ft_malloc_cmd(&n_op->cmd, name);
+		if (ft_malloc_cmd(&n_op->cmd, name))
+			return (1);
 	}
 	else if (n_op->redirect)
 	{
 		if (ft_attrib_last_redirect(&n_op, &n_redirect))
 			return (1);
 		if (n_redirect->file)
-			ft_malloc_cmd(&n_op->cmd, name);
-		else
-			n_redirect->file = ft_strdup(name);
+			if (ft_malloc_cmd(&n_op->cmd, name))
+				return (1);
+		if (!n_redirect->file)
+			if (!(n_redirect->file = ft_strdup(name)))
+				return (1);
 	}
 	return (0);
 }
@@ -105,13 +108,15 @@ int			ft_manage_io_number(t_seq **b_seq, char *name)
 	while (n_op->next)
 		n_op = n_op->next;
 	if (!n_op->redirect)
-		n_op->redirect = ft_malloc_redirect();
+		if (!(n_op->redirect = ft_malloc_redirect()))
+			return (1);
 	n_redirect = n_op->redirect;
 	while (n_redirect->next)
 		n_redirect = n_redirect->next;
 	if (n_redirect->redirect != TOKEN)
 	{
-		n_redirect->next = ft_malloc_redirect();
+		if (!(n_redirect->next = ft_malloc_redirect()))
+			return (1);
 		n_redirect->next->prev = n_redirect;
 		n_redirect = n_redirect->next;
 	}

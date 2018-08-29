@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 08:54:02 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 11:24:57 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,6 +67,8 @@ static int		manage_var_builtin(char ***tablo)
 				i--;
 			}
 	}
+	else
+		printf("PAS DE TABLEAU\n");
 	return (0);
 }
 
@@ -83,19 +85,8 @@ static int		error_n_op(t_op **b_op)
 			return (1);
 		manage_var_builtin(&n_op->cmd);
 		if (!n_op->redirect && !n_op->cmd)
-		{
-			if (n_op->token == TOKEN || n_op->token == AND_IF)
-			{
-				if (n_op->next || n_op->prev)
-				{
-					tmp = n_op->next ? n_op->next : NULL;
-					*b_op = !(*b_op)->prev ? *b_op = (*b_op)->next: *b_op;
-					ft_free_n_op(&n_op);
-				}
-				else
-					return (1);
-			}
-		}
+			if (del_nop_empty(&n_op, &tmp, b_op))
+				return (1);
 		n_op = n_op ? n_op->next : tmp;
 	}
 	return (0);

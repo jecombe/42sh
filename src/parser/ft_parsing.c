@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:18:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 10:17:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,9 +19,9 @@ int			ft_parse_exit(t_token token)
 	t_lex		clear_b_seq;
 
 	ft_convert_token(&name, token);
-	ft_putstr("bash: syntax error near unexpected token `");
-	ft_putstr(name);
-	ft_putendl("'");
+	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
+	ft_putstr_fd(name, 2);
+	ft_putendl_fd("'", 2);
 	if (name)
 		ft_strdel(&name);
 	return (2);

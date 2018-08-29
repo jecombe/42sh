@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:16:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 04:43:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 11:24:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,5 +44,6 @@ char		**search_prev(char **cmd, int i_max);
 int			add_before_bquote(char *line, int begin, char ***cmd);
 int			add_after_bquote(char *cmd, int j_index, char ***tablo, int ok);
 int			manage_tild_and_dollars(char ***cmd, t_bquote **i);
+int			del_nop_empty(t_op **n_op, t_op **tmp, t_op **b_op);
 
 #endif
