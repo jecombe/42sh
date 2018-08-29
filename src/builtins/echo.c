@@ -84,6 +84,9 @@ int 		ft_echo(t_op *t_exec, int flag)
 			//if (t_exec->redirect->redirect == DLESS)
 				//ft_echo_normal(t_exec, i, ok, slash_n);
 			//else
+			if (fd_open ==  0)
+				fd_open = 1;
+			printf("fd<-open-> %d\n", fd_open);
 				ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 		}
 		/////**********************************************************////

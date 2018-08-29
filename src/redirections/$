@@ -65,8 +65,6 @@ int			waitstat(int *status, int buil)
 	return (*status);
 }
 
-int g_hh;
-int g_ret;
 int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 {
 	int fd[2];
@@ -101,11 +99,8 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 
 		fd_in = 0;
 		status = 0;
-		if (ft_check_command(op->cmd[0]) != 0)
-			{
-				g_hh = 10;
-			}
-		bin = ft_search_bin(op->cmd[0]);
+		if (ft_check_command(op->cmd[0]) == 0)
+			bin = ft_search_bin(op->cmd[0]);
 		if (bin == NULL)
 		  printf("ERREUR\n");
 		if ((fork()) == 0 && bin != NULL)
@@ -121,16 +116,13 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			//bin = ft_search_bin(op->cmd[0]);
 			if (ft_check_command(op->cmd[0]) != 0)
 			{
-				g_hh = 1;
+				printf("okkk\n");
 				int flag;
-				g_ret = ft_builtins(op, ok, flag);
-				printf("exit builtin\n");
+				ret = ft_builtins(op, ok, flag);
 				exit(1);
 			}
 			else
 			{
-				printf("okokokkgidfsibnz\n");
-				g_hh =6;
 				//execve(bin, op->cmd, g_env);
 				return ((ret = ft_solver(op, -88, pid, 1)));
 			}
@@ -150,23 +142,12 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			i--;
 		}
 	}
-	printf("====> ok %d\n", g_hh);
 	status = waitstat(&status, ok);
-	if (g_hh == 10)
-	{
-		return (g_ret);
-	}
 	ret = WEXITSTATUS(status);
 	if (ret > 0)
-	{
-		printf("fail\n");
 		return (EXIT_FAILURE);
-	}
 	else
-	{
 		return (EXIT_SUCCESS);
-	}
-	printf("ezevdff\n");
 	return (EXIT_FAILURE);
 }
 

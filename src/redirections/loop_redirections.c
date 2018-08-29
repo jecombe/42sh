@@ -46,6 +46,7 @@ int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int bui
 			//*********** SI << ******************
 			if (flag == HEREDOC)
 			{
+				printf("heredoc\n");
 				//HEREDOC
 				if (ft_redirect_heredoc(redirect, flag, bin_cmd, cpid, buil) == EXIT_SUCCESS)
 					;

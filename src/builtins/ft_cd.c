@@ -95,6 +95,7 @@ static int	ft_chdir(char **curpath, const char *cmd, int fd_open, int redirectio
 	char	*pwd;
 
 	pwd = NULL;
+	printf("GOOO\n");
 	if (chdir(*curpath) == -1)
 	{
 		ft_strdel(&(*curpath));
