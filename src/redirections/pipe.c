@@ -89,6 +89,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			//***********Gestion des mutliples redirections*********//
 			pid_t piddd;
 			int fd_open;
+			printf ("GOO LOOP\n");
 			if ((fd_open = ft_loop_redirect(op->redirect, NULL, piddd, 1, op->cmd, op2, -1)) == EXIT_FAILURE)
 				;//return (EXIT_FAILURE);
 			else
@@ -105,6 +106,8 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			{
 				g_hh = 10;
 			}
+			else
+				g_hh = 0;
 		bin = ft_search_bin(op->cmd[0]);
 		if (bin == NULL)
 		{
@@ -123,14 +126,12 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			pid_t pid;
 			if (ft_check_command(op->cmd[0]) != 0)
 			{
-				g_hh = 1;
 				int flag;
 				g_ret = ft_builtins(op, ok, flag);
 				exit(1);
 			}
 			else
 			{
-				g_hh =6;
 				return ((ret = ft_solver(op, -88, pid, 1)));
 			}
 		}
@@ -155,9 +156,15 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 	}
 	ret = WEXITSTATUS(status);
 	if (ret > 0)
+	{
+		g_hh = 0;
 		return (EXIT_FAILURE);
+	}
 	else
+	{
+		g_hh =  0;
 		return (EXIT_SUCCESS);
+	}
 	return (EXIT_FAILURE);
 }
 
