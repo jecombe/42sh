@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/29 14:31:50 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/29 17:47:09 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -77,6 +77,7 @@ SRCS_NAME =	\
 			extension/ft_free_n_op.c \
 			extension/ft_free_n_redirect.c \
 			execute/binary.c \
+			execute/binary_signal.c \
 			execute/execute.c \
 			execute/solver.c \
 			execute/utils.c \

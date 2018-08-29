@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 14:28:21 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 18:18:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,5 +51,6 @@ int				ft_pipe(t_op *opera, int i, pid_t pid);
 int				ft_count_pipe(t_op *tmp);
 int				ft_loop_redirect(t_redirect *redirect, char *bin_cmd, pid_t cpid, int buil, char **cmd, t_op *op, int fd2);
 void			ft_print_error(const char *s1, const char *s2);
+int				binary_signal(int status, int pid, char *bin);
 
 #endif

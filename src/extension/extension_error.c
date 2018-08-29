@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 11:24:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 18:27:24 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -67,8 +67,6 @@ static int		manage_var_builtin(char ***tablo)
 				i--;
 			}
 	}
-	else
-		printf("PAS DE TABLEAU\n");
 	return (0);
 }
 
