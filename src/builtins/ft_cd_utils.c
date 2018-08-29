@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 22:26:15 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 22:44:09 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:02:37 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,6 @@ int			ft_canonical(char **curpath)
 		ft_strdel(curpath);
 		if (!(*curpath = ft_strdup(buf)))
 			return (EXIT_FAILURE);
-		ft_putendl(*curpath);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 22:44:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:05:19 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,23 +16,23 @@
 
 static int	ft_cd_error(const char *cmd, const int stat)
 {
-	ft_putstr_fd("101sh: cd: ", 2);
+	ft_putstr_fd("101sh: cd: ", STDERR_FILENO);
 	if (stat == 1)
 	{
-		ft_putchar_fd('-', 2);
-		ft_putchar_fd(*cmd, 2);
-		ft_putendl_fd(": invalid option", 2);
-		ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", 2);
+		ft_putchar_fd('-', STDERR_FILENO);
+		ft_putchar_fd(*cmd, STDERR_FILENO);
+		ft_putendl_fd(": invalid option", STDERR_FILENO);
+		ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", STDERR_FILENO);
 	}
 	if (stat == 2)
 	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		ft_putstr_fd(cmd, STDERR_FILENO);
+		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
 	}
 	return (EXIT_FAILURE);
 }
 
-int		ft_flags(const char **cmd, char *flag, int *idx)
+static int	ft_cd_flags(const char **cmd, char *flag, int *idx)
 {
 	int		i;
 	int		j;
@@ -66,13 +66,17 @@ static int	ft_chdir(char **curpath, const char *cmd)
 	char	*pwd;
 
 	pwd = NULL;
+	if (cmd && ft_strcmp(cmd, "-") == 0)
+	{
+		ft_strdel(curpath);
+		if (!(*curpath = ft_envset_value((const char **)g_env, "OLDPWD")))
+			return (EXIT_SUCCESS);
+	}
 	if (chdir(*curpath) == -1)
 	{
 		ft_strdel(&(*curpath));
 		return (ft_bierrors("cd", cmd, BINOFOUND));
 	}
-	if (cmd && ft_strcmp(cmd, "-") == 0)
-		ft_putendl(*curpath);
 	pwd = ft_envset_value((const char **)g_env, "PWD");
 	ft_setenv("PWD", *curpath);
 	ft_setenv("OLDPWD", pwd);
@@ -82,14 +86,14 @@ static int	ft_chdir(char **curpath, const char *cmd)
 
 int			ft_cd(t_op *exec, int flags)
 {
-	char	flag;
 	int		j;
+	char	flag;
 	char	*curpath;
 
-	flag = '\0';
 	j = 1;
+	flag = '\0';
 	curpath = NULL;
-	if (exec->cmd[j] && ft_flags((const char **)exec->cmd, &flag, &j))
+	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j))
 		return (EXIT_FAILURE);
 	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
 			ft_getenv("HOME", g_env)))

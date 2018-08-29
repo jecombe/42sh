@@ -6,87 +6,116 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/13 04:48:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 16:45:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-char		**ft_assign_env(char **cmd, int *idx)
+static void	ft_print_env()
 {
 	int		i;
-	char	**env;
-	char	**grid;
+
+	i = -1;
+	if (g_env)
+		while (g_env[++i])
+			ft_putendl_fd(g_env[i], STDOUT_FILENO);
+}
+
+static int	ft_env_flags(const char **cmd, char *flag, int *idx)
+{
+	int		i;
+	int		j;
 
 	i = 0;
-	env = NULL;
-	grid = NULL;
-/*	if (cmd[1][i] == '-')
+	j = -1;
+	while (cmd[++i])
 	{
-		while (cmd[1][++i])
-			if (cmd[1][i] != 'i')
-				return (NULL);
-		if (!(env = ft_tabdup(g_env)))
-			return (NULL);
-		ft_tabdel(&g_env);
-		if (!(g_env = (char **)malloc(sizeof(char *))))
-			return (NULL);
-		g_env[0] = NULL;
-	}
-	i = 1;
-	while (cmd[++i] && ft_strchr(cmd[i], '='))
-	{
-		if (!(grid = ft_strsplit(cmd[i], '=')))
-			return (NULL);
-		printf("<%s><%s>\n", grid[0], grid[1]);
-		ft_setenv(grid[0], grid[1]);
-	}*/
-	if (!(env = ft_tabdup(g_env)))
-		return (NULL);
-	while (cmd[++i] && ft_strcmp(cmd[i], "-i") == 0)
-		ft_tabdel(&g_env);
-	if (!g_env)
-	{
-		if (!(g_env = (char **)malloc(sizeof(char *) * 1)))
-			return (NULL);
-		else
-			g_env[0] = NULL;
-	}
-	while (cmd[i] && ft_strchr(cmd[i], '='))
-	{
-		if (!(grid = ft_strsplit(cmd[i++], '=')))
-			return (NULL);
-		ft_setenv(grid[0], grid[1]);
-		ft_tabdel(&grid);
+		if (cmd[i][++j] != '-')
+			break ;
+		while (cmd[i][++j])
+		{
+			if (cmd[i][j] != 'i')
+				return (ft_bierrors("env", &cmd[i][j], BIFLAG));
+			*flag = 'i';
+		}
 	}
 	*idx = i;
-	return (env);
+	return (EXIT_SUCCESS);
+}
+
+static int	ft_assign_env(const char **cmd, char flag, int *idx)
+{
+	char	**grid;
+
+	grid = NULL;
+	if (flag == 'i')
+		ft_tabdel(&g_env);
+	while (cmd[*idx])
+	{
+		if (!(ft_strchr(cmd[*idx], '=')))
+			break ;
+		if (!(grid = ft_strsplit(cmd[*idx], '=')))
+			return (EXIT_FAILURE);
+		ft_setenv(grid[0], grid[1]);
+		ft_tabdel(&grid);
+		(*idx)++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int	ft_exec_env(const char **cmd, int i)
+{
+	pid_t	cpid;
+	int		status;
+	char	**args;
+	char	*utility;
+
+	cpid = -1;
+	status = 1;
+	args = NULL;
+	utility = NULL;
+	while (cmd[i])
+		ft_malloc_cmd(&args, (char *)cmd[i++]);
+	if (args != NULL)
+	{
+		utility = ft_search_bin(args[0]);
+		if ((cpid = fork()) == 0)
+			if ((execve(utility, args, g_env)) == -1)
+				return (EXIT_FAILURE);
+		if (cpid > 0)
+			wait(&status);
+		ft_tabdel(&args);
+		ft_strdel(&utility);
+		return ((WEXITSTATUS(status) == 1) ? EXIT_FAILURE : EXIT_SUCCESS);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int			ft_env(t_op *exec)
 {
 	int		i;
+	char	flag;
 	char	**env;
-	char	**cmd;
 
-	i = -1;
+	i = 0;
+	flag = '\0';
 	env = NULL;
-	cmd = NULL;
 	if (!exec || exec->cmd[1] == NULL)
-		while (g_env[++i])
-			ft_putendl_fd(g_env[i], STDOUT_FILENO);
-	/*else
+		ft_print_env();
+	else
 	{
-		if (!(env = ft_assign_env(exec->cmd, &i)))
+		if (!(env = ft_tabdup(g_env)))
 			return (EXIT_FAILURE);
-		while (exec->cmd[i])
-		ft_malloc_cmd(&cmd, exec->cmd[i++]);
-		ft_tabdel(&cmd);
+		if (ft_env_flags((const char **)exec->cmd, &flag, &i))
+			return (EXIT_FAILURE);
+		if (ft_assign_env((const char **)exec->cmd, flag, &i))
+			return (EXIT_FAILURE);
+		ft_exec_env((const char **)exec->cmd, i);
 		ft_tabdel(&g_env);
 		g_env = ft_tabdup(env);
 		ft_tabdel(&env);
-	}*/
+	}
 	return (EXIT_SUCCESS);
 }
-
