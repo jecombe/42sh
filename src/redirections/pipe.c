@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 16:57:36 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 17:01:06 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,7 +107,10 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			}
 		bin = ft_search_bin(op->cmd[0]);
 		if (bin == NULL)
+		{
 		  printf("ERREUR\n");
+		  return (EXIT_FAILURE);
+		}
 		if ((fork()) == 0 && bin != NULL)
 		{
 			dup2(fd_in != 0 ? fd_in : fd_save, STDIN_FILENO);
