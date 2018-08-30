@@ -48,22 +48,31 @@ int			ft_check_direct_command(char *cmd)
 
 int				ft_check_file_is_directory(char *file)
 {
-	struct stat st;
-	stat(file, &st);
-	if (S_ISDIR(st.st_mode))
+	if (access(file, F_OK) == 0)
 	{
-		ft_print_error(file, "is a directory");
+		printf("NOO\n");
 		return (-1);
 	}
 	else
+		printf("GOOD\n");
 		return (0);
+	/*struct stat st;
+	stat(file, &st);
+	if (S_ISDIR(st.st_mode))
+	{
+		//ft_print_error(file, "is a directory");
+		return (-1);
+	}
+	else
+		return (0);*/
 }
 
 int		ft_check_source(char *source)
 {
-	struct stat sb;
+	struct stat st;
 
-	if (lstat(source, &sb) == -1)
+	stat(source, &st);
+	if ((!S_ISDIR(st.st_mode)) || (!S_ISREG (st.st_mode)))
 	{
 		ft_print_error(source, "no such file or directory");
 		return (-1);

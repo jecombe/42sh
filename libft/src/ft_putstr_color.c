@@ -16,21 +16,21 @@
 static void		ft_bold(int nb)
 {
 	if (nb == 8)
-		ft_putstr(BLACKB);
+		ft_putstr_fd(BLACKB, 2);
 	if (nb == 9)
-		ft_putstr(REDB);
+		ft_putstr_fd(REDB, 2);
 	if (nb == 10)
-		ft_putstr(GREENB);
+		ft_putstr_fd(GREENB, 2);
 	if (nb == 11)
-		ft_putstr(YELLOWB);
+		ft_putstr_fd(YELLOWB, 2);
 	if (nb == 12)
-		ft_putstr(BLUEB);
+		ft_putstr_fd(BLUEB, 2);
 	if (nb == 13)
-		ft_putstr(PURPLEB);
+		ft_putstr_fd(PURPLEB, 2);
 	if (nb == 14)
-		ft_putstr(CYANB);
+		ft_putstr_fd(CYANB, 2);
 	if (nb == 15)
-		ft_putstr(GREYB);
+		ft_putstr_fd(GREYB, 2);
 }
 
 void			ft_putstr_color(char const *s, int nb)
@@ -38,23 +38,23 @@ void			ft_putstr_color(char const *s, int nb)
 	if (s)
 	{
 		if (nb == 0)
-			ft_putstr(BLACK);
+			ft_putstr_fd(BLACK, 2);
 		if (nb == 1)
-			ft_putstr(REDD);
+			ft_putstr_fd(REDD, 2);
 		if (nb == 2)
-			ft_putstr(GREEN);
+			ft_putstr_fd(GREEN, 2);
 		if (nb == 3)
-			ft_putstr(YELLOW);
+			ft_putstr_fd(YELLOW, 2);
 		if (nb == 4)
-			ft_putstr(BLUEE);
+			ft_putstr_fd(BLUEE, 2);
 		if (nb == 5)
-			ft_putstr(PURPLE);
+			ft_putstr_fd(PURPLE, 2);
 		if (nb == 6)
-			ft_putstr(CYAN);
+			ft_putstr_fd(CYAN, 2);
 		if (nb == 7)
-			ft_putstr(GREY);
+			ft_putstr_fd(GREY, 2);
 		else
 			ft_bold(nb);
-		ft_putstr(s);
+		ft_putstr_fd(s, 2);
 	}
 }

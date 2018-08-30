@@ -19,6 +19,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	int			status;
 	int			ret;
 	t_redirect *redirect;
+	int ok  =0;
 
 	redirect = NULL;
 	ret = 0;
@@ -30,19 +31,25 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	if (pid == 0 || fd == -88)
 	{
 		//Gestion des multiples redirections
+		if (fd != -88)
+		{
 			if (ft_loop_redirect(redirect, bin_cmd, pid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
 		{
 			;
 		}
 		else
-			return(EXIT_FAILURE);
+		{
+			exit(EXIT_FAILURE);
+			return (EXIT_FAILURE);
+		}
+	}
 		//EXECVE
 		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else
 			exit(EXIT_SUCCESS);
 	}
-	if (pid > 0 && fd != -88)
+	if (pid > 0)
 	{
 		wait(&status);
 		ret = WEXITSTATUS(status);
