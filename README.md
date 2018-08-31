@@ -43,7 +43,7 @@
 | Les back quotes "‘". | ✅ |
 | L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ❌ |
 | Complétion dynamique. | 🐢 |
-| Le globing : "\*", "?", "[]", "{}", etc. (sans utiliser la fonction glob(3) !) | ✅ |
+| Le globing : "\*", "?", "[]", "{}", etc. (sans utiliser la fonction glob(3) !) | ❌ |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 
@@ -56,6 +56,7 @@ PROBLEMES A RESOUDRE:<br/>
 \_ls-l
 \_!d
 \_cat 101sh
+\_Les retours d'erreurs
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE
