@@ -52,11 +52,11 @@ PROBLEMES A RESOUDRE:<br/>
 \_\> l<br/>
 \_\`\` > 2<br/>
 \_  > 2<br/>
-\_\`echo ls\`
-\_ls-l
-\_!d
-\_cat 101sh
-\_Les retours d'erreurs
+\_\`echo ls\`<br/>
+\_ls-l<br/>
+\_!d<br/>
+\_cat 101sh<br/>
+\_Les retours d'erreurs<br/>
 
 SEGFAULT A RESOUDRE:<br/>
-\_ENVIRONNEMENT VIDE
+\_ENVIRONNEMENT VIDE<br/>
