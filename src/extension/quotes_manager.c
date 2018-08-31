@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 05:58:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 07:47:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,7 +96,7 @@ int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
 		else
 		{
 			(*i)->begin = (*i)->begin == -1 ? 0 : (*i)->begin;
-			bquote_manager(&(*cmd), &(*i)->j, &(*i)->i, (*i)->begin);
+			bquote_manager(&(*cmd), &(*i));
 			(*i)->begin = 0;
 		}
 		return (1);
