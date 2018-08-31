@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 11:51:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 15:24:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,6 +43,7 @@ char		**first_copy(char **cmd, t_bquote *index, char *in_bquote, int *ok)
 	{
 		if (ft_malloc_cmd(&result_bquote, in_bquote))
 			return (NULL);
+		printf("RESULT == %s\n", result_bquote[0]);
 	}
 	else
 		result_bquote = ft_split_bquote(in_bquote, ifs);
