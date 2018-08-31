@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 07:47:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 11:44:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -76,9 +76,9 @@ static int		manage_dsquotes(char ***tablo, t_bquote **i,
 	return (0);
 }
 
-int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
+int				ft_manage_quote(char ***cmd, t_bquote **i)
 {
-	if ((*cmd)[(*i)->i][(*i)->j] == '\'' && !*dquote && !(*i)->begin)
+	if ((*cmd)[(*i)->i][(*i)->j] == '\'' && !(*i)->dquote && !(*i)->begin)
 	{
 		manage_dsquotes(&(*cmd), &(*i), ft_replace_quote);
 		return (1);
@@ -86,7 +86,7 @@ int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
 	else if ((*cmd)[(*i)->i][(*i)->j] == '"' && !(*i)->begin)
 	{
 		manage_dsquotes(&(*cmd), &(*i), ft_replace_dquote);
-		*dquote = *dquote == 1 ? 0 : 1;
+		(*i)->dquote = (*i)->dquote == 1 ? 0 : 1;
 		return (1);
 	}
 	else if ((*cmd)[(*i)->i][(*i)->j] == '`')

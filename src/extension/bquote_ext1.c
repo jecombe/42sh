@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 10:50:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 11:51:13 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,13 @@ char		**first_copy(char **cmd, t_bquote *index, char *in_bquote, int *ok)
 	if (!(ifs = ft_getenv("IFS", g_set)))
 		ifs = ft_strdup("\n \t");
 	prev_cmd = search_prev(cmd, index->i);
-	result_bquote = ft_split_bquote(in_bquote, ifs);
+	if (index->dquote)
+	{
+		if (ft_malloc_cmd(&result_bquote, in_bquote))
+			return (NULL);
+	}
+	else
+		result_bquote = ft_split_bquote(in_bquote, ifs);
 	ifs ? ft_strdel(&ifs) : 0;
 	add_before_bquote(cmd[index->i], index->begin, &result_bquote);
 	add_and_del_tab(&ret, &prev_cmd);
