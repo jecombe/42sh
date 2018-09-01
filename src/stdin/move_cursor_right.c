@@ -6,17 +6,17 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:34:53 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:27:46 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/stdin.h"
 
-void	move_cursor_right(t_editor *ed, char *line)
+void	move_cursor_right(t_editor *ed)
 {
 	ioctl(0, TIOCGWINSZ, &sz);
-	if (ed->cursor_str_pos < ft_strlen(line))
+	if (ed->cursor_str_pos < ft_strlen(ed->line))
 	{
 		ed->cursor_str_pos++;
 		if (get_cursor_position(0) == sz.ws_col)

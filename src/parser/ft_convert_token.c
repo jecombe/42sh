@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:54:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 07:34:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/17 03:08:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-char		*ft_search_simple_token(e_token token)
+char		*ft_search_simple_token(t_token token)
 {
 	if (token == TOKEN)
 		return (ft_strdup("TOKEN"));
@@ -29,7 +29,7 @@ char		*ft_search_simple_token(e_token token)
 		return (ft_strdup("IO_NUMBER"));
 }
 
-char		*ft_search_control_operateur(e_token token)
+char		*ft_search_control_operateur(t_token token)
 {
 	if (token == SEMI)
 		return (ft_strdup("SEMI"));
@@ -53,7 +53,7 @@ char		*ft_search_control_operateur(e_token token)
 		return (ft_strdup("PIPE_AND"));
 }
 
-char		*ft_search_redirection_operator(e_token token)
+char		*ft_search_redirection_operator(t_token token)
 {
 	if (token == LESS)
 		return (ft_strdup("LESS"));
@@ -75,7 +75,7 @@ char		*ft_search_redirection_operator(e_token token)
 		return (ft_strdup("DLESSDASH"));
 }
 
-char		*ft_search_reserved_word(e_token token)
+char		*ft_search_reserved_word(t_token token)
 {
 	if (token == LBRACE)
 		return (ft_strdup("LBRACE"));
@@ -87,9 +87,8 @@ char		*ft_search_reserved_word(e_token token)
 		return (ft_strdup("IN"));
 }
 
-void		ft_convert_token(char **str, e_token token)
+void		ft_convert_token(char **str, t_token token)
 {
-	ft_strdel(&(*str));
 	if (token >= TOKEN && token <= IO_NUMBER)
 		*str = ft_search_simple_token(token);
 	else if (token >= SEMI && token <= PIPE_AND)

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/07/31 23:37:31 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/31 12:20:58 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,15 @@ SRCS_NAME =	\
 			ft_tabdel.c \
 			ft_tabdup.c \
 			ft_tablen.c \
-			ft_malloc_cmd.c
+			ft_getenv.c \
+			ft_strdel_in_tab.c \
+			ft_str_isalnum.c \
+			ft_malloc_cmd.c \
+			ft_putstr_color.c \
+			ft_add_str_at.c \
+			ft_strreplace.c \
+			ft_insert_char_in_str.c \
+			ft_isquote.c
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 

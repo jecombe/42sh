@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:32:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 05:43:08 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/01 03:41:46 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,6 @@ void		ft_free_b_redirect(t_redirect **b_redirect)
 	while (n_redirect)
 	{
 		*b_redirect = n_redirect;
-		ft_strdel(&n_redirect->fd);
 		ft_strdel(&n_redirect->file);
 		n_redirect = (*b_redirect)->next;
 		free(*b_redirect);

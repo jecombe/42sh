@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:36:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 12:21:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,26 @@
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
+
+# define BLACKB    "\033[1;30m"
+# define REDB      "\033[1;31m"
+# define GREENB    "\033[1;32m"
+# define YELLOWB   "\033[1;33m"
+# define BLUEB     "\033[1;34m"
+# define PURPLEB   "\033[1;35m"
+# define CYANB     "\033[1;36m"
+# define GREYB     "\033[1;37m"
+
+# define BLACK    "\033[0;30m"
+# define REDD      "\033[0;31m"
+# define GREEN    "\033[0;32m"
+# define YELLOW   "\033[0;33m"
+# define BLUEE     "\033[0;34m"
+# define PURPLE   "\033[0;35m"
+# define CYAN     "\033[0;36m"
+# define GREY     "\033[0;37m"
+
+# define STOP "\033[0;m"
 
 typedef struct		s_list
 {
@@ -99,5 +119,13 @@ void				ft_tabdel(char ***tab);//A RAJOUTER A LA LIB SUR MASTER
 int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MASTER
 int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
 char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
+char				*ft_getenv(char *str, char **env);
+int					ft_strdel_in_tab(char ***tablo, int index);
+int					ft_str_isalnum(char *str);
+void				ft_putstr_color(char const *s, int nb);
+int					ft_isquote(char c);
+int					ft_strreplace(char ***tablo, int index, char *by);
+int					ft_add_str_at(char ***tablo, char *str, int at);
+int					ft_insert_char_in_str(char **str, char c, int at);
 
 #endif

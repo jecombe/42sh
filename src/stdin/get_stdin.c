@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/31 23:43:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/09 23:29:54 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,39 +46,41 @@ int		get_term_raw_mode(int mode)
 	return (0);
 }
 
-int		get_keyboard_key(int *ret, char **line, t_editor *ed, e_prompt prompt)
+int		get_keyboard_key(int *ret, t_editor *ed, e_prompt *prompt, char **line)
 {
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (CTRL_D)
 		*ret = 0;
 	else if (CTRL_C)
-		end_of_text(line, ed);
-	else if (UP_KEY || DOWN_KEY)
-		return (0);
+		end_of_text(ed, prompt, line);
 	else if (!ft_strcmp(SHIFT_UP, ed->key) || !ft_strcmp(SHIFT_DOWN, ed->key))
-		!ft_strcmp(SHIFT_UP, ed->key) ? move_cursor_up(ed) : move_cursor_down(*line, ed);
-	else if (HOME_KEY || END_KEY)
-		HOME_KEY ? go_to_begin_of_line(ed) : go_to_end_of_line(ed, *line);
-	else if (BACKSPACE && line && ed->cursor_str_pos)
-		return (backspace(ed, line));
+		!ft_strcmp(SHIFT_UP, ed->key) ? move_cursor_up(ed) : move_cursor_down(ed);
+	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
+		HOME_KEY || CTRL_A ? go_to_begin_of_line(ed) : go_to_end_of_line(ed);
+	else if (BACKSPACE && ed->line && ed->cursor_str_pos)
+		return (backspace(ed));
 	else if (LEFT_KEY || RIGHT_KEY)
-		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed, *line);
+		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed);
 	else if (CTRL_L)
-		return (clear_window(*line, ed, prompt));
-	else if ((!ft_strcmp(SHIFT_RIGHT, ed->key) || !ft_strcmp(SHIFT_LEFT, ed->key)) && line)
-		!ft_strcmp(SHIFT_LEFT, ed->key) ? move_word_left(*line, ed) : move_word_right(*line, ed);
-	else if (ed->cursor_str_pos == ft_strlen(*line) && ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
+		return (clear_window(ed, *prompt));
+	else if ((!ft_strcmp(SHIFT_RIGHT, ed->key) || !ft_strcmp(SHIFT_LEFT, ed->key)) && ed->line)
+		!ft_strcmp(SHIFT_LEFT, ed->key) ? move_word_left(ed) : move_word_right(ed);
+	else if (ed->cursor_str_pos == ft_strlen(ed->line) && ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
 		return (add_char_to_line(ed->key[0], ed));
-	else if (ed->cursor_str_pos != ft_strlen(*line) && ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
-		return (add_char_into_line(ed->key[0], line, ed));
-	else if (CTRL_K && ft_strlen(*line + ed->cursor_str_pos))
-		delete_from_cursor_to_end(line, ed);
+	else if (ed->cursor_str_pos != ft_strlen(ed->line) && ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
+		return (add_char_into_line(ed->key[0], ed));
+	else if (CTRL_K && ft_strlen(ed->line + ed->cursor_str_pos))
+		delete_from_cursor_to_end(ed);
 	else if (CTRL_P)
-		paste_clipboard(line, ed);
+		paste_clipboard(ed);
+	else if (TAB_KEY && *prompt == PROMPT)
+		tabulator(ed);
+	else if (UP_KEY || DOWN_KEY)
+		historic(ed);
 	return (0);
 }
 
-int		line_editor_init(t_editor **ed)
+int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 {
 	if (!(*ed = (t_editor*)malloc(sizeof(t_editor))))
 		return (0);
@@ -86,34 +88,54 @@ int		line_editor_init(t_editor **ed)
 	(*ed)->cursor_str_pos = 0;
 	(*ed)->first_row = get_cursor_position(1);
 	(*ed)->last_row = (*ed)->first_row;
+	(*ed)->line = NULL;
+	*line = prompt != PROMPT && prompt != E_PIPE ? ft_strjoin_free(*line, "\n") : NULL;
 	return (1);
 }
 
-int		get_stdin(char **line, e_prompt prompt)
+void	save_ed(t_editor **ed, int mode)
+{
+	static t_editor *save;
+
+	if (!mode)
+		save = *ed;
+	else
+		*ed = save;
+}
+
+int		get_stdin(char **line, e_prompt *prompt)
 {
 	int ret;
 	t_editor *ed;
 
 	get_term_raw_mode(1);
-	line_editor_init(&ed);
-	display_prompt(prompt == 0 ? find_var_string(g_env, "HOME", 0) : NULL, prompt);
+	line_editor_init(line, *prompt, &ed);
+	display_prompt(prompt == 0 ? find_var_string(g_env, "HOME", 0) : NULL, *prompt);
 	ed->prompt_size = get_cursor_position(0);
 	signal(SIGWINCH, myhandler_winsize_change);
 	while ((ret = read(STDIN_FILENO, ed->key, BUFF_SIZE)) > 0)
 	{
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
-		if (get_keyboard_key(&ret, line, ed, prompt))
-			*line = ft_strjoin_free(*line, ed->key);
+		if (get_keyboard_key(&ret, ed, prompt, line))
+			ed->line = ft_strjoin_free(ed->line, ed->key);
+		save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
-		if (ft_strchr(ed->key, '\n') || (!ret && !(*line)))
+		if (ft_strchr(ed->key, '\n') || (!ret && !(ed->line) && *prompt == 0))
 			break ;
 	}
 	if ((ed->last_row - get_cursor_position(1)) != 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0,
 		ed->last_row - get_cursor_position(1)), 1, ft_putchar);
-	get_term_raw_mode(0);
 	ft_putchar('\n');
+	if (*prompt != PROMPT && *prompt != E_PIPE)
+	{
+		*line = ed->line == NULL ? *line : ft_strjoin_free(*line, ed->line);
+		ft_strdel(&ed->line);
+	}
+	else
+		*line = ed->line;
 	free(ed);
+	get_term_raw_mode(0);
 	return (ret);
 }
