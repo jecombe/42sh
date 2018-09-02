@@ -50,13 +50,13 @@ int				ft_check_file_is_directory(char *file)
 {
 	if (access(file, F_OK) == 0)
 	{
-		printf("NOO\n");
+		printf("NOOOOOOOOOOOOOOOOOO %s\n", file);
 		return (-1);
 	}
 	else
-		printf("GOOD\n");
+		printf("GOODn");
 		return (0);
-	/*struct stat st;
+/*	struct stat st;
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
 	{
@@ -69,13 +69,37 @@ int				ft_check_file_is_directory(char *file)
 
 int		ft_check_source(char *source)
 {
-	struct stat st;
+	if (access(source, F_OK) == 0)
+	{
+		printf("GOOOd\n");
+		return (0);
+	}
+	else
+		printf("NOOo\n");
+		return (-1);
+}
 
-	stat(source, &st);
-	if ((!S_ISDIR(st.st_mode)) || (!S_ISREG (st.st_mode)))
+/*int				ft_check_file_is_directory(char *file)
+{
+	struct stat st;
+	stat(file, &st);
+	if (S_ISDIR(st.st_mode))
+	{
+		ft_print_error(file, "is a directory");
+		return (-1);
+	}
+	else
+		return (0);
+}
+
+int		ft_check_source(char *source)
+{
+	struct stat sb;
+
+	if (lstat(source, &sb) == -1)
 	{
 		ft_print_error(source, "no such file or directory");
 		return (-1);
 	}
 	return (0);
-}
+}*/

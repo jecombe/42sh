@@ -49,7 +49,6 @@ void		ft_heredoc(t_redirect *redirect, char *bin, int flag, int buil)
 	int statu;
 
 	pipe(fd);
-	printf("=========> %s\n", redirect->file);
 	ft_read_line(fd[1], redirect->file);
 	close(fd[1]);
 	if (buil == 0)
@@ -63,23 +62,6 @@ int				ft_redirect_heredoc(t_redirect *redirect, int flag, char *tmp_bin, pid_t 
 
 	int			stat;
 
-	/*if (buil == 1)
-	{
-		if ((pid = fork()) < 0)
-			exit(EXIT_FAILURE);
-	}*/
-	/*if (pid == 0)
-	{*/
 		ft_heredoc(redirect, tmp_bin, flag, buil);
-	//}
-	/*else
-	{
-		wait(&stat);
-		if (WIFEXITED(stat))
-		{
-			if (WEXITSTATUS(stat) != 0)
-				return (EXIT_SUCCESS);
-		}
-	}*/
 	return (EXIT_SUCCESS);
 }

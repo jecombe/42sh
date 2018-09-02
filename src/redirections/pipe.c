@@ -83,12 +83,11 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 	while (i != 0)
 	{
 		pipe(fd);
-		if (op->redirect && i - 1 != 0)
-		{
 			t_op *op2;
-			//***********Gestion des mutliples redirections*********//
 			pid_t piddd;
 			int fd_open;
+			if (op->redirect && i - 1 != 0)
+			{
 			printf ("GOO LOOP\n");
 			if ((fd_open = ft_loop_redirect(op->redirect, NULL, piddd, 1, op->cmd, op2, -1)) == EXIT_FAILURE)
 				;//return (EXIT_FAILURE);
@@ -96,8 +95,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			{
 				;
 			}
-			/////**********************************************************////
-		}
+			}
 		fd_out =  1;
 
 		fd_in = 0;
