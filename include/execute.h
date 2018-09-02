@@ -62,5 +62,6 @@ int				ft_count_pipe(t_op *tmp);
 int				ft_loop_redirect(t_redirect *redirect, int buil, int fd2, int before_pipe);
 void			ft_print_error(const char *s1, const char *s2);
 int				binary_signal(int status, int pid, char *bin);
+void		ft_print_message(char *source, int nb);
 
 #endif
