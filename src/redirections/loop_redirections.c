@@ -127,11 +127,13 @@ int				ft_loop(t_redirect *redirect, t_loop *loop, int buil, int before_pipe)
 	int fd;
 
 	if (redirect != NULL)
+	{
 		fd_open  = ft_loop_2(redirect, &loop, buil, before_pipe);
 	if (fd_open == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (buil == 1)
 		return (fd_open);
+	}
 	return(EXIT_SUCCESS);
 }
 
