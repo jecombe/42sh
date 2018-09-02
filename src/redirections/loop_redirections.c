@@ -13,7 +13,7 @@
 
 #include "../../include/heart.h"
 
-/*int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe)
+int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe)
 {
 	if (before_pipe == 0)
 	{
@@ -26,10 +26,8 @@
 				{
 					(***loop).error = 2;
 					if (redirect->next == NULL)
-						exit(EXIT_FAILURE);
+						return (101);
 				}
-				else
-					(***loop).error = 0;
 			}
 		}
 		if ((***loop).fd != NOTHING)
@@ -37,14 +35,13 @@
 			if ((***loop).flag == O_RDONLY)
 				(***loop).flag2 = O_RDONLY;
 			else
-				(**loop).flag2 = O_WRONLY;
+				(***loop).flag2 = O_WRONLY;
 		}
 	}
 	return (EXIT_SUCCESS);
-
-
 }
-int				ft_loop_4(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe)
+
+	int				ft_loop_4(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe)
 {	if (before_pipe == 0)
 	{
 		if ((***loop).flag == O_RDONLY)
@@ -53,72 +50,43 @@ int				ft_loop_4(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe
 			{
 				(***loop).error = 1;
 				if (redirect->next == NULL)
-					exit(EXIT_FAILURE);
+				{
+					ft_print_message(redirect->file, 2);;
+					return (101);
+				}
 			}
-			else
-				(***loop).error = 0;
 		}
 	}
 	return (EXIT_SUCCESS);
-}*/
+}
 
 int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil, int before_pipe)
 {
-	//if (ft_loop_4((&loop), redirect, buil, before_pipe))
-	if (before_pipe == 0)
-	{
-		if ((**loop).flag == O_RDONLY)
-		{
-			if (ft_check_source(redirect->file) == -1)
-			{
-				(**loop).error = 1;
-				if (redirect->next == NULL)
-					exit(EXIT_FAILURE);
-			}
-			else
-				(**loop).error = 0;
-		}
-	}
+	int ret;
+	ret = ft_loop_4((&loop), redirect, buil, before_pipe);
+	if (ret == 101)
+		exit(EXIT_FAILURE);
+	else if (ret == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if ((**loop).flag == HEREDOC)
 	{
 		if ((ft_redirect_heredoc(redirect, buil) == EXIT_SUCCESS))
 		{
 			if (g_last == 1 && redirect->next == NULL)
-			{
 				if ((**loop).error == 0)
 					return (101);
-			}
 			if ((**loop).error > 0)
-				exit(EXIT_FAILURE);
-		}
-	}
-	/*if (ft_loop_5((&loop), redirect, buil, before_pipe) == EXIT_FAILURE)
-		return (EXIT_FAILURE);*/
-	if (before_pipe == 0)
-	{
-		(**loop).fd = redirect->fd;
-		if ((**loop).flag != NOTHING && (**loop).flag != HEREDOC)
-		{
-			if ((**loop).flag != O_RDONLY)
 			{
-				if ((ft_check_file_is_directory(redirect->file) == -1))
-				{
-					(**loop).error = 2;
-					if (redirect->next == NULL)
-						exit(EXIT_FAILURE);
-				}
-				else
-					(**loop).error = 0;
+				ft_print_message(redirect->file, (**loop).error);
+				exit(EXIT_FAILURE);
 			}
 		}
-		if ((**loop).fd != NOTHING)
-		{
-			if ((**loop).flag == O_RDONLY)
-				(**loop).flag2 = O_RDONLY;
-			else
-				(**loop).flag2 = O_WRONLY;
-		}
 	}
+	ret = ft_loop_5((&loop), redirect, buil, before_pipe);
+	if (ret == 101)
+		exit (EXIT_FAILURE);
+	else if (ret == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
@@ -135,11 +103,11 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil, int before_pipe)
 			return (EXIT_FAILURE);
 		if (ret == 101)
 			break;
-		if (redirect->redirect != DLESS && before_pipe == 0)
+		if (redirect->redirect != DLESS && before_pipe == 0 && (*loop)->error == 0)
 			fd_open = ft_open_redirect(redirect->file, (*loop)->flag, (*loop)->flag2, redirect->fd);
 		redirect = redirect->next;
 	}
-	if (before_pipe == 0)
+	if (before_pipe == 0 && (*loop)->error == 0)
 	{
 		if (buil == 1)
 			return (fd_open);
@@ -149,6 +117,11 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil, int before_pipe)
 			return (EXIT_SUCCESS);
 		}
 		dup2(fd_open, (*loop)->fd);
+	}
+	if ((*loop)->error > 0)
+	{
+		ft_print_message(NULL, (*loop)->error);
+		exit(EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
 }
@@ -161,10 +134,10 @@ int				ft_loop(t_redirect *redirect, t_loop *loop, int buil, int before_pipe)
 	if (redirect != NULL)
 	{
 		fd_open  = ft_loop_2(redirect, &loop, buil, before_pipe);
-	if (fd_open == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (buil == 1)
-		return (fd_open);
+		if (fd_open == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (buil == 1)
+			return (fd_open);
 	}
 	return(EXIT_SUCCESS);
 }
