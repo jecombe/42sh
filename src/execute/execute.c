@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 18:18:24 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/02 19:25:47 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,23 +30,26 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	if (pid == 0 || fd == -88)
 	{
 		//Gestion des multiples redirections
-			if (ft_loop_redirect(redirect, bin_cmd, pid, 0, tmp_op->cmd, tmp_op, fd) == EXIT_SUCCESS)
+			if (ft_loop_redirect(redirect, 0, fd, 0) == EXIT_SUCCESS)
 		{
 			;
 		}
 		else
 			return(EXIT_FAILURE);
 		//EXECVE
-		if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
+		if (g_error == 0)
+		{
+			if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 			exit(EXIT_FAILURE);
 		else
 			exit(EXIT_SUCCESS);
+		}
 	}
 	if (pid > 0 && fd != -88)
 	{
 		wait(&status);
 		ret = WEXITSTATUS(status);
-		binary_signal(status, pid, bin_cmd);
+		//binary_signal(status, pid, bin_cmd);
 	}
 	return (ret > 0 ? EXIT_FAILURE : EXIT_SUCCESS);
 }

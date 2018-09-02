@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 17:01:06 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/02 19:27:19 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,21 +82,21 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 
 	while (i != 0)
 	{
+		g_last = 0;
 		pipe(fd);
-		if (op->redirect && i - 1 != 0)
-		{
 			t_op *op2;
-			//***********Gestion des mutliples redirections*********//
 			pid_t piddd;
 			int fd_open;
-			if ((fd_open = ft_loop_redirect(op->redirect, NULL, piddd, 1, op->cmd, op2, -1)) == EXIT_FAILURE)
+			if (op->redirect && i - 1 != 0)
+			{
+			printf ("GOO LOOP\n");
+			if ((fd_open = ft_loop_redirect(op->redirect, 1, -1, 1)) == EXIT_FAILURE)
 				;//return (EXIT_FAILURE);
 			else
 			{
 				;
 			}
-			/////**********************************************************////
-		}
+			}
 		fd_out =  1;
 
 		fd_in = 0;
@@ -105,10 +105,12 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			{
 				g_hh = 10;
 			}
+			else
+				g_hh = 0;
 		bin = ft_search_bin(op->cmd[0]);
 		if (bin == NULL)
 		{
-		  printf("ERREUR\n");
+		  printf("ERREURuuuuuuuuuuuuuuuuuuuu\n");
 		  return (EXIT_FAILURE);
 		}
 		if ((fork()) == 0 && bin != NULL)
@@ -123,14 +125,14 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 			pid_t pid;
 			if (ft_check_command(op->cmd[0]) != 0)
 			{
-				g_hh = 1;
 				int flag;
 				g_ret = ft_builtins(op, ok, flag);
 				exit(1);
 			}
 			else
 			{
-				g_hh =6;
+				if (i - 1 == 0)
+					g_last = 1;
 				return ((ret = ft_solver(op, -88, pid, 1)));
 			}
 		}
@@ -155,9 +157,15 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe)
 	}
 	ret = WEXITSTATUS(status);
 	if (ret > 0)
+	{
+		g_hh = 0;
 		return (EXIT_FAILURE);
+	}
 	else
+	{
+		g_hh =  0;
 		return (EXIT_SUCCESS);
+	}
 	return (EXIT_FAILURE);
 }
 
