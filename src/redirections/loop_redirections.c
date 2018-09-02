@@ -13,42 +13,56 @@
 
 #include "../../include/heart.h"
 
-int				ft_loop_4(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe)
-{	if (before_pipe == 0)
+int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int before_pipe)
+{
+	if (before_pipe == 0)
+	{
+		(***loop).fd = redirect->fd;
+		if ((***loop).flag != NOTHING && (***loop).flag != HEREDOC)
+		{
+			if ((***loop).flag != O_RDONLY)
+			{
+				if ((ft_check_file_is_directory(redirect->file) == -1))
+				{
+					(***loop).error = 2;
+					exit(EXIT_FAILURE);
+				}
+				else
+					(***loop).error = 0;
+			}
+		}
+		if ((***loop).fd != NOTHING)
+		{
+			if ((***loop).flag == O_RDONLY)
+				(***loop).flag2 = O_RDONLY;
+			else
+				(***loop).flag2 = O_WRONLY;
+		}
+	}
+	return (EXIT_SUCCESS);
+}
+int				ft_loop_4(t_loop ***loop, t_redirect *redirect, int before_pipe)
+{
+	if (before_pipe == 0)
 	{
 		if ((***loop).flag == O_RDONLY)
 		{
 			if (ft_check_source(redirect->file) == -1)
 			{
 				(***loop).error = 1;
-				if (redirect->next == NULL)
 					exit(EXIT_FAILURE);
 			}
 			else
 				(***loop).error = 0;
 		}
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil, int before_pipe)
 {
-	/*if (ft_loop_4((&loop), redirect, buil, before_pipe))
-	  ;*/
-	if (before_pipe == 0)
-	{
-		if ((**loop).flag == O_RDONLY)
-		{
-			if (ft_check_source(redirect->file) == -1)
-			{
-				(**loop).error = 1;
-				if (redirect->next == NULL)
-					exit(EXIT_FAILURE);
-			}
-			else
-				(**loop).error = 0;
-		}
-	}
+	if (ft_loop_4((&loop), redirect, before_pipe) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if ((**loop).flag == HEREDOC)
 	{
 		if ((ft_redirect_heredoc(redirect, buil) == EXIT_SUCCESS))
@@ -59,34 +73,13 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil, int before_pipe)
 					return (101);
 			}
 			if ((**loop).error > 0)
-				exit(EXIT_FAILURE);
-		}
-	}
-	if (before_pipe == 0)
-	{
-		(**loop).fd = redirect->fd;
-		if ((**loop).flag != NOTHING && (**loop).flag != HEREDOC)
-		{
-			if ((**loop).flag != O_RDONLY)
 			{
-				if ((ft_check_file_is_directory(redirect->file) == -1))
-				{
-					(**loop).error = 2;
-					if (redirect->next == NULL)
-						exit(EXIT_FAILURE);
-				}
-				else
-					(**loop).error = 0;
+				exit(EXIT_FAILURE);
 			}
 		}
-		if ((**loop).fd != NOTHING)
-		{
-			if ((**loop).flag == O_RDONLY)
-				(**loop).flag2 = O_RDONLY;
-			else
-				(**loop).flag2 = O_WRONLY;
-		}
 	}
+	if (ft_loop_5((&loop), redirect, before_pipe) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
