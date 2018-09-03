@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 17:00:35 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/03 17:12:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,9 +24,12 @@ int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe
 			{
 				if ((ft_check_file_is_directory(redirect->file) == -1))
 				{
-					(***loop).error = 2;
+					(***loop).error = 1;
 					if (redirect->next == NULL)
+					{
+						ft_print_message(redirect->file, 1);;
 						return (101);
+					}
 				}
 			}
 		}
@@ -48,7 +51,7 @@ int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil, int before_pipe
 		{
 			if (ft_check_source(redirect->file) == -1)
 			{
-				(***loop).error = 1;
+				(***loop).error = 2;
 				if (redirect->next == NULL)
 				{
 					ft_print_message(redirect->file, 2);;
@@ -77,6 +80,7 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil, int before_pipe)
 					return (101);
 			if ((**loop).error > 0)
 			{
+				printf("====> %d\n",(**loop).error);
 				ft_print_message(redirect->file, (**loop).error);
 				exit(EXIT_FAILURE);
 			}
