@@ -80,14 +80,15 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil,
 	{
 		if ((ft_redirect_heredoc(redirect, buil) == EXIT_SUCCESS))
 		{
-			if (g_last == 1 && redirect->next == NULL)
+			/*if (g_last == 1 && redirect->next == NULL)
 				if ((**loop).error == 0)
-					return (101);
+					return (101);*/
 			if ((**loop).error > 0)
 			{
 				ft_print_message(redirect->file, (**loop).error);
 				exit(EXIT_FAILURE);
 			}
+			return (101);
 		}
 	}
 	ret = ft_loop_5((&loop), redirect, buil, before_pipe);
