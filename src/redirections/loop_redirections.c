@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/02 19:23:29 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/03 17:00:35 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,7 +103,7 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil, int before_pipe)
 			return (EXIT_FAILURE);
 		if (ret == 101)
 			break;
-		if (redirect->redirect != DLESS && before_pipe == 0 && (*loop)->error == 0)
+		if (redirect->redirect != DLESS && before_pipe == 0 && (*loop)->error == 0 && (*loop)->flag2 != O_RDONLY)
 			fd_open = ft_open_redirect(redirect->file, (*loop)->flag, (*loop)->flag2, redirect->fd);
 		redirect = redirect->next;
 	}
@@ -111,11 +111,6 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil, int before_pipe)
 	{
 		if (buil == 1)
 			return (fd_open);
-		if ((*loop)->flag2 == O_RDONLY)
-		{
-			dup2(fd_open, 0);
-			return (EXIT_SUCCESS);
-		}
 		dup2(fd_open, (*loop)->fd);
 	}
 	if ((*loop)->error > 0)
