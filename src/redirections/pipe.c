@@ -136,6 +136,8 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
 		return (g_ret);
 	}
 	ret = WEXITSTATUS(status);
+	if (bin == NULL)
+		return (EXIT_FAILURE);
 	if (ret > 0)
 	{
 		g_hh = 0;
