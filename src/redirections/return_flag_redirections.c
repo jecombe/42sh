@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:38:59 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 08:10:36 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:24:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,21 +27,6 @@ int		ft_return_flag(t_redirect *redirect)
 		{
 			return (HEREDOC);
 		}
-	}
-	return (NOTHING);
-}
-int		ft_return_flag2(t_op *op)
-{
-	if (op->redirect)
-	{
-		if (op->redirect->redirect == LESS)
-			return (O_RDONLY);
-		if (op->redirect->redirect == DGREAT)
-			return (O_APPEND);
-		if (op->redirect->redirect == GREAT)
-			return (O_TRUNC);
-		if (op->redirect->redirect == DLESS)
-			return (HEREDOC);
 	}
 	return (NOTHING);
 }

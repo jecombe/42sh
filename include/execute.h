@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 15:52:23 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 19:00:57 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,7 @@ int				ft_check_command(char *cmd);
 int				ft_open_redirect(char *file, int flag, int flag2);
 int				ft_return_flag(t_redirect *redirect);
 int				ft_echo(t_op *t_exec, int flag, int fd);
-int				ft_cd(t_op *t_exec, int flag);
+int				ft_cd(t_op *t_exec, int flag, int fd);
 int				ft_exit(t_op *t_exec, int flag);
 int 			ft_open_redirect_builtins(char *file, int flag, int flag2);
 int				ft_redirect_heredoc(t_redirect *redirect, int buil);

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:10:15 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:51:53 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -184,7 +184,7 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 		return (fd_open);
 	if (fd_open == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	//if (fd2 > 1)
-		//exit(EXIT_SUCCESS);
+	/*if (fd2 > 1)
+		exit(EXIT_SUCCESS);*/
 	return (EXIT_SUCCESS);
 }

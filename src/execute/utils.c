@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/02 19:29:36 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:21:20 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,10 +41,7 @@ int				ft_check_file_is_directory(char *file)
 	struct stat st;
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
-	{
-		//ft_print_error(file, "is a directory");
 		return (-1);
-	}
 	else
 		return (0);
 }
@@ -54,10 +51,7 @@ int		ft_check_source(char *source)
 	struct stat sb;
 
 	if (lstat(source, &sb) == -1)
-	{
-		//ft_print_error(source, "no such file or directory");
 		return (-1);
-	}
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 15:54:09 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:25:12 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,6 @@ static void	add_last_param(char **cmd)
 
 int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 {
-	//	ft_get_bin();
 	char *tmp_bin;
 	char *raccmd;
 	int ok;

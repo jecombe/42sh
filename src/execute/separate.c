@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 15:53:25 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:23:37 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,7 +83,6 @@ void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
 		{
 			if (separate->and_if == 0)
 			{
-				printf("=====> Fd%d\n", fd);
 				separate->ret = ft_solver(opera, fd, pid, 0);
 				add_to_set("?", ft_itoa(separate->ret));
 			}
@@ -130,111 +129,110 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 	}
 	else
 	{
-		printf("=====> fd%d\n", fd);
 		separate.ret = ft_solver(opera, fd, pid, 0);
 		add_to_set("?", ft_itoa(separate.ret));
 	}
 }
 /*
-void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
+   void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
+   {
+   t_op *opera;
+   int ret;
+   int and_if;
+   int or_if;
+   int i = 0;
+   int ok = 0;
+
+   and_if = 0;
+   or_if = 0;
+   opera = b_seq->op;
+   ret = 0;
+   if (opera->next)
+   {
+   while (opera)
+   {
+   ok = 0;
+   if (or_if == 0)
+   {
+   if (and_if == 0)
+   {
+   if (opera->token == PIPE)
+   {
+   if (opera->prev)
+   if (opera->prev->token != PIPE)
+   i = 0;
+   if (opera->token == PIPE)
+   {
+//Compte combien de pipe
+i = ft_count_pipe(opera);
+i++;
+ret = ft_pipe(opera, i, pid);
+}
+while (i != 0)
 {
-    t_op *opera;
-    int ret;
-    int and_if;
-    int or_if;
-    int i = 0;
-    int ok = 0;
-    
-    and_if = 0;
-    or_if = 0;
-    opera = b_seq->op;
-    ret = 0;
-    if (opera->next)
-    {
-        while (opera)
-        {
-            ok = 0;
-            if (or_if == 0)
-            {
-                if (and_if == 0)
-                {
-                    if (opera->token == PIPE)
-                    {
-                        if (opera->prev)
-                            if (opera->prev->token != PIPE)
-                                i = 0;
-                        if (opera->token == PIPE)
-                        {
-                            //Compte combien de pipe
-                            i = ft_count_pipe(opera);
-                            i++;
-                            ret = ft_pipe(opera, i, pid);
-                        }
-                        while (i != 0)
-                        {
-                            opera = opera->next;
-                            i--;
-                        }
-                        if (opera == NULL)
-                            return ;
-                        //opera = opera->next;
-                        if (ret == EXIT_SUCCESS)
-                        {
-                            if (opera->prev->token == OR_IF)
-                                or_if = 1;
-                            else
-                                or_if = 0;
-                            ret = 0;
-                        }
-                        //Si echec de solver
-                        else if (ret == EXIT_FAILURE)
-                        {
-                            if (opera->prev->token == AND_IF)
-                                and_if = 1;
-                            else
-                                and_if = 0;
-                            ret = 0;
-                        }
-                    }
-                }
-            }
-            if (opera->token != PIPE)
-            {
-                if (or_if == 0 && i == 0)
-                {
-                    if (and_if == 0)
-                    {
-                        ret = ft_solver(opera, fd, pid, 0);
-                        add_to_set("?", ft_itoa(ret));
-                    }
-                }
-                //Si succées de solver
-                if (ret == EXIT_SUCCESS)
-                {
-                    if (opera->token == OR_IF)
-                        or_if = 1;
-                    else
-                        or_if = 0;
-                    ret = 0;
-                }
-                //Si echec de solver
-                else if (ret == EXIT_FAILURE)
-                {
-                    if (opera->token == AND_IF)
-                        and_if = 1;
-                    else
-                        and_if = 0;
-                    ret = 0;
-                }
-            }
-            opera = opera->next;
-        }
-        return ;
-    }
-    //Command sans next donc sans séparateur dans opera(b_seq->op)
-    else
-    {
-        ret = ft_solver(opera, fd, pid, 0);
-        add_to_set("?", ft_itoa(ret));
-    }
+opera = opera->next;
+i--;
+}
+if (opera == NULL)
+return ;
+//opera = opera->next;
+if (ret == EXIT_SUCCESS)
+{
+if (opera->prev->token == OR_IF)
+or_if = 1;
+else
+or_if = 0;
+ret = 0;
+}
+//Si echec de solver
+else if (ret == EXIT_FAILURE)
+{
+if (opera->prev->token == AND_IF)
+and_if = 1;
+else
+and_if = 0;
+ret = 0;
+}
+}
+}
+}
+if (opera->token != PIPE)
+{
+if (or_if == 0 && i == 0)
+{
+if (and_if == 0)
+{
+ret = ft_solver(opera, fd, pid, 0);
+add_to_set("?", ft_itoa(ret));
+}
+}
+//Si succées de solver
+if (ret == EXIT_SUCCESS)
+{
+	if (opera->token == OR_IF)
+		or_if = 1;
+	else
+		or_if = 0;
+	ret = 0;
+}
+//Si echec de solver
+else if (ret == EXIT_FAILURE)
+{
+	if (opera->token == AND_IF)
+		and_if = 1;
+	else
+		and_if = 0;
+	ret = 0;
+}
+}
+opera = opera->next;
+}
+return ;
+}
+//Command sans next donc sans séparateur dans opera(b_seq->op)
+else
+{
+	ret = ft_solver(opera, fd, pid, 0);
+	add_to_set("?", ft_itoa(ret));
+}
 }*/
