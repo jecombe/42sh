@@ -73,16 +73,16 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil,
 
 	ret = ft_loop_4((&loop), redirect, buil, before_pipe);
 	if (ret == 101)
+	{
+		if (buil == 0)
 		exit(EXIT_FAILURE);
-	else if (ret == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+		else
+			return (EXIT_FAILURE);
+	}
 	if ((**loop).flag == HEREDOC)
 	{
 		if ((ft_redirect_heredoc(redirect, buil) == EXIT_SUCCESS))
 		{
-			/*if (g_last == 1 && redirect->next == NULL)
-				if ((**loop).error == 0)
-					return (101);*/
 			if ((**loop).error > 0)
 			{
 				ft_print_message(redirect->file, (**loop).error);
@@ -105,6 +105,7 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
 	int			fd_open;
 	int			ret;
 
+	fd_open = 0;
 	while (redirect)
 	{
 		(*loop)->i++;
@@ -163,6 +164,7 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 	loop.flag = 0;
 	loop.flag2 = 0;
 	loop.error = 0;
+	fd_open = 0;
 	if (fd2 > 1)
 	{
 		loop.flag = O_TRUNC;
@@ -170,11 +172,14 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 		fd_open = ft_open_redirect(".tmp_file", loop.flag, loop.flag2);
 		fd = 1;
 		dup2(fd_open, fd);
+		close(fd_open);
 	}
 	fd_open = ft_loop(redirect, &loop, buil, before_pipe);
 	if (fd_open == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (buil == 1)
 		return (fd_open);
+	if (fd2 > 1)
+		exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
