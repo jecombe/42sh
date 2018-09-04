@@ -107,12 +107,8 @@ int			ft_cd(t_op *exec, int flags, int fd)
 		if (fd_open < 1)
 			fd_open = 2;
 		if (exec->redirect)
-		{
-			if (exec->redirect->fd > 1)
-				fd_open = exec->redirect->fd;
-			else
+			if (exec->redirect->fd == 1)
 				fd_open = 2;
-		}
 	}
 	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j, fd_open))
 		return (EXIT_FAILURE);
