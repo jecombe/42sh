@@ -15,20 +15,17 @@
 
 char		**ft_tabdup(char **tab)
 {
-	char		**ret;
-	int			i;
+	char	**ret;
+	int		i;
 
-	i = 0;
 	ret = NULL;
+	i = -1;
 	if (tab)
 	{
-		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
+		if (!(ret = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1))))
 			return (NULL);
-		while (tab[i])
-		{
+		while (tab[++i])
 			ret[i] = ft_strdup(tab[i]);
-			i++;
-		}
 		ret[i] = NULL;
 	}
 	return (ret);
