@@ -175,6 +175,7 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 		{
 			dup2(fd_open, fd);
 			close(fd_open);
+			return (EXIT_SUCCESS);
 		}
 	}
 	if (buil == 1 && redirect == NULL && fd2 > 1)
