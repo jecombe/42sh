@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 07:47:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 15:54:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,6 +72,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		{
 			if (!extension(&b_seq))
 			{
+				printf("===> fd_base %d\n", fd_base);
 				ft_sequence(b_seq, fd_base, pid);
 				//ft_watch_result(line, lex, b_seq);
 			}

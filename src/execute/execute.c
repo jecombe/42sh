@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 14:26:08 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 17:53:02 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,11 +30,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	if (pid == 0 || fd == -88)
 	{
 		//Gestion des multiples redirections
-			if (ft_loop_redirect(redirect, 0, fd, 0) == EXIT_SUCCESS)
-		{
-			;
-		}
-		else
+			if (ft_loop_redirect(redirect, 0, fd, 0) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
 		//EXECVE
 		if (g_error == 0)

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 18:03:12 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:10:15 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -171,15 +171,20 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 		loop.flag2 = O_WRONLY;
 		fd_open = ft_open_redirect(".tmp_file", loop.flag, loop.flag2);
 		fd = 1;
-		dup2(fd_open, fd);
-		close(fd_open);
+		if (buil == 0)
+		{
+			dup2(fd_open, fd);
+			close(fd_open);
+		}
 	}
+	if (buil == 1 && redirect == NULL && fd2 > 1)
+		return (fd_open);
 	fd_open = ft_loop(redirect, &loop, buil, before_pipe);
-	if (fd_open == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	if (buil == 1)
 		return (fd_open);
-	if (fd2 > 1)
-		exit(EXIT_SUCCESS);
+	if (fd_open == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	//if (fd2 > 1)
+		//exit(EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:05:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 15:54:09 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
-		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
+		if (ft_builtins(t_exec, ok, flag, fd) == EXIT_SUCCESS)
 		{
 			add_last_param(t_exec->cmd);
 			return (EXIT_SUCCESS);

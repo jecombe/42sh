@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:40:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 15:43:58 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../../include/execute.h"
 #include "../../include/builtins.h"
 
-int		ft_builtins(t_op *exec, int what, int flag)
+int		ft_builtins(t_op *exec, int what, int flag, int fd)
 {
 	t_hashtable *hashtable = NULL;
 
@@ -23,7 +23,7 @@ int		ft_builtins(t_op *exec, int what, int flag)
 	else
 		ft_save_hash(&hashtable);
 	if (ft_strcmp(exec->cmd[0], "echo") == 0)
-		if (ft_echo(exec, flag))
+		if (ft_echo(exec, flag, fd))
 			return (EXIT_FAILURE);
 	if (ft_strcmp(exec->cmd[0], "cd") == 0)
 		if (ft_cd(exec, flag))

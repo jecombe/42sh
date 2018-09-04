@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/03 19:06:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 15:53:25 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ typedef struct s_separate
 	int ret;
 }			t_separate;
 
-int			ft_separate_pipe_2(t_separate **separate, t_op *opera, pid_t pid)
+int			ft_separate_pipe_2(t_separate **separate, t_op *opera, pid_t pid, int fd2)
 {
 	if (opera->prev)
 		if (opera->prev->token != PIPE)
@@ -31,7 +31,7 @@ int			ft_separate_pipe_2(t_separate **separate, t_op *opera, pid_t pid)
 	{
 		(*separate)->i = ft_count_pipe(opera);
 		(*separate)->i++;
-		(*separate)->ret = ft_pipe(opera, (*separate)->i, pid);
+		(*separate)->ret = ft_pipe(opera, (*separate)->i, pid, fd2);
 	}
 	while ((*separate)->i != 0)
 	{
@@ -42,7 +42,7 @@ int			ft_separate_pipe_2(t_separate **separate, t_op *opera, pid_t pid)
 		return (101);
 	return (42);
 }
-int			ft_separate_pipe(t_separate *separate, t_op *opera, pid_t pid)
+int			ft_separate_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd2)
 {
 	if (separate->or_if == 0)
 	{
@@ -50,7 +50,7 @@ int			ft_separate_pipe(t_separate *separate, t_op *opera, pid_t pid)
 		{
 			if (opera->token == PIPE)
 			{
-				if (ft_separate_pipe_2(&separate, opera, pid) == 101)
+				if (ft_separate_pipe_2(&separate, opera, pid, fd2) == 101)
 					return (101);
 				if (separate->ret == EXIT_SUCCESS)
 				{
@@ -83,6 +83,7 @@ void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
 		{
 			if (separate->and_if == 0)
 			{
+				printf("=====> Fd%d\n", fd);
 				separate->ret = ft_solver(opera, fd, pid, 0);
 				add_to_set("?", ft_itoa(separate->ret));
 			}
@@ -120,7 +121,7 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 	{
 		while (opera)
 		{
-			if (ft_separate_pipe(&separate, opera, pid) == 101)
+			if (ft_separate_pipe(&separate, opera, pid, fd) == 101)
 				return ;
 			ft_separate_no_pipe(&separate, opera, pid, fd);
 			opera = opera->next;
@@ -129,6 +130,7 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 	}
 	else
 	{
+		printf("=====> fd%d\n", fd);
 		separate.ret = ft_solver(opera, fd, pid, 0);
 		add_to_set("?", ft_itoa(separate.ret));
 	}
