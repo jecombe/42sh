@@ -56,8 +56,8 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 	{
 		raccmd = ft_strdup(t_exec->cmd[0]);
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (tmp_bin != NULL)
-		{
+		/*if (tmp_bin != NULL)
+		{*/
 			if (pipe == 0)
 			{
 				pid = fork();
@@ -75,11 +75,10 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 			{
 				ft_strdel(&raccmd);
 				add_last_param(t_exec->cmd);
+			if (tmp_bin == NULL)
+				ft_print_error(t_exec->cmd[0], "command not found");
 				return (EXIT_FAILURE);
 			}
-		}
-		else
-			ft_print_error(t_exec->cmd[0], "command not found");
 	}
 	add_last_param(t_exec->cmd);
 	return (EXIT_FAILURE);

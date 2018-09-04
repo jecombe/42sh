@@ -77,6 +77,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
 	int ret;
 	char *bin;
 	int ok = 0;
+	int mp = i;
 	int u = i;
 
 	while (i != 0)
@@ -93,20 +94,16 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
 		fd_in = 0;
 		status = 0;
 		if (ft_check_command(op->cmd[0]) != 0)
-		{
 			g_hh = 10;
-		}
 		else
 			g_hh = 0;
 		bin = ft_search_bin(op->cmd[0]);
-		if (bin == NULL)
-			return (EXIT_FAILURE);
-		if ((fork()) == 0 && bin != NULL)
+		if ((fork()) == 0)
 		{
 			dup2(fd_in != 0 ? fd_in : fd_save, STDIN_FILENO);
 			if (i != 1 && fd_out == 1)
 				dup2(fd[1], STDOUT_FILENO);
-			close(fd[0]);
+				close(fd[0]);
 			pid_t pid;
 			if (ft_check_command(op->cmd[0]) != 0)
 			{
@@ -115,11 +112,7 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
 				exit(1);
 			}
 			else
-			{
-				if (i - 1 == 0)
-					g_last = 1;
 				return ((ret = ft_solver(op, -88, pid, 1)));
-			}
 		}
 		else
 		{	
@@ -131,6 +124,8 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
 			if (fd_save)
 				close(fd_save);
 			fd_save = fd[0];
+			if (bin == NULL)
+				ft_print_error(op->cmd[0], "command not found");
 			op = op->next;
 			i--;
 		}
