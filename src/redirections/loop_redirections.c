@@ -113,10 +113,8 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
 		ret = ft_loop_3(&(*loop), redirect, buil, before_pipe);
 		if (ret == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (ret == 101)
-			break ;
 		if (redirect->redirect != DLESS && before_pipe == 0
-				&& (*loop)->error == 0 && (*loop)->flag2 != O_RDONLY)
+				&& (*loop)->error == 0 && (*loop)->flag2 != O_RDONLY && ret != 101)
 			fd_open = ft_open_redirect(redirect->file, (*loop)->flag, (*loop)->flag2);
 		redirect = redirect->next;
 	}
