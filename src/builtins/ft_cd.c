@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:19:17 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 19:27:27 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,8 +78,8 @@ static int	ft_chdir(char **curpath, const char *cmd, int fd_open)
 		return (ft_bierrors("cd", cmd, BINOFOUND, fd_open));
 	}
 	pwd = ft_envset_value((const char **)g_env, "PWD");
-	ft_setenv("PWD", *curpath);
-	ft_setenv("OLDPWD", pwd);
+	ft_setenv("PWD", *curpath, fd_open);
+	ft_setenv("OLDPWD", pwd, fd_open);
 	ft_strdel(&pwd);
 	return (EXIT_SUCCESS);
 }

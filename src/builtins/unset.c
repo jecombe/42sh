@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:52:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:05:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 19:28:02 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,7 @@ int				ft_unset_var(char *cmd)
 /*
  * LES REDIRECTIONS NE SONT PAS FAITES
 */
-int				unset(t_op *exec)
+int				unset(t_op *exec, int fd_open)
 {
 	int		i;
 
@@ -45,7 +45,7 @@ int				unset(t_op *exec)
 		while (exec->cmd[i])
 		{
 			ft_unset_var(exec->cmd[i]);
-			ft_unsetenv(exec->cmd[i++]);
+			ft_unsetenv(exec->cmd[i++], fd_open);
 		}
 	}
 	return (0);
