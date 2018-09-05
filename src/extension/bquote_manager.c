@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 07:38:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:38:16 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,10 +93,11 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 	prompt = PROMPT;
 	if ((line = recup_inside_bquote((*cmd)[(*i)->i], (*i)->begin, (*i)->j)))
 	{
-		fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
+		fd = 3;
+		//fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
 		heart_of_101sh(line, &prompt, fd);
 		ft_strdel(&line);
-		close(fd);
+		//close(fd);
 		line = get_tmp_file((*cmd)[(*i)->i], (*i)->begin, (*i)->j);
 	}
 	if (ft_bquote_replace(&(*cmd), &line, i))

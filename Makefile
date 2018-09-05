@@ -31,7 +31,13 @@ LIB_PATH = ./libft/
 SRCS_NAME =	\
 			heart/42sh.c \
 			heart/ft_signal.c \
-			stdin/add_char.c \
+			init/ft_term_init.c \
+			init/init_env.c \
+			init/add_to_env.c \
+			init/add_to_set.c \
+			init/init_set.c \
+			init/utils.c
+	#		stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \
 			stdin/cursor_position.c \
@@ -104,13 +110,8 @@ SRCS_NAME =	\
 			builtins/ft_export.c \
 			builtins/ft_assign.c \
 			builtins/ft_hash.c \
-			builtins/ft_hash_utils.c \
-			init/ft_term_init.c \
-			init/init_env.c \
-			init/add_to_env.c \
-			init/add_to_set.c \
-			init/init_set.c \
-			init/utils.c
+			builtins/ft_hash_utils.c
+
 
 OBJS_FOLDERS = \
 			builtins stdin lexer parser extension execute redirections init \

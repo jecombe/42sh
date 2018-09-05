@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:05:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:25:12 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,6 @@ static void	add_last_param(char **cmd)
 
 int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 {
-	//	ft_get_bin();
 	char *tmp_bin;
 	char *raccmd;
 	int ok;
@@ -42,7 +41,7 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
 	{
-		if (ft_builtins(t_exec, ok, flag) == EXIT_SUCCESS)
+		if (ft_builtins(t_exec, ok, flag, fd) == EXIT_SUCCESS)
 		{
 			add_last_param(t_exec->cmd);
 			return (EXIT_SUCCESS);
@@ -57,8 +56,8 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 	{
 		raccmd = ft_strdup(t_exec->cmd[0]);
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (tmp_bin != NULL)
-		{
+		/*if (tmp_bin != NULL)
+		{*/
 			if (pipe == 0)
 			{
 				pid = fork();
@@ -76,11 +75,10 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 			{
 				ft_strdel(&raccmd);
 				add_last_param(t_exec->cmd);
+			if (tmp_bin == NULL)
+				ft_print_error(t_exec->cmd[0], "command not found");
 				return (EXIT_FAILURE);
 			}
-		}
-		else
-			ft_print_error(t_exec->cmd[0], "command not found");
 	}
 	add_last_param(t_exec->cmd);
 	return (EXIT_FAILURE);

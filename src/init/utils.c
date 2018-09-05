@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/init.h"
+#include "../../include/heart.h"
 
 int					index_to_var(char *name, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 07:47:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 18:25:22 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "../../include/heart.h"
 
 #define cv ft_convert_token_to_string
-
+/*
 void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
@@ -102,17 +102,23 @@ void				ft_101sh(void)
 		heart_of_101sh(line, &prompt, 1);
 	}
 }
-
-int					main(int ac, char **argv)
+*/
+int					main(int ac, const char **av)
 {
-	char			**av;
-
-	if (!isatty(0))
-		return (0);
-	ft_signal();
-	av = ft_tabdup(argv);
+//	if (!isatty(0))
+//		return (0);
+	g_env = NULL;
+	g_set = NULL;
 	if (ft_term_init(ac, av))
 		return (EXIT_FAILURE);
-	ft_101sh();
+/*	ft_signal();
+	av = ft_tabdup(argv);
+	int i = -1;
+	while (g_set[++i])
+		ft_putendl(g_set[i]);*/
+	int i = -1;
+	while (g_env[++i])
+		ft_putendl(g_env[i]);
+	//ft_101sh();
 	return (EXIT_SUCCESS);
 }

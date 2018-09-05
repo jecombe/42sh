@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:05:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 19:28:24 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,7 @@ typedef struct			s_hashtable
 *******************************************************************************
 */
 
-int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err);
+int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err, int fd_open);
 
 /*
 *******************************************************************************
@@ -58,7 +58,7 @@ int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err);
 *******************************************************************************
 */
 
-int				ft_env(t_op *exec);
+int				ft_env(t_op *exec, int fd_open);
 
 /*
 *******************************************************************************
@@ -66,8 +66,8 @@ int				ft_env(t_op *exec);
 *******************************************************************************
 */
 
-int				ft_setenv(const char *name, const char *value);
-int				ft_unsetenv(const char *name);
+int				ft_setenv(const char *name, const char *value, int fd_open);
+int				ft_unsetenv(const char *name, int fd_open);
 
 /*
 *******************************************************************************
@@ -95,7 +95,7 @@ int				set(t_op *exec);
 *******************************************************************************
 */
 
-int				ft_export(t_op *exec);
+int				ft_export(t_op *exec, int fd_open);
 
 /*
 *******************************************************************************
@@ -111,7 +111,7 @@ int				ft_assign(t_op *exec);
 *******************************************************************************
 */
 
-int				unset(t_op *exec);
+int				unset(t_op *exec, int fd_open);
 int				ft_unset_var(char *cmd);
 
 /*
@@ -120,7 +120,7 @@ int				ft_unset_var(char *cmd);
 *******************************************************************************
 */
 
-int				ft_cd(t_op *t_exec, int flag);
+int				ft_cd(t_op *t_exec, int flag, int fd);
 
 /*
 *******************************************************************************
@@ -137,7 +137,7 @@ int				ft_rules(char **cmd);
 *******************************************************************************
 */
 
-int				ft_echo(t_op *t_exec, int flag);
+int				ft_echo(t_op *t_exec, int flag, int fd);
 
 /*
 *******************************************************************************
@@ -145,7 +145,7 @@ int				ft_echo(t_op *t_exec, int flag);
 *******************************************************************************
 */
 
-int				ft_exit(t_op *t_exec, int flag);
+int				ft_exit(t_op *t_exec, int flag, int fd_open);
 
 /*
 *******************************************************************************

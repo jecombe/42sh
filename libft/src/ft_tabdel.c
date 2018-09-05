@@ -17,10 +17,15 @@ void		ft_tabdel(char ***tab)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
 	if (*tab)
 	{
-		while ((*tab)[++i])
-			ft_strdel(&(*tab)[i]);
+		while ((*tab)[i])
+		{
+			free((*tab)[i]);
+			(*tab)[i] = NULL;
+		}
+		free(*tab);
+		*tab = NULL;
 	}
 }

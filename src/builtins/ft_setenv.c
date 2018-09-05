@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/11 04:13:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/19 09:00:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/04 19:26:59 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-int			ft_setenv(const char *name, const char *value)
+int			ft_setenv(const char *name, const char *value, int fd_open)
 {
 	char	*s;
 	int		i;
@@ -23,9 +23,9 @@ int			ft_setenv(const char *name, const char *value)
 	i = -1;
 	env = NULL;
 	if (name == NULL)
-		return (ft_env((t_op *) 0 ));
+		return (ft_env((t_op *) 0 , fd_open));
 	if (ft_strchr(name, '='))
-		return (ft_bierrors("setenv", NULL, BIEQUAL));
+		return (ft_bierrors("setenv", NULL, BIEQUAL, fd_open));
 	if (!(s = ft_envset_line((const char **)g_env, name)))
 		ft_malloc_cmd(&g_env, (s = ft_envset_join(name, value)));
 	else

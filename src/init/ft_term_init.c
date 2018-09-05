@@ -11,15 +11,15 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/init.h"
+#include "../../include/heart.h"
 
-int					ft_term_init(int ac, char **av)
+int					ft_term_init(int ac, const char **av)
 {
 	char			*term;
 
 	if (init_env(ac, av))
 		return (1);
-	if (init_set(ac, av))
-		return (1);
+//	if (init_set(ac, av))
+//		return (1);
 	return (0);
 }

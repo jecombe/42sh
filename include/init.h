@@ -16,16 +16,13 @@
 
 #include "./stdin.h"
 
-char **g_set;
-char **g_env;
-
-int			ft_term_init(int ac, char **av);
+int			ft_term_init(int ac, const char **av);
 char		*concat_name_value(char *name, char *value);
 int			add_to_env(char *name, char *value);
 int			add_to_set(char *name, char *value);
 char		*search_path_of_101sh(char *bin);
-int			init_env(int ac, char **av);
+int			init_env(int ac, const char **av);
 int			init_set(int ac, char **av);
-int			index_to_var(char *name, char **env);
+int			index_to_var(char *name, const char **env);
 
 #endif

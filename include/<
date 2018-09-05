@@ -9,8 +9,8 @@
 #include "./include/extension.h"
 #include "./include/builtins.h"
 
-char	**g_env;
-char	**g_set;
+static char	**g_env = NULL;
+static char	**g_set = NULL;
 
 int		heart_of_101sh(char *line, e_prompt *prompt, int fd_base);
 void	ft_signal(void);

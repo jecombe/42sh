@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/init.h"
+#include "../../include/heart.h"
 
 static int			not_found(char *to_add)
 {
