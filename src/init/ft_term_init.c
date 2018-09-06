@@ -17,9 +17,11 @@ int					ft_term_init(int ac, char **av)
 {
 	char			*term;
 
+	if (init_files(av[0]))
+		return (EXIT_FAILURE);
 	if (init_env(ac, av))
-		return (1);
+		return (EXIT_FAILURE);
 	if (init_set(ac, av))
-		return (1);
-	return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

@@ -18,18 +18,14 @@ char		**ft_tabdup(char **tab)
 	char		**ret;
 	int			i;
 
-	i = 0;
+	i = -1;
 	ret = NULL;
-	if (tab)
-	{
-		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
-			return (NULL);
-		while (tab[i])
-		{
-			ret[i] = ft_strdup(tab[i]);
-			i++;
-		}
-		ret[i] = NULL;
-	}
+	if (!tab)
+		return (NULL);
+	if (!(ret = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1))))
+		return (NULL);
+	while (tab[++i])
+		ret[i] = ft_strdup(tab[i]);
+	ret[i] = NULL;
 	return (ret);
 }

@@ -20,7 +20,25 @@ int			ft_malloc_cmd(char ***cmd, char *new_arg)
 	char	**tab;
 
 	i = 0;
-	if (!(*cmd) && new_arg)
+	tab = NULL;
+	if (!new_arg)
+		return (EXIT_FAILURE);
+	if (*cmd)
+		if (!(tab = ft_tabdup(*cmd)))
+			return (EXIT_FAILURE);
+	(*cmd) ? ft_tabdel(&(*cmd)) : 0;
+	if (!(*cmd = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 2))))
+		return (EXIT_FAILURE);
+	if (tab)
+		while (tab[i])
+		{
+			(*cmd)[i] = tab[i];
+			i++;
+		}
+	(*cmd)[i] = ft_strdup(new_arg);
+	(*cmd)[i + 1] = NULL;
+	(tab) ? ft_tabdel(&tab) : 0;
+	/*if (!(*cmd) && new_arg)
 	{
 		if (!(tab = (char**)malloc(sizeof(char*) * 2)))
 			return (1);
@@ -37,6 +55,6 @@ int			ft_malloc_cmd(char ***cmd, char *new_arg)
 		return (0);
 	tab[i] = ft_strdup(new_arg);
 	tab[i + 1] = NULL;
-	*cmd = ft_tabdup(tab);
-	return (0);
+	*cmd = ft_tabdup(tab);*/
+	return (EXIT_SUCCESS);
 }

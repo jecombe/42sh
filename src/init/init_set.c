@@ -43,8 +43,8 @@ int					manage_info_history(char *av)
 	char		buff[4096];
 
 	add_to_set("HISTSIZE", "500");
-	str = ft_strjoin(search_path_of_101sh(av), "/.historic");
-	if (!access(str, F_OK))
+	str = ft_strjoin(search_path_of_101sh(av), "/.101sh_history");
+	if (access(str, F_OK) == 0)
 	{
 		historic_found(str);
 	}

@@ -107,6 +107,8 @@ int					main(int ac, char **argv)
 {
 	char			**av;
 
+	g_env = NULL;
+	g_set = NULL;
 	if (!isatty(0))
 		return (0);
 	ft_signal();

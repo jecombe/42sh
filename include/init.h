@@ -26,6 +26,7 @@ int			add_to_set(char *name, char *value);
 char		*search_path_of_101sh(char *bin);
 int			init_env(int ac, char **av);
 int			init_set(int ac, char **av);
+int			init_files(char *bin);
 int			index_to_var(char *name, char **env);
 
 #endif

@@ -110,7 +110,8 @@ SRCS_NAME =	\
 			init/add_to_env.c \
 			init/add_to_set.c \
 			init/init_set.c \
-			init/utils.c
+			init/utils.c \
+			init/init_files.c
 
 OBJS_FOLDERS = \
 			builtins stdin lexer parser extension execute redirections init \
