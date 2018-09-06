@@ -24,5 +24,5 @@ char		*search_path_of_101sh(char *bin);
 int			init_env(int ac, const char **av);
 int			init_set(int ac, char **av);
 int			index_to_var(char *name, const char **env);
-
+int			ft_envset_add(char ***envset, char *new_arg);
 #endif

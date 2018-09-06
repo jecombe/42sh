@@ -13,134 +13,6 @@
 
 #include "../../include/heart.h"
 
-int			ft_unsetenv(const char *name, int fd_open)
-{
-	char	*s;
-	int		i;
-	char	**env;
-
-	s = NULL;
-	i = -1;
-	env = NULL;
-	if (name == NULL)
-		return (EXIT_FAILURE);
-	if (!(s = ft_envset_line((const char **)g_env, name)))
-		return (EXIT_SUCCESS);
-	env = ft_tabdup(g_env);
-	ft_tabdel(&g_env);
-	g_env = NULL;
-	while (env[++i])
-		if (!(ft_strcmp(env[i], s) == 0))
-			ft_malloc_cmd(&g_env, env[i]);
-	ft_tabdel(&env);
-	ft_strdel(&s);
-	return (EXIT_SUCCESS);
-}
-
-char		*ft_envset_value(const char **envset, const char *name)
-{
-	int		i;
-	char	*tmp;
-	char	*s;
-
-	i = -1;
-	tmp = NULL;
-	s = NULL;
-	while (envset[++i])
-	{
-		tmp = ft_strsub(envset[i], 0, ft_strlen(name));
-		if (ft_strcmp(name, tmp) == 0 && envset[i][ft_strlen(name)] == '=')
-			s = ft_strdup(ft_strchr(envset[i], '=') + 1);
-		ft_strdel(&tmp);
-		if (s)
-			break ;
-	}
-	return (s);
-}
-
-char		*ft_envset_line(const char **envset, const char *name)
-{
-	int		i;
-	char	*tmp;
-	char	*s;
-
-	i = -1;
-	tmp = NULL;
-	s = NULL;
-	while (envset[++i])
-	{
-		tmp = ft_strsub(envset[i], 0, ft_strlen(name));
-		if (ft_strcmp(name, tmp) == 0 && envset[i][ft_strlen(name)] == '=')
-			s = ft_strdup(envset[i]);
-		ft_strdel(&tmp);
-		if (s)
-			break ;
-	}
-	return (s);
-}
-char		*ft_envset_join(const char *name, const char *value)
-{
-	char	*tmp;
-	char	*s;
-
-	tmp = NULL;
-	s = NULL;
-	tmp = ft_strjoin(name, "=");
-	if (value)
-		s = ft_strjoin(tmp, value);
-	else
-		s = ft_strjoin(tmp, "''");
-	ft_strdel(&tmp);
-	return (s);
-}
-int			ft_setenv(const char *name, const char *value, int fd_open)
-{
-	char	*s;
-	int		i;
-	char	**env;
-
-	s = NULL;
-	i = -1;
-	env = NULL;
-	if (name == NULL)
-		return (EXIT_FAILURE);
-	if (ft_strchr(name, '='))
-		return (EXIT_FAILURE);
-	if (!(s = ft_envset_line((const char **)g_env, name)))
-		ft_malloc_cmd(&g_env, (s = ft_envset_join(name, value)));
-	else
-	{
-		while (g_env[++i])
-			if ((ft_strcmp(g_env[i], s)) == 0)
-				break ;
-		ft_strdel(&g_env[i]);
-		g_env[i] = ft_envset_join(name, value);
-	}
-	ft_strdel(&s);
-	return (EXIT_SUCCESS);
-}
-
-int			ft_envset_exist(const char **envset, const char *name)
-{
-	int		i;
-	char	*tmp;
-
-	i = -1;
-	tmp = NULL;
-	while (envset[++i])
-	{
-		if (!(tmp = ft_strsub(envset[i], 0, ft_strlen(name))))
-			return (EXIT_FAILURE);
-		if ((ft_strcmp(name, tmp) == 0) && (envset[i][ft_strlen(name)] == '='))
-			break ;
-		ft_strdel(&tmp);
-	}
-	(tmp) ? ft_strdel(&tmp) : 0;
-	if (!envset[i])
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
 static int				ft_get_user_info(void)
 {
 	char		buff[4096];
@@ -152,17 +24,24 @@ static int				ft_get_user_info(void)
 	i = 0;
 //	add_to_env("PWD", getcwd(buff, sizeof(buff)));
 //	if (ft_envset_exist((const char **)g_env, "PWD"))
-	ft_setenv("PWD", getcwd(buff, sizeof(buff)), 0);
+	if (getcwd(buff, sizeof(buff)))
+		ft_setenv("PWD", getcwd(buff, sizeof(buff)), 0);
+	ft_strclr(buff);
 //	add_to_env("SHELL", "/bin/bash");
-	ft_setenv("PWD", getcwd(buff, sizeof(buff)), 0);
+	if (getcwd(buff, sizeof(buff)))
+		ft_setenv("PWD", getcwd(buff, sizeof(buff)), 0);
+	ft_strclr(buff);
 	if ((str = ft_strjoin("/Users/", getlogin())))
 		ft_setenv("HOME", str, 0);
 //	if (str)
 //		ft_strdel(&str);
 	(str) ? ft_strdel(&str) : 0;
 	ft_setenv("101SH_VERSION", "21SH_PLEINS_DE_SEGFAULT", 0);
-	ft_setenv("USER", getlogin(), 0);
-	ft_setenv("LOGNAME", getlogin(), 0);
+	if ((str = getlogin()))
+	{
+		ft_setenv("USER", str, 0);
+		ft_setenv("LOGNAME", str, 0);
+	}
 	if ((str = ft_envset_value((const char **)g_env, "SHLVL")))
 	{
 		i = ft_atoi(str);

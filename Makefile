@@ -36,7 +36,8 @@ SRCS_NAME =	\
 			init/add_to_env.c \
 			init/add_to_set.c \
 			init/init_set.c \
-			init/utils.c
+			init/utils.c \
+			init/env_set_manage.c
 	#		stdin/add_char.c \
 			stdin/backspace.c \
 			stdin/clear_window.c \

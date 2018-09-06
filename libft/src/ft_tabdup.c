@@ -22,13 +22,11 @@ char		**ft_tabdup(char **tab)
 	ret = NULL;
 	if (tab)
 	{
-		if (!(ret = malloc(sizeof(char**) * ft_tablen(tab) + 1)))
+		if (!(ret = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1))))
 			return (NULL);
-		while (tab[i])
-		{
+		i = -1;
+		while (tab[++i])
 			ret[i] = ft_strdup(tab[i]);
-			i++;
-		}
 		ret[i] = NULL;
 	}
 	return (ret);

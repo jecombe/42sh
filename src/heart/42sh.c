@@ -117,8 +117,12 @@ int					main(int ac, const char **av)
 	while (g_set[++i])
 		ft_putendl(g_set[i]);*/
 	int i = -1;
-	while (g_env[++i])
-		ft_putendl(g_env[i]);
+//	while (g_env[++i])
+//		ft_putendl(g_env[i]);
+	i = -1;
+//	while (g_set[++i])
+//		ft_putendl(g_set[i]);
 	//ft_101sh();
+	ft_tabdel(&g_env);
 	return (EXIT_SUCCESS);
 }
