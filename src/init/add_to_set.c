@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 04:40:33 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:26:42 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/07 01:29:16 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/init.h"
+#include "../../include/heart.h"
 
 static void			sort_set(void)
 {
@@ -52,7 +52,28 @@ static int			not_found(char *to_add)
 
 int					add_to_set(char *name, char *value)
 {
-	int			i;
+	char	*s;
+	int		i;
+
+	s = NULL;
+	i = -1;
+	if (name == NULL)
+		return (EXIT_FAILURE);
+	if (ft_strchr(name, '='))
+		return (EXIT_FAILURE);
+	if (!(s = ft_envset_line((const char **)g_set, name)))
+		not_found((s = ft_envset_join(name, value)));
+	else
+	{
+		while (g_set[++i])
+			if ((ft_strcmp(g_set[i], s)) == 0)
+				break ;
+		ft_strdel(&g_set[i]);
+		g_set[i] = ft_envset_join(name, value);
+	}
+	ft_strdel(&s);
+	return (EXIT_SUCCESS);
+	/*int			i;
 	int			j;
 	int			find;
 	char		*to_add;
@@ -75,6 +96,6 @@ int					add_to_set(char *name, char *value)
 	}
 	else
 		not_found(to_add);
-	to_add ? ft_strdel(&to_add) : 0;
+	to_add ? ft_strdel(&to_add) : 0;*/
 	return (0);
 }

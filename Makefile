@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/08/29 17:47:09 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/07 01:26:55 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -110,7 +110,8 @@ SRCS_NAME =	\
 			init/add_to_env.c \
 			init/add_to_set.c \
 			init/init_set.c \
-			init/utils.c
+			init/utils.c \
+			init/init_files.c
 
 OBJS_FOLDERS = \
 			builtins stdin lexer parser extension execute redirections init \

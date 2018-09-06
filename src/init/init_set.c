@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:41:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/07 01:28:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ int					manage_info_history(char *av)
 	char		buff[4096];
 
 	add_to_set("HISTSIZE", "500");
-	str = ft_strjoin(search_path_of_101sh(av), "/.historic");
+	str = ft_strjoin(search_path_of_101sh(av), "/.101sh_history");
 	if (!access(str, F_OK))
 	{
 		historic_found(str);
