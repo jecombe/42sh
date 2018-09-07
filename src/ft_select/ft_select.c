@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 04:39:32 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 05:11:33 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 16:41:27 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,11 +77,11 @@ int				ft_test(t_select **sel, int ret)
 	return (0);
 }
 
-char			*ft_select(char **av, int *line, int *pos)
+char			*ft_select(char **av, int *line)
 {
 	t_select	*sel;
 	int			ret;
-	//t_ws		verif;
+	t_ws		verif;
 	char		*test = NULL;
 
 	ret = 0;
@@ -89,11 +89,11 @@ char			*ft_select(char **av, int *line, int *pos)
 	if (!av)
 		return (0);
 	ft_enable_raw(&sel);
-	ft_init_select(&sel, av, pos);
-//	ft_get_size_term(&verif, &sel, 2);
-//	if ()
+	ft_init_select(&sel, av);
+	ft_get_size_term(&verif, &sel, 2);
 	ft_test(&sel, ret);
 	test = ft_print_final(&sel, line);
 	ft_disable_raw(0, &sel);
+	ft_tabdel(&av);
 	return (test);
 }

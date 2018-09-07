@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 05:12:28 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/23 04:36:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,13 +33,14 @@ static t_line	*ft_init_begin(t_line **line, char *av)
 	return (after);
 }
 
-void			ft_init_select(t_select **sel, char **av, int *pos)
+void			ft_init_select(t_select **sel, char **av)
 {
 	int		i;
-	t_ws		verif;
 	t_line	*now;
 
 	i = -1;
+	if (av[1])
+	{
 		*sel = malloc(sizeof(t_select));
 		(*sel)->line = NULL;
 		(*sel)->select_max = 0;
@@ -50,11 +51,9 @@ void			ft_init_select(t_select **sel, char **av, int *pos)
 			else
 				now = ft_init_begin(&(*sel)->line, av[i]);
 		}
-		ft_get_size_term(&verif, sel, 2);
 		(*sel)->line->cursor_inside = 1;
 		(*sel)->bp = ft_search_big_param((*sel)->line);
 		(*sel)->pose_min = 0;
-		(*sel)->cur_col_pos = pos[0];
-		(*sel)->cur_row_pos = pos[1];
 		(*sel)->ds = NULL;
+	}
 }

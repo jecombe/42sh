@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 05:15:17 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/30 02:52:32 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,8 @@
 # define FT_SELECT_H
 # include <dirent.h>
 # include <sys/ioctl.h>
-# include "../../../includes/stdin.h"
+//#include <term.h>
+#include "../../../includes/stdin.h"
 
 # define BOLD "\x1b[1m"
 # define UNDER "\x1b[4m"
@@ -64,13 +65,11 @@ typedef struct			s_select
 	int					pbl;
 	int					nbl;
 	int					nbp;
-	int				cur_col_pos;
-	int				cur_row_pos;
 	char				*ds;
 	t_line				*line;
 }						t_select;
 
-char					*ft_select(char **av, int *line, int *pos);
+char					*ft_select(char **av, int *line);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_disable_raw(int ret, t_select **t);
@@ -82,7 +81,7 @@ void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
 int						ft_manage_touch(char **ret, t_select **t);
 int						ft_arrows(char arrows, t_select **t);
 int						ft_outc(int c);
-void					ft_init_select(t_select **sel, char **av, int *pos);
+void					ft_init_select(t_select **sel, char **av);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);

@@ -6,7 +6,7 @@
 /*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/11/22 21:36:51 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/05/27 19:09:59 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/29 02:27:08 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,7 @@
 
 int		ft_putstr(const char *s)
 {
-	int i;
-
-	i = 0;
 	if (s != NULL)
-		while (s[i])
-			ft_putchar(s[i++]);
+		write(1, s, ft_strlen(s));
 	return (0);
 }

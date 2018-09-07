@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/27 23:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/21 19:06:01 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 23:49:20 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,8 @@
 
 char	**ft_tabdup(char **tab)
 {
-	int i;
-	char **tabnew;
+	int		i;
+	char	**tabnew;
 
 	tabnew = NULL;
 	i = -1;

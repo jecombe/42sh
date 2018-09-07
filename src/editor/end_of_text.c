@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:32:55 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/10 02:09:45 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 22:45:04 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ void	end_of_text(t_editor *ed, e_prompt *prompt, char **line)
 		get_cursor_position(1)), 1, ft_putchar);
 	ft_putchar('\n');
 	getcwd(buf, sizeof(buf));
-	display_prompt(find_var_string(g_env, "HOME", 0), PROMPT);
+	display_prompt(find_env_var(g_env, "HOME", 0), PROMPT);
 	ed->last_row = get_cursor_position(1);
 	ed->first_row = ed->last_row;
 	if (ed->line)

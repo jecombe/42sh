@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:53:21 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 01:48:54 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/30 03:00:44 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,9 +35,11 @@ int			ft_malloc_cmd(char ***cmd, char *new_arg)
 			tab[i] = ft_strdup((*cmd)[i]);
 			i++;
 		}
+		ft_tabdel(cmd);
 	}
 	tab[i] = ft_strdup(new_arg);
 	tab[i + 1] = NULL;
 	*cmd = ft_tabdup(tab);
+	ft_tabdel(&tab);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 05:27:04 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/01 23:20:44 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,7 +135,6 @@ int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(char *home, e_prompt prompt);
 int		get_stdin(char **line, e_prompt *prompt);
-char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
 void	delete_from_cursor_to_end(t_editor *ed);
@@ -147,5 +146,6 @@ void	historic(t_editor *ed);
 void	fill_hist_list(t_hist *hist, char *line);
 int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);
+char	*find_env_var(char **env, char *var, int mode);
 
 #endif

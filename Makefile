@@ -6,7 +6,7 @@
 #    By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2018/02/22 01:51:44 by dewalter     #+#   ##    ##    #+#        #
-#    Updated: 2018/08/27 01:03:44 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/08/31 22:51:48 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -34,7 +34,6 @@ SRC_NAME =		editor/main.c \
 				editor/get_stdin.c \
 				editor/prompt.c \
 				editor/signal.c \
-				editor/find_env_var.c \
 				editor/cursor_position.c \
 				editor/backspace.c \
 				editor/clear_window.c \
@@ -54,6 +53,7 @@ SRC_NAME =		editor/main.c \
 				editor/tabulator.c \
 				editor/historic.c \
 				editor/term_init.c \
+				editor/find_env_var.c \
 				\
 				ft_select/ft_arrows.c \
 				ft_select/ft_char_by_line.c \

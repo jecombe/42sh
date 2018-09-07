@@ -6,12 +6,12 @@
 /*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/11/22 21:38:45 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/04/13 00:47:53 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/27 23:46:26 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "includes/libft.h"
 
 size_t	ft_strlen(const char *s)
 {

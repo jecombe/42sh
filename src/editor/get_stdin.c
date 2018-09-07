@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/27 04:35:00 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/05 13:41:16 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,7 +98,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 	get_term_raw_mode(1);
 	line_editor_init(line, *prompt, &ed);
 	display_prompt(prompt == 0 ?
-	find_var_string(g_env, "HOME", 0) : NULL, *prompt);
+	find_env_var(g_env, "HOME", 0) : NULL, *prompt);
 	ed->prompt_size = get_cursor_position(0);
 //	signal(SIGWINCH, myhandler_winsize_change);
 	while ((ret = read(STDIN_FILENO, ed->key, BUFF_SIZE)) > 0)
@@ -113,6 +113,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 			break ;
 	}
 	get_stdin_next(line, ed, prompt);
+	//fflush(stdout);
+	//ft_putstr("\033c");
 	get_term_raw_mode(0);
 	return (ret);
 }

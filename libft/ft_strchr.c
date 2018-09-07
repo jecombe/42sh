@@ -6,10 +6,12 @@
 /*   By: dewalter <dewalter@student.le-101.>        +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/11/22 21:37:09 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/04/16 23:52:51 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/30 01:03:41 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
+
+#include "includes/libft.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -22,5 +24,5 @@ char	*ft_strchr(const char *s, int c)
 			return ((char*)s + i);
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
