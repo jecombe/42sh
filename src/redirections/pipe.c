@@ -12,7 +12,8 @@
 /* ************************************************************************** */
 
 #include "heart.h"
-
+int g_hh;
+int g_ret;
 int		ft_count_pipe(t_op *tmp)
 {
 	t_op *tmpp = tmp;
@@ -26,144 +27,131 @@ int		ft_count_pipe(t_op *tmp)
 }
 
 
-/*int 	ft_children_fork(t_op *op, int *fd, int fd_out, int i, int fd2)
-  {	
-  char *bin;
-  int ret;
-
-  if (i != 1 && fd_out == 1)
-  dup2(fd[1], STDOUT_FILENO);
-  close(fd[0]);
-  pid_t pid;
-  bin = ft_search_bin(op->cmd[0]);
-  if (bin == NULL)
-  return (EXIT_FAILURE);
-  if (ft_check_command(op->cmd[0]) != 0)
-  {
-  int flag;
-  int ok  = 0;
-  return ((ret = ft_builtins(op, ok, flag, fd2)));
-  }
-  else
-  {
-  return ((ret = ft_solver(op, -88, pid, 1)));
-  printf("EXEC2\n");
-//return (execve(bin, op->cmd, g_env));
+int	ft_children_fork(t_pipe *tpipe, int *fd, t_op *op, int fd2, int i, int ret, char *bin)
+{
+	int flag;
+	int fd_open;
+	//pid_t pid;
+	int ok = 0;
+	dup2(tpipe->fd_in != 0 ? tpipe->fd_in : tpipe->fd_save, STDIN_FILENO);
+	if (i != 1 && tpipe->fd_out == 1)
+		dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	pid_t pid;
+	if (ft_loop_redirect(op->redirect, 0, -88, 0) == EXIT_FAILURE)
+		return(EXIT_FAILURE);
+	if (g_hh != 0 && i == 1)
+		exit(g_ret);
+	execve(bin, op->cmd, g_env);
+	//ft_solver(op, fd2, pid, 1);
+	return (0);
 }
-exit(1);
-//return (0);
-}*/
 
-int			waitstat(int *status, int buil)
+
+
+void			ft_parent_fork(t_pipe *tpipe, t_op *op, int *fd, char *bin)
+{
+	if ((*tpipe).fd_in > 0)
+		close((*tpipe).fd_in);
+	if ((*tpipe).fd_out != 1)
+		close((*tpipe).fd_out);
+	close(fd[1]);
+	if ((*tpipe).fd_save)
+		close((*tpipe).fd_save);
+	(*tpipe).fd_save = fd[0];
+}
+
+int			waitstat(int *status)
 {
 	int ret;
-	if (buil == 0)
+	if (g_hh == 0)
 		wait(status);
 	while (wait(NULL) > 0)
 		;
 	return (*status);
 }
 
-int g_hh;
-int g_ret;
-int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int *fd_pipe, int fd2)
+int ft_waiting(int status, int ret, char *bin, int i, t_pipe *tpipe)
+{
+	status = waitstat(&status);
+	ret = WEXITSTATUS(status);
+	if (ret > 0)
+		return (EXIT_FAILURE);
+	else
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
+int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int fd2)
 {
 	int fd[2];
 	int status = 0;
-	int fd_save =0;
-	int fd_out = 1;
-	int fd_in = 0;
-	int stat;
 	int ret;
 	char *bin;
-	int ok = 0;
-	int u = i;
+	t_pipe tpipe;
+	int fd_open;
+	int finish;
+	int flag;
+	int ok;
 
+	tpipe = ft_init_pipe(i);
 	while (i != 0)
 	{
-		g_last = 0;
 		pipe(fd);
-		t_op *op2;
-		pid_t piddd;
-		int fd_open;
 		if (op->redirect && i - 1 != 0)
 			if ((fd_open = ft_loop_redirect(op->redirect, 1, -1, 1)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-		fd_out =  1;
-		fd_in = 0;
+		tpipe.fd_out =  1;
+		tpipe.fd_in = 0;
 		status = 0;
-		if (ft_check_command(op->cmd[0]) != 0)
-		{
-			g_hh = 10;
-		}
-		else
-			g_hh = 0;
 		bin = ft_search_bin(op->cmd[0]);
-		if (bin == NULL)
-			return (EXIT_FAILURE);
-		if ((fork()) == 0 && bin != NULL)
+		if (bin != NULL)
 		{
-			dup2(fd_in != 0 ? fd_in : fd_save, STDIN_FILENO);
-			if (i != 1 && fd_out == 1)
-				dup2(fd[1], STDOUT_FILENO);
-			close(fd[0]);
-			pid_t pid;
-			if (ft_check_command(op->cmd[0]) != 0)
-			{
-				int flag;
+			if ((g_hh = ft_check_command(op->cmd[0]) != 0))
 				g_ret = ft_builtins(op, ok, flag, fd2);
-				exit(1);
+			if (g_hh == 0)
+			{
+				if ((fork() == 0))
+
+					ret = ft_children_fork(&tpipe, fd, op, fd2, i, ret, bin);
+				else
+				{
+					ft_parent_fork(&tpipe, op, fd, bin);
+					op = op->next;
+					i--;
+				}
 			}
 			else
 			{
-				if (i - 1 == 0)
-					g_last = 1;
-				return ((ret = ft_solver(op, -88, pid, 1)));
+				op = op->next;
+				i--;
 			}
 		}
 		else
-		{	
-			if (fd_in > 0)
-				close(fd_in);
-			if (fd_out != 1)
-				close(fd_out);
-			close(fd[1]);
-			if (fd_save)
-				close(fd_save);
-			fd_save = fd[0];
+		{
+			ft_print_error(op->cmd[0], "Command not found !");
 			op = op->next;
 			i--;
 		}
 	}
-	status = waitstat(&status, ok);
-	if (g_hh == 10)
+	if ((finish = ft_waiting(status, ret, bin, i, &tpipe)) == EXIT_SUCCESS)
 	{
-		return (g_ret);
-	}
-	ret = WEXITSTATUS(status);
-	if (bin == NULL)
-		return (EXIT_FAILURE);
-	if (ret > 0)
-	{
-		g_hh = 0;
-		return (EXIT_FAILURE);
-	}
-	else
-	{
-		g_hh =  0;
+		if (bin == NULL)
+			return (EXIT_FAILURE);
+		if (g_hh != 0)
+			return (g_ret);
 		return (EXIT_SUCCESS);
 	}
-	return (EXIT_FAILURE);
+	if (finish == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (0);
 }
-
-
-
 
 int		ft_pipe(t_op *opera, int i, pid_t pid, int fd2)
 {
 	int ret;
 	int fdd[3];
 
-	ret = ft_pipe_execute(i, opera, pid, fdd, fd2);
+	ret = ft_pipe_execute(i, opera, pid, fd2);
 	return (ret);
 }

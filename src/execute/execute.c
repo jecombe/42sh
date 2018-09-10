@@ -12,7 +12,6 @@
 /* ************************************************************************** */
 
 #include "heart.h"
-
 int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 {
 	//pid_t		cpid;
@@ -23,23 +22,18 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	redirect = NULL;
 	ret = 0;
 	if (tmp_op->redirect)
-	{
 		redirect = tmp_op->redirect;
-	}
 		//Gestion des multiples redirections
 	if (pid == 0 || fd == -88)
 	{
 		//Gestion des multiples redirections
 			if (ft_loop_redirect(redirect, 0, fd, 0) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-		//EXECVE
-		if (g_error == 0)
-		{
-			if ((execve(bin_cmd, tmp_op->cmd, g_env)) == -1)
+		//execve
+			if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
 				exit(EXIT_FAILURE);
 		else
 			exit(EXIT_SUCCESS);
-		}
 	}
 	if (pid > 0 && fd != -88)
 	{
@@ -47,7 +41,5 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 		ret = WEXITSTATUS(status);
 		//binary_signal(status, pid, bin_cmd);
 	}
-	/*if (fd > 2)
-		exit(EXIT_SUCCESS)*/
 	return (ret > 0 ? EXIT_FAILURE : EXIT_SUCCESS);
 }

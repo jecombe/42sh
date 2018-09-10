@@ -123,6 +123,7 @@ SRCS_NAME =	\
 			redirections/heredoc.c \
 			redirections/loop_redirections.c \
 			redirections/pipe.c \
+			redirections/init_struct.c \
 			builtins/builtins.c \
 			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \

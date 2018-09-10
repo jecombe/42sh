@@ -157,11 +157,7 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 	t_loop		loop;
 	int			flag2;
 
-	loop.fd = 0;
-	loop.i = 0;
-	loop.flag = 0;
-	loop.flag2 = 0;
-	loop.error = 0;
+	loop = ft_init_loop();
 	fd_open = 0;
 	if (fd2 > 1)
 	{
