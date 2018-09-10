@@ -108,10 +108,17 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int fd2)
 		if (bin != NULL)
 		{
 			if ((g_hh = ft_check_command(op->cmd[0]) != 0))
+			{
+				if (i == 1)
+				{
+					printf("yeyeye\n");
 				g_ret = ft_builtins(op, ok, flag, fd2);
+				}
+			}
 			if (g_hh == 0)
 			{
-				if ((fork() == 0))
+				printf("====+> %s\n", op->cmd[0]);
+				if (fork() == 0)
 
 					ret = ft_children_fork(&tpipe, fd, op, fd2, i, ret, bin);
 				else
