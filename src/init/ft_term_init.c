@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/07 01:27:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 02:03:13 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/init.h"
+#include "heart.h"
 
-int					ft_term_init(int ac, char **av)
+int			ft_term_init(int ac, char **av)
 {
 	char			*term;
 

@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 03:29:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 15:57:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:26:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/lexer.h"
+#include "heart.h"
 
 static char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
 {

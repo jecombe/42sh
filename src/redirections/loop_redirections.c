@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:51:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:41:38 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil,
 		int before_pipe)

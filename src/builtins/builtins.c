@@ -6,13 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:29:39 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:37:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 int		ft_builtins(t_op *exec, int what, int flag, int fd_open)
 {

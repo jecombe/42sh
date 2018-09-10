@@ -6,13 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:27:27 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:39:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 static int	ft_cd_error(const char *cmd, const int stat)
 {

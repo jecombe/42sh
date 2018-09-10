@@ -6,14 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/29 05:34:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 15:42:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:26:17 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
-static int		ft_outc(int c)
+static int		ft_outchar(int c)
 {
 	return (write(1, &c, 1));
 }
@@ -22,7 +22,7 @@ static void		ft_handle_stp(int sig)
 {
 
 	(void)sig;
-	tputs(tgetstr("cd", NULL), 1, ft_outc);
+	tputs(tgetstr("cd", NULL), 1, ft_outchar);
 	signal(SIGINT, SIG_DFL);
 //	signal(SIGTSTP, SIG_DFL);
 	ioctl(STDERR_FILENO, TIOCSTI, "\x1A");

@@ -6,7 +6,7 @@
 /*   By: dewalter <dewalter@le-101.fr>              +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/23 01:33:09 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:27:42 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/09 23:53:24 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ char	*var_directory(char *var_value, char *var_dir)
 	return (ft_strdup(path_dir));
 }
 
-char	*find_var_string(char **env, char *var, int mode)
+char	*find_env_var(char **env, char *var, int mode)
 {
 	int		i;
 	int		j;

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:28:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:35:45 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,8 +14,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "./extension.h"
-#include "./stdin.h"
+# include "heart.h"
 
 # define BI_MAX 4084
 # define MAX_HASH 100

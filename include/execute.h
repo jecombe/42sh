@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:25:07 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:35:39 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,13 +14,11 @@
 #ifndef EXECUTE_H
 # define EXECUTE_H
 
+# include "heart.h"
+
 # define HEREDOC 10
 # define NOTHING -1
-#include "./parsing.h"
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include "./stdin.h"
+
 
 char			**g_bin;
 int g_error;

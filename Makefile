@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/07 01:26:55 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/10 04:34:00 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -18,7 +18,7 @@ NAME = 101sh
 MAKE = make
 CC = gcc
 CFLAGS = #-Wall -Werror -Wextra
-CPPFLAGS = -I./
+CPPFLAGS = -I ./include/
 LDLIBS = -lft -ltermcap
 LDFLAGS = -Llibft/
 RM = rm -f
@@ -31,28 +31,62 @@ LIB_PATH = ./libft/
 SRCS_NAME =	\
 			heart/42sh.c \
 			heart/ft_signal.c \
-			stdin/add_char.c \
-			stdin/backspace.c \
-			stdin/clear_window.c \
-			stdin/cursor_position.c \
-			stdin/delete_from_cursor_to_end.c \
-			stdin/end_of_text.c \
-			stdin/escape_sequence.c \
-			stdin/find_env_var.c \
-			stdin/get_stdin.c \
-			stdin/go_to_begin_of_line.c \
-			stdin/go_to_end_of_line.c \
-			stdin/historic.c \
-			stdin/move_cursor_down.c \
-			stdin/move_cursor_left.c \
-			stdin/move_cursor_right.c \
-			stdin/move_cursor_up.c \
-			stdin/move_word_left.c \
-			stdin/move_word_right.c \
-			stdin/paste_clipboard.c \
-			stdin/prompt.c \
-			stdin/signal.c \
-			stdin/tabulator.c \
+			init/ft_term_init.c \
+			init/init_env.c \
+			init/add_to_env.c \
+			init/add_to_set.c \
+			init/init_set.c \
+			init/utils.c \
+			init/init_files.c \
+			init/envset_manage.c \
+			editor/get_stdin.c \
+			editor/prompt.c \
+			editor/signal.c \
+			editor/cursor_position.c \
+			editor/backspace.c \
+			editor/clear_window.c \
+			editor/escape_sequence.c \
+			editor/go_to_begin_of_line.c \
+			editor/go_to_end_of_line.c \
+			editor/move_cursor_up.c \
+			editor/move_cursor_down.c \
+			editor/move_cursor_left.c \
+			editor/move_cursor_right.c \
+			editor/move_word_left.c \
+			editor/move_word_right.c \
+			editor/end_of_text.c \
+			editor/add_char.c \
+			editor/delete_from_cursor_to_end.c \
+			editor/paste_clipboard.c \
+			editor/tabulator.c \
+			editor/historic.c \
+			editor/term_init.c \
+			editor/find_env_var.c \
+			ft_select/ft_arrows.c \
+			ft_select/ft_char_by_line.c \
+			ft_select/ft_count_line.c \
+			ft_select/ft_count_params.c \
+			ft_select/ft_disable_raw.c \
+			ft_select/ft_enable_raw.c \
+			ft_select/ft_error.c \
+			ft_select/ft_first_sort.c \
+			ft_select/ft_free_t_select.c \
+			ft_select/ft_get_size_term.c \
+			ft_select/ft_init_select.c \
+			ft_select/ft_is_file.c \
+			ft_select/ft_manage_entry.c \
+			ft_select/ft_manage_touch.c \
+			ft_select/ft_outc.c \
+			ft_select/ft_params_by_line.c \
+			ft_select/ft_prepare_print.c \
+			ft_select/ft_print_params.c \
+			ft_select/ft_read_entry.c \
+			ft_select/ft_save_raw_off.c \
+			ft_select/ft_save_shell.c \
+			ft_select/ft_search_big_param.c \
+			ft_select/ft_searchdyn.c \
+			ft_select/ft_select.c \
+			ft_select/ft_select_sp.c \
 			lexer/ft_lexer.c \
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_utils.c \
@@ -104,18 +138,12 @@ SRCS_NAME =	\
 			builtins/ft_export.c \
 			builtins/ft_assign.c \
 			builtins/ft_hash.c \
-			builtins/ft_hash_utils.c \
-			init/ft_term_init.c \
-			init/init_env.c \
-			init/add_to_env.c \
-			init/add_to_set.c \
-			init/init_set.c \
-			init/utils.c \
-			init/init_files.c
+			builtins/ft_hash_utils.c
 
-OBJS_FOLDERS = \
-			builtins stdin lexer parser extension execute redirections init \
-			heart hashtable
+OBJS_FOLDERS = 	\
+				heart init editor ft_select lexer parser extension execute \
+				redirections builtins
+
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 
 SRCS = $(addprefix $(SRCS_PATH),$(SRCS_NAME))

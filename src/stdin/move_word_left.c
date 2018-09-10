@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:54:46 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:27:47 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/09 23:53:31 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,7 @@ static int		check_if_previous_word(char *line, size_t cursor_str_pos)
 	return (-1);
 }
 
-void	move_word_left(t_editor *ed)
+void			move_word_left(t_editor *ed)
 {
 	size_t previous_word_pos;
 

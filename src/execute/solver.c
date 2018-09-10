@@ -6,14 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:25:12 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/stdin.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 static void	add_pid_bin(int pid)
 {

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:27:53 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/09 23:53:34 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@
 ** rwd = Real Working Directory
 */
 
-char	*cut_pwd_dir(char *pwd)
+char			*cut_pwd_dir(char *pwd)
 {
 	int i;
 
@@ -34,7 +34,7 @@ char	*cut_pwd_dir(char *pwd)
 	return (0);
 }
 
-void		prompt_type(e_prompt prompt)
+static void		prompt_type(e_prompt prompt)
 {
 	if (prompt == S_QUOTE)
 		ft_putstr("quote> ");
@@ -48,14 +48,13 @@ void		prompt_type(e_prompt prompt)
 		ft_putstr("heredoc> ");
 }
 
-void	display_prompt(char *home, e_prompt prompt)
+void			display_prompt(char *home, e_prompt prompt)
 {
 	char pwd[4096];
 
 	if (prompt != PROMPT)
 		return (prompt_type(prompt));
 	getcwd(pwd, sizeof(pwd));
-	//err == 2 ? ft_putstr(RED) : ft_putstr(WHITE);
 	ft_putstr(WHITE);
 	ft_putstr("101sh");
 	ft_putstr(END);
@@ -64,7 +63,7 @@ void	display_prompt(char *home, e_prompt prompt)
 	if (!ft_strcmp(pwd, !home ? "" : home))
 		ft_putstr("~");
 	else if (ft_strlen(pwd) == (ft_strlen(cut_pwd_dir(pwd)) + 1))
-			ft_putstr(pwd);
+		ft_putstr(pwd);
 	else
 		ft_putstr(cut_pwd_dir(pwd));
 	ft_putstr(END);

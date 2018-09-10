@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/19 14:28:43 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/25 15:37:19 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 01:00:59 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,13 +40,13 @@ void			ft_putstr_color(char const *s, int nb)
 		if (nb == 0)
 			ft_putstr(BLACK);
 		if (nb == 1)
-			ft_putstr(REDD);
+			ft_putstr(RED);
 		if (nb == 2)
 			ft_putstr(GREEN);
 		if (nb == 3)
 			ft_putstr(YELLOW);
 		if (nb == 4)
-			ft_putstr(BLUEE);
+			ft_putstr(BLUE);
 		if (nb == 5)
 			ft_putstr(PURPLE);
 		if (nb == 6)

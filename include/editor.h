@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   stdin.h                                          .::    .:/ .      .::   */
+/*   editor.h                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/19 08:51:01 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/12 06:19:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/10 03:03:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef STDIN_H
-# define STDIN_H
-# define BLUE "\033[1;49;36m"
+#ifndef EDITOR_H
+# define EDITOR_H
+
+# include "heart.h"
+
 # define WHITE "\033[7;49;37m"
-# define RED "\033[7;49;91m"
 # define END "\033[0m"
 # define LEFT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 68)
 # define RIGHT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 67)
@@ -41,17 +42,9 @@
 # define SHIFT_DOWN "\E[1;2B"
 # define SHIFT_LEFT "\E[1;2D"
 # define SHIFT_RIGHT "\E[1;2C"
-# include "../libft/include/libft.h"
-# include "./init.h"
-# include <unistd.h>
-# include <termios.h>
-# include <signal.h>
-# include <sys/ioctl.h>
-# include <curses.h>
-# include <term.h>
-# include <fcntl.h>
 
-struct winsize sz;
+typedef struct winsize	t_sz;
+typedef struct dirent	t_dirent;
 
 typedef enum		s_prompt
 {
@@ -79,9 +72,15 @@ typedef struct		s_editor
 	size_t	prompt_size;
 	size_t	cursor_str_pos;
 	char	*clipboard;
-	char	key[10];
+	char	key[BUFF_SIZE];
 	char *line;
 }					t_editor;
+
+typedef struct		s_tab
+{
+	char	d_name[4096];
+	struct s_tab	*next;
+}					t_tab;
 
 int		g_bin_exit;
 //char	*g_save_home;
@@ -121,12 +120,11 @@ void	myhandler_interrupt(int signal);
 char	*cursor_position_escape_sequence(int row, int col);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
-int		add_char_into_line(char key, t_editor *ed);
+void	add_char_into_line(char key, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(char *home, e_prompt prompt);
 int		get_stdin(char **line, e_prompt *prompt);
-char	*find_var_string(char **env, char *var, int mode);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);
 void	delete_from_cursor_to_end(t_editor *ed);
@@ -136,5 +134,8 @@ void	save_ed(t_editor **ed, int mode);
 void	tabulator(t_editor *ed);
 void	historic(t_editor *ed);
 void	fill_hist_list(t_hist *hist, char *line);
+int		term_reinit(struct termios *raw_mode);
+int		get_term_raw_mode(int mode);
+char	*find_env_var(char **env, char *var, int mode);
 
 #endif

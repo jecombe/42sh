@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:28:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
 
 int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 {

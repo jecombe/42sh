@@ -6,12 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/19 08:12:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 19:06:33 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:39:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "heart.h"
 
 static void		ft_biflag(const char *prgm, const char *cmd, int fd_open)
 {

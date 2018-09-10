@@ -6,15 +6,15 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/07 01:01:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:43:28 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 #define cv ft_convert_token_to_string
-
+/*
 void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
@@ -53,7 +53,7 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	}
 	printf("--------------------------------------\n\n");
 
-}
+}*/
 
 int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 {
@@ -85,7 +85,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 	return (0);
 }
 
-void				ft_101sh(void)
+static void			ft_101sh(void)
 {
 	e_prompt		prompt;
 	char			*line;
@@ -98,21 +98,17 @@ void				ft_101sh(void)
 		return;
 	ft_save_hash(&hashtable);
 	while (get_stdin(&line, &prompt))
-	{
 		heart_of_101sh(line, &prompt, 1);
-	}
 }
 
-int					main(int ac, char **argv)
+int			main(int ac, const char **av)
 {
-	char			**av;
-
 	if (!isatty(0))
 		return (0);
-	ft_signal();
-	av = ft_tabdup(argv);
-	if (ft_term_init(ac, av))
+	if (ft_term_init(ac, (char **)av))
 		return (EXIT_FAILURE);
+	ft_signal();
 	ft_101sh();
+	envset_del();
 	return (EXIT_SUCCESS);
 }

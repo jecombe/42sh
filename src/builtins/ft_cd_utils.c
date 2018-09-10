@@ -6,13 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 22:26:15 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 17:02:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:39:08 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 int			ft_canonical(char **curpath)
 {

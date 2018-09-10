@@ -1,5 +1,4 @@
-#include "../../include/execute.h"
-#include "../../include/stdin.h"
+#include "heart.h"
 
 static void		ft_skip_n(char *line)
 {

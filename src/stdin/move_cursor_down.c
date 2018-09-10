@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:52:03 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:27:45 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/09 23:53:28 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,7 @@ void	move_cursor_down(t_editor *ed)
 		else
 			ed->cursor_str_pos = ed->cursor_str_pos + ((get_cursor_position(0) +
 			(sz.ws_col - get_cursor_position(0))));
-			tputs(tgoto(tgetstr("cv", NULL), 0, get_cursor_position(1)), 1,
-			ft_putchar);
+		tputs(tgoto(tgetstr("cv", NULL), 0, get_cursor_position(1)), 1,
+		ft_putchar);
 	}
 }

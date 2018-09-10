@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:56:50 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/09 23:27:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/09 23:53:32 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,16 +20,16 @@ static int		check_if_next_word(char *line)
 	cursor_str_pos = 0;
 	while (line[cursor_str_pos])
 	{
-		if ((line[cursor_str_pos - 1] == ' ' || line
+		if (cursor_str_pos && (line[cursor_str_pos - 1] == ' ' || line
 		[cursor_str_pos - 1] == '\t') && line[cursor_str_pos] >= 33
-		&& line[cursor_str_pos] <= 126 && cursor_str_pos > 0)
+		&& line[cursor_str_pos] <= 126)
 			return (cursor_str_pos);
 		cursor_str_pos++;
 	}
 	return (0);
 }
 
-void	move_word_right(t_editor *ed)
+void			move_word_right(t_editor *ed)
 {
 	size_t next_word_pos;
 
