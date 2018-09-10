@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int	replace_cmd(char **to_copy, char ***to_past)
 {

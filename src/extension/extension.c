@@ -11,8 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
-#include "../../include/init.h"
+#include "heart.h"
 
 static int	init_parcour_tab(t_bquote **i)
 {

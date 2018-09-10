@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 int			add_after_bquote(char *cmd, int j_index, char ***tablo, int ok)
 {

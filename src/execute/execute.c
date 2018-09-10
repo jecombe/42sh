@@ -35,8 +35,8 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 		//EXECVE
 		if (g_error == 0)
 		{
-			if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
-			exit(EXIT_FAILURE);
+			if ((execve(bin_cmd, tmp_op->cmd, g_env)) == -1)
+				exit(EXIT_FAILURE);
 		else
 			exit(EXIT_SUCCESS);
 		}

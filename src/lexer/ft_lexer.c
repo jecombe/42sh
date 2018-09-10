@@ -13,7 +13,7 @@
 
 #include "heart.h"
 
-static char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
+static char			*ft_lexer_break_input(char *input, int *idx)
 {
 	int				i;
 	char			*s;
@@ -23,8 +23,7 @@ static char			*ft_lexer_break_input(char *input, int *idx, e_prompt *p)
 	{
 		if (ft_lexer_break_operator(input, *idx, i))
 			break ;
-		if ((*p = ft_lexer_break_quote(input, idx)))
-			break ;
+		ft_lexer_break_quote(input, idx);
 		ft_lexer_break_expansion(input, idx);
 		if ((ft_lexer_break_blank(input, idx, &i)))
 			break ;
@@ -58,21 +57,16 @@ static t_token		ft_lexer_token(char *name, char c)
 	return (tkn);
 }
 
-t_lex				ft_lexer(char *input, e_prompt *prompt)
+t_lex				lexer(char *input)
 {
 	t_lex			lex;
-	e_prompt		p;
 	int				idx;
 	int				v;
 
-	p = PROMPT;
 	idx = 0;
 	v = -1;
-	while ((lex.name[++v] = ft_lexer_break_input(input, &idx, &p)))
+	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
 	{
-		*prompt = (p) ? p : PROMPT;
-		if (*prompt)
-			break ;
 		if (v == 0 || lex.token[v - 1] == SEMI || lex.token[v - 1] == AND ||
 				lex.token[v - 1] == PIPE)
 			if (ft_isalias(&lex.name[v]))

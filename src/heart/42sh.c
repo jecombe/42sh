@@ -58,31 +58,44 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 {
 	t_lex			lex;
-	t_seq			*b_seq;
+	t_seq			*seq;
 	pid_t pid;
 
 	ft_memset(&lex, 0, sizeof(t_lex));
-	if (line)
-		lex = ft_lexer(line, prompt);
-	if (!(*prompt))
+	seq = NULL;
+	lex = lexer(line);
+	if ((seq = ft_parsing(lex)))
 	{
-		ft_strdel(&line);
-		b_seq = ft_parsing(lex);
-		if (b_seq != NULL)
+		if (!extension(&seq))
 		{
-			if (!extension(&b_seq))
-			{
-				ft_sequence(b_seq, fd_base, pid);
-				//ft_watch_result(line, lex, b_seq);
-			}
+			ft_sequence(seq, fd_base, pid);
+			//ft_watch_result(line, lex, b_seq);
 		}
-		ft_free_b_seq(&b_seq);
-		ft_memset(&lex, 0, sizeof(t_lex));
+		ft_free_b_seq(&seq);
 	}
 	ft_lexer_del(&lex);
+	ft_strdel(&line);
 //	printf("C EST QUI QUI SEGFAULT QUAND IL Y A UN ENVIRONNEMENT VIDE ?\n");
 //	printf("ET AUSSI SUR echo 'ls\n");
 	return (0);
+}
+
+int			ft_quotes(char *line)
+{
+	int		i;
+	char	c;
+
+	i = -1;
+	c = 0;
+	while (line[++i])
+	{
+		c = line[i];
+		if (c == '"' || c == '\'')
+			while (line[++i] != c)
+				if (!line[i])
+					return ((c == '"') ? B_QUOTE : S_QUOTE);
+	}
+	return (PROMPT);
 }
 
 static void			ft_101sh(void)
@@ -98,7 +111,8 @@ static void			ft_101sh(void)
 		return;
 	ft_save_hash(&hashtable);
 	while (get_stdin(&line, &prompt))
-		heart_of_101sh(line, &prompt, 1);
+		if (line && (!(prompt = ft_quotes(line))))
+			heart_of_101sh(line, &prompt, 1);
 }
 
 int			main(int ac, const char **av)

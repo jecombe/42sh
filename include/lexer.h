@@ -99,7 +99,7 @@ typedef struct		s_lex
 *******************************************************************************
 */
 
-t_lex				ft_lexer(char *input, e_prompt *prompt);
+t_lex				lexer(char *input);
 
 /*
 *******************************************************************************
@@ -108,7 +108,7 @@ t_lex				ft_lexer(char *input, e_prompt *prompt);
 */
 
 int					ft_lexer_break_operator(char *input, int idx, int i);
-e_prompt			ft_lexer_break_quote(char *input, int *idx);
+void				ft_lexer_break_quote(char *input, int *idx);
 int					ft_lexer_break_blank(char *input, int *idx, int *i);
 void				ft_lexer_break_expansion(char *input, int *idx);
 int					ft_lexer_break_comment(char *input, int *idx);

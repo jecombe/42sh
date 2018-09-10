@@ -11,8 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 char		*dollar_replace(char *line)
 {

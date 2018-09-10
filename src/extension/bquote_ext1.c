@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int	add_and_del_tab(char ***ret, char ***to_copy)
 {

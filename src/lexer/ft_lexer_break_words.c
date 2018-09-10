@@ -42,30 +42,21 @@ int				ft_lexer_break_operator(char *input, int idx, int i)
 	return (ret);
 }
 
-e_prompt		ft_lexer_break_quote(char *input, int *idx)
+void			ft_lexer_break_quote(char *input, int *idx)
 {
-	char		c;
-	e_prompt	prompt;
+	char	c;
 
+	c = 0;
 	c = input[*idx];
-	prompt = PROMPT;
 	if (c == '"' || c == '\'')
 	{
 		while (input[++(*idx)] != c)
-			if (!(input[*idx]))
-			{
-				if (c == '"')
-					prompt = D_QUOTE;
-				else if (c == '\'')
-					prompt = S_QUOTE;
-				break ;
-			}
+			;
 	}
 	else if (c == '\\')
 	{
 		++(*idx);
 	}
-	return (prompt);
 }
 
 int				ft_lexer_break_blank(char *input, int *idx, int *i)
