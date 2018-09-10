@@ -63,6 +63,7 @@ t_lex				lexer(char *input)
 	int				idx;
 	int				v;
 
+	ft_memset(&lex, 0, sizeof(t_lex));
 	idx = 0;
 	v = -1;
 	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))

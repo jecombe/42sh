@@ -69,7 +69,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		if (!extension(&seq))
 		{
 			ft_sequence(seq, fd_base, pid);
-			//ft_watch_result(line, lex, b_seq);
+		//	ft_watch_result(line, lex, seq);
 		}
 		ft_free_b_seq(&seq);
 	}
