@@ -57,6 +57,7 @@ PROBLEMES A RESOUDRE:<br/>
 \_!d<br/>
 \_cat 101sh<br/>
 \_Les retours d'erreurs<br/>
+\_GESTION DU CTRL+D APRES UNE/DES ERREURS
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE<br/>
