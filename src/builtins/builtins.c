@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:37:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 15:16:07 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,12 +17,17 @@ int		ft_builtins(t_op *exec, int what, int flag, int fd_open)
 {
 	t_hashtable *hashtable = NULL;
 
+	int p;
+
+	p = 0;
+	if (what == 101)
+		p = 1;
 	if (ft_strcmp(exec->cmd[0], "ft_assign") == 0)
 		return (ft_assign(exec));
 	else
 		ft_save_hash(&hashtable);
 	if (ft_strcmp(exec->cmd[0], "echo") == 0)
-		if (ft_echo(exec, flag, fd_open))
+		if (ft_echo(exec, flag, fd_open, p))
 			return (EXIT_FAILURE);
 	if (ft_strcmp(exec->cmd[0], "cd") == 0)
 		if (ft_cd(exec, flag, fd_open))

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:35:39 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 15:03:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ typedef struct s_pipe
 	int fd_out;
 	int fd_in;
 	int start;
+	int buil_pipe;
 }			t_pipe;
 
 typedef struct s_separate
