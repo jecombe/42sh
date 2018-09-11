@@ -26,7 +26,6 @@ int		ft_count_pipe(t_op *tmp)
 	return (i);
 }
 
-
 int	ft_children_fork(t_pipe *tpipe, int *fd, t_op *op, int fd2, int i, int ret, char *bin)
 {
 	int flag;
@@ -38,12 +37,12 @@ int	ft_children_fork(t_pipe *tpipe, int *fd, t_op *op, int fd2, int i, int ret, 
 		dup2(fd[1], STDOUT_FILENO);
 	close(fd[0]);
 	pid_t pid;
-	if (ft_loop_redirect(op->redirect, 0, -88, 0) == EXIT_FAILURE)
-		return(EXIT_FAILURE);
-	if (g_hh != 0 && i == 1)
-		exit(g_ret);
+	if (g_last == 0)
+	{
+		if (ft_loop_redirect(op->redirect, 0, -88, 0) == EXIT_FAILURE)
+			return(EXIT_FAILURE);
+	}
 	execve(bin, op->cmd, g_env);
-	//ft_solver(op, fd2, pid, 1);
 	return (0);
 }
 
@@ -98,9 +97,6 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int fd2)
 	while (i != 0)
 	{
 		pipe(fd);
-		if (op->redirect && i - 1 != 0)
-			if ((fd_open = ft_loop_redirect(op->redirect, 1, -1, 1)) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
 		tpipe.fd_out =  1;
 		tpipe.fd_in = 0;
 		status = 0;
@@ -109,27 +105,26 @@ int		ft_pipe_execute(int i, t_op *op, pid_t pidd, int fd2)
 		{
 			if ((g_hh = ft_check_command(op->cmd[0]) != 0))
 			{
-				if (i == 1)
-				{
-					printf("yeyeye\n");
-				g_ret = ft_builtins(op, ok, flag, fd2);
-				}
-			}
-			if (g_hh == 0)
-			{
-				printf("====+> %s\n", op->cmd[0]);
-				if (fork() == 0)
 
-					ret = ft_children_fork(&tpipe, fd, op, fd2, i, ret, bin);
-				else
-				{
-					ft_parent_fork(&tpipe, op, fd, bin);
-					op = op->next;
-					i--;
-				}
+				g_last = 10;
+				g_ret = ft_builtins(op, ok, flag, fd2);
 			}
 			else
 			{
+				g_last = 0;
+				if (op->redirect && i - 1 != 0)
+					if ((fd_open = ft_loop_redirect(op->redirect, 1, -1, 1)) == EXIT_FAILURE)
+						return (EXIT_FAILURE);
+			}
+			if (fork() == 0)
+			{
+				if (g_last == 10)
+					close(STDERR_FILENO);
+				ret = ft_children_fork(&tpipe, fd, op, fd2, i, ret, bin);
+			}
+			else
+			{
+				ft_parent_fork(&tpipe, op, fd, bin);
 				op = op->next;
 				i--;
 			}
