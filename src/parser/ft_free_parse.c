@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:32:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/01 03:41:46 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "heart.h"
 
 void		ft_free_b_redirect(t_redirect **b_redirect)
 {

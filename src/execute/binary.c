@@ -6,13 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 15:33:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:39:27 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 static int		ft_check_direct_bin(const char *cmd)
 {

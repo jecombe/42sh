@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:37:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/30 06:43:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:21 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "heart.h"
 
 int			ft_attrib_last_seq(t_seq **b_seq, t_seq **n_seq)
 {

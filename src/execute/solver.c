@@ -6,14 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:25:12 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
-#include "../../include/stdin.h"
-#include "../../include/builtins.h"
+#include "heart.h"
 
 static void	add_pid_bin(int pid)
 {
@@ -56,8 +54,6 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 	{
 		raccmd = ft_strdup(t_exec->cmd[0]);
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		/*if (tmp_bin != NULL)
-		{*/
 			if (pipe == 0)
 			{
 				pid = fork();
@@ -75,8 +71,8 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
 			{
 				ft_strdel(&raccmd);
 				add_last_param(t_exec->cmd);
-			if (tmp_bin == NULL)
-				ft_print_error(t_exec->cmd[0], "command not found");
+				if (tmp_bin == NULL)
+			ft_print_error(t_exec->cmd[0], "Command not found !");
 				return (EXIT_FAILURE);
 			}
 	}

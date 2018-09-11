@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/23 06:52:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:25:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 03:02:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int			not_found(char *to_add)
 {
@@ -38,6 +38,28 @@ static int			not_found(char *to_add)
 
 int					add_to_env(char *name, char *value)
 {
+	char	*s;
+	int		i;
+
+	s = NULL;
+	i = -1;
+	if (name == NULL)
+		return (EXIT_FAILURE);
+	if (ft_strchr(name, '='))
+		return (EXIT_FAILURE);
+	if (!(s = ft_envset_line((const char **)g_env, name)))
+		ft_malloc_cmd(&g_env, (s = ft_envset_join(name, value)));//not_found((s = ft_envset_join(name, value)));
+	else
+	{
+		while (g_env[++i])
+			if ((ft_strcmp(g_env[i], s)) == 0)
+				break ;
+		ft_strdel(&g_env[i]);
+		g_env[i] = ft_envset_join(name, value);
+	}
+	ft_strdel(&s);
+	return (EXIT_SUCCESS);
+/*
 	int			i;
 	int			j;
 	int			find;
@@ -62,5 +84,5 @@ int					add_to_env(char *name, char *value)
 	else
 		not_found(to_add);
 	to_add ? ft_strdel(&to_add) : 0;
-	return (0);
+	return (0);*/
 }

@@ -6,13 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 11:44:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 03:24:01 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
-#include "../../include/init.h"
+#include "heart.h"
 
 static int	init_parcour_tab(t_bquote **i)
 {

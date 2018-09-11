@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:51:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:41:38 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 int				ft_loop_5(t_loop ***loop, t_redirect *redirect, int buil,
 		int before_pipe)
@@ -157,11 +157,7 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 	t_loop		loop;
 	int			flag2;
 
-	loop.fd = 0;
-	loop.i = 0;
-	loop.flag = 0;
-	loop.flag2 = 0;
-	loop.error = 0;
+	loop = ft_init_loop();
 	fd_open = 0;
 	if (fd2 > 1)
 	{

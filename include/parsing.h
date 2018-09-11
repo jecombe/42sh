@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:18:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:36:26 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,9 +14,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <stdio.h>
-#include "../libft/include/libft.h"
-#include "./lexer.h"
+# include "heart.h"
 
 typedef struct					s_redirect
 {

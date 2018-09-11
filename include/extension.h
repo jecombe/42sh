@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:16:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 11:44:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 03:13:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,9 +14,7 @@
 #ifndef EXTENSION_H
 # define EXTENSION_H
 
-#include "./parsing.h"
-#include "./execute.h"
-#include "./stdin.h"
+# include "heart.h"
 
 typedef struct	s_bquote
 {

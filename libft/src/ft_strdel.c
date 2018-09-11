@@ -6,17 +6,16 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:12:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 16:29:22 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 03:17:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-#include "stdio.h"
 
 void	ft_strdel(char **as)
 {
-	if (as)
+	if (*as)
 	{
 		free(*as);
 		*as = NULL;

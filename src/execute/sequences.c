@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/14 14:43:59 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 void				ft_sequence(t_seq *b_seq, int fd, pid_t pid)
 {

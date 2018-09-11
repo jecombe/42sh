@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:37:51 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:24:34 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:41:38 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
 
 int			ft_open_redirect(char *file, int flag, int flag2)
 {

@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 15:24:22 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 01:25:16 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int	add_and_del_tab(char ***ret, char ***to_copy)
 {
@@ -36,6 +36,7 @@ char		**first_copy(char **cmd, t_bquote *index, char *in_bquote, int *ok)
 	char	**result_bquote;
 
 	ret = NULL;
+	result_bquote = NULL;
 	if (!(ifs = ft_getenv("IFS", g_set)))
 		ifs = ft_strdup("\n \t");
 	prev_cmd = search_prev(cmd, index->i);
@@ -43,7 +44,6 @@ char		**first_copy(char **cmd, t_bquote *index, char *in_bquote, int *ok)
 	{
 		if (ft_malloc_cmd(&result_bquote, in_bquote))
 			return (NULL);
-		printf("RESULT == %s\n", result_bquote[0]);
 	}
 	else
 		result_bquote = ft_split_bquote(in_bquote, ifs);

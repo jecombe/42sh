@@ -6,12 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:25:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 03:25:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 #define cv ft_convert_token_to_string
 /*
@@ -53,76 +53,71 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	}
 	printf("--------------------------------------\n\n");
 
-}
+}*/
 
 int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 {
 	t_lex			lex;
-	t_seq			*b_seq;
+	t_seq			*seq;
 	pid_t pid;
 
 	ft_memset(&lex, 0, sizeof(t_lex));
-	if (line)
-		lex = ft_lexer(line, prompt);
-	if (!(*prompt))
+	seq = NULL;
+	lex = lexer(line);
+	if ((seq = ft_parsing(lex)))
 	{
-		ft_strdel(&line);
-		b_seq = ft_parsing(lex);
-		if (b_seq != NULL)
+		if (!extension(&seq))
 		{
-			if (!extension(&b_seq))
-			{
-				ft_sequence(b_seq, fd_base, pid);
-				//ft_watch_result(line, lex, b_seq);
-			}
+			ft_sequence(seq, fd_base, pid);
+		//	ft_watch_result(line, lex, seq);
 		}
-		ft_free_b_seq(&b_seq);
-		ft_memset(&lex, 0, sizeof(t_lex));
+		ft_free_b_seq(&seq);
 	}
 	ft_lexer_del(&lex);
+	ft_strdel(&line);
 //	printf("C EST QUI QUI SEGFAULT QUAND IL Y A UN ENVIRONNEMENT VIDE ?\n");
 //	printf("ET AUSSI SUR echo 'ls\n");
 	return (0);
 }
 
-void				ft_101sh(void)
+int			ft_quotes(char *line)
+{
+	int		i;
+	char	c;
+
+	i = -1;
+	c = 0;
+	while (line[++i])
+	{
+		c = line[i];
+		if (c == '"' || c == '\'')
+			while (line[++i] != c)
+				if (!line[i])
+					return ((c == '"') ? B_QUOTE : S_QUOTE);
+	}
+	return (PROMPT);
+}
+
+static void			ft_101sh(void)
 {
 	e_prompt		prompt;
 	char			*line;
-	t_hashtable		*hashtable;
 
 	prompt = PROMPT;
 	line = NULL;
-	hashtable = NULL;
-	if (!(hashtable = ft_hashtable_create()))
-		return;
-	ft_save_hash(&hashtable);
 	while (get_stdin(&line, &prompt))
-	{
-		heart_of_101sh(line, &prompt, 1);
-	}
+		if (line && (!(prompt = ft_quotes(line))))
+			heart_of_101sh(line, &prompt, 1);
 }
-*/
-int					main(int ac, const char **av)
+
+int			main(int ac, const char **av)
 {
-//	if (!isatty(0))
-//		return (0);
-	g_env = NULL;
-	g_set = NULL;
-	if (ft_term_init(ac, av))
+	if (!isatty(0))
+		return (0);
+	if (ft_term_init(ac, (char **)av))
 		return (EXIT_FAILURE);
-/*	ft_signal();
-	av = ft_tabdup(argv);
-	int i = -1;
-	while (g_set[++i])
-		ft_putendl(g_set[i]);*/
-	int i = -1;
-//	while (g_env[++i])
-//		ft_putendl(g_env[i]);
-	i = -1;
-//	while (g_set[++i])
-//		ft_putendl(g_set[i]);
-	//ft_101sh();
-	ft_tabdel(&g_env);
+	ft_signal();
+//	ft_101sh();
+	envset_del();
 	return (EXIT_SUCCESS);
 }

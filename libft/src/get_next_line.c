@@ -6,18 +6,18 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/01/12 17:43:12 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 11:37:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 00:58:01 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/get_next_line.h"
 
-int					ft_gnl_init(int fd, t_line **list, t_line **stack)
+int					ft_gnl_init(int fd, t_gnline **list, t_gnline **stack)
 {
 	if (*list == NULL)
 	{
-		if (!(*list = (t_line *)malloc(sizeof(t_line))))
+		if (!(*list = (t_gnline *)malloc(sizeof(t_gnline))))
 			return (0);
 		(*list)->fd = fd;
 		(*list)->str = ft_strdup("");
@@ -28,7 +28,7 @@ int					ft_gnl_init(int fd, t_line **list, t_line **stack)
 		list = &(*list)->next;
 	if (!(*list))
 	{
-		if (!(*stack = (t_line *)malloc(sizeof(t_line))))
+		if (!(*stack = (t_gnline *)malloc(sizeof(t_gnline))))
 			return (0);
 		(*stack)->fd = fd;
 		(*stack)->str = ft_strdup("");
@@ -41,7 +41,7 @@ int					ft_gnl_init(int fd, t_line **list, t_line **stack)
 	return (1);
 }
 
-int					ft_fill(t_line *stack, char **line)
+int					ft_fill(t_gnline *stack, char **line)
 {
 	int				i;
 	char			*tmp;
@@ -67,24 +67,24 @@ int					ft_fill(t_line *stack, char **line)
 
 int					get_next_line(int fd, char **line)
 {
-	static t_line	*list;
-	t_line			*stack;
+	static t_gnline	*list;
+	t_gnline		*stack;
 	char			*buff;
 	char			*tmp;
 
-	buff = ft_strnew(BUFF_SIZE);
-	if (!line || BUFF_SIZE < 1 || fd < 0 || (read(fd, buff, 0)) < 0)
+	buff = ft_strnew(GNL_SIZE);
+	if (!line || GNL_SIZE < 1 || fd < 0 || (read(fd, buff, 0)) < 0)
 		return (-1);
 	if (!(ft_gnl_init(fd, &list, &stack)))
 		return (0);
-	while ((stack->index = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((stack->index = read(fd, buff, GNL_SIZE)) > 0)
 	{
 		tmp = ft_strdup(stack->str);
 		ft_strdel(&stack->str);
 		stack->str = ft_strjoin(tmp, buff);
 		ft_strdel(&tmp);
 		ft_strdel(&buff);
-		buff = ft_strnew(BUFF_SIZE);
+		buff = ft_strnew(GNL_SIZE);
 		if ((ft_strchr(stack->str, '\n')))
 			break ;
 	}

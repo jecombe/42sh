@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/04 18:38:16 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/11 03:20:34 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int	replace_cmd(char **to_copy, char ***to_past)
 {
@@ -96,8 +96,9 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 		fd = 3;
 		//fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
 		heart_of_101sh(line, &prompt, fd);
-		ft_strdel(&line);
+//		ft_strdel(&line);
 		//close(fd);
+//	fflush(NULL);
 		line = get_tmp_file((*cmd)[(*i)->i], (*i)->begin, (*i)->j);
 	}
 	if (ft_bquote_replace(&(*cmd), &line, i))

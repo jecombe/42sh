@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/29 17:33:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 18:22:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
 
 int		binary_signal(int status, int pid, char *bin)
 {

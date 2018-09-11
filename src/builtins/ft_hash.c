@@ -6,12 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 22:44:46 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 22:44:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:39:10 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "heart.h"
 
 int				ft_hash(const char *cmd)
 {
