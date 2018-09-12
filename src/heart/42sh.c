@@ -69,6 +69,7 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 		if (!extension(&seq))
 		{
 			ft_sequence(seq, fd_base, pid);
+			history_add(line);
 		//	ft_watch_result(line, lex, seq);
 		}
 		ft_free_b_seq(&seq);
@@ -117,7 +118,7 @@ int			main(int ac, const char **av)
 	if (ft_term_init(ac, (char **)av))
 		return (EXIT_FAILURE);
 	ft_signal();
-//	ft_101sh();
-	envset_del();
+	ft_101sh();
+	envset_del(av[0]);
 	return (EXIT_SUCCESS);
 }

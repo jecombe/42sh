@@ -70,30 +70,3 @@ char		*ft_envset_join(const char *name, const char *value)
 	ft_strdel(&tmp);
 	return (s);
 }
-
-void			envset_del(void)
-{
-	t_hashtable	*hashtable;
-	t_history	*history;
-	int			i;
-
-	hashtable = NULL;
-	history = NULL;
-	i = -1;
-	ft_save_hash(&hashtable);
-	history_save(&history);
-	if (g_env)
-		ft_tabdel(&g_env);
-	if (g_set)
-		ft_tabdel(&g_set);
-	while (++i < MAX_HASH)
-		if (hashtable[i].hashcase)
-			while (hashtable[i].hashcase)
-			{
-				ft_strdel(&hashtable[i].hashcase->command);
-				hashtable[i].hashcase = hashtable[i].hashcase->next;
-			}
-	free(hashtable);
-	ft_tabdel(&(history)->cmd);
-	free(history);
-}

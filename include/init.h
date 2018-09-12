@@ -20,6 +20,7 @@ int			ft_term_init(int ac, char **av);
 int			init_files(char *bin);
 int			init_env(int ac, char **av);
 int			init_set(int ac, char **av);
+int			init_builtins(char *path);
 int			add_to_env(char *name, char *value);
 int			add_to_set(char *name, char *value);
 
@@ -30,6 +31,6 @@ int			index_to_var(char *name, char **env);
 char		*ft_envset_line(const char **envset, const char *name);
 char		*ft_envset_join(const char *name, const char *value);
 char		*ft_envset_value(const char **envset, const char *name);
-void		envset_del(void);
+void		envset_del(const char *bin);
 
 #endif

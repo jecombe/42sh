@@ -31,12 +31,14 @@ LIB_PATH = ./libft/
 SRCS_NAME =	\
 			heart/42sh.c \
 			heart/ft_signal.c \
+			heart/exit_shell.c \
 			init/ft_term_init.c \
 			init/init_env.c \
 			init/add_to_envset.c \
 			init/init_set.c \
 			init/utils.c \
 			init/init_files.c \
+			init/init_builtins.c \
 			init/envset_manage.c \
 			editor/get_stdin.c \
 			editor/prompt.c \
