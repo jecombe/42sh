@@ -13,14 +13,14 @@
 
 # include "heart.h"
 
-int			init_files(char *bin)
+int			init_files(const char *bin)
 {
 	char	*path;
 	char	*buf;
 
 	path = NULL;
 	buf = NULL;
-	if (!(path = search_path_of_101sh(bin)))
+	if (!(path = search_path_of_101sh((char *)bin)))
 		return (EXIT_FAILURE);
 	if ((access((buf = ft_strjoin(path, "/.101sh_history")), F_OK)) == -1)
 		creat(buf, 0644);

@@ -70,11 +70,3 @@ char		*ft_envset_join(const char *name, const char *value)
 	ft_strdel(&tmp);
 	return (s);
 }
-
-void		envset_del(void)
-{
-	if (g_env)
-		ft_tabdel(&g_env);
-	if (g_set)
-		ft_tabdel(&g_set);
-}

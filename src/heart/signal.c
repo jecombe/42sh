@@ -63,7 +63,7 @@ static void		sig_handler(int sig)
 		ft_handle_quit(sig);
 }
 
-void			ft_signal(void)
+void			signal_shell(void)
 {
 	int				i;
 

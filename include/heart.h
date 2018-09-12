@@ -2,6 +2,8 @@
 # define HEART_H
 
 # define BUFF_SIZE 4096
+# define BI_MAX 4084
+# define MAX_HASH 100
 
 # include <unistd.h>
 # include <signal.h>
@@ -35,7 +37,8 @@
 char	**g_set;
 char	**g_env;
 
-int		heart_of_101sh(char *line, e_prompt *prompt, int fd_base);
-void	ft_signal(void);
+int		heart_of_101sh(char *line, int fd_base);
+void	signal_shell(void);
+void	exit_shell(const char *bin);
 
 #endif

@@ -30,14 +30,15 @@ LIB_PATH = ./libft/
 
 SRCS_NAME =	\
 			heart/42sh.c \
-			heart/ft_signal.c \
-			init/ft_term_init.c \
-			init/init_env.c \
-			init/add_to_env.c \
-			init/add_to_set.c \
-			init/init_set.c \
-			init/utils.c \
+			heart/signal.c \
+			heart/42sh_exit.c \
+			init/init_shell.c \
 			init/init_files.c \
+			init/init_env.c \
+			init/init_set.c \
+			init/init_builtins.c \
+			init/add_to_envset.c \
+			init/utils.c \
 			init/envset_manage.c \
 			editor/get_stdin.c \
 			editor/prompt.c \
@@ -87,6 +88,7 @@ SRCS_NAME =	\
 			ft_select/ft_searchdyn.c \
 			ft_select/ft_select.c \
 			ft_select/ft_select_sp.c \
+			lexer/prelexer.c \
 			lexer/ft_lexer.c \
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_utils.c \
@@ -139,7 +141,8 @@ SRCS_NAME =	\
 			builtins/ft_export.c \
 			builtins/ft_assign.c \
 			builtins/ft_hash.c \
-			builtins/ft_hash_utils.c
+			builtins/ft_hash_utils.c \
+			builtins/history.c
 
 OBJS_FOLDERS = 	\
 				heart init editor ft_select lexer parser extension execute \

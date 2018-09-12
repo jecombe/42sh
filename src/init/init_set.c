@@ -13,7 +13,7 @@
 
 #include "heart.h"
 
-static int			add_info_params(int ac, char **av)
+static int			add_info_params(int ac, const char **av)
 {
 	char	*tmp;
 	int		i;
@@ -25,7 +25,7 @@ static int			add_info_params(int ac, char **av)
 	while (av[++i])
 	{
 		tmp = ft_itoa(i);
-		add_to_set(tmp, av[i]);
+		add_to_set(tmp, (char *)av[i]);
 		ft_strdel(&tmp);
 		if (etoile)
 		{
@@ -62,7 +62,7 @@ static void			add_info_id(void)
 		add_to_set("HOSTNAME", buff);
 }
 
-static int				manage_info_history(char *av)
+static int				manage_info_history(const char *av)
 {
 	char	*path;
 	char	*str;
@@ -120,7 +120,7 @@ static int			get_sysname(int ac)
 	return (0);
 }
 
-int					init_set(int ac, char **av)
+int					init_set(int ac, const char **av)
 {
 	if (g_env)
 		g_set = ft_tabdup(g_env);

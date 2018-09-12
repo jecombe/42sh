@@ -16,9 +16,6 @@
 
 # include "heart.h"
 
-# define BI_MAX 4084
-# define MAX_HASH 100
-
 typedef enum	e_bierror
 {
 	NOBIERROR,
@@ -42,6 +39,11 @@ typedef struct			s_hashtable
 	int					key;
 	t_hashcase			*hashcase;
 }						t_hashtable;
+
+typedef struct			s_history
+{
+	char	**cmd;
+}						t_history;
 
 /*
 *******************************************************************************
@@ -166,5 +168,7 @@ t_hashtable		*ft_hashtable_create(void);
 t_hashcase		*ft_create_case(const char *cmd, const char *raccmd);
 void			ft_save_hash(t_hashtable **hashtable);
 void			ft_hash_add(t_hashcase **begin, t_hashcase *hashcase);
+void			history_save(t_history **history);
+void			history_add(char *cmd);
 
 #endif

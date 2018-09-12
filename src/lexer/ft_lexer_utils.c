@@ -81,38 +81,3 @@ void			ft_lexer_del(t_lex *lex)
 	while (lex->name[++i])
 		ft_strdel(&(lex)->name[i]);
 }
-
-/*
-**
-char			*ft_convert_token_to_string(t_token token)
-{
-	static char	*tkname[] = {";", "&", ";;", "(", ")", "!", "&&", "||",
-		"|", "|&", "<", "<>", ">", ">|", ">>", ">&", "<<", "<&", "<<-",
-		"if", "while", "for", "until", "case", "then", "do", "esac", "fi",
-		"done", "elif", "else"};
-	int			value;
-	int			i;
-	char		*s;
-
-	value = 265;
-	i = -1;
-	while (++value < 297)
-	{
-		++i;
-		if (value == token)
-			break ;
-	}
-	if (value == 297)
-	{
-		if (token == 261) s = "WORD";
-		else if (token == 262) s = "ASSIGNEMENT_WORD";
-		else if (token == 263) s = "NAME";
-		else if (token == 264) s = "NEWLINE";
-		else if (token == 265) s = "IO_NUMBER";
-		else s = "TOKEN";
-	}
-	return (value == 297 ? s : tkname[i]);
-}
-
-**
-*/

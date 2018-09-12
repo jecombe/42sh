@@ -95,7 +95,7 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 	{
 		fd = 3;
 		//fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
-		heart_of_101sh(line, &prompt, fd);
+		heart_of_101sh(line, fd);
 //		ft_strdel(&line);
 		//close(fd);
 //	fflush(NULL);

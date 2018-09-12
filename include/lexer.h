@@ -99,6 +99,7 @@ typedef struct		s_lex
 *******************************************************************************
 */
 
+int					prelexer(char *input);
 t_lex				lexer(char *input);
 
 /*

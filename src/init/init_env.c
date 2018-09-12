@@ -15,11 +15,11 @@
 
 static void		ft_get_user_info(void)
 {
-	char	buff[4096];
+	char	buff[BUFF_SIZE];
 	char	*str;
 	int		i;
 
-	ft_bzero(buff, 4096);
+	ft_bzero(buff, BUFF_SIZE);
 	str = NULL;
 	i = 0;
 	(getcwd(buff, sizeof(buff))) ? add_to_env("PWD", buff) : 0;
@@ -41,7 +41,7 @@ static void		ft_get_user_info(void)
 	ft_strdel(&str);
 }
 
-static void		ft_get_file_info(char *bin)
+static void		ft_get_file_info(const char *bin)
 {
 	char	*path;
 	char	*tmp;
@@ -60,7 +60,7 @@ static void		ft_get_file_info(char *bin)
 	}
 }
 
-int				init_env(int ac, char **av)
+int				init_env(int ac, const char **av)
 {
 	extern char	**environ;
 	char		*s;

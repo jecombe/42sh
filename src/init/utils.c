@@ -63,7 +63,7 @@ static char			*found_slash(int i[2], char *bin, char **tmp_1, char **tmp)
 	return (NULL);
 }
 
-char				*search_path_of_101sh(char *bin)
+char				*search_path_of_101sh(const char *bin)
 {
 	char		*tmp;
 	char		*tmp_1;
@@ -81,7 +81,7 @@ char				*search_path_of_101sh(char *bin)
 		{
 			if (bin[i[0]] == '/')
 			{
-				tmp_2 = found_slash(i, bin, &tmp_1, &tmp);
+				tmp_2 = found_slash(i, (char *)bin, &tmp_1, &tmp);
 				tmp_2 ? ft_strdel(&tmp) : 0;
 				return (tmp_2 ? tmp_2 : tmp);
 			}

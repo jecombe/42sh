@@ -13,15 +13,20 @@
 
 #include "heart.h"
 
-int			ft_term_init(int ac, char **av)
+int			init_shell(int ac, const char **av)
 {
-	char			*term;
+	char	*path;
 
+	if (!(path = search_path_of_101sh(av[0])))
+		return (EXIT_FAILURE);
 	if (init_files(av[0]))
 		return (EXIT_FAILURE);
 	if (init_env(ac, av))
 		return (EXIT_FAILURE);
 	if (init_set(ac, av))
 		return (EXIT_FAILURE);
+	if (init_builtins((const char *)path))
+		return (EXIT_FAILURE);
+	ft_strdel(&path);
 	return (EXIT_SUCCESS);
 }
