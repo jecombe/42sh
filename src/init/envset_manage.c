@@ -94,10 +94,6 @@ void			envset_del(void)
 				hashtable[i].hashcase = hashtable[i].hashcase->next;
 			}
 	free(hashtable);
-	i = -1;
-	while (history->cmd[++i])
-		ft_strdel(&(history)->cmd[i]);
-	free(history->cmd);
+	ft_tabdel(&(history)->cmd);
 	free(history);
-
 }
