@@ -5,8 +5,8 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/09/11 15:03:08 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 15:22:28 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/12 17:39:20 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/12 17:40:55 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 15:03:05 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 17:39:14 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ int		ft_count_pipe(t_op *tmp)
 	return (i);
 }
 
-int	ft_children_fork(t_pipe **tpipe, int *fd, t_op *op, int fd2, int ret, char *bin, int co)
+int	ft_children_fork(t_pipe **tpipe, int *fd, t_op *op, int fd2, int ret, int co)
 {
 	int flag;
 	int fd_open;
@@ -52,13 +52,13 @@ int	ft_children_fork(t_pipe **tpipe, int *fd, t_op *op, int fd2, int ret, char *
 	if ((*tpipe)->buil_pipe == 0)
 		if (ft_loop_redirect(op->redirect, 0, -88, 0) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-	execve(bin, op->cmd, g_env);
+	execve((*tpipe)->bin, op->cmd, g_env);
 	return (0);
 }
 
 
 
-void			ft_parent_fork(t_pipe **tpipe, t_op *op, int *fd, char *bin)
+void			ft_parent_fork(t_pipe **tpipe, t_op *op, int *fd)
 {
 	if ((*tpipe)->fd_in > 0)
 		close((*tpipe)->fd_in);
@@ -80,7 +80,7 @@ int			waitstat(int *status)
 	return (*status);
 }
 
-int ft_waiting(int status, int ret, char *bin, t_pipe *tpipe)
+int ft_waiting(int status, int ret, t_pipe *tpipe)
 {
 	status = waitstat(&status);
 	ret = WEXITSTATUS(status);
@@ -91,7 +91,7 @@ int ft_waiting(int status, int ret, char *bin, t_pipe *tpipe)
 	return (EXIT_FAILURE);
 }
 
-int		ft_exec_no_null(t_op *op, int fd2, t_pipe *tpipe, int *fd, char *bin, int co)
+int		ft_exec_no_null(t_op *op, int fd2, t_pipe *tpipe, int *fd, int co)
 {
 	int fd_open;
 	int ret;
@@ -116,11 +116,10 @@ int		ft_exec_no_null(t_op *op, int fd2, t_pipe *tpipe, int *fd, char *bin, int c
 				close(STDOUT_FILENO);
 			close(STDERR_FILENO);
 		}
-		ret = ft_children_fork(&tpipe, fd, op, fd2, ret, bin, co);
+		ret = ft_children_fork(&tpipe, fd, op, fd2, ret, co);
 	}
 	else
-		ft_parent_fork(&tpipe, op, fd, bin);
-	//tpipe->buil_pipe = 0;
+		ft_parent_fork(&tpipe, op, fd);
 	return (0);
 }
 
@@ -143,18 +142,18 @@ int		ft_pipe_execute(int co, t_op *op, pid_t pidd, int fd2)
 		tpipe.fd_out =  1;
 		tpipe.fd_in = 0;
 		status = 0;
-		bin = ft_search_bin(op->cmd[0]);
-		if (bin != NULL)
-			ft_exec_no_null(op, fd2, &tpipe, fd, bin, co);
+		tpipe.bin = ft_search_bin(op->cmd[0]);
+		if (tpipe.bin != NULL)
+			ft_exec_no_null(op, fd2, &tpipe, fd,co);
 		else
 			ft_print_error(op->cmd[0], "Command not found !");
 		op = op->next;
 		co--;
 	}
 	tpipe.buil_pipe = 0;
-	if ((finish = ft_waiting(status, ret, bin, &tpipe)) == EXIT_SUCCESS)
+	if ((finish = ft_waiting(status, ret, &tpipe)) == EXIT_SUCCESS)
 	{
-		if (bin == NULL)
+		if (tpipe.bin == NULL)
 			return (EXIT_FAILURE);
 		if (g_hh != 0)
 			return (g_ret);

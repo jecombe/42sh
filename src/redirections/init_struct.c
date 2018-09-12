@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/05 13:48:40 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 14:40:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 17:40:15 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,7 @@ t_pipe		ft_init_pipe(int i)
 	tpipe.fd_in = 0;
 	tpipe.start = i;
 	tpipe.buil_pipe = 0;
+	tpipe.bin = NULL;
 	return (tpipe);
 }
 
