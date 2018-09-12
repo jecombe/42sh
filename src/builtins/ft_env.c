@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:17:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 18:36:34 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,6 +103,8 @@ int			ft_env(t_op *exec, int fd, int p)
 	i = 0;
 	flag = '\0';
 	env = NULL;
+	fd_open = ft_prelim_loop(exec, fd, 1);
+/*
 	if (fd > 2)
 		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -115,7 +117,7 @@ int			ft_env(t_op *exec, int fd, int p)
 		{
 			if (exec->redirect->fd > 1)
 				fd_open = exec->redirect->fd;
-		}
+		}*/
 		if (exec->redirect == NULL && p == 1)
 			fd_open = 5;
 	if (!exec || exec->cmd[1] == NULL)
