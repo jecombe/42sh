@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 02:42:39 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 04:47:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #include "heart.h"
 
 #define cv ft_convert_token_to_string
-/*
+
 void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 {
 	int				i = -1;
@@ -53,7 +53,7 @@ void				ft_watch_result(char *line, t_lex lex, t_seq *n_seq)
 	}
 	printf("--------------------------------------\n\n");
 
-}*/
+}
 
 int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 {
@@ -68,10 +68,11 @@ int					heart_of_101sh(char *line, e_prompt *prompt, int fd_base)
 	{
 		if (!extension(&seq))
 		{
-			printf("BBBUUUGGGG\n");
+			ft_watch_result(line, lex, seq);
 			ft_sequence(seq, fd_base, pid);
-		//	ft_watch_result(line, lex, seq);
 		}
+		else
+			printf("!!!!!!!!!!!!!SSSSEEEQQQ\n");
 		ft_free_b_seq(&seq);
 	}
 	ft_lexer_del(&lex);

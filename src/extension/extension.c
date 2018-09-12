@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 02:39:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 05:14:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,13 @@ static int	init_parcour_tab(t_bquote **i)
 	(*i)->i = -1;
 	(*i)->dquote = 0;
 	return (0);
+}
+
+static int	return_parcour_tab(char **cmd, int ret)
+{
+	if (!cmd)
+		return (2);
+	return (ret == -1 ? 1 : 0);
 }
 
 static int	ft_parcour_tab(char ***cmd)
@@ -44,7 +51,7 @@ static int	ft_parcour_tab(char ***cmd)
 					if (manage_tild_and_dollars(cmd, &i))
 						return (1);
 				if (!(*cmd) || !(*cmd)[i->i] || ret == -1)
-					return (ret == -1 ? 1 : 0);
+					return (return_parcour_tab(*cmd, ret));
 			}
 		}
 	return (0);
@@ -53,13 +60,21 @@ static int	ft_parcour_tab(char ***cmd)
 static int	ft_parcour_op(t_op **b_op)
 {
 	t_op		*n_op;
+	int			ret;
 
 	n_op = *b_op;
 	while (n_op)
 	{
 		if (n_op->cmd)
-			if (ft_parcour_tab(&n_op->cmd))
+		{
+			if ((ret = ft_parcour_tab(&n_op->cmd)) != 0 && ret != 2)
 				return (1);
+			else if (ret == 2)
+			{
+				if (!n_op->redirect)
+					return (2);
+			}
+		}
 		n_op = n_op->next;
 	}
 	return (0);
@@ -68,15 +83,18 @@ static int	ft_parcour_op(t_op **b_op)
 int			extension(t_seq **b_seq)
 {
 	t_seq		*n_seq;
-	int i = 0;
+	int			ret;
 
 	n_seq = *b_seq;
 	while (n_seq)
 	{
 		if (n_seq->op)
-			if (ft_parcour_op(&n_seq->op))
+			if ((ret = ft_parcour_op(&n_seq->op)) != 0 && ret != 2)
 				return (1);
-		n_seq = n_seq->next;
+		if (ret == 2)
+			ft_free_n_seq(&n_seq);
+		else
+			n_seq = n_seq->next;
 	}
 	return (extension_error(b_seq));
 }

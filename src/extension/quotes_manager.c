@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/31 11:44:39 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 04:50:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -72,7 +72,10 @@ static int		manage_dsquotes(char ***tablo, t_bquote **i,
 		(*tablo)[(*i)->i] = ft_strdup(tmp);
 	}
 	else
+	{
+		printf("DEL_IN_TAB\n");
 		ft_strdel_in_tab(&(*tablo), (*i)->j);
+	}
 	return (0);
 }
 
