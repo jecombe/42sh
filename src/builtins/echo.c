@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 15:16:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 02:22:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,8 +41,9 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;
-		t_exec->cmd[1] = "\n";
-		t_exec->cmd[2] = NULL;
+		ft_malloc_cmd(&t_exec->cmd, "\n");
+//		t_exec->cmd[1] = "\n";
+//		t_exec->cmd[2] = NULL;
 	}
 	slash_n = 0;
 	i = 1;

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 18:27:24 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 02:52:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -80,7 +80,7 @@ static int		error_n_op(t_op **b_op)
 	{
 		tmp = NULL;
 		if (error_n_redirect(&n_op->redirect))
-			return (1);
+			return (2);
 		manage_var_builtin(&n_op->cmd);
 		if (!n_op->redirect && !n_op->cmd)
 			if (del_nop_empty(&n_op, &tmp, b_op))
@@ -94,15 +94,17 @@ int				extension_error(t_seq **b_seq)
 {
 	t_seq		*n_seq;
 	t_seq		*tmp;
+	int			ret;
 
+	ret = 0;
 	n_seq = *b_seq;
 	while (n_seq)
 	{
 		tmp = NULL;
 		if (n_seq->op)
-			if (error_n_op(&n_seq->op) == 1)
+			if ((ret = error_n_op(&n_seq->op)))
 			{
-				if (n_seq->prev || n_seq->next)
+				if (ret == 1 && (n_seq->prev || n_seq->next))
 				{
 					tmp = n_seq->next ? n_seq->next : NULL;
 					*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
@@ -110,7 +112,7 @@ int				extension_error(t_seq **b_seq)
 				}
 				else
 				{
-					ft_free_b_seq(b_seq);
+			//		ft_free_b_seq(b_seq);
 					return (1);
 				}
 			}
