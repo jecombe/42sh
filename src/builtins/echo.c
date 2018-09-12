@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 02:22:22 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 18:29:33 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,8 +42,6 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 	{
 		ok = 1;
 		ft_malloc_cmd(&t_exec->cmd, "\n");
-//		t_exec->cmd[1] = "\n";
-//		t_exec->cmd[2] = NULL;
 	}
 	slash_n = 0;
 	i = 1;
@@ -52,27 +50,9 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 		slash_n = 1;
 		i++;
 	}
-	if (fd > 2)
-	{
-		if ((fd_open = ft_loop_redirect(t_exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
-	}
-	else
-	{
-		fd = 1;
-		if ((fd_open = ft_loop_redirect(t_exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
-			return(EXIT_FAILURE);
-		if (fd_open < 1)
-			fd_open = 1;
-		if (t_exec->redirect)
-		{
-			if (t_exec->redirect->fd > 1)
-				fd_open = t_exec->redirect->fd;
-		}
-		if (t_exec->redirect == NULL && p == 1)
-			fd_open = 5;
-		ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
-	}
+	fd_open = ft_prelim_loop(t_exec, fd, 1);
+	if (t_exec->redirect == NULL && p == 1)
+		fd_open = 5;
+	ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 	return (EXIT_SUCCESS);
 }

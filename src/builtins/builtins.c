@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 15:16:07 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 18:15:49 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ int		ft_builtins(t_op *exec, int what, int flag, int fd_open)
 		if (ft_exit(exec, flag, fd_open))
 			return (EXIT_FAILURE);
 	if (ft_strcmp(exec->cmd[0], "env") == 0)
-		if (ft_env(exec, fd_open))
+		if (ft_env(exec, fd_open, p))
 			return (EXIT_FAILURE);
 	if (ft_strcmp(exec->cmd[0], "setenv") == 0)
 	{

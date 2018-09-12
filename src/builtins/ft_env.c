@@ -6,21 +6,21 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:09 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 18:17:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void	ft_print_env()
+static void	ft_print_env(int fd_open)
 {
 	int		i;
 
 	i = -1;
 	if (g_env)
 		while (g_env[++i])
-			ft_putendl_fd(g_env[i], STDOUT_FILENO);
+			ft_putendl_fd(g_env[i], fd_open);
 }
 
 static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
@@ -93,17 +93,33 @@ static int	ft_exec_env(const char **cmd, int i)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_env(t_op *exec, int fd_open)
+int			ft_env(t_op *exec, int fd, int p)
 {
 	int		i;
 	char	flag;
 	char	**env;
+	int fd_open;
 
 	i = 0;
 	flag = '\0';
 	env = NULL;
+	if (fd > 2)
+		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		fd = 1;
+		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
+			return(EXIT_FAILURE);
+		if (fd_open < 1)
+			fd_open = 1;
+		if (exec->redirect)
+		{
+			if (exec->redirect->fd > 1)
+				fd_open = exec->redirect->fd;
+		}
+		if (exec->redirect == NULL && p == 1)
+			fd_open = 5;
 	if (!exec || exec->cmd[1] == NULL)
-		ft_print_env();
+		ft_print_env(fd_open);
 	else
 	{
 		if (!(env = ft_tabdup(g_env)))
