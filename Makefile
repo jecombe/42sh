@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/12 02:20:31 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/12 17:07:34 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -122,6 +122,7 @@ SRCS_NAME =	\
 			execute/separate.c \
 			redirections/open_file_redirections.c \
 			redirections/return_flag_redirections.c \
+			redirections/prelim_loop.c \
 			redirections/heredoc.c \
 			redirections/loop_redirections.c \
 			redirections/pipe.c \

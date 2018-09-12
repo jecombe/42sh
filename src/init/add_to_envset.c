@@ -46,8 +46,10 @@ int				add_to_set(char *name, char *value)
 	if (ft_strchr(name, '='))
 		return (EXIT_FAILURE);
 	if (!(s = ft_envset_line((const char **)g_set, name)))
+	{
 		if (!(ft_malloc_cmd(&g_set, (s = ft_envset_join(name, value)))))
 			sort_set();
+	}
 	else
 	{
 		while (g_set[++i])

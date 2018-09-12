@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:07 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 17:29:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,7 @@ static int	ft_cd_flags(const char **cmd, char *flag, int *idx, int fd_open)
 	j = -1;
 	if (!cmd[i] || ft_strcmp(cmd[i], "-") == 0)
 		return (EXIT_SUCCESS);
+	if (cmd[1])
 	while (cmd[i])
 	{
 		if (cmd[i][++j] != '-')
@@ -93,27 +94,16 @@ int			ft_cd(t_op *exec, int flags, int fd)
 	j = 1;
 	flag = '\0';
 	curpath = NULL;
-	if (fd > 2)
-	{
-		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
+	if ((fd_open = ft_prelim_loop(exec, fd, 0)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-	}
-	else
-	{
-		fd = 1;
-		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
-			return(EXIT_FAILURE);
-		if (fd_open < 1)
-			fd_open = 2;
-		if (exec->redirect)
-			if (exec->redirect->fd == 1)
-				fd_open = 2;
-	}
 	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j, fd_open))
 		return (EXIT_FAILURE);
 	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
 			ft_getenv("HOME", g_env)))
+	{
+		printf("REUSSITE\n");
 		return (EXIT_SUCCESS);
+	}
 	if (flag != 'P')
 	{
 		ft_canonical(&curpath);
@@ -124,5 +114,6 @@ int			ft_cd(t_op *exec, int flags, int fd)
 	if (ft_chdir(&curpath, exec->cmd[j], fd_open))
 		return (EXIT_FAILURE);
 	ft_strdel(&curpath);
+	printf("EXIT SUc\n");
 	return (EXIT_SUCCESS);
 }

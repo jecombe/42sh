@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/11 15:03:43 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 17:07:09 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -79,5 +79,6 @@ int				binary_signal(int status, int pid, char *bin);
 void		ft_print_message(char *source, int nb);
 t_loop		ft_init_loop(void);
 t_separate ft_init_separate(void);
+int			ft_prelim_loop(t_op *exec, int fd, int std_err);
 
 #endif
