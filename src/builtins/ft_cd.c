@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:05:13 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 14:59:44 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,7 +83,7 @@ static int	ft_chdir(char **curpath, const char *cmd, int fd_open)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_cd(t_op *exec, int flags, int fd)
+int			ft_cd(t_op *exec, int flags, int fd, int p)
 {
 	int		j;
 	char	flag;
@@ -107,19 +107,11 @@ int			ft_cd(t_op *exec, int flags, int fd)
 		ft_canonical(&curpath);
 		ft_rules(&curpath);
 	}
-	/*if (exec->cmd[1] == NULL)
+	if (exec->cmd[1] == NULL && p == 1)
 	{
 		chdir(curpath);
-		//pwd = ft_envset_value((const char **)g_env, "PWD");
-	//ft_setenv("PWD", curpath, fd_open);
-	//ft_setenv("OLDPWD", pwd, fd_open);
-
-		//pwd = ft_envset_value((const char **)g_env, "pwd");
-		//ft_setenv("pwd", curpath, fd_open);
-		//ft_setenv("oldpwd", pwd, fd_open);
-		//ft_strdel(&pwd);
 		return (EXIT_SUCCESS);
-	}*/
+	}
 	if (!(curpath))
 		return (EXIT_FAILURE);
 	if (ft_chdir(&curpath, exec->cmd[j], fd_open))

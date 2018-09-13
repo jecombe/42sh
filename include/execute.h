@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 17:39:54 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 14:55:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,8 @@ typedef struct s_pipe
 	int start;
 	int buil_pipe;
 	char	*bin;
+	int		ret;
+	int		built;
 }			t_pipe;
 
 typedef struct s_separate
@@ -72,14 +74,14 @@ int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
 void			ft_separate(t_seq *b_seq, int fd, pid_t pid);
 void			ft_sequence(t_seq *b_seq, int fd, pid_t pid);
-int				ft_pipe(t_op *opera, int i, pid_t pid, int fd2);
+int				ft_pipe(t_op *opera, int co, int fd2);
 int				ft_count_pipe(t_op *tmp);
 int				ft_loop_redirect(t_redirect *redirect, int buil, int fd2, int before_pipe);
 void			ft_print_error(const char *s1, const char *s2);
 int				binary_signal(int status, int pid, char *bin);
-void		ft_print_message(char *source, int nb);
-t_loop		ft_init_loop(void);
-t_separate ft_init_separate(void);
-int			ft_prelim_loop(t_op *exec, int fd, int std_err);
+void			ft_print_message(char *source, int nb);
+t_loop			ft_init_loop(void);
+t_separate		ft_init_separate(void);
+int				ft_prelim_loop(t_op *exec, int fd, int std_err);
 
 #endif
