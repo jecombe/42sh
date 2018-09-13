@@ -27,7 +27,6 @@ void	get_keyboard_key_next(t_editor *ed, e_prompt *prompt, char **line)
 		delete_from_cursor_to_end(ed);
 	else if (CTRL_P)
 		paste_clipboard(ed);
-	
 	else if (UP_KEY || DOWN_KEY)
 		historic(ed);
 }

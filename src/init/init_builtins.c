@@ -77,5 +77,6 @@ int			init_builtins(const char *path)
 	history->cmd = NULL;
 	history_save(&history);
 	init_builtins_history(path);
+	history_get(NULL, 0);
 	return (EXIT_SUCCESS);
 }

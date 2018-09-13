@@ -15,12 +15,16 @@
 
 void	historic(t_editor *ed)
 {
-	(void)ed;
 	int fd;
 
-		printf("OK\n");
-	if (!(fd = open("../history", O_RDONLY)))
-		printf("OK\n");
+	go_to_begin_of_line(ed);
+	delete_from_cursor_to_end(ed);
+	if (UP_KEY)
+		history_get(&(ed)->line, -1);
+	else if (DOWN_KEY)
+		history_get(&(ed)->line, 1);
+	ft_putstr(ed->line);
+	ed->cursor_str_pos = ft_strlen(ed->line);
 }
 
 void	fill_hist_list(t_hist *hist, char *line)

@@ -28,21 +28,22 @@ void			history_save_file(const char *bin)
 	char		buf[BUFF_SIZE];
 
 	history = NULL;
-	i = -1;
+	i = 0;
 	fd = -1;
 	ft_bzero(buf, BUFF_SIZE);
 	history_save(&history);
 	if ((fd = history_save_file_open(bin)) == -1)
 		return ;
 	if (history->cmd)
-		while (history->cmd[++i])
-		{
-			ft_strcpy(buf, "[");
-			ft_strcat(buf, history->cmd[i]);
-			ft_strcat(buf, "]");
-			ft_putendl_fd(buf, fd);
-			ft_strclr(buf);
-		}
+			while (history->cmd[i])
+			{
+				ft_strcpy(buf, "[");
+				ft_strcat(buf, history->cmd[i]);
+				ft_strcat(buf, "]");
+				ft_putendl_fd(buf, fd);
+				ft_strclr(buf);
+				i++;
+			}
 	close(fd);
 	ft_tabdel(&(history)->cmd);
 	free(history);

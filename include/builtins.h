@@ -170,5 +170,6 @@ void			ft_save_hash(t_hashtable **hashtable);
 void			ft_hash_add(t_hashcase **begin, t_hashcase *hashcase);
 void			history_save(t_history **history);
 void			history_add(char *cmd);
+void			history_get(char **line, int stat);
 
 #endif
