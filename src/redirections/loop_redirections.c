@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 16:41:23 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 16:45:53 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -97,8 +97,8 @@ void			ft_aggreg_file(t_redirect *redirect)
 		printf("2\n");
 	if (redirect->redirect == GREATAND)
 	{
+		printf("3\n");
 		close(redirect->fd);
-		ft_aggreg_file(redirect);
 	}
 	if (redirect->redirect == LESSAND)
 		printf("4\n");
@@ -118,7 +118,7 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
 	{
 		(*loop)->i++;
 		(*loop)->flag = ft_return_flag(redirect);
-		ft_aggreg_file(redirect);
+		//ft_aggreg_file(redirect);
 		if ((ret = ft_loop_3(&(*loop), redirect, buil, bef_pi)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (redirect->redirect != DLESS && bef_pi == 0 && (*loop)->error == 0 && ret != 101)
