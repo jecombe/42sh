@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/29 05:34:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:26:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 21:18:13 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,7 @@ static void		ft_handle_quit(int sig)
 	(void)sig;
 	if ((tmp = ft_getenv("PID_BIN", g_set)))
 	{
-		kill(atoi(tmp), 9);
+	//	kill(atoi(tmp), 9);
 		ft_putchar('\n');
 		ft_strdel(&tmp);
 	}

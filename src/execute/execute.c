@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:40:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 21:17:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,7 @@ int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	{
 		wait(&status);
 		ret = WEXITSTATUS(status);
-		//binary_signal(status, pid, bin_cmd);
+		binary_signal(status, pid, bin_cmd);
 	}
 	return (ret > 0 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
