@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:29:33 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 20:34:31 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,6 +53,7 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 	fd_open = ft_prelim_loop(t_exec, fd, 1);
 	if (t_exec->redirect == NULL && p == 1)
 		fd_open = 5;
+	if (t_exec->redirect)
 		if (fd_open == EXIT_FAILURE && t_exec->redirect->redirect == LESS)
 			return (EXIT_FAILURE);
 	ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
