@@ -25,6 +25,7 @@ int			ft_prelim_loop(t_op *exec, int fd, int std_err)
 		fd = 1;
 		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
+			printf("fd_open %d\n", fd_open);
 		if (fd_open < 1)
 		{
 			if (std_err == 0)
@@ -46,5 +47,6 @@ int			ft_prelim_loop(t_op *exec, int fd, int std_err)
 			}
 		}
 	}
+	printf("-------> %d\n", fd_open);
 	return (fd_open);
 }

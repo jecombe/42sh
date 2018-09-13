@@ -93,7 +93,9 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil,
 	}
 	ret = ft_loop_5((&loop), redirect, buil, before_pipe);
 	if (ret == 101)
+	{
 		exit(EXIT_FAILURE);
+	}
 	else if (ret == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -113,14 +115,16 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
 		ret = ft_loop_3(&(*loop), redirect, buil, before_pipe);
 		if (ret == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (redirect->redirect != DLESS && before_pipe == 0
-				&& (*loop)->error == 0 && (*loop)->flag2 != O_RDONLY && ret != 101)
+
+		if (redirect->redirect != DLESS && before_pipe == 0 && (*loop)->error == 0 && ret != 101)
 			fd_open = ft_open_redirect(redirect->file, (*loop)->flag, (*loop)->flag2);
+		if ((*loop)->flag == O_RDONLY && buil == 0)
+			break;
 		redirect = redirect->next;
 	}
 	if (before_pipe == 0 && (*loop)->error == 0)
 	{
-		if (buil == 1)
+		if (buil == 1 || (*loop)->flag == O_RDONLY)
 			return (fd_open);
 		dup2(fd_open, (*loop)->fd);
 	}
@@ -143,7 +147,7 @@ int				ft_loop(t_redirect *redirect, t_loop *loop, int buil,
 		fd_open = ft_loop_2(redirect, &loop, buil, before_pipe);
 		if (fd_open == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (buil == 1)
+		if ((buil == 1) || (loop->flag == O_RDONLY))
 			return (fd_open);
 	}
 	return (EXIT_SUCCESS);
@@ -175,11 +179,16 @@ int				ft_loop_redirect(t_redirect *redirect,  int buil, int fd2,
 	if (buil == 1 && redirect == NULL && fd2 > 1)
 		return (fd_open);
 	fd_open = ft_loop(redirect, &loop, buil, before_pipe);
-	if (buil == 1)
-		return (fd_open);
-	if (fd_open == EXIT_FAILURE)
+		if (fd_open == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	/*if (fd2 > 1)
-		exit(EXIT_SUCCESS);*/
+		if (buil == 0 && loop.flag == O_RDONLY && redirect != NULL)
+		{
+			dup2(fd_open, STDIN_FILENO);
+			if (redirect->next)
+				return (ft_loop_redirect(redirect->next, 0, fd2, 0));
+
+		}
+	if (buil == 1 && loop.flag != HEREDOC)
+		return (fd_open);
 	return (EXIT_SUCCESS);
 }

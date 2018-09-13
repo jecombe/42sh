@@ -53,6 +53,8 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 	fd_open = ft_prelim_loop(t_exec, fd, 1);
 	if (t_exec->redirect == NULL && p == 1)
 		fd_open = 5;
+		if (fd_open == EXIT_FAILURE && t_exec->redirect->redirect == LESS)
+			return (EXIT_FAILURE);
 	ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 	return (EXIT_SUCCESS);
 }

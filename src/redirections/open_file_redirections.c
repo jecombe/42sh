@@ -16,7 +16,13 @@
 int			ft_open_redirect(char *file, int flag, int flag2)
 {
 	int ret2;
-	if (flag2 == O_WRONLY)
+	if (flag2 == O_WRONLY && flag != O_RDONLY)
 		return (ret2 = open(file, O_WRONLY | flag | O_CREAT, S_IRUSR | S_IRGRP | S_IWGRP | S_IWUSR));
-	return (EXIT_FAILURE);
+	//return (EXIT_FAILURE);
+	if (flag == O_RDONLY)
+	{
+		printf("okok\n");
+		return (ret2 = open(file, flag, 0644));
+	}
+		return (EXIT_FAILURE);
 }
