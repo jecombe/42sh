@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:40:05 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 15:01:58 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ int			ft_separate_pipe_2(t_separate **separate, t_op **opera, pid_t pid, int fd2
 	{
 		(*separate)->i = ft_count_pipe((*opera));
 		(*separate)->i++;
-		(*separate)->ret = ft_pipe((*opera), (*separate)->i, pid, fd2);
+		(*separate)->ret = ft_pipe((*opera), (*separate)->i, fd2);
 	}
 	while ((*separate)->i != 0)
 	{
