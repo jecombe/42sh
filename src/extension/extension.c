@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 05:14:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 05:45:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -92,7 +92,13 @@ int			extension(t_seq **b_seq)
 			if ((ret = ft_parcour_op(&n_seq->op)) != 0 && ret != 2)
 				return (1);
 		if (ret == 2)
-			ft_free_n_seq(&n_seq);
+		{
+			if (ft_free_n_seq(&n_seq, b_seq) == 1)
+			{
+				printf("RETURN 1\n");
+				return (1);
+			}
+		}
 		else
 			n_seq = n_seq->next;
 	}

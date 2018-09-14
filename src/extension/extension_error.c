@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 05:21:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 05:38:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -125,9 +125,11 @@ int				extension_error(t_seq **b_seq)
 				if (ret == 1 && (n_seq->prev || n_seq->next))
 				{
 					printf("000EXT_ERR\n");
-					tmp = n_seq->next ? n_seq->next : NULL;
-					*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
-					ft_free_n_seq(&n_seq);
+		//			tmp = n_seq->next ? n_seq->next : NULL;
+		//			*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
+		//			ft_free_n_seq(&n_seq, b_seq);
+					if (ft_free_n_seq(&n_seq, b_seq) == 1)
+						return (1);
 				}
 				else
 				{
@@ -140,17 +142,17 @@ int				extension_error(t_seq **b_seq)
 		else
 		{
 			printf("222EXT_ERR\n");
-				if (n_seq->prev || n_seq->next)
-				{
-					tmp = n_seq->next ? n_seq->next : NULL;
-					*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
-					ft_free_n_seq(&n_seq);
-				}
-				else
-				{
+		//		if (n_seq->prev || n_seq->next)
+		//		{
+		//			tmp = n_seq->next ? n_seq->next : NULL;
+		//			*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
+		//			ft_free_n_seq(&n_seq);
+		//		}
+		//		else
+		//		{
 					ft_free_b_seq(b_seq);
 					return (1);
-				}
+		//		}
 		}
 		n_seq = n_seq ? n_seq->next : tmp;
 	}
