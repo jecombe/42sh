@@ -5,8 +5,21 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/09/14 14:50:46 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/14 18:10:03 by jecombe     ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   loop_redirections.c                              .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:05:31 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 16:46:54 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 14:43:33 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,21 +102,22 @@ int				ft_loop_3(t_loop **loop, t_redirect *redirect, int buil,
 	return (EXIT_SUCCESS);
 }
 
-void			ft_aggreg_file(t_redirect *redirect)
+void			ft_aggreg_file(t_redirect *redirect, int buil, int bef_pi)
 {
-	if (redirect->redirect == LESSGREAT)
-		printf("1\n");
-	if (redirect->redirect == CLOBBER)
-		printf("2\n");
-	if (redirect->redirect == GREATAND)
+	if (redirect->redirect == GREATAND || redirect->redirect == LESSAND)
 	{
-		printf("3\n");
-		close(redirect->fd);
+		if (ft_strcmp("-", redirect->file) == 0)
+		{
+			if (buil == 0  || bef_pi == 1)
+				close(redirect->fd);
+			else
+				redirect->fd = -1;
+		}
+		if (ft_strcmp("1", redirect->file) == 0)
+			dup2(1, STDERR_FILENO);
+		if (ft_strcmp("2", redirect->file) == 0)
+			dup2(STDERR_FILENO, g_fd[1]);
 	}
-	if (redirect->redirect == LESSAND)
-		printf("4\n");
-	if (redirect->redirect == DLESSDASH)
-		printf("5\n");
 }
 
 int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
@@ -117,7 +131,7 @@ int				ft_loop_2(t_redirect *redirect, t_loop **loop, int buil,
 	{
 		(*loop)->i++;
 		(*loop)->flag = ft_return_flag(redirect);
-		ft_aggreg_file(redirect);
+		ft_aggreg_file(redirect, buil, bef_pi);
 		if ((ret = ft_loop_3(&(*loop), redirect, buil, bef_pi)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (redirect->redirect != DLESS && bef_pi == 0 && (*loop)->error == 0 && ret != 101)

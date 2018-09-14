@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 14:55:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 16:36:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,39 +20,36 @@
 # define NOTHING -1
 
 
-char			**g_bin;
-int g_error;
-int g_last;
-typedef struct s_loop
+int				g_fd[2];
+
+typedef struct	s_loop
 {
-	int fd;
-	int i;
-	int flag;
-	int flag2;
-	int error;
+	int			fd;
+	int			i;
+	int			flag;
+	int			flag2;
+	int			error;
 }				t_loop;
 
-typedef struct s_pipe
+typedef struct	s_pipe
 {
-	int fd_save;
-	int fd_out;
-	int fd_in;
-	int start;
-	int buil_pipe;
-	char	*bin;
-	int		ret;
-	int		built;
-}			t_pipe;
+	int			fd_save;
+	int			fd_out;
+	int			fd_in;
+	int			start;
+	int			buil_pipe;
+	char		*bin;
+	int			ret;
+	int			built;
+}				t_pipe;
 
-typedef struct s_separate
+typedef struct	s_separate
 {
-	int i;
-	int or_if;
-	int and_if;
-	int ret;
-}			t_separate;
-
-
+	int			i;
+	int			or_if;
+	int			and_if;
+	int			ret;
+}				t_separate;
 
 int				ft_solver(t_op *tmp_exec, int fd, pid_t pid, int pipe);
 char			*ft_search_bin(char *cmd);
