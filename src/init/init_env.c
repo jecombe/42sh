@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:01:27 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 23:13:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,8 @@ static void		ft_get_user_info(void)
 	ft_bzero(buff, BUFF_SIZE);
 	str = NULL;
 	i = 0;
-	(getcwd(buff, sizeof(buff))) ? add_to_env("PWD", buff) : 0;
+	if ((getcwd(buff, sizeof(buff))))
+		add_to_env("PWD", buff);
 	add_to_env("SHELL", "/bin/bash");
 	if ((str = getlogin()))
 	{

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/13 20:49:17 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/14 05:52:38 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -37,7 +37,7 @@ SRCS_NAME =	\
 			init/init_env.c \
 			init/init_set.c \
 			init/init_builtins.c \
-			init/add_to_envset.c \
+			init/envset_add.c \
 			init/utils.c \
 			init/envset_manage.c \
 			editor/get_stdin.c \

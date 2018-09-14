@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_term_init.c                                   .::    .:/ .      .::   */
+/*   init_shell.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 02:03:13 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/13 22:58:19 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/13 23:16:40 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,6 +17,7 @@ int			init_shell(int ac, const char **av)
 {
 	char	*path;
 
+	path = NULL;
 	if (!(path = search_path_of_101sh(av[0])))
 		return (EXIT_FAILURE);
 	if (init_files(av[0]))

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   init_builtins.c                                  .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2018/09/13 22:57:58 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/14 02:00:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
 
 #include "heart.h"
 
@@ -28,31 +40,49 @@ static int	init_builtins_history_add(char *line, char **buf)
 	return (EXIT_FAILURE);
 }
 
-static int	init_builtins_history(const char *path)
+static int	init_builtins_history_read(int fd, int *i)
 {
 	char	*str;
 	char	*buf;
-	int		fd;
 
 	str = NULL;
 	buf = NULL;
-	fd = -1;
-	if (!(str = ft_strjoin(path, "/.101sh_history")))
-		return (EXIT_FAILURE);
-	if (((fd = open(str, O_RDONLY))) == -1)
-		return (EXIT_FAILURE);
-	ft_strdel(&str);
 	while (get_next_line(fd, &str))
 	{
 		if (!(init_builtins_history_add(str, &buf)))
+		{
 			ft_strdel(&buf);
+			(*i)++;
+		}
 		ft_strdel(&str);
 	}
 	ft_strdel(&str);
 	ft_strdel(&buf);
-	if ((close(fd)) == -1)
-		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
+}
+
+static int	init_builtins_history(const char *path)
+{
+	char	*str;
+	int		fd;
+	int		i;
+
+	str = NULL;
+	fd = -1;
+	i = 0;
+	if (!(str = ft_strjoin(path, "/.101sh_history")))
+		return (EXIT_FAILURE);
+	if ((fd = open(str, O_RDONLY)) == -1)
+		return (EXIT_FAILURE);
+	init_builtins_history_read(fd, &i);
+	add_to_set("HISTSIZE", "500");
+	add_to_set("HISTFILE", str);
+	ft_strdel(&str);
+	if (!(str = ft_itoa(i)))
+		return (EXIT_FAILURE);
+	add_to_set("HISTFILESIZE", str);
+	ft_strdel(&str);
+	return (close(fd) == -1 ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
 int			init_builtins(const char *path)

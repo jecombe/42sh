@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_term_init.c                                   .::    .:/ .      .::   */
+/*   init_set.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/12 04:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:37:15 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/13 22:58:09 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/14 01:48:50 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,39 +62,6 @@ static void			add_info_id(void)
 		add_to_set("HOSTNAME", buff);
 }
 
-static int				manage_info_history(const char *av)
-{
-	char	*path;
-	char	*str;
-	int		fd;
-	int		i;
-
-	path = NULL;
-	str = NULL;
-	fd = -1;
-	i = 0;
-	add_to_set("HISTSIZE", "500");
-	path = search_path_of_101sh(av);
-	if (access((str = ft_strjoin(path, "/.101sh_history")), F_OK) == 0)
-	{
-		add_to_set("HISTFILE", str);
-		fd = open(str, O_RDONLY);
-		ft_strdel(&str);
-		while (get_next_line(fd, &str) > 0 && ++i)
-			ft_strdel(&str);
-		close(fd);
-		add_to_set("HISTFILESIZE", (str = ft_itoa(i)));
-		ft_strdel(&str);
-		ft_strdel(&path);
-		return (EXIT_SUCCESS);
-	}
-	add_to_set("HISTFILESIZE", "NULL");
-	add_to_set("HISTFILE", "UNKNOW");
-	ft_strdel(&str);
-	ft_strdel(&path);
-	return (EXIT_SUCCESS);
-}
-
 static int			get_sysname(int ac)
 {
 	char			*tmp;
@@ -127,7 +94,6 @@ int					init_set(int ac, const char **av)
 	add_info_params(ac, av);
 	add_info_id();
 	add_to_set("IFS", " \t\n");
-	manage_info_history(av[0]);
 	get_sysname(ac);
 	return (EXIT_SUCCESS);
 }
