@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 16:18:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 05:18:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,10 +31,11 @@ int					heart_of_101sh(char *line, int fd_base)
 			//ft_watch_result(line, lex, seq);
 			ft_sequence(seq, fd_base, pid);
 			history_add(line);
+		ft_free_b_seq(&seq);
 		}
 		else
 			printf("!!!!!!!!!!!!!SSSSEEEQQQ\n");
-		ft_free_b_seq(&seq);
+	printf("FREE_B_SEA FINISH\n");
 	}
 	ft_lexer_del(&lex);
 	ft_strdel(&line);
