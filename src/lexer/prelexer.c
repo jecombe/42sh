@@ -13,42 +13,49 @@
 
 #include "heart.h"
 
-static int	prelex_search_quotes(char c, char *lst, char *line, int *index)
+static int	prelex_squotes(char *line, char *lst, int *index, char c)
 {
-	int				ret;
-
-	ret = 0;
-	if (c == '\'')
+	if (line[*index + 1])
 	{
 		while (line[++(*index)] && line[*index] != c)
 		{
-//			printf("SQUOTE == %c\n", line[*index]);
 			if (!line[*index + 1] && line[(*index)] != c)
 			{
 				*lst = 0;
-//				printf("0RET == S_QUOTE\n");
 				return (S_QUOTE);
 			}
 		}
 	}
-	else if (c == '`')
+	else
+	{
+		*lst = 0;
+		return (S_QUOTE);
+	}
+	return (PROMPT);
+}
+
+static int	prelex_bquotes(char *line, char *lst, int *index, char c)
+{
+	int				ret;
+
+	ret = 0;
+	if (line[*index + 1])
 	{
 		while (line[++(*index)] && line[*index] != c)
 		{
-//			printf("BQUOTE == %c\n", line[*index]);
 			if (!line[*index + 1] && line[*index] != c)
 			{
 				ret = *lst;
 				*lst = 0;
-//				printf("1RET == %d\n", ret);
 				return (ret ? DB_QUOTE : B_QUOTE);
 			}
 		}
 	}
-	else if (c == '"')
+	else
 	{
-//		printf("DQUOTE == %d\n", *lst == '"' ? 1 : 1);
-		*lst = *lst == '"' ? 0 : '"';
+		ret = *lst;
+		*lst = 0;
+		return (ret ? DB_QUOTE : B_QUOTE);
 	}
 	return (PROMPT);
 }
@@ -59,10 +66,19 @@ static int	prelex_quotes(char c, int version, char *line, int *index)
 	int				ret;
 
 	if (version == 0)
-		return (prelex_search_quotes(c, &lst, line, index));
+	{
+		if (c == '\'')
+			return (prelex_squotes(line, &lst, index, c));
+		else if (c == '`')
+			return (prelex_bquotes(line, &lst, index, c));
+		else if (c == '"')
+			lst = lst == '"' ? 0 : '"';
+		else if (c == '|' && ft_str_isblank(line + (*index + 1)) && lst == 0)
+			return (E_PIPE);
+		return (PROMPT);
+	}
 	ret = lst;
 	lst = 0;
-//	printf("2RET == %d\n", ret);
 	return (ret == '"' ? D_QUOTE : PROMPT);
 }
 
@@ -75,18 +91,23 @@ int			prelexer(char *line)
 	i = 0;
 	while (line[i])
 	{
+	printf("LINE == %s\n", line);
 		if (line[i] == '\\' && line[i + 1])
 			i++;
-		else if ((line[i] == '\\' || line[i] == '|') && !line[i + 1])
-		{
-//			printf("RETURN %d\n", line[i]);
-			return (line[i] == '\\' ? BACKSLASH : E_PIPE);
-		}
-		else if (line[i] == '\'' || line[i] == '"' || line[i] == '`')
+		else if (line[i] == '\\'  && !line[i + 1])
+			return (BACKSLASH);
+		/*
+		else if (line[i] == '|' && !ft_str_isblank(line + i))
 		{
 			if ((ret = prelex_quotes(line[i], 0, line, &i)))
 				return (ret);
 		}
+		else if (line[i] == '\'' || line[i] == '"' || line[i] == '`')
+			if ((ret = prelex_quotes(line[i], 0, line, &i)))
+				return (ret);*/
+				else
+			if ((ret = prelex_quotes(line[i], 0, line, &i)))
+				return (ret);
 		i++;
 	}
 	return (prelex_quotes(0, 1, NULL, (int*)0));

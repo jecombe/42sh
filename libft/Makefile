@@ -104,6 +104,7 @@ SRCS_NAME =	\
 			ft_add_str_at.c \
 			ft_strreplace.c \
 			ft_add_to_str.c \
+			ft_str_isblank.c \
 			ft_insert_char_in_str.c \
 			ft_isquote.c
 
