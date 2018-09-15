@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:23:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 05:52:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,11 +58,11 @@ static void			shell(void)
 	{
 		if (line && (!(prompt = prelexer(line))))
 		{
-			printf("101SH\n");
+//			printf("101SH\n");
 			heart_of_101sh(line, 1);
 		}
-		else
-			printf("!!!!!101SH\n");
+//		else
+//			printf("!!!!!101SH\n");
 	}
 }
 
