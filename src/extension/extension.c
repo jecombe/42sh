@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:09:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 05:54:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,7 +88,6 @@ int			extension(t_seq **b_seq)
 	n_seq = *b_seq;
 	while (n_seq)
 	{
-	printf("OKOK\n");
 		if (n_seq->op)
 			if ((ret = ft_parcour_op(&n_seq->op)) != 0 && ret != 2)
 				return (1);

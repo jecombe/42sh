@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:18:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 05:58:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,10 +93,8 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 	prompt = PROMPT;
 	if ((line = recup_inside_bquote((*cmd)[(*i)->i], (*i)->begin, (*i)->j)))
 	{
-		if (prelexer(line) != PROMPT)
-			return (1);
-		else
-			printf("QUOTES VALIDES\n");
+		if ((prompt = prelexer(line)) != PROMPT)
+			return (err_bquote_unmatched(prompt));
 		fd = 3;
 		//fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
 		heart_of_101sh(line, fd);
