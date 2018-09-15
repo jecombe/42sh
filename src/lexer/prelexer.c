@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/14 23:56:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:42:24 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 05:51:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,31 +20,36 @@ static int	prelex_search_quotes(char c, char *lst, char *line, int *index)
 	ret = 0;
 	if (c == '\'')
 	{
-		while (line[++(*index)])
+		while (line[++(*index)] && line[*index] != c)
 		{
+//			printf("SQUOTE == %c\n", line[*index]);
 			if (!line[*index + 1] && line[(*index)] != c)
 			{
 				*lst = 0;
-	printf("0RET == S_QUOTE\n");
+//				printf("0RET == S_QUOTE\n");
 				return (S_QUOTE);
 			}
 		}
 	}
 	else if (c == '`')
 	{
-		while (line[++(*index)])
+		while (line[++(*index)] && line[*index] != c)
 		{
+//			printf("BQUOTE == %c\n", line[*index]);
 			if (!line[*index + 1] && line[*index] != c)
 			{
 				ret = *lst;
 				*lst = 0;
-	printf("1RET == %d\n", ret);
+//				printf("1RET == %d\n", ret);
 				return (ret ? DB_QUOTE : B_QUOTE);
 			}
 		}
 	}
 	else if (c == '"')
+	{
+//		printf("DQUOTE == %d\n", *lst == '"' ? 1 : 1);
 		*lst = *lst == '"' ? 0 : '"';
+	}
 	return (PROMPT);
 }
 
@@ -57,7 +62,7 @@ static int	prelex_quotes(char c, int version, char *line, int *index)
 		return (prelex_search_quotes(c, &lst, line, index));
 	ret = lst;
 	lst = 0;
-	printf("2RET == %d\n", ret);
+//	printf("2RET == %d\n", ret);
 	return (ret == '"' ? D_QUOTE : PROMPT);
 }
 
@@ -74,7 +79,7 @@ int			prelexer(char *line)
 			i++;
 		else if ((line[i] == '\\' || line[i] == '|') && !line[i + 1])
 		{
-			printf("RETURN %d\n", line[i]);
+//			printf("RETURN %d\n", line[i]);
 			return (line[i] == '\\' ? BACKSLASH : E_PIPE);
 		}
 		else if (line[i] == '\'' || line[i] == '"' || line[i] == '`')
