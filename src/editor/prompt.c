@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 05:28:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,8 @@ static void		prompt_type(e_prompt prompt)
 		ft_putstr("pipe> ");
 	else if (prompt == E_HDOC)
 		ft_putstr("heredoc> ");
+	else if (prompt == DB_QUOTE)
+		ft_putstr("dquote bquote> ");
 }
 
 void			display_prompt(char *home, e_prompt prompt)
