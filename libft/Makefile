@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/08/31 12:20:58 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/15 00:25:37 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ SRCS_NAME =	\
 			ft_putstr_color.c \
 			ft_add_str_at.c \
 			ft_strreplace.c \
+			ft_add_to_str.c \
 			ft_insert_char_in_str.c \
 			ft_isquote.c
 

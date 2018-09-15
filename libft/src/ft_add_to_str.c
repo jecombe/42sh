@@ -1,43 +1,44 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_free_n_seq.c                                  .::    .:/ .      .::   */
+/*   ft_add_to_str.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/28 00:33:33 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 23:17:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/15 00:16:54 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/15 00:26:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../include/libft.h"
 
-int		ft_free_n_seq(t_seq **n_seq, t_seq **b_seq)
+int		ft_add_to_str(char **str, char c)
 {
-	int		ret;
+	char		*tmp;
+	int			i;
 
-	ret = 0;
-	if (*n_seq)
+	i = 0;
+	if (*str)
 	{
-		if ((*n_seq)->op)
-			ft_free_b_op(&(*n_seq)->op);
-		if ((*n_seq)->next && (*n_seq)->prev)
+		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(*str) + 2))))
 		{
-			(*n_seq)->next->prev = (*n_seq)->prev;
-			(*n_seq)->prev->next = (*n_seq)->next;
+			ft_strdel(str);
+			return (1);
 		}
-		else if ((*n_seq)->prev)
-			(*n_seq)->prev->next = NULL;
-		else if ((*n_seq)->next)
+		while ((*str)[i])
 		{
-			*b_seq = (*n_seq)->next;
-			(*b_seq)->prev = NULL;
+			tmp[i] = (*str)[i];
+			i++;
 		}
-		else
-			ret = 1;
-		free(*n_seq);
-		*n_seq = NULL;
 	}
-		return (ret);
+	else
+		if (!(tmp = (char*)malloc(sizeof(char) * 2)))
+		{
+			ft_strdel(str);
+			return (1);
+		}
+	tmp[i] = c;
+	tmp[i] = '\0';
+	return (0);
 }

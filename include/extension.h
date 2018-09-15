@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:16:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 05:36:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 23:30:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,12 +28,10 @@ int			extension(t_seq **b_seq);
 char		**ft_split_bquote(const char *str, char *to_split);
 int			ft_dollar(char ***cmd, int *i_index, int *j_index);
 int			ft_manage_quote(char ***cmd, t_bquote **i);
-//char		*ft_replace_quote(char *str, int *j);
-//char		*ft_replace_dquote(char *str, int *j);
-int			extension_error(t_seq **b_seq);
+int			extension_error(t_seq **b_seq, int ret);
 int			bquote_manager(char ***cmd, t_bquote **i);
 int			backslash_manager(char ***cmd, t_bquote **i);
-int		ft_free_n_seq(t_seq **n_seq, t_seq **b_seq);
+int			ft_free_n_seq(t_seq **n_seq, t_seq **b_seq);
 void		ft_free_n_op(t_op **n_op);
 void		ft_free_n_redirect(t_redirect **n_redirect);
 int			last_copy(char ***begin_copy, char **cmd, t_bquote *index, int ok);

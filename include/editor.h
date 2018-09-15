@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:03:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/15 02:43:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,8 +52,10 @@ typedef enum		s_prompt
 	B_QUOTE,
 	S_QUOTE,
 	D_QUOTE,
+	DB_QUOTE,
 	E_HDOC,
 	E_PIPE,
+	BACKSLASH,
 }					e_prompt;
 
 typedef struct		s_hist

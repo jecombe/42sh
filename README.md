@@ -62,3 +62,4 @@ SEGFAULT A RESOUDRE:<br/>
 
 BOUCLE INFINI<br/>
 \_e"\`echo cho"\`\`ls\` MAUVAISE GESTION DES FINS DE QUOTES
+\_\"ls

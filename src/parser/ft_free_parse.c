@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:32:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:40:53 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 23:24:22 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ void		ft_free_b_op(t_op **b_op)
 	}
 }
 
-void		ft_free_b_seq(t_seq **b_seq)
+int			ft_free_b_seq(t_seq **b_seq)
 {
 	t_seq		*n_seq;
 
@@ -57,4 +57,5 @@ void		ft_free_b_seq(t_seq **b_seq)
 		free(*b_seq);
 		*b_seq = NULL;
 	}
+	return (0);
 }
