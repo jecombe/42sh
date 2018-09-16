@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 00:26:10 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 07:47:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -129,5 +129,6 @@ int					ft_strreplace(char ***tablo, int index, char *by);
 int					ft_add_str_at(char ***tablo, char *str, int at);
 int					ft_insert_char_in_str(char **str, char c, int at);
 int					ft_add_to_str(char **str, char c);
+int					ft_reverse_tab(char ***tablo);
 
 #endif

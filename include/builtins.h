@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 14:58:26 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 05:44:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -168,8 +168,7 @@ t_hashtable		*ft_hashtable_create(void);
 t_hashcase		*ft_create_case(const char *cmd, const char *raccmd);
 void			ft_save_hash(t_hashtable **hashtable);
 void			ft_hash_add(t_hashcase **begin, t_hashcase *hashcase);
-void			history_save(t_history **history);
-void			history_add(char *cmd);
-void			history_get(char **line, int stat);
+void			history_save(char ***history, char *news, int version, char *s);
+void			history_get(char **line, int index);
 
 #endif

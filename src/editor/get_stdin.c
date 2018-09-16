@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 09:15:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,36 +27,41 @@ void	get_keyboard_key_next(t_editor *ed, e_prompt *prompt, char **line)
 		delete_from_cursor_to_end(ed);
 	else if (CTRL_P)
 		paste_clipboard(ed);
-	else if (UP_KEY || DOWN_KEY)
-		historic(ed);
 }
 
 int		get_keyboard_key(int *ret, t_editor *ed, e_prompt *prompt, char **line)
 {
 	t_sz sz;
+	static int hist = 0;
+
+	hist = hist == -42 ? -42 : 0;
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (CTRL_D)
 		*ret = 0;
 	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
 		HOME_KEY || CTRL_A ? go_to_begin_of_line(ed) : go_to_end_of_line(ed);
 	else if (BACKSPACE && ed->line && ed->cursor_str_pos)
-		return (backspace(ed));
+		return ((hist = backspace(ed)));
 	else if (LEFT_KEY || RIGHT_KEY)
 		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed);
 	else if (CTRL_L)
-		return (clear_window(ed, *prompt));
+		return ((hist = clear_window(ed, *prompt)));
 	else if ((!ft_strcmp(SHIFT_RIGHT, ed->key) ||
 	!ft_strcmp(SHIFT_LEFT, ed->key)) && ed->line)
 		!ft_strcmp(SHIFT_LEFT, ed->key) ? move_word_left(ed) :
 		move_word_right(ed);
 	else if (ed->cursor_str_pos == ft_strlen(ed->line) &&
 	ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
-		return (add_char_to_line(ed->key[0], ed));
+		return ((hist = add_char_to_line(ed->key[0], ed)));
 	else if (TAB_KEY && *prompt == PROMPT)
 		tabulator(ed);
+	else if (UP_KEY || DOWN_KEY)
+		hist = historic(ed, 3);
 	else
 		get_keyboard_key_next(ed, prompt, line);
-	return (0);
+	if (!(UP_KEY || DOWN_KEY) && hist == -42)
+		hist = 0;
+	return (hist == -42 ? 0 : hist);
 }
 
 int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)

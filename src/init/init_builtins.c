@@ -6,58 +6,76 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:57:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 02:00:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 09:27:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static int	init_builtins_history_add(char *line, char **buf)
+static int	add_multiline(char **ret, char *news, int i, char ***get_hist)
 {
 	char	*tmp;
+	char	*tmp2;
 
-	tmp = NULL;
-	if (!(*buf))
-		*buf = ft_strdup(line);
-	else
+	tmp = ft_strjoin("\n", news);
+	tmp2 = ft_strjoin(*ret, tmp);
+	ft_strdel(ret);
+	*ret = ft_strdup(tmp2);
+	if (news[ft_strlen(news) - 1] == ']')
 	{
-		if (!(tmp = ft_strjoin(*buf, "\n")))
-			return (EXIT_FAILURE);
-		ft_strdel(buf);
-		if (!((*buf) = ft_strjoin(tmp, line)))
-			return (EXIT_FAILURE);
-		ft_strdel(&tmp);
+		ft_malloc_cmd(get_hist, *ret);
+		ft_strdel(ret);
 	}
-	if (((*buf)[ft_strlen(*buf) - 1]) == ']')
-	{
-		if (!(tmp = ft_strsub(*buf, 1, ft_strlen(*buf) - 2)))
-			return (EXIT_FAILURE);
-		history_add(tmp);
-		ft_strdel(&tmp);
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
+	ft_strdel(&tmp);
+	ft_strdel(&tmp2);
+	return (0);
 }
 
-static int	init_builtins_history_read(int fd, int *i)
+static int	add_hist_to_memory(char **tmp, char *path)
+{
+	char			**get_hist;
+	int				i;
+	char			*str;
+
+	i = -1;
+	str = NULL;
+	get_hist = NULL;
+	if (tmp)
+		while (tmp[++i])
+		{
+			if (!str && tmp[i][0] == '[')
+			{
+				if (tmp[i][ft_strlen(tmp[i]) - 1] == ']')
+					ft_malloc_cmd(&get_hist, tmp[i]);
+				else
+					str = ft_strdup(tmp[i]);
+			}
+			else if (str)
+				add_multiline(&str, tmp[i], i, &get_hist);
+		}
+	ft_strdel(&str);
+	history_save(&get_hist, NULL, -1, path);
+	ft_tabdel(&get_hist);
+	return (0);
+}
+
+static int	init_builtins_history_read(int fd, int *i, char *path)
 {
 	char	*str;
-	char	*buf;
+	char	**tmp;
 
 	str = NULL;
-	buf = NULL;
+	tmp = NULL;
 	while (get_next_line(fd, &str))
 	{
-		if (!(init_builtins_history_add(str, &buf)))
-		{
-			ft_strdel(&buf);
-			(*i)++;
-		}
+		if (ft_malloc_cmd(&tmp, str))
+			return (EXIT_FAILURE);
+		(*i)++;
 		ft_strdel(&str);
 	}
-	ft_strdel(&str);
-	ft_strdel(&buf);
+	add_hist_to_memory(tmp, path);
+	ft_tabdel(&tmp);
 	return (EXIT_SUCCESS);
 }
 
@@ -74,7 +92,7 @@ static int	init_builtins_history(const char *path)
 		return (EXIT_FAILURE);
 	if ((fd = open(str, O_RDONLY)) == -1)
 		return (EXIT_FAILURE);
-	init_builtins_history_read(fd, &i);
+	init_builtins_history_read(fd, &i, (char *)path);
 	add_to_set("HISTSIZE", "500");
 	add_to_set("HISTFILE", str);
 	ft_strdel(&str);
@@ -88,11 +106,9 @@ static int	init_builtins_history(const char *path)
 int			init_builtins(const char *path)
 {
 	t_hashtable		*hashtable;
-	t_history		*history;
 	int				i;
 
 	hashtable = NULL;
-	history = NULL;
 	i = -1;
 	if (!(hashtable = (t_hashtable *)malloc(sizeof(t_hashtable) * MAX_HASH)))
 		return (EXIT_FAILURE);
@@ -102,11 +118,6 @@ int			init_builtins(const char *path)
 		hashtable[i].hashcase = NULL;
 	}
 	ft_save_hash(&hashtable);
-	if (!(history = (t_history *)malloc(sizeof(t_history))))
-		return (EXIT_FAILURE);
-	history->cmd = NULL;
-	history_save(&history);
 	init_builtins_history(path);
-	history_get(NULL, 0);
 	return (EXIT_SUCCESS);
 }

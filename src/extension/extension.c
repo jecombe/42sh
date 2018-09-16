@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:54:45 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 02:06:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,10 @@ static int	init_parcour_tab(t_bquote **i)
 	return (0);
 }
 
-static int	return_parcour_tab(char **cmd, int ret)
+static int	return_parcour_tab(char **cmd, int ret, t_bquote **i)
 {
+	if (*i)
+		free(*i);
 	if (!cmd)
 		return (2);
 	return (ret == -1 ? 1 : 0);
@@ -47,13 +49,13 @@ static int	ft_parcour_tab(char ***cmd)
 					;
 				else if ((ret = ft_manage_quote(cmd, &i)))
 					;
-				else
-					if (manage_tild_and_dollars(cmd, &i))
-						return (1);
+				else if ((ret = manage_tild_and_dollars(cmd, &i)))
+					;
 				if (!(*cmd) || !(*cmd)[i->i] || ret == -1)
-					return (return_parcour_tab(*cmd, ret));
+					return (return_parcour_tab(*cmd, ret, &i));
 			}
 		}
+	free(i);
 	return (0);
 }
 

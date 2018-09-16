@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 23:30:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 08:21:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -84,11 +84,8 @@ static int		error_n_op(t_op **b_op)
 			return (2);
 		manage_var_builtin(&n_op->cmd);
 		if (!n_op->redirect && !n_op->cmd)
-		{
-			printf("DEL_OP\n");
 			if (del_nop_empty(&n_op, &tmp, b_op))
 				return (1);
-		}
 		n_op = n_op ? n_op->next : tmp;
 	}
 	return (0);

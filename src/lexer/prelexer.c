@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/14 23:56:23 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/15 05:51:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 09:47:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,7 +91,6 @@ int			prelexer(char *line)
 	i = 0;
 	while (line[i])
 	{
-	printf("LINE == %s\n", line);
 		if (line[i] == '\\' && line[i + 1])
 			i++;
 		else if (line[i] == '\\'  && !line[i + 1])
@@ -105,9 +104,9 @@ int			prelexer(char *line)
 		else if (line[i] == '\'' || line[i] == '"' || line[i] == '`')
 			if ((ret = prelex_quotes(line[i], 0, line, &i)))
 				return (ret);*/
-				else
-			if ((ret = prelex_quotes(line[i], 0, line, &i)))
-				return (ret);
+			else
+				if ((ret = prelex_quotes(line[i], 0, line, &i)))
+					return (ret);
 		i++;
 	}
 	return (prelex_quotes(0, 1, NULL, (int*)0));
