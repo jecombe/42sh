@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 12:54:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 03:56:24 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 16:37:03 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,7 @@ int			waitstat(int *status, t_pipe **tpipe)
 	return (*status);
 }
 
-/*int ft_waiting(int status, t_pipe **tpipe)
+int ft_waiting(int status, t_pipe **tpipe)
 {
 	int ret;
 
@@ -76,7 +76,7 @@ int			waitstat(int *status, t_pipe **tpipe)
 	else
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
-}*/
+}
 void		ft_exec_fork_pipe(t_pipe **tpipe, t_op *o, int fd2, int ret)
 {
 	if (fork() == 0)
@@ -106,13 +106,10 @@ int		ft_exec_no_null(t_op *op, int fd2, t_pipe *tpipe)
 	else
 	{
 		tpipe->buil_pipe = 0;
-			/*if ((fd_open = ft_loop_redirect2(op->redirect, 0, 0)) == EXIT_FAILURE)
-			{
-				
-			}*/
+		if (op->redirect && tpipe->start - 1 != 0)
+			if ((fd_open = ft_loop_redirect(op->redirect, 1, -1, 1)) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 	}
-		
 	ft_exec_fork_pipe(&tpipe,op, fd2, ret);
 	return (0);
 }
@@ -121,14 +118,14 @@ int			ft_return_pipe(int status, t_pipe *tpipe)
 {
 	int finish;
 
-	/*if ((finish = ft_waiting(status, &tpipe)) == EXIT_SUCCESS)
+	if ((finish = ft_waiting(status, &tpipe)) == EXIT_SUCCESS)
 	{
 		if (tpipe->bin == NULL)
 			return (EXIT_FAILURE);
 		if (tpipe->built != 0)
 			return (tpipe->ret);
 		return (EXIT_SUCCESS);
-	}*/
+	}
 	if (finish == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (0);
@@ -137,7 +134,6 @@ int			ft_return_pipe(int status, t_pipe *tpipe)
 int		ft_pipe(t_op *op, int co, int fd2)
 {
 	 //g_fd[2];
-	 int fdd[2];
 	int status;
 	t_pipe tpipe;
 	int fd_open;
@@ -146,7 +142,7 @@ int		ft_pipe(t_op *op, int co, int fd2)
 	tpipe = ft_init_pipe(co);
 	while (tpipe.start != 0)
 	{
-		pipe(fdd);
+		pipe(g_fd);
 		tpipe.fd_out =  1;
 		tpipe.fd_in = 0;
 		status = 0;

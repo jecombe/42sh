@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 00:11:53 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/12 18:36:34 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ static void	ft_print_env(int fd_open)
 	i = -1;
 	if (g_env)
 		while (g_env[++i])
-			ft_putendl_fd(g_env[i], 1);
+			ft_putendl_fd(g_env[i], fd_open);
 }
 
 static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
@@ -103,7 +103,7 @@ int			ft_env(t_op *exec, int fd, int p)
 	i = 0;
 	flag = '\0';
 	env = NULL;
-//	fd_open = ft_prelim_loop(exec, fd, 1);
+	fd_open = ft_prelim_loop(exec, fd, 1);
 /*
 	if (fd > 2)
 		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
@@ -118,9 +118,8 @@ int			ft_env(t_op *exec, int fd, int p)
 			if (exec->redirect->fd > 1)
 				fd_open = exec->redirect->fd;
 		}*/
-	//	if (exec->redirect == NULL && p == 1)
-	//		fd_open = 5;
-	
+		if (exec->redirect == NULL && p == 1)
+			fd_open = 5;
 	if (!exec || exec->cmd[1] == NULL)
 		ft_print_env(fd_open);
 	else

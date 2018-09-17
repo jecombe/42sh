@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 09:35:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 00:19:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		historic(t_editor *ed, int serie)
+int		term_historic(t_editor *ed, int serie)
 {
 	static int	 index = 0;
 
@@ -23,6 +23,8 @@ int		historic(t_editor *ed, int serie)
 		index = serie == -101 ? index + 1 : 0;
 	else if (DOWN_KEY)
 		index = serie == -101  && index > 0 ? index - 1 : 0;
+	else
+		index = 0;
 	printf("0ED->LINE == %s\n", ed->line);
 	printf("INDEX == %d\n", index);
 	//	ed->line = ft_strdup("p");

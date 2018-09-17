@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 09:15:42 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 04:53:34 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -56,7 +56,7 @@ int		get_keyboard_key(int *ret, t_editor *ed, e_prompt *prompt, char **line)
 	else if (TAB_KEY && *prompt == PROMPT)
 		tabulator(ed);
 	else if (UP_KEY || DOWN_KEY)
-		hist = historic(ed, 3);
+		hist = term_historic(ed, 3);
 	else
 		get_keyboard_key_next(ed, prompt, line);
 	if (!(UP_KEY || DOWN_KEY) && hist == -42)

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/14 05:52:38 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/17 00:19:28 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -60,7 +60,7 @@ SRCS_NAME =	\
 			editor/delete_from_cursor_to_end.c \
 			editor/paste_clipboard.c \
 			editor/tabulator.c \
-			editor/historic.c \
+			editor/term_historic.c \
 			editor/term_init.c \
 			editor/find_env_var.c \
 			ft_select/ft_arrows.c \

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/16 02:27:55 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 09:44:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 05:15:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,12 +31,37 @@ static int		save_to_file(char **histsave, char *path)
 	return (EXIT_SUCCESS);
 }
 
-static int		add_memory(char **ret, char *news)
+static int		manage_max_history()
+{
+	return (0);
+}
+
+static int		add_memory(char *news, char ***histsave)
 {
 	char	*tmp;
+	char	*tmp2;
+	int		histsize;
+	int		histfilesize;
 
+	tmp = ft_getenv("HISTSIZE", g_set);
+	printf("HISTSIZE == %s\n", tmp);
+	histsize = tmp ? ft_atoi(tmp) : 500;
+	ft_strdel(&tmp);
+	histfilesize = *histsave ? ft_tablen(*histsave) : 0;
+	printf("HISTSIZE == %d, HISTFILESIZE == %d\n", histsize, histfilesize);
+	while (histfilesize >= histsize && histfilesize > 0)
+	{
+		printf("HISTSAVE[0] == %s\n", (*histsave)[0]);
+		ft_strdel_in_tab(histsave, 0);
+		histfilesize--;
+	}
 	tmp = ft_strjoin("[", news);
-	*ret = ft_strjoin(tmp, "]");
+	tmp2 = ft_strjoin(tmp, "]");
+	ft_strdel(&tmp);
+	ft_malloc_cmd(histsave, tmp2);
+	ft_strdel(&tmp2);
+	tmp = ft_itoa(histfilesize + 1);
+	add_to_set("HISTFILESIZE", tmp);
 	ft_strdel(&tmp);
 	return (0);
 }
@@ -61,12 +86,9 @@ void			history_save(char ***history, char *news, int version, char *s)
 		histsave = ft_tabdup(*history);
 	}
 	else if (version == 0 && histsave)
-		*history = histsave;
+		*history = ft_tabdup(histsave);
 	else if (version == 1)
-	{
-		add_memory(&tmp, news);
-		ft_malloc_cmd(&histsave, tmp);
-	}
+		add_memory(news, &histsave);
 	else if (version == 2)
 	{
 		tmp = ft_strjoin(path, "/.101sh_history");
