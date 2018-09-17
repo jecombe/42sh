@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 16:47:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 05:01:15 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,7 @@ int			ft_separate_pipe(t_separate *separate, t_op **opera, pid_t pid, int fd2)
 }
 
 
-void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
+/*void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
 {
 	if (separate->or_if == 0 && separate->i == 0)
 	{
@@ -86,8 +86,112 @@ void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
 			separate->and_if = 0;
 		separate->ret = 0;
 	}
+}*/
+/*
+int			perform_pipe(t_op *op, int fdd)
+{
+	int fd[2];
+
+	pipe(fd);
+	int fd_out =  1;
+	int fd_in = 0;
+	int status = 0;
+	char *bin = ft_search_bin(op->cmd[0]);
+	if (bin != NULL)
+		ft_exec_no_null(op, fd, fd_out, fd_in);
+	else
+		ft_print_error(op->cmd[0], "Command not found !");
+
+}*/
+
+void	ft_save_fd(int fd_org[3])
+{
+	fd_org[0] = dup(0);
+	fd_org[1] = dup(1);
+	fd_org[2] = dup(2);
 }
 
+void	ft_restore_fd(int fd_org[3])
+{
+	dup2(fd_org[0], 0);
+	dup2(fd_org[1], 1);
+	dup2(fd_org[2], 2);
+}
+
+
+static void			ft_parent_fork(t_pipe **tpipe, t_op *op)
+{
+	if ((*tpipe)->fd_in > 0)
+		close((*tpipe)->fd_in);
+	if ((*tpipe)->fd_out != 1)
+		close((*tpipe)->fd_out);
+	close(g_fd[1]);
+	if ((*tpipe)->fd_save)
+		close((*tpipe)->fd_save);
+	(*tpipe)->fd_save = g_fd[0];
+}
+
+
+void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
+{
+	t_op *opera;
+	t_separate separate;
+	t_token		token;
+	int		fd_org[3];
+	token = TOKEN;
+	int ret = -1;
+	int fdd[2];
+	separate = ft_init_separate();
+	opera = b_seq->op;
+	g_start = ft_count_pipe(b_seq->op);
+	//g_save = 0;
+	while (opera)
+	{
+		pipe(g_fd);
+		g_input = 0;
+		g_output = 1;
+		printf("=============+> %s\n", opera->cmd[0]);
+		/*if (opera->token == PIPE)
+			if (ft_separate_pipe(&separate, &opera, pid, fd) == 101)
+				return ;
+		if (opera->token != PIPE)
+		{
+			//ft_separate_no_pipe(&separate, opera, pid, fd);
+			
+		}*/
+		/*if (token == AND_IF && ret == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if ()
+		{
+			
+		}*/
+		if ((token == TOKEN) || (token == PIPE) ||
+				(token == AND_IF && ret == EXIT_SUCCESS) ||
+				(token == OR_IF && ret == EXIT_FAILURE))
+		{
+		//	if (token == PIPE)
+		//		perform_pipe(opera, fd);
+			ft_save_fd(fd_org);
+			ret = ft_solver(opera, fd, pid, 0, fdd, 0, 1);
+//int			ft_solver(t_op *t_exec, int fd, pid_t pid, int save, int *fdd, int input, int output)
+			token = opera->token;
+			printf("\n%d\n", opera->token);
+			ft_restore_fd(fd_org);
+		}
+		opera = opera->next;
+		//g_start--;
+
+	}
+	return ;
+	//else
+	//{
+		///pipe(g_fd);
+		//separate.ret = ft_solver(opera, fd, pid, 0);
+		//add_to_set("?", ft_itoa(separate.ret));
+	//}
+}
+
+/*
 void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 {
 	t_op *opera;
@@ -118,7 +222,7 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 		add_to_set("?", ft_itoa(separate.ret));
 	}
 }
-
+*/
 /*void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 {
 	t_op *opera;
