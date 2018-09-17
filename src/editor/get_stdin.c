@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 11:00:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 11:41:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,9 @@
 
 void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
-	if (CTRL_C)
+	if (TAB_KEY && *prompt == PROMPT)
+		tabulator(*ed);
+	else if (CTRL_C)
 		end_of_text(*ed, prompt, line);
 	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
 		!ft_strcmp(SHIFT_UP, (*ed)->key) ? move_cursor_up(*ed) :
@@ -34,8 +36,6 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	t_sz sz;
 
 	ioctl(0, TIOCGWINSZ, &sz);
-//	printf("\nLINE == %s\n", *line);
-//	printf("\nED->line == %s\n", (*ed)->line);
 	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
 	{
 		ft_strdel(&(*ed)->tmp_line);
@@ -60,8 +60,6 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	else if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line) &&
 	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
 		return (add_char_to_line((*ed)->key[0], *ed));
-	else if (TAB_KEY && *prompt == PROMPT)
-		tabulator(*ed);
 	else
 		get_keyboard_key_next(ed, prompt, line);
 	return (0);
