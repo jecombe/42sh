@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strcmp.c                                      .::    .:/ .      .::   */
+/*   ft_strisdigit.c                                  .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:12:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 09:12:20 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/17 08:53:38 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/17 08:55:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int			ft_strisdigit(char *str)
 {
-	int i;
+	int		i;
 
 	i = 0;
-	while (s1[i] == s2[i] && s1[i] && s2[i])
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
 		i++;
-	i = (const unsigned char)s1[i] - (const unsigned char)s2[i];
-	return (i);
+	}
+	return (1);
 }

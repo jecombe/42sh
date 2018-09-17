@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 00:19:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 07:49:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,26 +18,26 @@
 
 # define WHITE "\033[7;49;37m"
 # define END "\033[0m"
-# define LEFT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 68)
-# define RIGHT_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 67)
-# define UP_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 65)
-# define DOWN_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 66)
-# define SPACE_KEY (ed->key[0] == 32 && ed->key[1] == 0)
-# define TAB_KEY (ed->key[0] == 9 && ed->key[1] == 0)
-# define BS_KEY (ed->key[0] == 127 && ed->key[1] == 0)
-# define ENTER_KEY (ed->key[0] == 10 && ed->key[1] == 0)
-# define BACKSPACE (ed->key[0] == 127 && ed->key[1] == 0)
-# define CTRL_A (ed->key[0] == 1 && ed->key[1] == 0)
-# define CTRL_E (ed->key[0] == 5 && ed->key[1] == 0)
-# define CTRL_C (ed->key[0] == 3 && ed->key[1] == 0)
-# define CTRL_D (ed->key[0] == 4 && ed->key[1] == 0)
-# define CTRL_L (ed->key[0] == 12 && ed->key[1] == 0)
-# define CTRL_K (ed->key[0] == 11 && ed->key[1] == 0)
-# define CTRL_U (ed->key[0] == 21 && ed->key[1] == 0)
-# define CTRL_W (ed->key[0] == 23 && ed->key[1] == 0)
-# define CTRL_P (ed->key[0] == 16 && ed->key[1] == 0)
-# define HOME_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 72)
-# define END_KEY (ed->key[0] == 27 && ed->key[1] == 91 && ed->key[2] == 70)
+# define LEFT_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 68)
+# define RIGHT_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 67)
+# define UP_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 65)
+# define DOWN_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 66)
+# define SPACE_KEY ((*ed)->key[0] == 32 && (*ed)->key[1] == 0)
+# define TAB_KEY ((*ed)->key[0] == 9 && (*ed)->key[1] == 0)
+# define BS_KEY ((*ed)->key[0] == 127 && (*ed)->key[1] == 0)
+# define ENTER_KEY ((*ed)->key[0] == 10 && (*ed)->key[1] == 0)
+# define BACKSPACE ((*ed)->key[0] == 127 && (*ed)->key[1] == 0)
+# define CTRL_A ((*ed)->key[0] == 1 && (*ed)->key[1] == 0)
+# define CTRL_E ((*ed)->key[0] == 5 && (*ed)->key[1] == 0)
+# define CTRL_C ((*ed)->key[0] == 3 && (*ed)->key[1] == 0)
+# define CTRL_D ((*ed)->key[0] == 4 && (*ed)->key[1] == 0)
+# define CTRL_L ((*ed)->key[0] == 12 && (*ed)->key[1] == 0)
+# define CTRL_K ((*ed)->key[0] == 11 && (*ed)->key[1] == 0)
+# define CTRL_U ((*ed)->key[0] == 21 && (*ed)->key[1] == 0)
+# define CTRL_W ((*ed)->key[0] == 23 && (*ed)->key[1] == 0)
+# define CTRL_P ((*ed)->key[0] == 16 && (*ed)->key[1] == 0)
+# define HOME_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 72)
+# define END_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 70)
 # define SHIFT_UP "\E[1;2A"
 # define SHIFT_DOWN "\E[1;2B"
 # define SHIFT_LEFT "\E[1;2D"
@@ -75,7 +75,9 @@ typedef struct		s_editor
 	size_t	cursor_str_pos;
 	char	*clipboard;
 	char	key[BUFF_SIZE];
-	char *line;
+	char	*line;
+	char	*tmp_line;
+	int		hist;
 }					t_editor;
 
 typedef struct		s_tab
@@ -134,7 +136,7 @@ void	paste_clipboard(t_editor *ed);
 int		get_term_raw_mode(int mode);
 void	save_ed(t_editor **ed, int mode);
 void	tabulator(t_editor *ed);
-int		term_historic(t_editor *ed, int serie);
+int		term_historic(t_editor **ed);
 int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);
 char	*find_env_var(char **env, char *var, int mode);

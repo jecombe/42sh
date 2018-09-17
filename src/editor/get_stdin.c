@@ -6,62 +6,65 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 04:53:34 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/17 11:00:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void	get_keyboard_key_next(t_editor *ed, e_prompt *prompt, char **line)
+void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (CTRL_C)
-		end_of_text(ed, prompt, line);
-	else if (!ft_strcmp(SHIFT_UP, ed->key) || !ft_strcmp(SHIFT_DOWN, ed->key))
-		!ft_strcmp(SHIFT_UP, ed->key) ? move_cursor_up(ed) :
-		move_cursor_down(ed);
-	if (ed->cursor_str_pos != ft_strlen(ed->line) &&
-	ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
-		add_char_into_line(ed->key[0], ed);
-	else if (CTRL_K && ft_strlen(ed->line + ed->cursor_str_pos))
-		delete_from_cursor_to_end(ed);
+		end_of_text(*ed, prompt, line);
+	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
+		!ft_strcmp(SHIFT_UP, (*ed)->key) ? move_cursor_up(*ed) :
+		move_cursor_down(*ed);
+	if ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) &&
+	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
+		add_char_into_line((*ed)->key[0], *ed);
+	else if (CTRL_K && ft_strlen((*ed)->line + (*ed)->cursor_str_pos))
+		delete_from_cursor_to_end(*ed);
 	else if (CTRL_P)
-		paste_clipboard(ed);
+		paste_clipboard(*ed);
 }
 
-int		get_keyboard_key(int *ret, t_editor *ed, e_prompt *prompt, char **line)
+int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 {
 	t_sz sz;
-	static int hist = 0;
 
-	hist = hist == -42 ? -42 : 0;
 	ioctl(0, TIOCGWINSZ, &sz);
-	if (CTRL_D)
+//	printf("\nLINE == %s\n", *line);
+//	printf("\nED->line == %s\n", (*ed)->line);
+	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
+	{
+		ft_strdel(&(*ed)->tmp_line);
+		(*ed)->hist = -2;
+	}
+	if (UP_KEY || DOWN_KEY)
+		term_historic(ed);
+	else if (CTRL_D)
 		*ret = 0;
 	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
-		HOME_KEY || CTRL_A ? go_to_begin_of_line(ed) : go_to_end_of_line(ed);
-	else if (BACKSPACE && ed->line && ed->cursor_str_pos)
-		return ((hist = backspace(ed)));
+		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
+	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
+		return (backspace(*ed));
 	else if (LEFT_KEY || RIGHT_KEY)
-		LEFT_KEY ? move_cursor_left(ed) : move_cursor_right(ed);
+		LEFT_KEY ? move_cursor_left(*ed) : move_cursor_right(*ed);
 	else if (CTRL_L)
-		return ((hist = clear_window(ed, *prompt)));
-	else if ((!ft_strcmp(SHIFT_RIGHT, ed->key) ||
-	!ft_strcmp(SHIFT_LEFT, ed->key)) && ed->line)
-		!ft_strcmp(SHIFT_LEFT, ed->key) ? move_word_left(ed) :
-		move_word_right(ed);
-	else if (ed->cursor_str_pos == ft_strlen(ed->line) &&
-	ft_strlen(ed->key) == 1 && ft_isprint(ed->key[0]))
-		return ((hist = add_char_to_line(ed->key[0], ed)));
+		return (clear_window(*ed, *prompt));
+	else if ((!ft_strcmp(SHIFT_RIGHT, (*ed)->key) ||
+	!ft_strcmp(SHIFT_LEFT, (*ed)->key)) && (*ed)->line)
+		!ft_strcmp(SHIFT_LEFT, (*ed)->key) ? move_word_left(*ed) :
+		move_word_right(*ed);
+	else if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line) &&
+	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
+		return (add_char_to_line((*ed)->key[0], *ed));
 	else if (TAB_KEY && *prompt == PROMPT)
-		tabulator(ed);
-	else if (UP_KEY || DOWN_KEY)
-		hist = term_historic(ed, 3);
+		tabulator(*ed);
 	else
 		get_keyboard_key_next(ed, prompt, line);
-	if (!(UP_KEY || DOWN_KEY) && hist == -42)
-		hist = 0;
-	return (hist == -42 ? 0 : hist);
+	return (0);
 }
 
 int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
@@ -73,6 +76,8 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->first_row = get_cursor_position(1);
 	(*ed)->last_row = (*ed)->first_row;
 	(*ed)->line = NULL;
+	(*ed)->tmp_line = NULL;
+	(*ed)->hist = -2;
 	*line = prompt != PROMPT && prompt != E_PIPE ?
 	ft_strjoin_free(*line, "\n") : NULL;
 	return (1);
@@ -110,7 +115,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 	{
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
-		if (get_keyboard_key(&ret, ed, prompt, line))
+		if (get_keyboard_key(&ret, &ed, prompt, line))
 			ed->line = ft_strjoin_free(ed->line, ed->key);
 	//	save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
