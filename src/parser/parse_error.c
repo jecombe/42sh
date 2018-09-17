@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 08:44:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 18:11:05 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
+#include "heart.h"
 
 static int		error_n_redirect(t_redirect **b_redirect)
 {

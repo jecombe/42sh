@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 10:48:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 00:28:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int	replace_cmd(char **to_copy, char ***to_past)
 {
@@ -84,27 +84,26 @@ static char	*get_tmp_file(char *cmd, int begin, int j_index)
 	return (ret);
 }
 
-int			bquote_manager(char ***cmd, int *j_index, int *i_index, int begin)
+int			bquote_manager(char ***cmd, t_bquote **i)
 {
 	int			fd;
 	char		*line;
 	e_prompt	prompt;
-	t_bquote	*index;
 
-	index = malloc(sizeof(t_bquote));
-	index->i = *i_index;
-	index->j = *j_index;
-	index->begin = begin;
 	prompt = PROMPT;
-	if ((line = recup_inside_bquote((*cmd)[*i_index], begin, *j_index)))
+	if ((line = recup_inside_bquote((*cmd)[(*i)->i], (*i)->begin, (*i)->j)))
 	{
-		fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
-		heart_of_101sh(line, &prompt, fd);
-		ft_strdel(&line);
-		close(fd);
-		line = get_tmp_file((*cmd)[*i_index], begin, *j_index);
+		if ((prompt = prelexer(line)) != PROMPT)
+			return (err_bquote_unmatched(prompt));
+		fd = 3;
+		//fd = open(".tmp_file", O_CREAT | O_TRUNC , 0666);
+		heart_of_101sh(line, fd);
+//		ft_strdel(&line);
+		//close(fd);
+//	fflush(NULL);
+		line = get_tmp_file((*cmd)[(*i)->i], (*i)->begin, (*i)->j);
 	}
-	if (ft_bquote_replace(&(*cmd), &line, &index))
+	if (ft_bquote_replace(&(*cmd), &line, i))
 		return (1);
 	return (0);
 }

@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 05:58:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 00:33:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
+#include "heart.h"
 
 static char		*ft_replace_dquote(char *str, int *j)
 {
@@ -72,13 +72,13 @@ static int		manage_dsquotes(char ***tablo, t_bquote **i,
 		(*tablo)[(*i)->i] = ft_strdup(tmp);
 	}
 	else
-		ft_strdel_in_tab(&(*tablo), (*i)->j);
+		ft_strdel_in_tab(&(*tablo), (*i)->j + 1);
 	return (0);
 }
 
-int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
+int				ft_manage_quote(char ***cmd, t_bquote **i)
 {
-	if ((*cmd)[(*i)->i][(*i)->j] == '\'' && !*dquote && !(*i)->begin)
+	if ((*cmd)[(*i)->i][(*i)->j] == '\'' && !(*i)->dquote && !(*i)->begin)
 	{
 		manage_dsquotes(&(*cmd), &(*i), ft_replace_quote);
 		return (1);
@@ -86,7 +86,7 @@ int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
 	else if ((*cmd)[(*i)->i][(*i)->j] == '"' && !(*i)->begin)
 	{
 		manage_dsquotes(&(*cmd), &(*i), ft_replace_dquote);
-		*dquote = *dquote == 1 ? 0 : 1;
+		(*i)->dquote = (*i)->dquote == 1 ? 0 : 1;
 		return (1);
 	}
 	else if ((*cmd)[(*i)->i][(*i)->j] == '`')
@@ -96,7 +96,8 @@ int				ft_manage_quote(char ***cmd, t_bquote **i, int *dquote)
 		else
 		{
 			(*i)->begin = (*i)->begin == -1 ? 0 : (*i)->begin;
-			bquote_manager(&(*cmd), &(*i)->j, &(*i)->i, (*i)->begin);
+			if (bquote_manager(&(*cmd), &(*i)) == 1)
+				return (-1);
 			(*i)->begin = 0;
 		}
 		return (1);

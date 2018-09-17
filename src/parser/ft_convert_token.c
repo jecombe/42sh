@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:54:28 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 03:08:12 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "heart.h"
 
 char		*ft_search_simple_token(t_token token)
 {

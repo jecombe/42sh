@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 20:13:12 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 05:26:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/08/31 11:42:51 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
+#include "heart.h"
 
 int			backslash_out_dquote(char **cmd, int *j)
 {
@@ -42,11 +42,11 @@ int			backslash_out_dquote(char **cmd, int *j)
 	return (0);
 }
 
-int			backslash_manager(char ***cmd, t_bquote **i, int d_quote)
+int			backslash_manager(char ***cmd, t_bquote **i)
 {
 	if ((*cmd)[(*i)->i][(*i)->j] == '\\')
 	{
-		if (d_quote == 0)
+		if ((*i)->dquote == 0)
 		{
 			if (backslash_out_dquote(&(*cmd)[(*i)->i], &(*i)->j))
 				return (-1);

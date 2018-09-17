@@ -1,15 +1,44 @@
 #ifndef HEART_H
 # define HEART_H
 
-#include "./include/stdin.h"
-#include "./include/init.h"
-#include "./include/lexer.h"
-#include "./include/parsing.h"
-#include "./include/execute.h"
-#include "./include/extension.h"
-#include "./include/builtins.h"
+# define BUFF_SIZE 4096
+# define BI_MAX 4084
+# define MAX_HASH 100
 
-int		heart_of_101sh(char *line, e_prompt *prompt, int fd_base);
-void	ft_signal(void);
+# include <unistd.h>
+# include <signal.h>
+
+# include <term.h>
+# include <termios.h>
+
+# include <sys/ioctl.h>
+# include <sys/types.h>
+# include <sys/utsname.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+
+# include <stdio.h>
+# include <curses.h>
+# include <fcntl.h>
+# include <dirent.h>
+# include <pwd.h>
+# include <limits.h>
+
+# include "../libft/include/libft.h"
+# include "init.h"
+# include "ft_select.h"
+# include "editor.h"
+# include "lexer.h"
+# include "parsing.h"
+# include "extension.h"
+# include "builtins.h"
+# include "execute.h"
+
+char	**g_set;
+char	**g_env;
+
+int		heart_of_101sh(char *line, int fd_base);
+void	signal_shell(void);
+void	exit_shell(const char *bin);
 
 #endif

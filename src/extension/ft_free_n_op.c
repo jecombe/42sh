@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
+#include "heart.h"
 
 void		ft_free_n_op(t_op **n_op)
 {

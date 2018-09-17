@@ -6,12 +6,28 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 10:47:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 00:03:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
+
+int			err_bquote_unmatched(e_prompt prompt)
+{
+	if (prompt == S_QUOTE)
+		ft_putendl_fd("zsh: unmatched '", 2);
+	else if (prompt == D_QUOTE)
+		ft_putendl_fd("zsh: unmatched \"", 2);
+	else if (prompt == E_HDOC)
+		ft_putendl_fd("zsh: unmatched <<", 2);
+	else if (prompt == E_PIPE)
+		ft_putendl_fd("zsh: unmatched |", 2);
+	else if (prompt == BACKSLASH)
+		ft_putendl_fd("zsh: unmatched \\", 2);
+		ft_putendl_fd("zsh: parse error in command substitution", 2);
+	return (1);
+}
 
 int			add_after_bquote(char *cmd, int j_index, char ***tablo, int ok)
 {

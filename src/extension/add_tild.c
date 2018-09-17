@@ -6,13 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 10:56:19 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 03:55:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 02:00:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
-#include "../../include/init.h"
+#include "heart.h"
 
 static int	add_tild(char **str, int *index)
 {
@@ -26,7 +25,8 @@ static int	add_tild(char **str, int *index)
 	if ((var = ft_getenv("HOME", g_env)) && (!(*str)[*index + 1] ||
 	(*str)[*index + 1] == '/'))
 	{
-		tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)));
+		if (!(tmp = malloc(sizeof(char*) * (ft_strlen(*str) + ft_strlen(var)))))
+			return (1);
 		while (var[++i])
 			tmp[i] = var[i];
 		ft_strdel(&var);
@@ -47,7 +47,7 @@ int			manage_tild_and_dollars(char ***cmd, t_bquote **i)
 	if ((*cmd)[(*i)->i][(*i)->j] == '~' && (*i)->j == 0)
 	{
 		if (add_tild(&(*cmd)[(*i)->i], &(*i)->j))
-			return (1);
+			return (-1);
 	}
 	else if ((*cmd)[(*i)->i][(*i)->j] == '$')
 		ft_dollar(cmd, &(*i)->i, &(*i)->j);

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/08/28 03:51:57 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/16 07:47:29 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,10 @@ SRCS_NAME =	\
 			ft_putstr_color.c \
 			ft_add_str_at.c \
 			ft_strreplace.c \
+			ft_add_to_str.c \
+			ft_str_isblank.c \
+			ft_reverse_tab.c \
+			ft_insert_char_in_str.c \
 			ft_isquote.c
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)

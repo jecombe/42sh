@@ -6,12 +6,13 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 04:29:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 04:30:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:04 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
+
 int			ft_check_command(char *cmd)
 {
 	if (ft_strcmp("echo", cmd) == 0)

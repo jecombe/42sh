@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 03:48:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 07:47:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,10 +29,10 @@
 # define GREYB     "\033[1;37m"
 
 # define BLACK    "\033[0;30m"
-# define REDD      "\033[0;31m"
+# define RED      "\033[0;31m"
 # define GREEN    "\033[0;32m"
 # define YELLOW   "\033[0;33m"
-# define BLUEE     "\033[0;34m"
+# define BLUE    "\033[0;34m"
 # define PURPLE   "\033[0;35m"
 # define CYAN     "\033[0;36m"
 # define GREY     "\033[0;37m"
@@ -115,16 +115,20 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 size_t				ft_nbrlen(int n);
 void				ft_stradel(char ***array);
-void				ft_tabdel(char ***tab);//A RAJOUTER A LA LIB SUR MASTER
+void				ft_tabdel(char ***grid);//A RAJOUTER A LA LIB SUR MASTER
 int					ft_malloc_cmd(char ***cmd, char *new_arg);//A RAJOUTER A LA LIB SUR MASTER
-int					ft_tablen(char **tab);//A RAJOUTER A LA LIB SUR MASTER
-char				**ft_tabdup(char **tab);//A RAJOUTER A LA LIB SUR MASTER
+int					ft_tablen(char **grid);//A RAJOUTER A LA LIB SUR MASTER
+char				**ft_tabdup(char **grid);//A RAJOUTER A LA LIB SUR MASTER
 char				*ft_getenv(char *str, char **env);
 int					ft_strdel_in_tab(char ***tablo, int index);
 int					ft_str_isalnum(char *str);
+int					ft_str_isblank(char *str);
 void				ft_putstr_color(char const *s, int nb);
 int					ft_isquote(char c);
 int					ft_strreplace(char ***tablo, int index, char *by);
 int					ft_add_str_at(char ***tablo, char *str, int at);
+int					ft_insert_char_in_str(char **str, char c, int at);
+int					ft_add_to_str(char **str, char c);
+int					ft_reverse_tab(char ***tablo);
 
 #endif

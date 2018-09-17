@@ -6,17 +6,16 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 18:32:49 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 15:22:54 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
 
 int 		ft_echo_redirect(int fd_open, char **cmd, int ok, int slash_n)
 {
 	int i = 0;
-
 	while (cmd[i])
 	{
 		ft_putstr_fd(cmd[i], fd_open);
@@ -30,39 +29,19 @@ int 		ft_echo_redirect(int fd_open, char **cmd, int ok, int slash_n)
 
 }
 
-int 		ft_echo_normal(t_op *t_exec, int i, int ok, int slash_n)
-{	
-	if (ok == 1)
-	{
-		ft_putchar('\n');
-		return (EXIT_SUCCESS);
-	}
-	while (t_exec->cmd[i])
-	{
-		ft_putstr(t_exec->cmd[i]);
-		if (t_exec->cmd[i + 1])
-			ft_putchar(' ');
-		i++;
-	}
-	if (slash_n == 0)
-		ft_putchar('\n');
-	return (EXIT_SUCCESS);
-
-}
-int 		ft_echo(t_op *t_exec, int flag)
+int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 {
-	//printf("ECHO\n");
 	int flag2;
 	int fd_open;
 	int i;
 	int slash_n;
+
 	int ok = 0;
 	t_op *op = NULL;
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;
-		t_exec->cmd[1] = "\n";
-		t_exec->cmd[2] = NULL;
+		ft_malloc_cmd(&t_exec->cmd, "\n");
 	}
 	slash_n = 0;
 	i = 1;
@@ -71,34 +50,17 @@ int 		ft_echo(t_op *t_exec, int flag)
 		slash_n = 1;
 		i++;
 	}
+	fd_open = ft_prelim_loop(t_exec, fd, 1);
+	if (t_exec->redirect == NULL && p == 1)
+		fd_open = 5;
 	if (t_exec->redirect)
 	{
-		//***********Gestion des mutliples redirections, pour bientot*********//
-		pid_t pid;
-		if ((fd_open = ft_loop_redirect(t_exec->redirect, NULL, pid, 1, t_exec->cmd + i, op, -1)) == EXIT_FAILURE)
+		if (fd_open == EXIT_FAILURE && t_exec->redirect->redirect == LESS)
 			return (EXIT_FAILURE);
-		else
-		{
-			if (t_exec->redirect->fd > 1)
-			{
-				printf("ttttttttt\n");
-				fd_open = t_exec->redirect->fd;
-			}
-			//if (t_exec->redirect->redirect == DLESS)
-				//ft_echo_normal(t_exec, i, ok, slash_n);
-			//else
-			if (fd_open ==  0)
-				fd_open = 1;
-			printf("fd<-open-> %d\n", fd_open);
-				ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
-		}
-		/////**********************************************************////
+		printf("GOOOOOOO %d\n", p);
+		if ((p == 1 && (t_exec->redirect->redirect == LESSAND)) || (t_exec->redirect->redirect == GREATAND && p == 1))
+			return (EXIT_SUCCESS);
 	}
-	else
-	{
-		printf("ET NONO\n");
-		ft_echo_redirect(1, t_exec->cmd + i, ok, slash_n);
-	}
-		//ft_echo_normal(t_exec, i, ok, slash_n);
+	ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
 	return (EXIT_SUCCESS);
 }

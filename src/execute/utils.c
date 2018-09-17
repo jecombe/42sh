@@ -6,12 +6,12 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:03:01 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 04:40:02 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/execute.h"
+#include "heart.h"
 
 void	ft_print_error(const char *s1, const char *s2)
 {
@@ -36,58 +36,12 @@ char	*ft_go_to(char *bin, int nb)
 	}
 	return (bin);
 }
-
-int			ft_check_direct_command(char *cmd)
-{
-	struct stat sb;
-	if (lstat(cmd, &sb) == -1)
-		return (-1);
-	else
-		return (0);
-}
-
 int				ft_check_file_is_directory(char *file)
-{
-	if (access(file, F_OK) == 0)
-	{
-		printf("NOOOOOOOOOOOOOOOOOO %s\n", file);
-		return (-1);
-	}
-	else
-		printf("GOODn");
-		return (0);
-/*	struct stat st;
-	stat(file, &st);
-	if (S_ISDIR(st.st_mode))
-	{
-		//ft_print_error(file, "is a directory");
-		return (-1);
-	}
-	else
-		return (0);*/
-}
-
-int		ft_check_source(char *source)
-{
-	if (access(source, F_OK) == 0)
-	{
-		printf("GOOOd\n");
-		return (0);
-	}
-	else
-		printf("NOOo\n");
-		return (-1);
-}
-
-/*int				ft_check_file_is_directory(char *file)
 {
 	struct stat st;
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
-	{
-		ft_print_error(file, "is a directory");
 		return (-1);
-	}
 	else
 		return (0);
 }
@@ -97,9 +51,23 @@ int		ft_check_source(char *source)
 	struct stat sb;
 
 	if (lstat(source, &sb) == -1)
-	{
-		ft_print_error(source, "no such file or directory");
 		return (-1);
-	}
 	return (0);
-}*/
+}
+
+void		ft_print_message(char *source, int nb)
+{
+	if (nb == 1)
+		ft_print_error(source, "is a directory");
+	else if (nb == 2)
+		ft_print_error(source, "no such file or directory");
+}
+
+int			ft_check_direct_command(char *cmd)
+{
+	struct stat sb;
+	if (lstat(cmd, &sb) == -1)
+		return (-1);
+	else
+		return (0);
+}

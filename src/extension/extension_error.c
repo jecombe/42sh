@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 11:24:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/16 08:21:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/extension.h"
+#include "heart.h"
 
 static int		error_n_redirect(t_redirect **b_redirect)
 {
@@ -67,8 +67,6 @@ static int		manage_var_builtin(char ***tablo)
 				i--;
 			}
 	}
-	else
-		printf("PAS DE TABLEAU\n");
 	return (0);
 }
 
@@ -77,12 +75,13 @@ static int		error_n_op(t_op **b_op)
 	t_op		*n_op;
 	t_op		*tmp;
 
+	int i = 0;
 	n_op = *b_op;
 	while (n_op)
 	{
 		tmp = NULL;
 		if (error_n_redirect(&n_op->redirect))
-			return (1);
+			return (2);
 		manage_var_builtin(&n_op->cmd);
 		if (!n_op->redirect && !n_op->cmd)
 			if (del_nop_empty(&n_op, &tmp, b_op))
@@ -92,7 +91,7 @@ static int		error_n_op(t_op **b_op)
 	return (0);
 }
 
-int				extension_error(t_seq **b_seq)
+int				extension_error(t_seq **b_seq, int ret)
 {
 	t_seq		*n_seq;
 	t_seq		*tmp;
@@ -102,20 +101,20 @@ int				extension_error(t_seq **b_seq)
 	{
 		tmp = NULL;
 		if (n_seq->op)
-			if (error_n_op(&n_seq->op) == 1)
+		{
+			if ((ret = error_n_op(&n_seq->op)))
 			{
-				if (n_seq->prev || n_seq->next)
+				if (ret == 1 && (n_seq->prev || n_seq->next))
 				{
-					tmp = n_seq->next ? n_seq->next : NULL;
-					*b_seq = !(*b_seq)->prev ? (*b_seq)->next : *b_seq;
-					ft_free_n_seq(&n_seq);
+					if (ft_free_n_seq(&n_seq, b_seq) == 1)
+						return (1);
 				}
 				else
-				{
-					ft_free_b_seq(b_seq);
-					return (1);
-				}
+					return (ft_free_b_seq(b_seq) + 1);
 			}
+		}
+		else
+			return (ft_free_b_seq(b_seq) + 1);
 		n_seq = n_seq ? n_seq->next : tmp;
 	}
 	return (0);

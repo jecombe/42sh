@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/28 09:18:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/14 23:23:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,9 +14,7 @@
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <stdio.h>
-#include "../libft/include/libft.h"
-#include "./lexer.h"
+# include "heart.h"
 
 typedef struct					s_redirect
 {
@@ -47,7 +45,7 @@ typedef struct					s_seq
 
 t_seq							*ft_parsing(t_lex lex);
 int								ft_parse_exit(t_token token);
-void							ft_free_b_seq(t_seq **b_seq);
+int								ft_free_b_seq(t_seq **b_seq);
 void							ft_free_b_op(t_op **b_op);
 void							ft_free_b_redirect(t_redirect **b_redirect);
 t_redirect						*ft_malloc_redirect(void);
@@ -65,5 +63,7 @@ int								ft_manage_word(t_seq **b_seq, char *name);
 int								ft_manage_io_number(t_seq **b_seq, char *name);
 void							ft_convert_token(char **str, t_token token);
 int								parse_error(t_seq **b_seq);
+int								ft_add_assign(char **str);
+int								ft_search_assignement_word(int i, char **name);
 
 #endif

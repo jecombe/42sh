@@ -40,21 +40,22 @@
 | Les redirections avancées : l’aggrégation des sorties de fichier et le heredoc "<<". | ✅ |
 | Edition de ligne telle que demandée dans le ftsh3. | ✅ |
 | les variables locales et les builtin unset et export. | ✅ |
-| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | ❌ |
-| Complétion dynamique. | 🐢 |
-| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Les back quotes "‘". | ✅ |
+| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | 🐢 |
+| Complétion dynamique. | 🐢 |
+| Le globing : "\*", "?", "[]", "{}", etc. (sans utiliser la fonction glob(3) !) | ❌ |
+| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
 
 PROBLEMES A RESOUDRE:<br/>
 \_TABLE DE HASH<br/>
-\_\> l<br/>
 \_\`\` > 2<br/>
 \_  > 2<br/>
-\_\`echo ls\`
-\_ls-l
-\_!d
-\_cat 101sh
+\_ls-l<br/>
+\_Les retours d'erreurs<br/>
+\_GESTION DU CTRL+D APRES UNE/DES ERREURS
+\_PASSER LA LIGNE EN TEMPORAIRE TANT QU UNE AUTRE TOUCHE IMPRIMABLE N A PAS ETAIT SAISIE(HISTORIQUE)<br/>
+\_PROBLEME DE RETOUR DE PIPE DANS EDITOR, PAR EXEMPLE:<br/>echo |<br/>
 
 SEGFAULT A RESOUDRE:<br/>
-\_ENVIRONNEMENT VIDE
+\_ENVIRONNEMENT VIDE<br/>

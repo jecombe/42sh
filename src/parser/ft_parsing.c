@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/29 17:41:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/13 20:52:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/parsing.h"
+#include "heart.h"
 
 int			ft_parse_exit(t_token token)
 {
@@ -51,6 +51,12 @@ t_seq		*ft_parsing(t_lex lex)
 	error = 0;
 	i = 0;
 	b_seq = NULL;
+	if ((i = ft_search_assignement_word(i, lex.name)) == -1)
+	{
+		while (lex.name[++i])
+			ft_add_assign(&lex.name[i]);
+		i = 0;
+	}
 	while (lex.name[i])
 	{
 		if ((error = ft_attribute_token(&b_seq, lex.name[i], lex.token[i])))

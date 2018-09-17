@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/17 02:56:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/10 03:03:25 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,9 +14,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stdio.h>
-# include "../libft/include/libft.h"
-# include "./stdin.h"
+# include "heart.h"
 
 # define MAX_LEXER_SIZE 4096
 
@@ -101,7 +99,8 @@ typedef struct		s_lex
 *******************************************************************************
 */
 
-t_lex				ft_lexer(char *input, e_prompt *prompt);
+int					prelexer(char *input);
+t_lex				lexer(char *input);
 
 /*
 *******************************************************************************
@@ -110,7 +109,7 @@ t_lex				ft_lexer(char *input, e_prompt *prompt);
 */
 
 int					ft_lexer_break_operator(char *input, int idx, int i);
-e_prompt			ft_lexer_break_quote(char *input, int *idx);
+void				ft_lexer_break_quote(char *input, int *idx);
 int					ft_lexer_break_blank(char *input, int *idx, int *i);
 void				ft_lexer_break_expansion(char *input, int *idx);
 int					ft_lexer_break_comment(char *input, int *idx);
