@@ -105,14 +105,14 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int save, int *fdd, int input, 
 		if ((pid = fork()) == 0)
 		{
 		add_pid_bin(pid);
-		dup2(g_input != 0 ? g_input : g_save, STDIN_FILENO);
-		if (g_start != 1 && g_output == 1)
+		//dup2(g_input != 0 ? g_input : g_save, STDIN_FILENO);
+		/*if (g_start != 1 && g_output == 1)
 			dup2(g_fd[1], STDOUT_FILENO);
 		if (g_output != 1)
 		{
 
 		}
-		close(g_fd[0]);
+		close(g_fd[0]);*/
 //		dup2((*tpipe)->fd_in != 0 ? (*tpipe)->fd_in : (*tpipe)->fd_save, STDIN_FILENO);
 //	if ((*tpipe)->start != 1 && (*tpipe)->fd_out == 1)
 //		dup2(g_fd[1], STDOUT_FILENO);
@@ -137,10 +137,9 @@ printf("FORKING pour : %s\n",t_exec->cmd[0]);
 		//	return (EXIT_FAILURE);
 		//}
 	}
-		else
-			ft_close(save,fdd,input, output);
-	}
 	result = ft_waiting2(status);
+
+	}
 	/*	dup2(STDIN_FILENO, fd_org[0]);
 		dup2(STDOUT_FILENO, fd_org[1]);
 		dup2(STDERR_FILENO, fd_org[2]);

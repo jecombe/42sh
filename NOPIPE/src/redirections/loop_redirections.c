@@ -263,9 +263,9 @@ int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, i
 		{
 			flag = ft_return_flag(redirect);
 			flag2 = O_WRONLY;
-			//g_output = ft_open_redirect(redirect->file ,flag, flag2);
+			g_output = ft_open_redirect(redirect->file ,flag, flag2);
 	//dup2(g_output != 0 ? g_output : g_save, STDIN_FILENO);
-			//dup2(file, redirect->fd);
+			dup2(g_output, redirect->fd);
 			///fd_dup[1] = dup(file);
 			//close(g_input);
 			///fd_dup[redirect->fd] = file;
@@ -280,7 +280,7 @@ int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, i
 					return (EXIT_FAILURE);
 			}
 			flag = O_RDONLY;
-			//g_input = ft_open_redirect(redirect->file, flag, 0);
+			g_input = ft_open_redirect(redirect->file, flag, 0);
 			dup2(g_input, STDIN_FILENO);
 		}
 		redirect = redirect->next;
