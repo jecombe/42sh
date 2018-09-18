@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 05:01:15 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 02:34:13 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -133,33 +133,45 @@ static void			ft_parent_fork(t_pipe **tpipe, t_op *op)
 
 int			ft_go_pipe(t_op *opera)
 {
+		if (opera->redirect)
+			printf("=========> %d\n", opera->redirect->fd);
 	int i = ft_count_pipe(opera);
 	int status = 0;
 	i++;
+	pid_t pid;
 	while (i != 0)
 	{
 		//printf("ok\n");
 		pipe(g_fd);
 		g_input = 0;
 		g_output =1;
+		if (opera->redirect)
+			printf("=========> %d\n", opera->redirect->fd);
 		char *bin = ft_search_bin(opera->cmd[0]);
 		if (ft_loop_redirect2(opera->redirect, 0, 0, 0, 0, 0) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-		if (fork() == 0)
+		if ((pid = fork()) == 0)
 		{
+			if (opera->redirect)
+				printf("=========> %d\n", opera->redirect->fd);
 			dup2(g_input != 0 ? g_input : g_save, STDIN_FILENO);
+		
 			if (i != 1 && g_output == 1)
-				dup2(g_fd[1], STDOUT_FILENO);
+			{
+				dup2(g_fd[1], (opera->redirect) ? opera->redirect->fd : STDOUT_FILENO);
+			}
 			if (g_output != 1)
 			{
-				dup2(g_output, STDOUT_FILENO);
+				dup2(g_output, (opera->redirect) ? opera->redirect->fd : STDOUT_FILENO);
 			}
 			close(g_fd[0]);
-			execve(bin, opera->cmd, g_env);
+		//	execve(bin, opera->cmd, g_env);
+			ft_solver(opera, 0, pid, 0, 0, 0, 1);
 			exit(-1);
 		}
 		else
 		{
+			printf("\nJESUISLA\n");
 			if (g_input > 0)
 				close(g_input);
 			if (g_output!= 1)
@@ -175,6 +187,11 @@ int			ft_go_pipe(t_op *opera)
 	wait(&status);
 	while(wait(NULL) > 0)
 		;
+	status = WEXITSTATUS(status);
+	if (status == EXIT_FAILURE)
+		printf("\nFAIL\n");
+	else
+		printf("\nSUCCESS\n");
 	return(WEXITSTATUS(status));
 
 }
@@ -225,7 +242,9 @@ void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 		}
 		else if (token == PIPE)
 		{*/
+		ft_save_fd(fd_org);
 		ft_go_pipe(opera);
+		ft_restore_fd(fd_org);
 		return ;
 		//}
 		opera = opera->next;

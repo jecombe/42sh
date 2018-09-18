@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:52:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 03:56:01 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 02:28:48 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,8 +70,5 @@ void			ft_exec2(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid)
 	int			ret;
 	t_redirect *redirect;
 
-			if (execve(bin_cmd, tmp_op->cmd, g_env) == -1)
-				exit(EXIT_FAILURE);
-		else
-			exit(EXIT_SUCCESS);
+	execve(bin_cmd, tmp_op->cmd, g_env);
 }

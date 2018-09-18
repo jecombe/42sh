@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/17 04:11:44 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 04:11:46 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 01:27:54 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -250,17 +250,16 @@ int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, i
 
 	// ls 2> fedf
 	// fd[i] 
-	if ((redirect) == NULL)
+/*	if ((redirect) == NULL)
 		{
 			g_input = 0;
 			g_output = 1;
 			return (0);
-		}
+		}*/
 	while (redirect)
 	{
 		if (redirect->redirect == DLESS)
 		{
-			if (g_input <= 0)
 			g_input = ft_redirect_heredoc(redirect, 0);
 			//dup2(g_input, STDIN_FILENO);
 			//close(g_input);
@@ -271,8 +270,8 @@ int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, i
 			flag = ft_return_flag(redirect);
 			flag2 = O_WRONLY;
 			g_output = ft_open_redirect(redirect->file ,flag, flag2);
-	//dup2(g_output != 0 ? g_output : g_save, STDIN_FILENO);
-			//dup2(file, redirect->fd);
+			//dup2(g_output != 0 ? g_output : g_save, STDIN_FILENO);
+			//dup2(g_output, redirect->fd);
 			///fd_dup[1] = dup(file);
 			//close(g_input);
 			///fd_dup[redirect->fd] = file;
