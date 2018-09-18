@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 04:59:29 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 04:50:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,11 +30,9 @@ int g_c;
 
 typedef struct	s_loop
 {
-	int			fd;
-	int			i;
-	int			flag;
-	int			flag2;
-	int			error;
+	int			fd_in;
+	int			fd_out;
+	int			fd_save;
 }				t_loop;
 
 typedef struct	s_pipe
@@ -86,7 +84,7 @@ void			ft_print_message(char *source, int nb);
 t_loop			ft_init_loop(void);
 t_separate		ft_init_separate(void);
 int				ft_prelim_loop(t_op *exec, int fd, int std_err);
-int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, int input, int *fdd);
+int				ft_loop_redirect2(t_redirect *redirect,  int fd2, int  ouput, int save, int input, int *fdd, t_loop *loop);
 void			ft_exec2(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid);
 
 #endif

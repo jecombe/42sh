@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 00:53:10 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 04:38:08 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,8 +57,6 @@ void				ft_sequence(t_seq *b_seq, int fd, pid_t pid)
 	seq = b_seq;
 	while (seq)
 	{
-			//si il y a encore une separation command ==> &&
-			printf("OOOOOOOOOOOOOOOOOOOOOOO\n");
 		ft_separate(seq, fd, pid);
 		seq = seq->next;
 	}

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/14 05:52:38 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/18 04:32:02 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -126,8 +126,8 @@ SRCS_NAME =	\
 			redirections/prelim_loop.c \
 			redirections/heredoc.c \
 			redirections/loop_redirections.c \
-			redirections/pipe.c \
 			redirections/init_struct.c \
+			redirections/pipe.c \
 			builtins/builtins.c \
 			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \

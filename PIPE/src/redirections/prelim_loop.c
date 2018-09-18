@@ -6,14 +6,15 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/12 17:06:22 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:29:47 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 04:33:54 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
 int			ft_prelim_loop(t_op *exec, int fd, int std_err)
-{
+{/*
 	int fd_open;
 	if (fd > 2)
 	{
@@ -47,6 +48,6 @@ int			ft_prelim_loop(t_op *exec, int fd, int std_err)
 			}
 		}
 	}
-	printf("-------> %d\n", fd_open);
-	return (fd_open);
+	printf("-------> %d\n", fd_open);*/
+	return (1);
 }

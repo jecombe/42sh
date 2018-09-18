@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 02:27:28 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 02:33:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 04:38:40 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -115,9 +115,5 @@ int			ft_solver(t_op *t_exec, int fd, pid_t pid, int save, int *fdd, int input, 
 		result = ft_waiting2(status);
 	}
 	add_last_param(t_exec->cmd);
-	if (result)
-		printf("\nRETURN FAILURE\n");
-	else
-		printf("\nRETURN SUCCESS\n");
 	return (result);
 }
