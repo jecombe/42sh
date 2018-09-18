@@ -26,8 +26,8 @@
 
 # include "../libft/include/libft.h"
 # include "init.h"
-# include "ft_select.h"
 # include "editor.h"
+# include "ft_select.h"
 # include "lexer.h"
 # include "parsing.h"
 # include "extension.h"

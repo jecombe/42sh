@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 07:49:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/18 07:31:57 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,7 +135,6 @@ void	delete_from_cursor_to_end(t_editor *ed);
 void	paste_clipboard(t_editor *ed);
 int		get_term_raw_mode(int mode);
 void	save_ed(t_editor **ed, int mode);
-void	tabulator(t_editor *ed);
 int		term_historic(t_editor **ed);
 int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/17 00:19:28 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/18 06:10:51 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -59,7 +59,6 @@ SRCS_NAME =	\
 			editor/add_char.c \
 			editor/delete_from_cursor_to_end.c \
 			editor/paste_clipboard.c \
-			editor/tabulator.c \
 			editor/term_historic.c \
 			editor/term_init.c \
 			editor/find_env_var.c \
@@ -87,6 +86,8 @@ SRCS_NAME =	\
 			ft_select/ft_search_big_param.c \
 			ft_select/ft_searchdyn.c \
 			ft_select/ft_select.c \
+			ft_select/tabulator.c \
+			ft_select/utils.c \
 			ft_select/ft_select_sp.c \
 			lexer/prelexer.c \
 			lexer/ft_lexer.c \
