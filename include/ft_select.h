@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 07:31:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/19 06:37:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -93,5 +93,7 @@ int						ft_searchdyn(t_select **t, char ret);
 void					ft_unhighlightds(t_select **t);
 int						ft_istab(char c);
 int						tabulator(t_editor **ed);
+int						ft_isdir(char *test);
+char					*ft_search_pwd(char *ext);
 
 #endif
