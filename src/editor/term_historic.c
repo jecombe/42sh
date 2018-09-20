@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 08:19:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 13:23:20 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,12 +42,6 @@ static int	down_key(t_editor **ed)
 			print_str(ed);
 		}
 		(*ed)->hist = -2;
-		if ((*ed)->tmp_line)
-		{
-			ft_strdel(&(*ed)->line);
-			(*ed)->line = ft_strdup((*ed)->tmp_line);
-			ft_strdel(&(*ed)->tmp_line);
-		}
 		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
 		return (0);
 	}

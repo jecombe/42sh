@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/18 06:10:51 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/20 09:12:12 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -87,6 +87,7 @@ SRCS_NAME =	\
 			ft_select/ft_searchdyn.c \
 			ft_select/ft_select.c \
 			ft_select/tabulator.c \
+			ft_select/ft_tabsplit.c \
 			ft_select/utils.c \
 			ft_select/ft_select_sp.c \
 			lexer/prelexer.c \

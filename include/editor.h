@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 07:31:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:06:13 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,6 +78,7 @@ typedef struct		s_editor
 	char	*line;
 	char	*tmp_line;
 	int		hist;
+	int		tabu;
 }					t_editor;
 
 typedef struct		s_tab

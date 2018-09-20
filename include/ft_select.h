@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/19 16:07:35 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 11:25:59 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,7 +96,6 @@ int						ft_isdir(char *test);
 char					*ft_search_pwd(char *ext);
 int						ft_isechap(char c);
 int						ft_isseparator(char c);
-int						ft_isbegintab(char c, char before, int i);
-int						ft_isendtab(char begin, char end, char echap, int i[2]);
+char					**ft_tabsplit(const char *s, int cursor_pos);
 
 #endif
