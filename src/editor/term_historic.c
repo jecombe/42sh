@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 04:23:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 08:19:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,8 +28,8 @@ static void	print_str(t_editor **ed)
 
 static int	down_key(t_editor **ed)
 {
-	(*ed)->hist--;
-	if ((*ed)->hist < 0)
+	(*ed)->hist -= (*ed)->hist == -3 ? 0 : 1;
+	if ((*ed)->hist < 0 && !((*ed)->hist <= -3))
 	{
 		ft_strdel(&(*ed)->line);
 		go_to_begin_of_line(*ed);
@@ -41,19 +41,25 @@ static int	down_key(t_editor **ed)
 			ft_strdel(&(*ed)->tmp_line);
 			print_str(ed);
 		}
-		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
 		(*ed)->hist = -2;
+		if ((*ed)->tmp_line)
+		{
+			ft_strdel(&(*ed)->line);
+			(*ed)->line = ft_strdup((*ed)->tmp_line);
+			ft_strdel(&(*ed)->tmp_line);
+		}
+		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
 		return (0);
 	}
 	(*ed)->hist--;
-	return (1);
+	return ((*ed)->hist < 0 ? 0 : 1);
 }
 
 int		term_historic(t_editor **ed)
 {
 	if (UP_KEY)
 	{
-		if ((*ed)->hist == -2)
+		if ((*ed)->hist <= -2)
 		{
 			(*ed)->tmp_line = ft_strdup((*ed)->line);
 			(*ed)->hist = 0;
