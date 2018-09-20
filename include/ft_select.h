@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/19 06:37:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/19 16:07:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,9 +91,12 @@ void					ft_save_shell(t_select **t, int version);
 int						ft_test(t_select **sel, int ret);
 int						ft_searchdyn(t_select **t, char ret);
 void					ft_unhighlightds(t_select **t);
-int						ft_istab(char c);
 int						tabulator(t_editor **ed);
 int						ft_isdir(char *test);
 char					*ft_search_pwd(char *ext);
+int						ft_isechap(char c);
+int						ft_isseparator(char c);
+int						ft_isbegintab(char c, char before, int i);
+int						ft_isendtab(char begin, char end, char echap, int i[2]);
 
 #endif
