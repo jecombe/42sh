@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 17:26:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 18:37:04 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -222,86 +222,83 @@ int		search_end_word(int index, char **tablo)
 	return (count);
 }
 
-void	binorfile(char **t, int nb_word[2], int *end_word, int cursor_str_pos)
+void	binorfile(t_editor **ed, int *end_word)
 {
 	int		i;
 
 	i = 0;
-	if (t)
-		while (t[i] && *end_word < cursor_str_pos)
+	if ((*ed)->t.cmd)
+		while ((*ed)->t.cmd[i] && *end_word < (*ed)->cursor_str_pos)
 		{
-			*end_word += ft_strlen(t[i]);
-			if (ft_isseparator(t[i][0]))
-				nb_word[0] = 0;
-			else if (ft_isprint(t[i][0]))
-				nb_word[0]++;
+			*end_word += ft_strlen((*ed)->t.cmd[i]);
+			if (ft_isseparator((*ed)->t.cmd[i][0]))
+				(*ed)->t.nb_word = 0;
+			else if (ft_isprint((*ed)->t.cmd[i][0]))
+				(*ed)->t.nb_word++;
 			i++;
 		}
-	nb_word[1] = i;
+	(*ed)->t.nb_char = i;
 }
 
-int		lexer_tab(t_editor **ed, char **word, char ***t, int nb_word[2])
+int		lexer_tab(t_editor **ed)
 {
 	int		end_word;
 
-//	*t = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
-//	int i = 0;
 	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
-//	while ((*t)[i])
-//	printf("TABUL == %s\n", (*t)[i++]);
-//	sleep(2);
 	end_word = 0;
-//	binorfile(*t, nb_word, &end_word, (*ed)->cursor_str_pos);
-	binorfile((*ed)->t.cmd, nb_word, &end_word, (*ed)->cursor_str_pos);
-//	printf("\nEND_WORD == %d CURSOR_POS == %d\n", end_word, (int)(*ed)->cursor_str_pos);
-//	printf("LINE ACTUELLE == %s NB_WORD[0] == %d NB_WORD[1] == %d\n", (*t)[nb_word[1] - 1], nb_word[0], nb_word[1]);
+	binorfile(ed, &end_word);
 	if ((*ed)->cursor_str_pos != end_word)
 	{
 		(*ed)->cursor_str_pos = end_word;
 		return (-1);
 	}
-	//if ((*t) && (*t)[nb_word[1] - 1] && !ft_isseparator((*t)[nb_word[1]][0]))
-	*word = ft_strdup((*ed)->t.cmd[nb_word[1] > 0 ? nb_word[1] - 1 : nb_word[1]]);
-	if (*word && *word[0] == '$')
-		nb_word[0] = -1;
+	printf("NB_WORD == %d NB_CHAR == %d\n", (*ed)->t.nb_word, (*ed)->t.nb_char);
+	if ((*ed)->t.cmd)
+	{
+		(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char > 0 ?
+				(*ed)->t.nb_char - 1 : (*ed)->t.nb_char]);
+		if ((*ed)->t.word && (*ed)->t.word[0] == '$')
+			(*ed)->t.nb_word = -1;
+	}
 	return (1);
 }
 
 int		tabulator(t_editor **ed, int version)
 {
-	int		nb_word[2];
 	char	*word;
 	char	**element;
-	char	**tmpline;
 
 	(void)version;
 	word = NULL;
-	tmpline = NULL;
-	nb_word[0] = 0;
-	nb_word[1] = 0;
-	if (lexer_tab(ed, &word, &tmpline, nb_word) != -1)
+	if ((*ed)->tabu == -1 && version == 1)
 	{
-//		printf("WORD == %s\n", word);
-//		sleep(2);
-//		word = ft_strdup("n");
-		if (nb_word[0] == 1 || nb_word[0] == 0)
-			element = search_bin(word);
-		else if (nb_word[0] == -1)
-			element = search_var(word);
-		else
-			element = search_in_rep(word);
-		if (element && element[1])
+		if (lexer_tab(ed) != -1)
 		{
-//			int i = 0;
-//			while (element[i])
-//				printf("ELEMENT[i] == %s\n", element[i++]);
+			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
+				(*ed)->t.elem = search_bin((*ed)->t.word);
+			else if ((*ed)->t.nb_word == -1)
+				(*ed)->t.elem = search_var((*ed)->t.word);
+			else
+				(*ed)->t.elem = search_in_rep((*ed)->t.word);
 			ft_strdel(&word);
-			printf("\n\r");
-			ft_select(element, &word, &(*ed)->tabu);
-//			display_prompt(ft_getenv("HOME", g_set), 0);
-			printf("RET_FT_SELECT == %s\n", word);
+			(*ed)->tabu = 0;
 		}
 	}
+	else if ((*ed)->tabu >= 0 && version == 1)
+	{
+		if ((*ed)->t.elem && (*ed)->t.elem[1])
+		{
+			printf("\n\r");
+			ft_select((*ed)->t.elem, &word, &(*ed)->tabu);
+	//		display_prompt(ft_getenv("HOME", g_set), 0);
+	//		printf("RET_FT_SELECT == %s\n", word);
+		}
+	}
+	else if (version == 0)
+	{
+		printf("DEL\n");
+	}
+//	}
 //	printf("LINE == %s NB_WORD == %d WORD == %s\n", (*ed)->line, nb_word[0], word);
 //	sleep(2);
 	return (0);

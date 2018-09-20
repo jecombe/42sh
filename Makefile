@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/20 09:12:12 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/20 18:42:04 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -84,7 +84,6 @@ SRCS_NAME =	\
 			ft_select/ft_save_raw_off.c \
 			ft_select/ft_save_shell.c \
 			ft_select/ft_search_big_param.c \
-			ft_select/ft_searchdyn.c \
 			ft_select/ft_select.c \
 			ft_select/tabulator.c \
 			ft_select/ft_tabsplit.c \

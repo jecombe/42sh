@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 15:53:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 18:59:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,6 +58,8 @@ int			ft_select(char **av, char **line, int *index)
 	tputs(tgetstr("cd", NULL), 1, ft_outc);
 	g_sign = 1;
 	ft_enable_raw(&sel);
+//	printf("SELECT\n");
+//	sleep(2);
 	ft_init_select(&sel, av, *index);
 	ft_get_size_term(&verif, &sel, 2);
 	ft_test(&sel, ret);

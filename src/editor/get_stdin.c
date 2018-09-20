@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 17:26:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 19:05:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,8 +17,8 @@ void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (TAB_KEY && *prompt == PROMPT)
 	{
-		(*ed)->tabu = (*ed)->tabu == -1 ? 0 : (*ed)->tabu;
-		tabulator(ed, 0);
+//		(*ed)->tabu = (*ed)->tabu == -1 ? 0 : (*ed)->tabu;
+		tabulator(ed, 1);
 	}
 	else if (CTRL_C)
 		end_of_text(*ed, prompt, line);
@@ -46,6 +46,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	}
 	else if (!TAB_KEY && (*ed)->tabu != -1)
 	{
+		tabulator(ed, 0);
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
 	}
@@ -86,6 +87,8 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->hist = -2;
 	(*ed)->tabu = -1;
 	(*ed)->t.cmd = NULL;
+	(*ed)->t.elem = NULL;
+	(*ed)->t.word = NULL;
 	(*ed)->t.nb_word = 0;
 	(*ed)->t.nb_char = 0;
 	*line = prompt != PROMPT && prompt != E_PIPE ?
@@ -123,6 +126,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 //	signal(SIGWINCH, myhandler_winsize_change);
 	while ((ret = read(STDIN_FILENO, ed->key, BUFF_SIZE)) > 0)
 	{
+		printf("fsgs\n");
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
 		if (get_keyboard_key(&ret, &ed, prompt, line))

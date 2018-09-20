@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 17:25:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 18:33:57 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,6 +61,8 @@ typedef enum		s_prompt
 typedef struct		s_tab
 {
 	char			**cmd;
+	char			**elem;
+	char			*word;
 	int				nb_word;
 	int				nb_char;
 }					t_tab;

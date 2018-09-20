@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 02:51:08 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 19:07:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,7 @@ int		get_term_raw_mode(int mode)
 		raw_mode.c_lflag &= ~(ECHO | ICANON | ISIG);
 		raw_mode.c_cflag &= ~(CSIZE | PARENB);
 		raw_mode.c_cflag |= CS8;
-		raw_mode.c_cc[VMIN] = 1;
+		raw_mode.c_cc[VMIN] = 0;
 		raw_mode.c_cc[VTIME] = 1;
 		tcsetattr(STDIN_FILENO, TCSANOW, &raw_mode);
 	}

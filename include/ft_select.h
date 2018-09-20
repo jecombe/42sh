@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 17:19:34 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 18:43:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,8 +89,6 @@ void					ft_place_cursor(int nb_ret, int len_line, int v);
 int						ft_free_t_select(t_select **t);
 void					ft_save_shell(t_select **t, int version);
 int						ft_test(t_select **sel, int ret);
-int						ft_searchdyn(t_select **t, char ret);
-void					ft_unhighlightds(t_select **t);
 int						tabulator(t_editor **ed, int version);
 int						ft_isdir(char *test);
 char					*ft_search_pwd(char *ext);
