@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:23:54 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:14:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 static int		ft_up_and_down(char arrows, t_select **t, t_line *l, int y)
 {

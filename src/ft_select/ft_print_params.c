@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 18:27:26 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:10:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 15:25:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 void		ft_place_cursor(int nb_ret, int len_line, int v)
 {
@@ -44,7 +44,6 @@ void		ft_print_select(t_line *str, int j, int bp, int v)
 		str->is_file == 3 ? ft_putstr_fd(WHITE, 2) : 0;
 	}
 	ft_putstr_fd(BOLD, 2);
-	str->select > 0 ? tputs(tgetstr("mr", NULL), 1, ft_outc) : 0;
 	str->cursor_inside == 1 ? ft_putstr_fd(IBLUE, 2) : 0;
 	str->cursor_inside == 1 ? tputs(tgetstr("us", NULL), 1, ft_outc) : 0;
 	ft_putstr_fd(str->elem, 2);
@@ -56,7 +55,6 @@ void		ft_print_select(t_line *str, int j, int bp, int v)
 	}
 	str->cursor_inside == 1 && v == 1 ? tputs(tgetstr("ue", NULL), 1, ft_outc) :
 	0;
-	str->select == 1 ? tputs(tgetstr("me", NULL), 1, ft_outc) : 0;
 	ft_putstr_fd(END, 2);
 }
 

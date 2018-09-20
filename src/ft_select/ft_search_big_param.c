@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/15 01:26:02 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:10:07 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:19:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 int		ft_search_big_param(t_line *line)
 {

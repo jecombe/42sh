@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/11 19:49:39 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:08:24 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:16:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 static char	*ft_complete_path(char *src, char *file)
 {

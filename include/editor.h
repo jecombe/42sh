@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:06:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 17:25:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,12 +58,12 @@ typedef enum		s_prompt
 	BACKSLASH,
 }					e_prompt;
 
-typedef struct		s_hist
+typedef struct		s_tab
 {
-	char			*cmd;
-	struct s_hist	*next;
-	struct s_hist	*prev;
-}					t_hist;
+	char			**cmd;
+	int				nb_word;
+	int				nb_char;
+}					t_tab;
 
 typedef struct		s_editor
 {
@@ -77,15 +77,10 @@ typedef struct		s_editor
 	char	key[BUFF_SIZE];
 	char	*line;
 	char	*tmp_line;
+	t_tab	t;
 	int		hist;
 	int		tabu;
 }					t_editor;
-
-typedef struct		s_tab
-{
-	char	d_name[4096];
-	struct s_tab	*next;
-}					t_tab;
 
 int		g_bin_exit;
 //char	*g_save_home;

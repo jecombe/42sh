@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 04:30:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 17:26:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,10 @@
 void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (TAB_KEY && *prompt == PROMPT)
-		tabulator(ed);
+	{
+		(*ed)->tabu = (*ed)->tabu == -1 ? 0 : (*ed)->tabu;
+		tabulator(ed, 0);
+	}
 	else if (CTRL_C)
 		end_of_text(*ed, prompt, line);
 	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
@@ -40,6 +43,11 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	{
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
+	}
+	else if (!TAB_KEY && (*ed)->tabu != -1)
+	{
+		ft_strdel(&(*ed)->tmp_line);
+		(*ed)->tabu = -1;
 	}
 	if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
@@ -76,6 +84,10 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->line = NULL;
 	(*ed)->tmp_line = NULL;
 	(*ed)->hist = -2;
+	(*ed)->tabu = -1;
+	(*ed)->t.cmd = NULL;
+	(*ed)->t.nb_word = 0;
+	(*ed)->t.nb_char = 0;
 	*line = prompt != PROMPT && prompt != E_PIPE ?
 	ft_strjoin_free(*line, "\n") : NULL;
 	return (1);

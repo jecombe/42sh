@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:10:08 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:19:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 static void		ft_highlightds(int len, t_line *l, t_select *t, int i)
 {

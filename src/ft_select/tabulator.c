@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 13:53:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 17:26:38 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,7 +39,6 @@ int		add_bin(char ***bin, DIR *dir, char *line, int version)
 //		if ((line && 0 == ft_strstr(tmp, line)) ||
 			!line || version == 1)
 		{
-			ft_putstr_color(tmp, 2);
 //			printf("ELEMENT TROUVER\n");
 //			sleep(1);
 			ft_malloc_cmd(bin, tmp);
@@ -178,6 +177,7 @@ char	**search_var(char *word)
 {
 	char	**ret;
 	char	*tmp;
+	char	*tmp2;
 	int		i;
 
 	i = 0;
@@ -191,12 +191,15 @@ char	**search_var(char *word)
 		{
 			if ((tmp && 0 == ft_strncmp(tmp, tmp, ft_strlen(tmp))) || !tmp)
 			{
-				ft_malloc_cmd(&ret, g_set[i]);
+				tmp2 = ft_get_value(g_set[i]);
+				ft_malloc_cmd(&ret, tmp2);
+				ft_strdel(&tmp2);
 //				printf("SEARCH_VAR == %s\n", g_set[i]);
 			}
 			i++;
 		}
 	}
+	ft_strdel(&tmp);
 //	printf("22\n");
 	return (ret);
 }
@@ -241,9 +244,15 @@ int		lexer_tab(t_editor **ed, char **word, char ***t, int nb_word[2])
 {
 	int		end_word;
 
-	*t = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
+//	*t = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
+//	int i = 0;
+	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
+//	while ((*t)[i])
+//	printf("TABUL == %s\n", (*t)[i++]);
+//	sleep(2);
 	end_word = 0;
-	binorfile(*t, nb_word, &end_word, (*ed)->cursor_str_pos);
+//	binorfile(*t, nb_word, &end_word, (*ed)->cursor_str_pos);
+	binorfile((*ed)->t.cmd, nb_word, &end_word, (*ed)->cursor_str_pos);
 //	printf("\nEND_WORD == %d CURSOR_POS == %d\n", end_word, (int)(*ed)->cursor_str_pos);
 //	printf("LINE ACTUELLE == %s NB_WORD[0] == %d NB_WORD[1] == %d\n", (*t)[nb_word[1] - 1], nb_word[0], nb_word[1]);
 	if ((*ed)->cursor_str_pos != end_word)
@@ -252,19 +261,20 @@ int		lexer_tab(t_editor **ed, char **word, char ***t, int nb_word[2])
 		return (-1);
 	}
 	//if ((*t) && (*t)[nb_word[1] - 1] && !ft_isseparator((*t)[nb_word[1]][0]))
-	*word = ft_strdup((*t)[nb_word[1] > 0 ? nb_word[1] - 1 : nb_word[1]]);
+	*word = ft_strdup((*ed)->t.cmd[nb_word[1] > 0 ? nb_word[1] - 1 : nb_word[1]]);
 	if (*word && *word[0] == '$')
 		nb_word[0] = -1;
 	return (1);
 }
 
-int		tabulator(t_editor **ed)
+int		tabulator(t_editor **ed, int version)
 {
 	int		nb_word[2];
 	char	*word;
 	char	**element;
 	char	**tmpline;
 
+	(void)version;
 	word = NULL;
 	tmpline = NULL;
 	nb_word[0] = 0;
@@ -282,10 +292,14 @@ int		tabulator(t_editor **ed)
 			element = search_in_rep(word);
 		if (element && element[1])
 		{
-			int i = 0;
-			while (element[i])
-				printf("ELEMENT[i] == %s\n", element[i++]);
-			ft_select(element, &nb_word[1]);
+//			int i = 0;
+//			while (element[i])
+//				printf("ELEMENT[i] == %s\n", element[i++]);
+			ft_strdel(&word);
+			printf("\n\r");
+			ft_select(element, &word, &(*ed)->tabu);
+//			display_prompt(ft_getenv("HOME", g_set), 0);
+			printf("RET_FT_SELECT == %s\n", word);
 		}
 	}
 //	printf("LINE == %s NB_WORD == %d WORD == %s\n", (*ed)->line, nb_word[0], word);

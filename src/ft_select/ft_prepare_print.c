@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/17 18:14:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:10:03 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 14:19:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../../include/ft_select.h"
 
 t_line		*ft_prepare_print(int i[2], t_line **line, int nb_line)
 {

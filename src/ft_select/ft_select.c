@@ -1,47 +1,17 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_select.c                                      .::    .:/ .      .::   */
+/*   main.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/23 04:39:32 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:10:08 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/20 15:53:31 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
-
-
-
-static char		*ft_print_final(t_select **t, int *line)
-{
-	t_line		*tmp;
-	int			i;
-
-	i = 1;
-	tputs(tgetstr("cd", NULL), 1, ft_outc);
-	if (*t)
-	{*line = (*t)->nbl;
-		while ((*t)->select_max >= i)
-		{
-			tmp = (*t)->line;
-			while (tmp)
-			{
-				if (tmp->select == i)
-				{
-				//	if (i > 1)
-				//		ft_putchar(' ');
-					return(ft_strdup(tmp->elem));
-					i++;
-				}
-				tmp = tmp->next;
-			}
-		}
-	}
-	return (0);
-}
+#include "../../include/ft_select.h"
 
 static int		ft_refresh(t_select *t, int ret, t_ws verif)
 {
@@ -78,23 +48,21 @@ int				ft_test(t_select **sel, int ret)
 	return (0);
 }
 
-char			*ft_select(char **av, int *line)
+int			ft_select(char **av, char **line, int *index)
 {
 	t_select	*sel;
 	int			ret;
 	t_ws		verif;
-	char		*test = NULL;
 
 	ret = 0;
+	tputs(tgetstr("cd", NULL), 1, ft_outc);
 	g_sign = 1;
-	if (!av)
-		return (0);
 	ft_enable_raw(&sel);
-	ft_init_select(&sel, av);
+	ft_init_select(&sel, av, *index);
 	ft_get_size_term(&verif, &sel, 2);
 	ft_test(&sel, ret);
-	test = ft_print_final(&sel, line);
-	ft_disable_raw(0, &sel);
-	ft_tabdel(&av);
-	return (test);
+	tputs(tgetstr("cd", NULL), 1, ft_outc);
+	if (sel->ret)
+		*line = ft_strdup(sel->ret);
+	return (ft_disable_raw(0, &sel));
 }

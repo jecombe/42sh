@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 11:25:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 17:19:34 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ typedef struct			s_line
 	int					is_file;
 	int					ds;
 	int					cursor_inside;
-	float				select;
+//	int					select;
 	struct s_line		*prev;
 	struct s_line		*next;
 }						t_line;
@@ -51,7 +51,7 @@ typedef struct			s_line
 typedef struct			s_select
 {
 	t_ws				ws;
-	int					select_max;
+	char				*ret;
 	int					pose_min;
 	int					bp;
 	int					pbl;
@@ -61,7 +61,7 @@ typedef struct			s_select
 	t_line				*line;
 }						t_select;
 
-char					*ft_select(char **av, int *line);
+int						ft_select(char **av, char **line, int *index);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_disable_raw(int ret, t_select **t);
@@ -73,11 +73,11 @@ void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
 int						ft_manage_touch(char **ret, t_select **t);
 int						ft_arrows(char arrows, t_select **t);
 int						ft_outc(int c);
-void					ft_init_select(t_select **sel, char **av);
+void					ft_init_select(t_select **sel, char **av, int index);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);
-void					ft_first_sort(t_line **line, char *av);
+void					ft_first_sort(t_line **line, char *av, int inside);
 int						ft_count_params(t_line *line);
 int						ft_char_by_line(t_select **sel);
 t_line					*ft_prepare_print(int i[2], t_line **line, int nb_line);
@@ -91,7 +91,7 @@ void					ft_save_shell(t_select **t, int version);
 int						ft_test(t_select **sel, int ret);
 int						ft_searchdyn(t_select **t, char ret);
 void					ft_unhighlightds(t_select **t);
-int						tabulator(t_editor **ed);
+int						tabulator(t_editor **ed, int version);
 int						ft_isdir(char *test);
 char					*ft_search_pwd(char *ext);
 int						ft_isechap(char c);
