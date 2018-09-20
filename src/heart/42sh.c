@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/18 05:36:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 20:55:27 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,7 +54,7 @@ static void			shell(void)
 
 	prompt = PROMPT;
 	line = NULL;
-	while (get_stdin(&line, &prompt))
+	while (get_stdin(&line, &prompt) != -2)
 	{
 		if (line && (!(prompt = prelexer(line))))
 			heart_of_101sh(line, 1);

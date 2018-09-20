@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 19:05:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/20 20:57:00 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
 	else if (CTRL_D)
-		*ret = 0;
+		*ret = -2;
 	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
 		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
 	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
@@ -117,6 +117,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 	int			ret;
 	t_editor	*ed;
 
+	ret = -2;
 	ed = NULL;
 	get_term_raw_mode(1);
 	line_editor_init(line, *prompt, &ed);
@@ -124,16 +125,16 @@ int		get_stdin(char **line, e_prompt *prompt)
 	find_env_var(g_env, "HOME", 0) : NULL, *prompt);
 	ed->prompt_size = get_cursor_position(0);
 //	signal(SIGWINCH, myhandler_winsize_change);
-	while ((ret = read(STDIN_FILENO, ed->key, BUFF_SIZE)) > 0)
+	while (ret != -1)
 	{
-		printf("fsgs\n");
+		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
 		if (get_keyboard_key(&ret, &ed, prompt, line))
 			ed->line = ft_strjoin_free(ed->line, ed->key);
 	//	save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
-		if (ft_strchr(ed->key, '\n') || (!ret && !(ed->line) && *prompt == 0))
+		if (ft_strchr(ed->key, '\n') || (ret == -2 && !(ed->line) && *prompt == 0))
 			break ;
 	}
 	get_stdin_next(line, ed, prompt);
