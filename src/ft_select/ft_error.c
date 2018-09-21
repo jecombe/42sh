@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/25 10:59:49 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:15:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 13:01:01 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,5 +21,5 @@ void	ft_error(const char *s, t_select **t)
 		ft_putstr_fd(s, 2);
 		ft_putchar_fd(2, '\n');
 	}
-	exit(ft_disable_raw(1, &(*t)));
+	exit(ft_free_t_select(&(*t)));
 }

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 20:57:00 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 13:19:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,9 +36,11 @@ void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 
 int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 {
-	t_sz sz;
+	t_sz	ws;
 
-	ioctl(0, TIOCGWINSZ, &sz);
+	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
+		return (1);
+	ws.ws_col != (*ed)->ws_col ? (*ed)->ws_col = ws.ws_col : 0;
 	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
 	{
 		ft_strdel(&(*ed)->tmp_line);
@@ -112,10 +114,17 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	free(ed);
 }
 
+void	refresh_term(t_editor **ed, t_sz ws)
+{
+	(*ed)->ws_col = ws.ws_col;
+	printf("\nREFRESH PROMPT ET LINE\n");
+}
+
 int		get_stdin(char **line, e_prompt *prompt)
 {
 	int			ret;
 	t_editor	*ed;
+	t_sz		ws;
 
 	ret = -2;
 	ed = NULL;
@@ -125,13 +134,21 @@ int		get_stdin(char **line, e_prompt *prompt)
 	find_env_var(g_env, "HOME", 0) : NULL, *prompt);
 	ed->prompt_size = get_cursor_position(0);
 //	signal(SIGWINCH, myhandler_winsize_change);
+	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
+		return (1);
+	ed->ws_col = ws.ws_col;
 	while (ret != -1)
 	{
+		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
+			return (1);
+		if (ws.ws_col != ed->ws_col && ed->line)
+			refresh_term(&ed, ws);
 		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
-		if (get_keyboard_key(&ret, &ed, prompt, line))
-			ed->line = ft_strjoin_free(ed->line, ed->key);
+		if (ed->key[0])
+			if (get_keyboard_key(&ret, &ed, prompt, line))
+		ed->line = ft_strjoin_free(ed->line, ed->key);
 	//	save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
 		if (ft_strchr(ed->key, '\n') || (ret == -2 && !(ed->line) && *prompt == 0))

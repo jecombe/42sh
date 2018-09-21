@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 18:43:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 12:58:21 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,8 +64,6 @@ typedef struct			s_select
 int						ft_select(char **av, char **line, int *index);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
-int						ft_disable_raw(int ret, t_select **t);
-void					ft_enable_raw(t_select **t);
 int						ft_manage_entry(char **ret, t_select **sel);
 char					*ft_read_entry(t_select **t);
 void					ft_print_params(t_select **sel);

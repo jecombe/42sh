@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/20 18:42:04 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/21 12:58:56 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -66,8 +66,6 @@ SRCS_NAME =	\
 			ft_select/ft_char_by_line.c \
 			ft_select/ft_count_line.c \
 			ft_select/ft_count_params.c \
-			ft_select/ft_disable_raw.c \
-			ft_select/ft_enable_raw.c \
 			ft_select/ft_error.c \
 			ft_select/ft_first_sort.c \
 			ft_select/ft_free_t_select.c \
