@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:20:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 00:09:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,7 +116,7 @@ void	refresh_term(t_editor **ed, t_sz ws)
 {
 	(*ed)->ws_col = ws.ws_col;
 	ft_putstr("\r");
-	tputs(tgetstr("cd", NULL), 1, ft_putchar);
+//	tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putstr((*ed)->line);
 }

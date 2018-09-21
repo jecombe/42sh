@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:19:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 00:14:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,17 +48,17 @@ int				ft_test(t_select **sel, int ret, t_editor **ed)
 	int			refresh;
 
 	refresh = 0;
-	tputs(tgetstr("cd", NULL), 1, ft_outc);
+//	tputs(tgetstr("cd", NULL), 1, ft_outc);
 //	while ((*sel && ret != 4) || ret == 0)
 //	{
-		refresh = ft_refresh((*sel), ret);
-		if (refresh == 1)
-		{
+	//	refresh = ft_refresh((*sel), ret);
+//		if (refresh == 1)
+//		{
 //		printf("REFRESH == %d\n", refresh);
 //		sleep(2);
-			ft_print_params(&(*sel));
-		}
-		refresh == 2 ? ft_putstr_fd("\E[0J", 2) : 0;
+//			ft_print_params((*sel));
+//		}
+//		refresh == 2 ? ft_putstr_fd("\E[0J", 2) : 0;
 		ret = ft_manage_entry(ed, &(*sel));
 //	}
 	return (0);
@@ -75,7 +75,7 @@ int			ft_select(t_editor **ed, char **line, int version)
 	if (!ft_manage_raw(&raw, 0))
 	{
 		ft_init_select(&sel, (*ed)->t.elem, (*ed)->tabu);
-		version == 0 ? ft_print_params(&sel) : 0;
+		version == 0 ? ft_print_params(sel) : 0;
 		version == 1 ? ft_test(&sel, ret, ed) : 0;
 		if (sel->ret)
 			*line = ft_strdup(sel->ret);

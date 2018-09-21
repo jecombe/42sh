@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:23:54 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:20:35 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:59:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,7 +36,7 @@ static int		ft_up_and_down(char arrows, t_select **t, t_line *l, int y)
 		ft_place_cursor(l->y_pos - (*t)->pose_min, l->x_char_pos + (*t)->bp, 0);
 		return (0);
 	}
-	ft_print_params(&(*t));
+	ft_print_params((*t));
 	return (0);
 }
 
@@ -96,17 +96,17 @@ static void		ft_left_and_right(char arrows, t_select **t, t_line *l, int y)
 	if (y == 0 && l->y_pos > (*t)->ws.ws_row)
 	{
 		(*t)->pose_min = (l->y_pos - (*t)->ws.ws_row + 1);
-		ft_print_params(&(*t));
+		ft_print_params(*t);
 	}
 	if (l->y_pos == y + 1 && l->y_pos >= (*t)->ws.ws_row + (*t)->pose_min)
 	{
 		(*t)->pose_min++;
-		ft_print_params(&(*t));
+		ft_print_params(*t);
 	}
 	else if (l->y_pos < (*t)->pose_min)
 	{
 		(*t)->pose_min = l->y_pos;
-		ft_print_params(&(*t));
+		ft_print_params(*t);
 	}
 	else
 	{

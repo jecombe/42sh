@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:13:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:56:23 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,7 +64,7 @@ void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_manage_entry(t_editor **ed, t_select **sel);
 char					*ft_read_entry(t_select **t);
-void					ft_print_params(t_select **sel);
+void					ft_print_params(t_select *sel);
 void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
 int						ft_manage_touch(char *ret, t_select **t, int *place);
 int						ft_arrows(char arrows, t_select **t, int *place);
@@ -76,7 +76,7 @@ int						ft_is_file(char *file);
 void					ft_first_sort(t_line **line, char *av, int inside);
 int						ft_count_params(t_line *line);
 int						ft_char_by_line(t_select **sel);
-t_line					*ft_prepare_print(int i[2], t_line **line, int nb_line);
+t_line					*ft_prepare_print(int i[2], t_line *line, int nb_line);
 int						ft_params_by_line(t_select *t);
 int						ft_select_sp(t_select **t);
 void					ft_print_select(t_line *str, int j, int bp, int v);

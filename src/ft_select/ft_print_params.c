@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 18:27:26 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:35:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:56:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,28 +58,25 @@ void		ft_print_select(t_line *str, int j, int bp, int v)
 	ft_putstr_fd(END, 2);
 }
 
-void		ft_print_params(t_select **t)
+void		ft_print_params(t_select *t)
 {
 	int		i[2];
 
-//	(*t)->pbl = ft_params_by_line((*t));
-//	(*t)->nbl = ft_count_line((*t));
-//	(*t)->nbp = ft_count_params((*t)->line);
-	i[0] = (*t)->pose_min;
+	i[0] = t->pose_min;
 	i[1] = 0;
 	tputs(tgetstr("cd", NULL), 1, ft_outc);
-	while (i[0] < (*t)->nbl)
+	while (i[0] < t->nbl)
 	{
-		if (i[0] < (*t)->ws.ws_row + (*t)->pose_min)
-			ft_putstr_fd(i[0] > (*t)->pose_min ? "\n\r" : "\r", 2);
+		if (i[0] < t->ws.ws_row + t->pose_min)
+			ft_putstr_fd(i[0] > t->pose_min ? "\n\r" : "\r", 2);
 		i[1] = -1;
-		while (++i[1] < (*t)->pbl && i[0] + ((*t)->nbl * i[1]) < (*t)->nbp)
+		while (++i[1] < t->pbl && i[0] + (t->nbl * i[1]) < t->nbp)
 		{
-			if (i[0] < (*t)->ws.ws_row + (*t)->pose_min)
-				ft_print_select(ft_prepare_print(i, &(*t)->line, (*t)->nbl),
-				i[1], (*t)->bp, 1);
+			if (i[0] < t->ws.ws_row + t->pose_min)
+				ft_print_select(ft_prepare_print(i, t->line, t->nbl),
+				i[1], t->bp, 1);
 			else
-				ft_prepare_print(i, &(*t)->line, (*t)->nbl);
+				ft_prepare_print(i, t->line, t->nbl);
 		}
 		i[0]++;
 	}

@@ -6,21 +6,21 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/17 18:14:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:19:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:53:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/ft_select.h"
 
-t_line		*ft_prepare_print(int i[2], t_line **line, int nb_line)
+t_line		*ft_prepare_print(int i[2], t_line *line, int nb_line)
 {
 	int		at_print;
 	t_line	*tmp;
 	int		bp;
 
-	bp = ft_search_big_param(*line);
-	tmp = *line;
+	bp = ft_search_big_param(line);
+	tmp = line;
 	at_print = i[0] + (nb_line * i[1]);
 	while (at_print && tmp->next)
 	{
