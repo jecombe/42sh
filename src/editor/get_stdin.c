@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 15:29:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 16:00:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,8 @@
 
 void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
-	if (TAB_KEY && *prompt == PROMPT)
-		tabulator(ed, 1);
+	if (UP_KEY || DOWN_KEY)
+		term_historic(ed);
 	else if (CTRL_C)
 		end_of_text(*ed, prompt, line);
 	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
@@ -43,15 +43,15 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
 	}
-	else if (!TAB_KEY && (*ed)->tabu != -1)
+	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY) && (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
 		tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	}
-	if (UP_KEY || DOWN_KEY)
-		term_historic(ed);
+	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY) && (*ed)->tabu != -1))
+		tabulator(ed, 1);
 	else if (CTRL_D)
 		*ret = -2;
 	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
