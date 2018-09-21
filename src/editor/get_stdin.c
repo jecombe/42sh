@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 13:19:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 13:29:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -117,7 +117,10 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 void	refresh_term(t_editor **ed, t_sz ws)
 {
 	(*ed)->ws_col = ws.ws_col;
-	printf("\nREFRESH PROMPT ET LINE\n");
+	ft_putstr("\r");
+	tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	display_prompt(find_env_var(g_env, "HOME", 0), 0);
+	ft_putstr((*ed)->line);
 }
 
 int		get_stdin(char **line, e_prompt *prompt)
