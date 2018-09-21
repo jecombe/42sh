@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 18:27:26 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 15:25:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:35:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,9 +62,9 @@ void		ft_print_params(t_select **t)
 {
 	int		i[2];
 
-	(*t)->pbl = ft_params_by_line((*t));
-	(*t)->nbl = ft_count_line((*t));
-	(*t)->nbp = ft_count_params((*t)->line);
+//	(*t)->pbl = ft_params_by_line((*t));
+//	(*t)->nbl = ft_count_line((*t));
+//	(*t)->nbp = ft_count_params((*t)->line);
 	i[0] = (*t)->pose_min;
 	i[1] = 0;
 	tputs(tgetstr("cd", NULL), 1, ft_outc);

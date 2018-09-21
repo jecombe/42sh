@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:27:16 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:18:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:02:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 
 int		ft_params_by_line(t_select *t)
 {
+//	printf("22\n");
 	int		ret;
 	int		i;
 	int		big_param;
@@ -24,6 +25,7 @@ int		ft_params_by_line(t_select *t)
 	i = 0;
 	nb_char = 0;
 	big_param = ft_search_big_param(t->line);
+//	printf("23BP == %d\n", big_param);
 	while (i != -1 && t->line)
 	{
 		if (nb_char == 0 && nb_char + big_param <= t->ws.ws_col)
@@ -34,5 +36,6 @@ int		ft_params_by_line(t_select *t)
 			i = -1;
 		nb_char += ret == 0 ? big_param : big_param + 1;
 	}
+//	printf("33RET == %d\n", ret);
 	return (ret);
 }
