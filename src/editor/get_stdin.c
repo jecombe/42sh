@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 14:01:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 15:29:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 		tabulator(ed, 0);
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
+		tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	}
 	if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
@@ -147,8 +148,11 @@ int		get_stdin(char **line, e_prompt *prompt)
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';
 		if (ed->key[0])
+		{
+			printf("KEY == %s\n", ed->key);
 			if (get_keyboard_key(&ret, &ed, prompt, line))
-		ed->line = ft_strjoin_free(ed->line, ed->key);
+				ed->line = ft_strjoin_free(ed->line, ed->key);
+		}
 	//	save_ed(&ed, 0);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
 		if (ft_strchr(ed->key, '\n') || (ret == -2 && !(ed->line) && *prompt == 0))
