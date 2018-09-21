@@ -6,14 +6,14 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:28 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:42:08 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:05:44 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int 		ft_exit(t_op *t_exec, int flag, int fd_open)
+int 		ft_exit(t_op *t_exec)
 {
 	printf("EXIT\n");
 	return (EXIT_SUCCESS);

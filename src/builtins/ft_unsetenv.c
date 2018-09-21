@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/11 04:13:57 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:13 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:03:30 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int			ft_unsetenv(const char *name, int fd_open)
+int			ft_unsetenv(const char *name)
 {
 	char	*s;
 	int		i;
@@ -23,7 +23,7 @@ int			ft_unsetenv(const char *name, int fd_open)
 	i = -1;
 	env = NULL;
 	if (name == NULL)
-		return (ft_bierrors("unsetenv", NULL, BITOFEW, fd_open));
+		return (ft_bierrors("unsetenv", NULL, BITOFEW));
 	if (!(s = ft_envset_line((const char **)g_env, name)))
 		return (EXIT_SUCCESS);
 	env = ft_tabdup(g_env);

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/21 14:36:24 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/21 17:22:54 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -114,19 +114,15 @@ SRCS_NAME =	\
 			extension/ft_free_n_redirect.c \
 			execute/binary.c \
 			execute/binary_signal.c \
-			execute/execute.c \
 			execute/solver.c \
 			execute/utils.c \
 			execute/check_command.c \
 			execute/sequences.c \
 			execute/separate.c \
-			redirections/open_file_redirections.c \
-			redirections/return_flag_redirections.c \
-			redirections/prelim_loop.c \
-			redirections/heredoc.c \
-			redirections/loop_redirections.c \
-			redirections/pipe.c \
-			redirections/init_struct.c \
+			execute/open_file_redirections.c \
+			execute/return_flag_redirections.c \
+			execute/heredoc.c \
+			execute/init_struct.c \
 			builtins/builtins.c \
 			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \
@@ -147,7 +143,7 @@ SRCS_NAME =	\
 
 OBJS_FOLDERS = 	\
 				heart init editor ft_select lexer parser extension execute \
-				redirections builtins
+				builtins
 
 OBJS_NAME = $(SRCS_NAME:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 16:36:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:08:45 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,15 +20,12 @@
 # define NOTHING -1
 
 
-int				g_fd[2];
 
 typedef struct	s_loop
 {
-	int			fd;
-	int			i;
-	int			flag;
-	int			flag2;
-	int			error;
+	int fd_in;
+	int fd_out;
+	int fd_save;
 }				t_loop;
 
 typedef struct	s_pipe
@@ -51,14 +48,13 @@ typedef struct	s_separate
 	int			ret;
 }				t_separate;
 
-int				ft_solver(t_op *tmp_exec, int fd, pid_t pid, int pipe);
+int				ft_solver(t_op *tmp_exec, pid_t pid);
 char			*ft_search_bin(char *cmd);
 char			*ft_go_to(char *bin, int nb);
 void			ft_skip(char **ttab);
 void			ft_get_bin();
 t_pipe			ft_init_pipe(int i);
-int				ft_exec(t_op *tmp_op, char *bin_cmd, int fd, pid_t pid);
-int				ft_builtins(t_op *t_exec, int what, int flag, int fd);
+int				ft_builtins(t_op *t_exec);
 int				ft_check_command(char *cmd);
 int				ft_open_redirect(char *file, int flag, int flag2);
 int				ft_return_flag(t_redirect *redirect);
@@ -71,14 +67,12 @@ int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
 void			ft_separate(t_seq *b_seq, int fd, pid_t pid);
 void			ft_sequence(t_seq *b_seq, int fd, pid_t pid);
-int				ft_pipe(t_op *opera, int co, int fd2);
 int				ft_count_pipe(t_op *tmp);
-int				ft_loop_redirect(t_redirect *redirect, int buil, int fd2, int before_pipe);
+int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop);
 void			ft_print_error(const char *s1, const char *s2);
 int				binary_signal(int status, int pid, char *bin);
 void			ft_print_message(char *source, int nb);
 t_loop			ft_init_loop(void);
 t_separate		ft_init_separate(void);
-int				ft_prelim_loop(t_op *exec, int fd, int std_err);
 
 #endif

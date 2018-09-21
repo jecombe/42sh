@@ -6,21 +6,21 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:36:34 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:02:25 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void	ft_print_env(int fd_open)
+static void	ft_print_env()
 {
 	int		i;
 
 	i = -1;
 	if (g_env)
 		while (g_env[++i])
-			ft_putendl_fd(g_env[i], fd_open);
+			ft_putendl_fd(g_env[i], 1);
 }
 
 static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
@@ -37,7 +37,7 @@ static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
 		while (cmd[i][++j])
 		{
 			if (cmd[i][j] != 'i')
-				return (ft_bierrors("env", &cmd[i][j], BIFLAG, fd_open));
+				return (ft_bierrors("env", &cmd[i][j], BIFLAG));
 			*flag = 'i';
 		}
 	}
@@ -58,7 +58,7 @@ static int	ft_assign_env(const char **cmd, char flag, int *idx, int fd_open)
 			break ;
 		if (!(grid = ft_strsplit(cmd[*idx], '=')))
 			return (EXIT_FAILURE);
-		ft_setenv(grid[0], grid[1], fd_open);
+		ft_setenv(grid[0], grid[1]);
 		ft_tabdel(&grid);
 		(*idx)++;
 	}
@@ -93,7 +93,7 @@ static int	ft_exec_env(const char **cmd, int i)
 	return (EXIT_SUCCESS);
 }
 
-int			ft_env(t_op *exec, int fd, int p)
+int			ft_env(t_op *exec)
 {
 	int		i;
 	char	flag;
@@ -103,25 +103,8 @@ int			ft_env(t_op *exec, int fd, int p)
 	i = 0;
 	flag = '\0';
 	env = NULL;
-	fd_open = ft_prelim_loop(exec, fd, 1);
-/*
-	if (fd > 2)
-		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		fd = 1;
-		if ((fd_open = ft_loop_redirect(exec->redirect, 1, fd, 0)) == EXIT_FAILURE)
-			return(EXIT_FAILURE);
-		if (fd_open < 1)
-			fd_open = 1;
-		if (exec->redirect)
-		{
-			if (exec->redirect->fd > 1)
-				fd_open = exec->redirect->fd;
-		}*/
-		if (exec->redirect == NULL && p == 1)
-			fd_open = 5;
 	if (!exec || exec->cmd[1] == NULL)
-		ft_print_env(fd_open);
+		ft_print_env();
 	else
 	{
 		if (!(env = ft_tabdup(g_env)))

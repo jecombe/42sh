@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 14:59:44 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:01:33 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,7 @@ static int	ft_cd_error(const char *cmd, const int stat)
 	return (EXIT_FAILURE);
 }
 
-static int	ft_cd_flags(const char **cmd, char *flag, int *idx, int fd_open)
+static int	ft_cd_flags(const char **cmd, char *flag, int *idx)
 {
 	int		i;
 	int		j;
@@ -47,7 +47,7 @@ static int	ft_cd_flags(const char **cmd, char *flag, int *idx, int fd_open)
 		while (cmd[i][++j])
 		{
 			if (cmd[i][j] != 'P' && cmd[i][j] != 'L')
-				return (ft_bierrors("cd", &cmd[i][j], BIFLAG, fd_open));
+				return (ft_bierrors("cd", &cmd[i][j], BIFLAG));
 			if (*flag)
 				*flag = (*flag == 'P') ? 'L' : 'P';
 			else
@@ -74,16 +74,16 @@ static int	ft_chdir(char **curpath, const char *cmd, int fd_open)
 	if (chdir(*curpath) == -1)
 	{
 		ft_strdel(&(*curpath));
-		return (ft_bierrors("cd", cmd, BINOFOUND, fd_open));
+		return (ft_bierrors("cd", cmd, BINOFOUND));
 	}
 	pwd = ft_envset_value((const char **)g_env, "PWD");
-	ft_setenv("PWD", *curpath, fd_open);
-	ft_setenv("OLDPWD", pwd, fd_open);
+	ft_setenv("PWD", *curpath);
+	ft_setenv("OLDPWD", pwd);
 	ft_strdel(&pwd);
 	return (EXIT_SUCCESS);
 }
 
-int			ft_cd(t_op *exec, int flags, int fd, int p)
+int			ft_cd(t_op *exec)
 {
 	int		j;
 	char	flag;
@@ -94,9 +94,7 @@ int			ft_cd(t_op *exec, int flags, int fd, int p)
 	j = 1;
 	flag = '\0';
 	curpath = NULL;
-	if ((fd_open = ft_prelim_loop(exec, fd, 0)) == EXIT_FAILURE)
-	  return (EXIT_FAILURE);
-	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j, fd_open))
+	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j))
 		return (EXIT_FAILURE);
 	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
 				ft_getenv("HOME", g_env)))
@@ -106,11 +104,6 @@ int			ft_cd(t_op *exec, int flags, int fd, int p)
 	{
 		ft_canonical(&curpath);
 		ft_rules(&curpath);
-	}
-	if (exec->cmd[1] == NULL && p == 1)
-	{
-		chdir(curpath);
-		return (EXIT_SUCCESS);
 	}
 	if (!(curpath))
 		return (EXIT_FAILURE);

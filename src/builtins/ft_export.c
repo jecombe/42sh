@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 06:59:18 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/12 18:32:17 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:02:54 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,14 +74,14 @@ int			assign_var(char *cmd)
 	return (0);
 }
 
-int			ft_export(t_op *exec, int fd_open)
+int			ft_export(t_op *exec)
 {
 	int		i;
 	t_op	*tmp;
 
 	i = 1;
 	if (!exec->cmd[1])
-		ft_env(NULL, fd_open, 0);
+		ft_env(NULL);
 	while (exec->cmd[i])
 	{
 		if (ft_str_isalnum(exec->cmd[i]) && ft_isalpha(exec->cmd[i][0]))

@@ -6,30 +6,30 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 15:22:54 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:00:43 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int 		ft_echo_redirect(int fd_open, char **cmd, int ok, int slash_n)
+int 		ft_echo_redirect(char **cmd, int ok, int slash_n)
 {
 	int i = 0;
 	while (cmd[i])
 	{
-		ft_putstr_fd(cmd[i], fd_open);
+		ft_putstr_fd(cmd[i], 1);
 		if (cmd[i + 1])
-			ft_putchar_fd(' ', fd_open);
+			ft_putchar_fd(' ', 1);
 		i++;
 	}
 	if (slash_n == 0 && ok == 0)
-		ft_putchar_fd('\n', fd_open);
+		ft_putchar_fd('\n', 1);
 	return (EXIT_SUCCESS);
 
 }
 
-int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
+int 		ft_echo(t_op *t_exec)
 {
 	int flag2;
 	int fd_open;
@@ -50,17 +50,6 @@ int 		ft_echo(t_op *t_exec, int flag, int fd, int p)
 		slash_n = 1;
 		i++;
 	}
-	fd_open = ft_prelim_loop(t_exec, fd, 1);
-	if (t_exec->redirect == NULL && p == 1)
-		fd_open = 5;
-	if (t_exec->redirect)
-	{
-		if (fd_open == EXIT_FAILURE && t_exec->redirect->redirect == LESS)
-			return (EXIT_FAILURE);
-		printf("GOOOOOOO %d\n", p);
-		if ((p == 1 && (t_exec->redirect->redirect == LESSAND)) || (t_exec->redirect->redirect == GREATAND && p == 1))
-			return (EXIT_SUCCESS);
-	}
-	ft_echo_redirect(fd_open, t_exec->cmd + i, ok, slash_n);
+	ft_echo_redirect(t_exec->cmd + i, ok, slash_n);
 	return (EXIT_SUCCESS);
 }

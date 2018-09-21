@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 16:39:02 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:17:06 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,52 +30,61 @@ static void	add_last_param(char **cmd)
 		add_to_set("_", cmd[ft_tablen(cmd) - 1]);
 }
 
-int			ft_solver(t_op *t_exec, int fd, pid_t pid, int pipe)
+int			waitstat2(int *status)
+{
+	wait(status);
+	while (wait(NULL) > 0)
+		;
+	return (*status);
+}
+
+int ft_waiting2(int status)
+{
+	int ret;
+
+	status = waitstat2(&status);
+	ret = WEXITSTATUS(status);
+	if (ret > 0)
+		return (EXIT_FAILURE);
+	else
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
+int			ft_solver(t_op *t_exec, pid_t pid)
 {
 	char *tmp_bin;
 	char *raccmd;
 	int ok;
-	int flag;
+	int status;
+	int result;
 
+	result = 0;
 	if ((ok = ft_check_command(t_exec->cmd[0])) != 0)
-	{
-		if (ft_builtins(t_exec, ok, flag, fd) == EXIT_SUCCESS)
-		{
-			add_last_param(t_exec->cmd);
-			return (EXIT_SUCCESS);
-		}
-		else
-		{
-			add_last_param(t_exec->cmd);
-			return (EXIT_FAILURE);
-		}
-	}
+		result = ft_builtins(t_exec);
 	else
 	{
 		raccmd = ft_strdup(t_exec->cmd[0]);
 		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-			if (pipe == 0)
+		if (pid == 0)
+		{
+			add_pid_bin(pid);
+	execve(tmp_bin, t_exec->cmd, g_env);
+			/*{
+			  ft_hashtable(tmp_bin, raccmd);
+			  ft_strdel(&raccmd);
+			  add_last_param(t_exec->cmd);
+			  ft_unset_var("PID_BIN");
+			}*/
+			/*else
 			{
-				pid = fork();
-				add_pid_bin(pid);
-			}
-			if (ft_exec(t_exec, tmp_bin, fd, pid) == EXIT_SUCCESS)
-			{
-				ft_hashtable(tmp_bin, raccmd);
-				ft_strdel(&raccmd);
-				add_last_param(t_exec->cmd);
-				ft_unset_var("PID_BIN");
-				return (EXIT_SUCCESS);
-			}
-			else
-			{
-				ft_strdel(&raccmd);
-				add_last_param(t_exec->cmd);
-				if (tmp_bin == NULL)
-			ft_print_error(t_exec->cmd[0], "Command not found !");
-				return (EXIT_FAILURE);
-			}
+			ft_strdel(&raccmd);
+			add_last_param(t_exec->cmd);
+			if (tmp_bin == NULL)
+			ft_print_error(t_exec->cmd[0], "Command not found !");*/
+		}
+		result = ft_waiting2(status);
 	}
 	add_last_param(t_exec->cmd);
-	return (EXIT_FAILURE);
+	return (result);
 }

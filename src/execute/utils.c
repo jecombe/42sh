@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:40:02 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:09:08 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -70,4 +70,17 @@ int			ft_check_direct_command(char *cmd)
 		return (-1);
 	else
 		return (0);
+}
+int		ft_count_pipe(t_op *tmp)
+{
+	t_op *tmpp = tmp;
+	int i;
+
+	i = 0;
+	while (tmpp->token == PIPE)
+	{
+		i++;
+		tmpp = tmpp->next;
+	}
+	return (i);
 }

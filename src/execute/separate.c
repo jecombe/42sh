@@ -6,218 +6,167 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 16:47:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:08:49 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-
-int			ft_separate_pipe_2(t_separate **separate, t_op **opera, pid_t pid, int fd2)
+void	ft_save_fd(int fd_org[3])
 {
-	if ((*opera)->prev)
-		if ((*opera)->prev->token != PIPE)
-			(*separate)->i = 0;
-	if ((*opera)->token == PIPE)
-	{
-		(*separate)->i = ft_count_pipe((*opera));
-		(*separate)->i++;
-		(*separate)->ret = ft_pipe((*opera), (*separate)->i, fd2);
-	}
-	while ((*separate)->i != 0)
-	{
-		(*opera) = (*opera)->next;
-		(*separate)->i--;
-	}
-	if ((*opera) == NULL)
-		return (101);
-	return (42);
+	fd_org[0] = dup(0);
+	fd_org[1] = dup(1);
+	fd_org[2] = dup(2);
 }
 
-int			ft_separate_pipe(t_separate *separate, t_op **opera, pid_t pid, int fd2)
+void	ft_restore_fd(int fd_org[3])
 {
-	if (ft_separate_pipe_2(&separate, &(*opera), pid, fd2) == 101)
-		return (101);
+	dup2(fd_org[0], 0);
+	dup2(fd_org[1], 1);
+	dup2(fd_org[2], 2);
+}
 
-	if (separate->ret == EXIT_SUCCESS)
+
+int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
+{
+	int file;
+	int flag;
+
+	flag = 0;
+	file = -1;
+	if (fd2 > 1)
 	{
-		if ((*opera)->prev->token == OR_IF)
-			separate->or_if = 1;
-		else
-			separate->or_if = 0;
-		separate->ret = 0;
+
+		loop->fd_out = ft_open_redirect(".tmp_file", O_TRUNC, O_WRONLY);
+		dup2(loop->fd_out, 1);
 	}
-	else if (separate->ret == EXIT_FAILURE)
+	while (redirect)
 	{
-		if ((*opera)->prev->token == AND_IF)
-			separate->and_if = 1;
-		else
-			separate->and_if = 0;
-		separate->ret = 0;
+		if (redirect->redirect == DLESS)
+			loop->fd_in = ft_redirect_heredoc(redirect, 0);
+		if (redirect->redirect == GREAT || redirect->redirect == DGREAT)
+		{
+			if (ft_check_file_is_directory(redirect->file) == -1)
+			{
+				ft_print_message(redirect->file, 1);
+				return (EXIT_FAILURE);
+			}
+			flag = ft_return_flag(redirect);
+			loop->fd_out = ft_open_redirect(redirect->file ,flag, O_WRONLY);
+			dup2(loop->fd_out, redirect->fd);
+		}
+		if (redirect->redirect == LESS)
+		{
+			if (ft_check_source(redirect->file) == -1)
+			{
+				ft_print_message(redirect->file, 2);
+				return (EXIT_FAILURE);
+			}
+			loop->fd_in = ft_open_redirect(redirect->file, O_RDONLY, 0);
+		}
+		if (redirect->redirect == GREATAND || redirect->redirect == LESSAND)
+		{
+			if (ft_strcmp("-", redirect->file) == 0)
+			{
+				close(redirect->fd);
+			}
+			if (ft_strcmp("1", redirect->file) == 0)
+				dup2(1, STDERR_FILENO);
+			if (ft_strcmp("2", redirect->file) == 0)
+				dup2(STDERR_FILENO, fd_one);
+		}
+		redirect = redirect->next;
 	}
 	return (EXIT_SUCCESS);
 }
 
-
-void			ft_separate_no_pipe(t_separate *separate, t_op *opera, pid_t pid, int fd)
+t_loop		init_loop(void)
 {
-	if (separate->or_if == 0 && separate->i == 0)
+	t_loop	loop;
+
+	loop.fd_in = 0;
+	loop.fd_out = 1;
+	loop.fd_save = 0;
+	return (loop);
+}
+
+int			ft_go_pipe(t_op *opera, int fd2)
+{
+	int i = ft_count_pipe(opera);
+	int status = 0;
+	t_loop loop;
+	int fd[2];
+
+	i++;
+	pid_t pid;
+	loop = init_loop();
+	while (i != 0)
 	{
-		if (separate->and_if == 0)
+		pipe(fd);
+		loop.fd_in = 0;
+		loop.fd_out = 1;
+		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
+			return(EXIT_FAILURE);
+		if ((pid = fork()) == 0)
 		{
-			separate->ret = ft_solver(opera, fd, pid, 0);
-			add_to_set("?", ft_itoa(separate->ret));
+			dup2(loop.fd_in != 0 ? loop.fd_in : loop.fd_save, STDIN_FILENO);
+			if (i != 1 && loop.fd_out == 1)
+				dup2(fd[1], STDOUT_FILENO);
+			close(fd[0]);
+			ft_solver(opera, pid);
+			exit(-1);
+		}
+		else
+		{
+			if (loop.fd_in  > 0)
+				close(loop.fd_in);
+			if (loop.fd_out!= 1)
+				close(loop.fd_out);
+			close(fd[1]);
+			if (loop.fd_save)
+				close(loop.fd_save);
+			loop.fd_save = fd[0];
+			i--;
+			opera = opera->next;
 		}
 	}
-	if (separate->ret == EXIT_SUCCESS)
+	wait(&status);
+	while(wait(NULL) > 0)
+		;
+	status = WEXITSTATUS(status);
+	if (status > 0)
 	{
-		if (opera->token == OR_IF)
-			separate->or_if = 1;
-		else
-			separate->or_if = 0;
-		separate->ret = 0;
+		printf("FAILURE\n");
+		return (EXIT_FAILURE);
 	}
-	else if (separate->ret == EXIT_FAILURE)
+	else
 	{
-		if (opera->token == AND_IF)
-			separate->and_if = 1;
-		else
-			separate->and_if = 0;
-		separate->ret = 0;
+		printf("SUCCES\n");
+		return (EXIT_SUCCESS);
 	}
+
 }
 
 void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
 {
-	t_op *opera;
-	t_separate separate;
+	t_op	*opera;
+	int		fd_org[3];
+	int ret;
+	int		i;
 
-	separate = ft_init_separate();
+	i = 0;
 	opera = b_seq->op;
-	if (opera->next)
+	t_token tk;
+	ret = 0;
+	while (opera)
 	{
-		while (opera)
-		{
-			if (opera->token == PIPE)
-				if (ft_separate_pipe(&separate, &opera, pid, fd) == 101)
-					return ;
-			if (opera->token != PIPE)
-			{
-				pipe(g_fd);
-				ft_separate_no_pipe(&separate, opera, pid, fd);
-			}
-			opera = opera->next;
-		}
-		return ;
-	}
-	else
-	{
-		pipe(g_fd);
-		separate.ret = ft_solver(opera, fd, pid, 0);
-		add_to_set("?", ft_itoa(separate.ret));
+		tk = b_seq->op->token;
+		ft_save_fd(fd_org);
+		if ((tk == TOKEN) || (tk == AND_IF && !ret) || (tk == OR_IF && ret) || i == 0)
+			ret = ft_go_pipe(opera, fd);
+		ft_restore_fd(fd_org);
+		opera = opera->next;
+		i++;
 	}
 }
-
-/*void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
-{
-	t_op *opera;
-	int ret;
-	int and_if;
-	int or_if;
-	int i = 0;
-	int ok = 0;
-
-	and_if = 0;
-	or_if = 0;
-	opera = b_seq->op;
-	ret = 0;
-	if (opera->next)
-	{
-		while (opera)
-		{
-			ok = 0;
-			if (or_if == 0)
-			{
-				if (and_if == 0)
-				{
-					if (opera->token == PIPE)
-					{
-						if (opera->prev)
-							if (opera->prev->token != PIPE)
-								i = 0;
-						if (opera->token == PIPE)
-						{
-							//Compte combien de pipe
-							i = ft_count_pipe(opera);
-							i++;
-							ret = ft_pipe(opera, i, pid, fd);
-						}
-						while (i != 0)
-						{
-							opera = opera->next;
-							i--;
-						}
-						if (opera == NULL)
-							return ;
-						//opera = opera->next;
-						if (ret == EXIT_SUCCESS)
-						{
-							if (opera->prev->token == OR_IF)
-								or_if = 1;
-							else
-								or_if = 0;
-							ret = 0;
-						}
-						//Si echec de solver
-						else if (ret == EXIT_FAILURE)
-						{
-							if (opera->prev->token == AND_IF)
-								and_if = 1;
-							else
-								and_if = 0;
-							ret = 0;
-						}
-					}
-				}
-			}
-			if (opera->token != PIPE)
-			{
-				if (or_if == 0 && i == 0)
-				{
-					if (and_if == 0)
-					{
-						ret = ft_solver(opera, fd, pid, 0);
-						add_to_set("?", ft_itoa(ret));
-					}
-				}
-				//Si succées de solver
-				if (ret == EXIT_SUCCESS)
-				{
-					if (opera->token == OR_IF)
-						or_if = 1;
-					else
-						or_if = 0;
-					ret = 0;
-				}
-				//Si echec de solver
-				else if (ret == EXIT_FAILURE)
-				{
-					if (opera->token == AND_IF)
-						and_if = 1;
-					else
-						and_if = 0;
-					ret = 0;
-				}
-			}
-			opera = opera->next;
-		}
-		return ;
-	}
-	//Command sans next donc sans séparateur dans opera(b_seq->op)
-	else
-	{
-		ret = ft_solver(opera, fd, pid, 0);
-		add_to_set("?", ft_itoa(ret));
-	}
-}*/

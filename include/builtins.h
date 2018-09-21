@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/17 11:09:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 16:58:56 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ typedef struct			s_history
 *******************************************************************************
 */
 
-int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err, int fd_open);
+int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err);
 
 /*
 *******************************************************************************
@@ -59,7 +59,7 @@ int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err, int fd_open
 *******************************************************************************
 */
 
-int				ft_env(t_op *exec, int fd_open, int p);
+int				ft_env(t_op *exec);
 
 /*
 *******************************************************************************
@@ -67,8 +67,8 @@ int				ft_env(t_op *exec, int fd_open, int p);
 *******************************************************************************
 */
 
-int				ft_setenv(const char *name, const char *value, int fd_open);
-int				ft_unsetenv(const char *name, int fd_open);
+int				ft_setenv(const char *name, const char *value);
+int				ft_unsetenv(const char *name);
 
 /*
 *******************************************************************************
@@ -88,7 +88,7 @@ char			*ft_envset_join(const char *name, const char *value);
 *******************************************************************************
 */
 
-int				set(t_op *exec, int p, int fd_open);
+int				set(t_op *exec);
 
 /*
 *******************************************************************************
@@ -96,7 +96,7 @@ int				set(t_op *exec, int p, int fd_open);
 *******************************************************************************
 */
 
-int				ft_export(t_op *exec, int fd_open);
+int				ft_export(t_op *exec);
 
 /*
 *******************************************************************************
@@ -112,7 +112,7 @@ int				ft_assign(t_op *exec);
 *******************************************************************************
 */
 
-int				unset(t_op *exec, int fd_open);
+int				unset(t_op *exec);
 int				ft_unset_var(char *cmd);
 
 /*
@@ -121,7 +121,7 @@ int				ft_unset_var(char *cmd);
 *******************************************************************************
 */
 
-int				ft_cd(t_op *t_exec, int flag, int fd, int p);
+int				ft_cd(t_op *t_exec);
 
 /*
 *******************************************************************************
@@ -138,7 +138,7 @@ int				ft_rules(char **cmd);
 *******************************************************************************
 */
 
-int				ft_echo(t_op *t_exec, int flag, int fd, int p);
+int				ft_echo(t_op *t_exec);
 
 /*
 *******************************************************************************
@@ -146,7 +146,7 @@ int				ft_echo(t_op *t_exec, int flag, int fd, int p);
 *******************************************************************************
 */
 
-int				ft_exit(t_op *t_exec, int flag, int fd_open);
+int				ft_exit(t_op *t_exec);
 
 /*
 *******************************************************************************

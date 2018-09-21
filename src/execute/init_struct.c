@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/05 13:48:40 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 14:37:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 16:47:22 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,17 +28,6 @@ t_pipe		ft_init_pipe(int i)
 	return (tpipe);
 }
 
-t_loop		ft_init_loop(void)
-{
-	t_loop loop;
-
-	loop.fd = 0;
-	loop.i = 0;
-	loop.flag = 0;
-	loop.flag2 = 0;
-	loop.error = 0;
-	return (loop);
-}
 
 t_separate ft_init_separate(void)
 {
