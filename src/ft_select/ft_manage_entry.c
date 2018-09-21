@@ -6,20 +6,18 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:29:05 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:17:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:12:49 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/ft_select.h"
 
-int		ft_manage_entry(char **entry, t_select **sel)
+int		ft_manage_entry(t_editor **ed, t_select **sel)
 {
 	int		ret;
 
 	ret = 1;
-	(*entry) = ft_read_entry(&(*sel));
-	if ((*entry)[0] != -1)
-		ret = ft_manage_touch(&(*entry), &(*sel));
+	ret = ft_manage_touch((*ed)->key, &(*sel), &(*ed)->tabu);
 	return (ret);
 }

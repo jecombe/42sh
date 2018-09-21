@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:15:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:26:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -252,7 +252,7 @@ int		lexer_tab(t_editor **ed)
 		(*ed)->cursor_str_pos = end_word;
 		return (-1);
 	}
-	printf("NB_WORD == %d NB_CHAR == %d\n", (*ed)->t.nb_word, (*ed)->t.nb_char);
+//	printf("NB_WORD == %d NB_CHAR == %d\n", (*ed)->t.nb_word, (*ed)->t.nb_char);
 	if ((*ed)->t.cmd)
 	{
 		(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char > 0 ?
@@ -272,7 +272,7 @@ int		tabulator(t_editor **ed, int version)
 	word = NULL;
 	if ((*ed)->tabu == -1 && version == 1)
 	{
-		printf("TABU\n");
+//		printf("TABU\n");
 		if (lexer_tab(ed) != -1)
 		{
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
@@ -283,7 +283,7 @@ int		tabulator(t_editor **ed, int version)
 				(*ed)->t.elem = search_in_rep((*ed)->t.word);
 			ft_strdel(&word);
 			(*ed)->tabu = 0;
-			ft_select((*ed)->t.elem, &word, &(*ed)->tabu, 0);
+			ft_select(ed, &word, 0);
 		}
 //		printf("PREMIERE FOIS OK\n");
 //		sleep(2);
@@ -293,21 +293,22 @@ int		tabulator(t_editor **ed, int version)
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 		{
 //			printf("\n\r");
-			ft_select((*ed)->t.elem, &word, &(*ed)->tabu, 1);
+			ft_select(ed, &word, 1);
 	//		display_prompt(ft_getenv("HOME", g_set), 0);
 //			printf("RET_FT_SELECT == %s\n", word);
 		}
 	}
 	else if (version == 2)
 	{
-		printf("REFRESH\n");
+//		printf("REFRESH\n");
 	}
 	else if (version == 0)
 	{
-		printf("DEL\n");
+//		printf("DEL\n");
+		ft_select(ed, &word, 1);
 	}
 //	}
-//	printf("LINE == %s NB_WORD == %d WORD == %s\n", (*ed)->line, nb_word[0], word);
+	printf("LINE == %s\n", word);
 //	sleep(2);
 	return (0);
 }

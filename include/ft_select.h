@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 15:29:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:13:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,15 +59,15 @@ typedef struct			s_select
 	t_line				*line;
 }						t_select;
 
-int						ft_select(char **av, char **line, int *index, int version);
+int						ft_select(t_editor **ed, char **line, int version);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
-int						ft_manage_entry(char **ret, t_select **sel);
+int						ft_manage_entry(t_editor **ed, t_select **sel);
 char					*ft_read_entry(t_select **t);
 void					ft_print_params(t_select **sel);
 void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
-int						ft_manage_touch(char **ret, t_select **t);
-int						ft_arrows(char arrows, t_select **t);
+int						ft_manage_touch(char *ret, t_select **t, int *place);
+int						ft_arrows(char arrows, t_select **t, int *place);
 int						ft_outc(int c);
 void					ft_init_select(t_select **sel, char **av, int index);
 int						ft_count_line(t_select *t);

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:23:54 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:14:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 23:20:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,7 +116,7 @@ static void		ft_left_and_right(char arrows, t_select **t, t_line *l, int y)
 	}
 }
 
-int				ft_arrows(char arrows, t_select **t)
+int				ft_arrows(char arrows, t_select **t, int *place)
 {
 	t_line	*l;
 	int		y;
@@ -135,5 +135,13 @@ int				ft_arrows(char arrows, t_select **t)
 		ft_up_and_down(arrows, &(*t), l, y);
 	if (arrows == 67 || arrows == 68)
 		ft_left_and_right(arrows, &(*t), l, y);
+	y = 0;
+	l = (*t)->line;
+	while (l)
+	{
+		l->cursor_inside == 1 ? *place = y : 0;
+		y++;
+		l = l->next;
+	}
 	return (1);
 }
