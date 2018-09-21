@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:03:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:38:12 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ int ft_waiting2(int status)
 	return (EXIT_FAILURE);
 }
 
-int			ft_solver(t_op *t_exec, pid_t pid)
+int			ft_solver(t_op *t_exec, pid_t pid, int builtins)
 {
 	char *tmp_bin;
 	char *raccmd;
@@ -60,14 +60,8 @@ int			ft_solver(t_op *t_exec, pid_t pid)
 	int result;
 
 	result = 0;
-	if ((g_p = ft_check_command(t_exec->cmd[0])) != 0)
+	if (builtins > 0)
 		result = ft_builtins(t_exec);
-		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (tmp_bin == NULL)
-		{
-			printf("NOT FOUND\n");
-			return(EXIT_FAILURE);
-		}
 	else
 	{
 		raccmd = ft_strdup(t_exec->cmd[0]);

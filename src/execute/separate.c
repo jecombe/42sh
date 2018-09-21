@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:24:16 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:38:07 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,39 +81,29 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 	return (EXIT_SUCCESS);
 }
 
-t_loop		init_loop(void)
+int			ft_waitstat(int *status, int builtins)
 {
-	t_loop	loop;
-
-	loop.fd_in = 0;
-	loop.fd_out = 1;
-	loop.fd_save = 0;
-	return (loop);
-}
-
-int			ft_waitstat(int *status)
-{
-	if (g_p == 0)
+	if (builtins == 0)
 		wait(status);
 	while(wait(NULL) > 0)
 		;
 	return (*status);
 }
-int			ft_waiting(int status)
+int			ft_waiting(int status, int builtins)
 {
 	int ret;
 
-	status = ft_waitstat(&status);
+	status = ft_waitstat(&status, builtins);
 	ret = WEXITSTATUS(status);
 	if (ret > 0)
 		return (EXIT_FAILURE);
 	return(EXIT_SUCCESS);
 }
-int			ft_return_command(int status, char *bin)
+int			ft_return_command(int status, char *bin, int builtins)
 {
 	int finish;
 
-	if ((finish = ft_waiting(status)) == EXIT_SUCCESS)
+	if ((finish = ft_waiting(status, builtins)) == EXIT_SUCCESS)
 	{
 		if (bin == NULL)
 		{
@@ -133,11 +123,12 @@ int			ft_go_pipe(t_op *opera, int fd2)
 	t_loop loop;
 	int fd[2];
 	char *tmp_bin;
+	int builtins;
 	int ok;
 
 	i++;
 	pid_t pid;
-	loop = init_loop();
+	loop = ft_init_loop();
 	while (i != 0)
 	{
 		pipe(fd);
@@ -157,7 +148,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 				if (i != 1 && loop.fd_out == 1)
 					dup2(fd[1], STDOUT_FILENO);
 				close(fd[0]);
-				ft_solver(opera, pid);
+				ft_solver(opera, pid, builtins);
 				//exit(-1);
 			}
 			else
@@ -181,7 +172,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 			i--;
 		}
 	}
-	return (ft_return_command(status, tmp_bin));
+	return (ft_return_command(status, tmp_bin, builtins));
 }
 
 void		ft_separate(t_seq *b_seq, int fd, pid_t pid)

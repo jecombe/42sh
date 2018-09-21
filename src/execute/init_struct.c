@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/05 13:48:40 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 16:47:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:37:29 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,4 +38,13 @@ t_separate ft_init_separate(void)
 	separate.and_if = 0;
 	separate.ret = 0;
 	return (separate);
+}
+t_loop		ft_init_loop(void)
+{
+	t_loop	loop;
+
+	loop.fd_in = 0;
+	loop.fd_out = 1;
+	loop.fd_save = 0;
+	return (loop);
 }

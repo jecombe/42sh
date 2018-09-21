@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:00:43 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:29:50 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,6 +36,7 @@ int 		ft_echo(t_op *t_exec)
 	int i;
 	int slash_n;
 
+	printf("OKKKKKKKKKKKKKK echo\n");
 	int ok = 0;
 	t_op *op = NULL;
 	if (t_exec->cmd[1] == NULL)
