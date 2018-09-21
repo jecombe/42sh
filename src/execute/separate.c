@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:08:49 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 18:24:16 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -91,12 +91,49 @@ t_loop		init_loop(void)
 	return (loop);
 }
 
+int			ft_waitstat(int *status)
+{
+	if (g_p == 0)
+		wait(status);
+	while(wait(NULL) > 0)
+		;
+	return (*status);
+}
+int			ft_waiting(int status)
+{
+	int ret;
+
+	status = ft_waitstat(&status);
+	ret = WEXITSTATUS(status);
+	if (ret > 0)
+		return (EXIT_FAILURE);
+	return(EXIT_SUCCESS);
+}
+int			ft_return_command(int status, char *bin)
+{
+	int finish;
+
+	if ((finish = ft_waiting(status)) == EXIT_SUCCESS)
+	{
+		if (bin == NULL)
+		{
+			printf("FAILURE\n");
+			return (EXIT_FAILURE);
+		}
+		printf("SUCCES\n");
+		return (EXIT_SUCCESS);
+	}
+	printf("FAILURE\n");
+	return (EXIT_FAILURE);
+}
 int			ft_go_pipe(t_op *opera, int fd2)
 {
 	int i = ft_count_pipe(opera);
 	int status = 0;
 	t_loop loop;
 	int fd[2];
+	char *tmp_bin;
+	int ok;
 
 	i++;
 	pid_t pid;
@@ -108,44 +145,43 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		loop.fd_out = 1;
 		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-		if ((pid = fork()) == 0)
+		if ((ok = ft_check_command(opera->cmd[0])) == 0)
 		{
-			dup2(loop.fd_in != 0 ? loop.fd_in : loop.fd_save, STDIN_FILENO);
-			if (i != 1 && loop.fd_out == 1)
-				dup2(fd[1], STDOUT_FILENO);
-			close(fd[0]);
-			ft_solver(opera, pid);
-			exit(-1);
+			tmp_bin = ft_search_bin(opera->cmd[0]);
+		}
+		if (tmp_bin != NULL)
+		{
+			if ((pid = fork()) == 0)
+			{
+				dup2(loop.fd_in != 0 ? loop.fd_in : loop.fd_save, STDIN_FILENO);
+				if (i != 1 && loop.fd_out == 1)
+					dup2(fd[1], STDOUT_FILENO);
+				close(fd[0]);
+				ft_solver(opera, pid);
+				//exit(-1);
+			}
+			else
+			{
+				if (loop.fd_in  > 0)
+					close(loop.fd_in);
+				if (loop.fd_out!= 1)
+					close(loop.fd_out);
+				close(fd[1]);
+				if (loop.fd_save)
+					close(loop.fd_save);
+				loop.fd_save = fd[0];
+				i--;
+				opera = opera->next;
+			}
 		}
 		else
 		{
-			if (loop.fd_in  > 0)
-				close(loop.fd_in);
-			if (loop.fd_out!= 1)
-				close(loop.fd_out);
-			close(fd[1]);
-			if (loop.fd_save)
-				close(loop.fd_save);
-			loop.fd_save = fd[0];
-			i--;
+			ft_print_error(opera->cmd[0], "Command not found !");
 			opera = opera->next;
+			i--;
 		}
 	}
-	wait(&status);
-	while(wait(NULL) > 0)
-		;
-	status = WEXITSTATUS(status);
-	if (status > 0)
-	{
-		printf("FAILURE\n");
-		return (EXIT_FAILURE);
-	}
-	else
-	{
-		printf("SUCCES\n");
-		return (EXIT_SUCCESS);
-	}
-
+	return (ft_return_command(status, tmp_bin));
 }
 
 void		ft_separate(t_seq *b_seq, int fd, pid_t pid)

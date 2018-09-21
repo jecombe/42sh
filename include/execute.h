@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:08:45 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 17:53:17 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,7 @@
 # define HEREDOC 10
 # define NOTHING -1
 
-
+int g_p;
 
 typedef struct	s_loop
 {
