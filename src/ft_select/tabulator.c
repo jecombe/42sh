@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 14:16:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 16:16:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -290,10 +290,10 @@ int		tabulator(t_editor **ed, int version)
 	{
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 		{
-			printf("\n\r");
+//			printf("\n\r");
 			ft_select((*ed)->t.elem, &word, &(*ed)->tabu, 1);
 	//		display_prompt(ft_getenv("HOME", g_set), 0);
-			printf("RET_FT_SELECT == %s\n", word);
+//			printf("RET_FT_SELECT == %s\n", word);
 		}
 	}
 	else if (version == 2)

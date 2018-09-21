@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 16:00:49 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 16:14:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -149,7 +149,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 		ed->key[ret] = '\0';
 		if (ed->key[0])
 		{
-			printf("KEY == %s\n", ed->key);
+//			printf("KEY == %s\n", ed->key);
 			if (get_keyboard_key(&ret, &ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
 		}
