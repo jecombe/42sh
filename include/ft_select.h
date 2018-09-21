@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 12:58:21 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 14:05:06 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,8 +28,6 @@
 # define IPURPLE "\x1b[45m"
 # define ICYAN "\x1b[46m"
 # define IWHITE "\x1b[47m"
-
-int		g_sign;
 
 typedef struct termios	t_term;
 typedef struct winsize	t_ws;
@@ -61,7 +59,7 @@ typedef struct			s_select
 	t_line				*line;
 }						t_select;
 
-int						ft_select(char **av, char **line, int *index);
+int						ft_select(char **av, char **line, int *index, int version);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
 int						ft_manage_entry(char **ret, t_select **sel);

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 13:29:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/21 14:01:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,10 +16,7 @@
 void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (TAB_KEY && *prompt == PROMPT)
-	{
-//		(*ed)->tabu = (*ed)->tabu == -1 ? 0 : (*ed)->tabu;
 		tabulator(ed, 1);
-	}
 	else if (CTRL_C)
 		end_of_text(*ed, prompt, line);
 	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
