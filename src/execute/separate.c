@@ -137,9 +137,9 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
 			tmp_bin = ft_search_bin(opera->cmd[0]);
-			// verififer que la commande n'est pas exit, et peut etre d'autres commandes x. Faut executer la commande x ici, et pas dans solver.
+			//faudrais trouver une condition mieux..
 			if (ft_strcmp("exit", opera->cmd[0]) == 0)
-				ft_exit(opera);
+				tmp_bin = "r";
 		if (tmp_bin != NULL)
 		{
 			if ((pid = fork()) == 0)
