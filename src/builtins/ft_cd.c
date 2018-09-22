@@ -92,6 +92,7 @@ int			ft_cd(t_op *exec)
 	char *pwd;
 
 	j = 1;
+	printf("ok cdddddddddddddd\n");
 	flag = '\0';
 	curpath = NULL;
 	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j))

@@ -36,7 +36,6 @@ int 		ft_echo(t_op *t_exec)
 	int i;
 	int slash_n;
 
-	printf("OKKKKKKKKKKKKKK echo\n");
 	int ok = 0;
 	t_op *op = NULL;
 	if (t_exec->cmd[1] == NULL)

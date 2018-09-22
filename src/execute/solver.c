@@ -51,40 +51,39 @@ int ft_waiting2(int status)
 	return (EXIT_FAILURE);
 }
 
-int			ft_solver(t_op *t_exec, pid_t pid, int builtins)
+//int			ft_check_command2(t_exec, 
+int			ft_solver(t_op *t_exec, pid_t pid, char *bin)
 {
-	char *tmp_bin;
 	char *raccmd;
-	int ok;
 	int status;
 	int result;
 
 	result = 0;
-	if (builtins > 0)
-		result = ft_builtins(t_exec);
+	if ((g_builtins = ft_check_command(t_exec->cmd[0])) != 0)
+	{
+		add_last_param(t_exec->cmd);
+		exit(result = ft_builtins(t_exec));
+	}
 	else
 	{
+		g_builtins = 0;
 		raccmd = ft_strdup(t_exec->cmd[0]);
-		tmp_bin = ft_search_bin(t_exec->cmd[0]);
-		if (pid == 0)
-		{
-			add_pid_bin(pid);
-	execve(tmp_bin, t_exec->cmd, g_env);
-			/*{
-			  ft_hashtable(tmp_bin, raccmd);
-			  ft_strdel(&raccmd);
-			  add_last_param(t_exec->cmd);
-			  ft_unset_var("PID_BIN");
-			}*/
-			/*else
-			{
-			ft_strdel(&raccmd);
-			add_last_param(t_exec->cmd);
-			if (tmp_bin == NULL)
-			ft_print_error(t_exec->cmd[0], "Command not found !");*/
-		}
+		add_pid_bin(pid);
+		execve(bin, t_exec->cmd, g_env);
+		/*{
+		  ft_hashtable(tmp_bin, raccmd);
+		  ft_strdel(&raccmd);
+		  add_last_param(t_exec->cmd);
+		  ft_unset_var("PID_BIN");
+		  }*/
+		/*else
+		  {
+		  ft_strdel(&raccmd);
+		  add_last_param(t_exec->cmd);
+		  if (tmp_bin == NULL)
+		  ft_print_error(t_exec->cmd[0], "Command not found !");*/
 		//result = ft_waiting2(status);
 	}
 	add_last_param(t_exec->cmd);
 	return (result);
-}
+	}

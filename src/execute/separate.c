@@ -83,7 +83,7 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 
 int			ft_waitstat(int *status, int builtins)
 {
-	if (builtins == 0)
+	if (g_builtins == 0)
 		wait(status);
 	while(wait(NULL) > 0)
 		;
@@ -136,10 +136,10 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		loop.fd_out = 1;
 		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-		if ((ok = ft_check_command(opera->cmd[0])) == 0)
-		{
 			tmp_bin = ft_search_bin(opera->cmd[0]);
-		}
+			// verififer que la commande n'est pas exit, et peut etre d'autres commandes x. Faut executer la commande x ici, et pas dans solver.
+			if (ft_strcmp("exit", opera->cmd[0]) == 0)
+				ft_exit(opera);
 		if (tmp_bin != NULL)
 		{
 			if ((pid = fork()) == 0)
@@ -148,7 +148,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 				if (i != 1 && loop.fd_out == 1)
 					dup2(fd[1], STDOUT_FILENO);
 				close(fd[0]);
-				ft_solver(opera, pid, builtins);
+				ft_solver(opera, pid, tmp_bin);
 				//exit(-1);
 			}
 			else
