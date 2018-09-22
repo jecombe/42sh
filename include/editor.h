@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 00:16:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 19:33:03 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -137,5 +137,6 @@ int		term_historic(t_editor **ed);
 int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);
 char	*find_env_var(char **env, char *var, int mode);
+void	prompt_example(void);
 
 #endif

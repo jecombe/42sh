@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/21 17:26:47 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/22 19:32:26 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -62,6 +62,7 @@ SRCS_NAME =	\
 			editor/term_historic.c \
 			editor/term_init.c \
 			editor/find_env_var.c \
+			editor/prompt_git.c \
 			ft_select/ft_arrows.c \
 			ft_select/ft_char_by_line.c \
 			ft_select/ft_count_line.c \
