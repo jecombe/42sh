@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 19:33:03 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 21:46:40 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,6 +45,7 @@
 
 typedef struct winsize	t_sz;
 typedef struct dirent	t_dirent;
+typedef struct s_select	t_select;
 
 typedef enum		s_prompt
 {
@@ -80,6 +81,7 @@ typedef struct		s_editor
 	char	*line;
 	char	*tmp_line;
 	t_tab	t;
+	t_select	*sel;
 	int		hist;
 	int		tabu;
 }					t_editor;

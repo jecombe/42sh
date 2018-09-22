@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 00:00:08 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 21:40:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 int		echap_char(char **element)
 {
@@ -300,12 +300,13 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 2)
 	{
+		ft_select(ed, &word, 0);
 //		printf("REFRESH\n");
 	}
 	else if (version == 0)
 	{
+		ft_free_t_select(&(*ed)->sel);
 //		printf("DEL\n");
-		ft_select(ed, &word, 1);
 	}
 //	}
 //	printf("LINE == %s\n", word);

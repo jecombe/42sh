@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 00:09:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 22:03:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
 	}
-	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY) && (*ed)->tabu != -1)
+	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D) && (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
 		ft_strdel(&(*ed)->tmp_line);
@@ -91,6 +91,7 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->t.word = NULL;
 	(*ed)->t.nb_word = 0;
 	(*ed)->t.nb_char = 0;
+	(*ed)->sel = NULL;
 	*line = prompt != PROMPT && prompt != E_PIPE ?
 	ft_strjoin_free(*line, "\n") : NULL;
 	return (1);

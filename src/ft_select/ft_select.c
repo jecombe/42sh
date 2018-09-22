@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 00:14:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/22 22:08:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 static int	ft_manage_raw(t_term *raw, int version)
 {
-	if (version == 0)
+/*	if (version == 0)
 	{
 		if (tcgetattr(STDIN_FILENO, raw) == -1)
 			return (1);
@@ -32,7 +32,7 @@ static int	ft_manage_raw(t_term *raw, int version)
 		if (tcsetattr(STDIN_FILENO, TCSANOW, raw) == -1)
 			return (1);
 		tputs(tgetstr("ve", NULL), 1, ft_outc);
-	}
+	}*/
 	return (0);
 }
 
@@ -56,7 +56,7 @@ int				ft_test(t_select **sel, int ret, t_editor **ed)
 //		{
 //		printf("REFRESH == %d\n", refresh);
 //		sleep(2);
-//			ft_print_params((*sel));
+//			ft_print_params(*sel);
 //		}
 //		refresh == 2 ? ft_putstr_fd("\E[0J", 2) : 0;
 		ret = ft_manage_entry(ed, &(*sel));
@@ -66,21 +66,19 @@ int				ft_test(t_select **sel, int ret, t_editor **ed)
 
 int			ft_select(t_editor **ed, char **line, int version)
 {
-	t_select	*sel;
 	int			ret;
 	t_term		raw;
 
 	ret = 0;
-	sel = NULL;
 	if (!ft_manage_raw(&raw, 0))
 	{
-		ft_init_select(&sel, (*ed)->t.elem, (*ed)->tabu);
-		version == 0 ? ft_print_params(sel) : 0;
-		version == 1 ? ft_test(&sel, ret, ed) : 0;
-		if (sel->ret)
-			*line = ft_strdup(sel->ret);
+		version == 0 ? ft_init_select(&(*ed)->sel, (*ed)->t.elem, (*ed)->tabu) : 0;
+		version == 0 ? ft_print_params((*ed)->sel) : 0;
+		version == 1 ? ft_test(&(*ed)->sel, ret, ed) : 0;
+		if ((*ed)->sel->ret)
+			*line = ft_strdup((*ed)->sel->ret);
 		ft_manage_raw(&raw, 1);
-		ft_free_t_select(&sel);
+//		ft_free_t_select(&sel);
 	}
 	return (0);
 }
