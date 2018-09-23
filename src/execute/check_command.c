@@ -17,11 +17,11 @@ int			ft_check_command(char *cmd)
 {
 	if (ft_strcmp("echo", cmd) == 0)
 		return (1);
-if (ft_strcmp("cd", cmd) == 0)
+	if (ft_strcmp("cd", cmd) == 0)
 		return (2);
 	else if (ft_strcmp("exit", cmd) == 0)
 		return (3);
-		else if (ft_strcmp("env", cmd) == 0)
+	else if (ft_strcmp("env", cmd) == 0)
 		return (4);
 	else if (ft_strcmp("setenv", cmd) == 0)
 		return (5);
@@ -44,11 +44,11 @@ char			*ft_check_command2(char *cmd)
 {
 	if (ft_strcmp("echo", cmd) == 0)
 		return ("good");
-if (ft_strcmp("cd", cmd) == 0)
+	if (ft_strcmp("cd", cmd) == 0)
 		return ("good");
 	else if (ft_strcmp("exit", cmd) == 0)
 		return ("good");
-		else if (ft_strcmp("env", cmd) == 0)
+	else if (ft_strcmp("env", cmd) == 0)
 		return ("good");
 	else if (ft_strcmp("setenv", cmd) == 0)
 		return ("good");

@@ -137,10 +137,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		loop.fd_out = 1;
 		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-			//faudrais trouver une condition mieux
 			tmp_bin = ft_check_command2(opera->cmd[0]);
-			if (ft_strcmp("exit", opera->cmd[0]) == 0)
-				tmp_bin = "r";
 		if (tmp_bin != NULL)
 		{
 			if ((pid = fork()) == 0)
@@ -150,7 +147,6 @@ int			ft_go_pipe(t_op *opera, int fd2)
 					dup2(fd[1], STDOUT_FILENO);
 				close(fd[0]);
 				ft_solver(opera, pid, tmp_bin);
-				//exit(-1);
 			}
 			else
 			{
