@@ -33,20 +33,33 @@ int					heart_of_101sh(char *line, int fd_base)
 		{
 			//ft_watch_result(line, lex, seq);
 			ft_sequence(seq, fd_base, pid);
-		ft_free_b_seq(&seq);
+			ft_free_b_seq(&seq);
 		}
-//		else
-//		{
-//			printf("!!!!!!!!!!!!!SSSSEEEQQQ\n");
-//			ft_free_b_seq(&seq);
-//		}
-//	printf("FREE_B_SEA FINISH\n");
+		//		else
+		//		{
+		//			printf("!!!!!!!!!!!!!SSSSEEEQQQ\n");
+		//			ft_free_b_seq(&seq);
+		//		}
+		//	printf("FREE_B_SEA FINISH\n");
 	}
 	ft_lexer_del(&lex);
 	ft_strdel(&line);
 	return (EXIT_SUCCESS);
 }
 
+void        ft_print_logo(void)
+{
+	ft_putstr("\e[95m");
+
+
+	ft_putendl (" _  _  ____      _");
+	ft_putendl ("| || ||___ \\ ___| |__");
+	ft_putendl ("| || |_ __) / __| '_ \\");
+	ft_putendl ("|__   _/ __/\\__ \\ | | |");
+	ft_putendl ("   |_||_____|___/_| |_|");
+	ft_putstr("\e[39m");
+	ft_putstr("\n");
+}
 static void			shell(void)
 {
 	e_prompt		prompt;
@@ -54,6 +67,7 @@ static void			shell(void)
 
 	prompt = PROMPT;
 	line = NULL;
+	ft_print_logo();
 	while (get_stdin(&line, &prompt) != -2)
 	{
 		if (line && (!(prompt = prelexer(line))))
