@@ -39,11 +39,10 @@ char	*ft_go_to(char *bin, int nb)
 int				ft_check_file_is_directory(char *file)
 {
 	struct stat st;
+	struct stat sb;
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
 		return (-1);
-	if (access(file, X_OK) == -1)
-		return (-2);
 	else
 		return (0);
 }
@@ -54,8 +53,6 @@ int		ft_check_source(char *source)
 
 	if (lstat(source, &sb) == -1)
 		return (-3);
-	if (access(source, X_OK) == -1)
-		return (-2);
 	return (0);
 }
 
