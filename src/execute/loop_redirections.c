@@ -49,7 +49,7 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 		}
 		if (redirect->redirect == LESS)
 		{
-			if ((nb = ft_check_source(redirect->file)) == -1)
+			if ((nb = ft_check_source(redirect->file)) == -3)
 			{
 				ft_print_message(redirect->file, nb);
 				return (EXIT_FAILURE);

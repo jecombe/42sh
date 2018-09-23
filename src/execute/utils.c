@@ -39,7 +39,6 @@ char	*ft_go_to(char *bin, int nb)
 int				ft_check_file_is_directory(char *file)
 {
 	struct stat st;
-	struct stat sb;
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
 		return (-1);
@@ -50,7 +49,6 @@ int				ft_check_file_is_directory(char *file)
 int		ft_check_source(char *source)
 {
 	struct stat sb;
-
 	if (lstat(source, &sb) == -1)
 		return (-3);
 	return (0);
@@ -60,7 +58,7 @@ void		ft_print_message(char *source, int nb)
 {
 	if (nb == -1)
 		ft_print_error(source, "is a directory");
-	if (nb == -2)
+	else if (nb == -2)
 		ft_print_error(source, "permission denied !");
 	else if (nb == -3)
 		ft_print_error(source, "no such file or directory");
