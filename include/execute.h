@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:36:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/23 19:15:05 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 # define EXECUTE_H
 
 # include "heart.h"
+# include <errno.h>
 
 # define HEREDOC 10
 # define NOTHING -1

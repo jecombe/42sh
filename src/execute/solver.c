@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:38:12 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/23 20:10:22 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,8 +50,6 @@ int ft_waiting2(int status)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }
-
-//int			ft_check_command2(t_exec, 
 int			ft_solver(t_op *t_exec, pid_t pid, char *bin)
 {
 	char *raccmd;

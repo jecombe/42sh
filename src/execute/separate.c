@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:38:07 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/23 20:13:10 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 {
 	int file;
 	int flag;
+	int nb;
 
 	flag = 0;
 	file = -1;
@@ -47,9 +48,9 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 			loop->fd_in = ft_redirect_heredoc(redirect, 0);
 		if (redirect->redirect == GREAT || redirect->redirect == DGREAT)
 		{
-			if (ft_check_file_is_directory(redirect->file) == -1)
+			if ((nb = ft_check_file_is_directory(redirect->file)) < 0)
 			{
-				ft_print_message(redirect->file, 1);
+				ft_print_message(redirect->file, nb);
 				return (EXIT_FAILURE);
 			}
 			flag = ft_return_flag(redirect);
@@ -58,9 +59,9 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 		}
 		if (redirect->redirect == LESS)
 		{
-			if (ft_check_source(redirect->file) == -1)
+			if ((nb = ft_check_source(redirect->file)) < 0)
 			{
-				ft_print_message(redirect->file, 2);
+				ft_print_message(redirect->file, nb);
 				return (EXIT_FAILURE);
 			}
 			loop->fd_in = ft_open_redirect(redirect->file, O_RDONLY, 0);
