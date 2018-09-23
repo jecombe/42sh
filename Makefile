@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/22 19:32:26 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/23 20:34:04 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -118,6 +118,7 @@ SRCS_NAME =	\
 			execute/solver.c \
 			execute/utils.c \
 			execute/check_command.c \
+			execute/loop_redirections.c \
 			execute/sequences.c \
 			execute/separate.c \
 			execute/open_file_redirections.c \

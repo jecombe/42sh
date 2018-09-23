@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 19:15:05 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/23 20:47:52 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,42 +20,21 @@
 # define HEREDOC 10
 # define NOTHING -1
 
-int g_p;
-int g_builtins;
 
 typedef struct	s_loop
 {
-	int fd_in;
-	int fd_out;
-	int fd_save;
+	int			fd_in;
+	int			fd_out;
+	int			fd_save;
+	int			start;
+	char		*bin;
 }				t_loop;
 
-typedef struct	s_pipe
-{
-	int			fd_save;
-	int			fd_out;
-	int			fd_in;
-	int			start;
-	int			buil_pipe;
-	char		*bin;
-	int			ret;
-	int			built;
-}				t_pipe;
-
-typedef struct	s_separate
-{
-	int			i;
-	int			or_if;
-	int			and_if;
-	int			ret;
-}				t_separate;
-
-int				ft_solver(t_op *tmp_exec, pid_t pid, char *bin);
+int			ft_solver(t_op *t_exec, pid_t pid, t_loop *loop);
 char			*ft_search_bin(char *cmd);
 char			*ft_go_to(char *bin, int nb);
 void			ft_skip(char **ttab);
 void			ft_get_bin();
-t_pipe			ft_init_pipe(int i);
 int				ft_builtins(t_op *t_exec);
 int				ft_check_command(char *cmd);
 int				ft_open_redirect(char *file, int flag, int flag2);
@@ -74,8 +53,7 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop);
 void			ft_print_error(const char *s1, const char *s2);
 int				binary_signal(int status, int pid, char *bin);
 void			ft_print_message(char *source, int nb);
-t_separate		ft_init_separate(void);
-t_loop		ft_init_loop(void);
+t_loop		ft_init_loop(int i);
 char			*ft_check_command2(char *cmd);
 
 #endif
