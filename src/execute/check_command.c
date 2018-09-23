@@ -13,15 +13,6 @@
 
 #include "heart.h"
 
-int			ft_check_command2(char *cmd)
-{
-	if (ft_strcmp("echo", cmd) == 0)
-		return (1);
-	else if (ft_strcmp("env", cmd) == 0)
-		return (2);
-	else
-		return (0);
-}
 int			ft_check_command(char *cmd)
 {
 	if (ft_strcmp("echo", cmd) == 0)
@@ -48,4 +39,31 @@ if (ft_strcmp("cd", cmd) == 0)
 		return (11);
 	else
 		return (0);
+}
+char			*ft_check_command2(char *cmd)
+{
+	if (ft_strcmp("echo", cmd) == 0)
+		return ("good");
+if (ft_strcmp("cd", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("exit", cmd) == 0)
+		return ("good");
+		else if (ft_strcmp("env", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("setenv", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("unsetenv", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("hash", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("set", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("unset", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("export", cmd) == 0)
+		return ("good");
+	else if (ft_strcmp("ft_assign", cmd) == 0)
+		return ("good");
+	else
+		return (ft_search_bin(cmd));;
 }

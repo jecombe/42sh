@@ -75,6 +75,6 @@ int				binary_signal(int status, int pid, char *bin);
 void			ft_print_message(char *source, int nb);
 t_separate		ft_init_separate(void);
 t_loop		ft_init_loop(void);
-int			ft_check_command2(char *cmd);
+char			*ft_check_command2(char *cmd);
 
 #endif

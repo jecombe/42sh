@@ -116,6 +116,7 @@ int			ft_return_command(int status, char *bin, int builtins)
 	printf("FAILURE\n");
 	return (EXIT_FAILURE);
 }
+
 int			ft_go_pipe(t_op *opera, int fd2)
 {
 	int i = ft_count_pipe(opera);
@@ -136,8 +137,8 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		loop.fd_out = 1;
 		if (ft_loop_redirect(opera->redirect, fd2, fd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-			tmp_bin = ft_search_bin(opera->cmd[0]);
-			//faudrais trouver une condition mieux..
+			//faudrais trouver une condition mieux
+			tmp_bin = ft_check_command2(opera->cmd[0]);
 			if (ft_strcmp("exit", opera->cmd[0]) == 0)
 				tmp_bin = "r";
 		if (tmp_bin != NULL)
