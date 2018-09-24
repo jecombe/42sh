@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 21:40:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/24 10:42:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -252,7 +252,6 @@ int		lexer_tab(t_editor **ed)
 		(*ed)->cursor_str_pos = end_word;
 		return (-1);
 	}
-//	printf("NB_WORD == %d NB_CHAR == %d\n", (*ed)->t.nb_word, (*ed)->t.nb_char);
 	if ((*ed)->t.cmd)
 	{
 		(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char > 0 ?
@@ -263,16 +262,51 @@ int		lexer_tab(t_editor **ed)
 	return (1);
 }
 
+void	place_cursor_before(t_editor *ed)
+{
+	int line_max;
+	int	nb_line;
+	int	cursor;
+	int	to_jump;
+
+	line_max = ed->prompt_size;
+	line_max += ed->line ? ft_strlen(ed->line) : 0;
+	nb_line = line_max / ed->ws_col + 1;
+	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
+	while (nb_line - to_jump > 0)
+	{
+		tputs(tgetstr("do", NULL), 1, ft_putchar);
+		nb_line--;
+	}
+	ft_putchar('\r');
+}
+
+void	place_cursor_after(t_editor *ed)
+{
+	int		line_max;
+	int	nb_line;
+	int	cursor;
+	int	to_jump;
+
+	line_max = ed->prompt_size;
+	line_max += ed->line ? ft_strlen(ed->line) : 0;
+	nb_line = line_max / ed->ws_col + 1;
+	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
+	tputs(tgetstr("up", NULL), 1, ft_putchar);
+	tputs(tgetstr("ce", NULL), 1, ft_putchar);
+	display_prompt(find_env_var(g_env, "HOME", 0), 0);
+	ft_putstr(ed->line);
+}
+
 int		tabulator(t_editor **ed, int version)
 {
 	char	*word;
 	char	**element;
 
-	(void)version;
 	word = NULL;
+	place_cursor_before(*ed);
 	if ((*ed)->tabu == -1 && version == 1)
 	{
-//		printf("TABU\n");
 		if (lexer_tab(ed) != -1)
 		{
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
@@ -285,31 +319,20 @@ int		tabulator(t_editor **ed, int version)
 			(*ed)->tabu = 0;
 			ft_select(ed, &word, 0);
 		}
-//		printf("PREMIERE FOIS OK\n");
-//		sleep(2);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
-		{
-//			printf("\n\r");
 			ft_select(ed, &word, 1);
-	//		display_prompt(ft_getenv("HOME", g_set), 0);
-//			printf("RET_FT_SELECT == %s\n", word);
-		}
+		if (word)
+			(*ed)->line = ft_strdup(word);
 	}
 	else if (version == 2)
-	{
 		ft_select(ed, &word, 0);
-//		printf("REFRESH\n");
-	}
 	else if (version == 0)
-	{
 		ft_free_t_select(&(*ed)->sel);
-//		printf("DEL\n");
-	}
-//	}
-//	printf("LINE == %s\n", word);
+	place_cursor_after(*ed);
+//	printf("WORD == %s\n", word);
 //	sleep(2);
 	return (0);
 }
