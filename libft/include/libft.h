@@ -123,7 +123,7 @@ char				*ft_getenv(char *str, char **env);
 int					ft_strdel_in_tab(char ***tablo, int index);
 int					ft_str_isalnum(char *str);
 int					ft_str_isblank(char *str);
-void				ft_putstr_color(char const *s, int nb);
+void				ft_putstr_color(char const *s, int nb, int fd);
 int					ft_isquote(char c);
 int					ft_strreplace(char ***tablo, int index, char *by);
 int					ft_add_str_at(char ***tablo, char *str, int at);

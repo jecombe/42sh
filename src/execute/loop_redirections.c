@@ -38,6 +38,7 @@ int		ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
 				ft_print_message(redirect->file, nb);
 				return (EXIT_FAILURE);
 			}
+			printf("eeeeeeeeeeeeeeee\n");
 			flag = ft_return_flag(redirect);
 			loop->fd_out = ft_open_redirect(redirect->file ,flag, O_WRONLY);
 			if (loop->fd_out < 0)

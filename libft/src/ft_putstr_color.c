@@ -13,48 +13,48 @@
 
 #include "../include/libft.h"
 
-static void		ft_bold(int nb)
+static void		ft_bold(int nb, int fd)
 {
 	if (nb == 8)
-		ft_putstr(BLACKB);
+		ft_putstr_fd(BLACKB, fd);
 	if (nb == 9)
-		ft_putstr(REDB);
+		ft_putstr_fd(REDB, fd);
 	if (nb == 10)
-		ft_putstr(GREENB);
+		ft_putstr_fd(GREENB, fd);
 	if (nb == 11)
-		ft_putstr(YELLOWB);
+		ft_putstr_fd(YELLOWB, fd);
 	if (nb == 12)
-		ft_putstr(BLUEB);
+		ft_putstr_fd(BLUEB, fd);
 	if (nb == 13)
-		ft_putstr(PURPLEB);
+		ft_putstr_fd(PURPLEB, fd);
 	if (nb == 14)
-		ft_putstr(CYANB);
+		ft_putstr_fd(CYANB, fd);
 	if (nb == 15)
-		ft_putstr(GREYB);
+		ft_putstr_fd(GREYB, fd);
 }
 
-void			ft_putstr_color(char const *s, int nb)
+void			ft_putstr_color(char const *s, int nb, int fd)
 {
 	if (s)
 	{
 		if (nb == 0)
-			ft_putstr(BLACK);
+			ft_putstr_fd(BLACK, fd);
 		if (nb == 1)
-			ft_putstr(RED);
+			ft_putstr_fd(RED, fd);
 		if (nb == 2)
-			ft_putstr(GREEN);
+			ft_putstr_fd(GREEN, fd);
 		if (nb == 3)
-			ft_putstr(YELLOW);
+			ft_putstr_fd(YELLOW, fd);
 		if (nb == 4)
-			ft_putstr(BLUE);
+			ft_putstr_fd(BLUE, fd);
 		if (nb == 5)
-			ft_putstr(PURPLE);
+			ft_putstr_fd(PURPLE, fd);
 		if (nb == 6)
-			ft_putstr(CYAN);
+			ft_putstr_fd(CYAN, fd);
 		if (nb == 7)
-			ft_putstr(GREY);
+			ft_putstr_fd(GREY, fd);
 		else
-			ft_bold(nb);
-		ft_putstr(s);
+			ft_bold(nb, fd);
+		ft_putstr_fd(s, fd);
 	}
 }
