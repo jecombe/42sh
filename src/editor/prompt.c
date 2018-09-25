@@ -49,7 +49,7 @@ static void		prompt_type(e_prompt prompt)
 	else if (prompt == DB_QUOTE)
 		ft_putstr("dquote bquote> ");
 }
-
+/*
 void			display_prompt(char *home, e_prompt prompt)
 {
 	char pwd[4096];
@@ -73,4 +73,26 @@ void			display_prompt(char *home, e_prompt prompt)
 	if (home)
 		ft_strdel(&home);
 //	prompt_example();
+}*/
+
+void			display_prompt(char *home, e_prompt prompt)
+{
+	char	pwd[4096];
+	char	*error;
+
+	if (prompt != PROMPT)
+		return (prompt_type(prompt));
+	getcwd(pwd, sizeof(pwd));
+	error = ft_getenv("?", g_set);
+	ft_putstr(error && error[0] == '1' ? "\e[91m➜\e[0m" : "\e[92m➜\e[0m");
+	ft_putstr("  \e[1m\e[93m");
+	if (!ft_strcmp(pwd, !home ? "" : home))
+		ft_putstr("~");
+	else
+		ft_putstr(cut_pwd_dir(pwd));
+	ft_putstr("\e[0m ");
+	ft_print_git_branch();
+	ft_putstr(error && error[0] == '1' ? "\U0001F44E" : "\U0001F44D");
+	ft_putstr("  ");
+	free(error);
 }

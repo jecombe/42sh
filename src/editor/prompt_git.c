@@ -71,7 +71,7 @@ static	char        *ft_get_git_branch()
 	return (NULL);
 }
 
-void        prompt_example(void)
+void	        	ft_print_git_branch(void)
 {
 	char    *prompt;
 	char    *git_branch;
@@ -81,7 +81,7 @@ void        prompt_example(void)
 	prompt = ft_miniconcat(prompt, git_branch);
 	free(git_branch);
 	prompt = ft_miniconcat(prompt, "\e[94m)\e[0m ");
-	prompt = ft_miniconcat(prompt, "\U0001F44D  ");
+//	prompt = ft_miniconcat(prompt, "\U0001F44D  ");
 	ft_putstr(prompt);
 	free(prompt);
 }

@@ -50,13 +50,13 @@ int			ft_return_command(t_loop *loop)
 	{
 		if (loop->bin == NULL)
 		{
-			printf("FAILURE\n");
+		//	printf("FAILURE\n");
 			return (EXIT_FAILURE);
 		}
-		printf("SUCCES\n");
+	//	printf("SUCCES\n");
 		return (EXIT_SUCCESS);
 	}
-	printf("FAILURE\n");
+//	printf("FAILURE\n");
 	return (EXIT_FAILURE);
 }
 

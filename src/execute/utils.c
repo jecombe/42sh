@@ -15,13 +15,17 @@
 
 void	ft_print_error(const char *s1, const char *s2)
 {
-	ft_putstr_color("42sh: ", 4, 2);
+/*	ft_putstr_color("42sh: ", 4, 2);
 	ft_putstr_color(s1, 1, 2);
 	ft_putstr_fd(STOP, 2);
 	ft_putstr_color(": ", 1, 2);
 	ft_putstr_color(s2, 1, 2);
 	ft_putstr_fd(STOP, 2);
-	ft_putchar_fd('\n', 2);
+	ft_putchar_fd('\n', 2);*/
+	ft_putstr(s1);
+	ft_putstr(": ");
+	ft_putstr(s2);
+	ft_putstr("\n");
 }
 
 char	*ft_go_to(char *bin, int nb)

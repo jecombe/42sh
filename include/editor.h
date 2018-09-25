@@ -57,7 +57,17 @@ typedef enum		s_prompt
 	E_HDOC,
 	E_PIPE,
 	BACKSLASH,
+	READ,
 }					e_prompt;
+
+typedef struct		s_read
+{
+	char			*line;
+	e_prompt		*prompt;
+	char			delimiter;
+	int				limit;
+	int				hide;
+}					t_read;
 
 typedef struct		s_tab
 {
@@ -139,6 +149,6 @@ int		term_historic(t_editor **ed);
 int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);
 char	*find_env_var(char **env, char *var, int mode);
-void	prompt_example(void);
+void	ft_print_git_branch(void);
 
 #endif
