@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 08:19:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 12:34:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -263,9 +263,8 @@ void	place_cursor_before(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / (ed->ws_col + 1);
-//	nb_line = line_max / ed->ws_col + 1;PROBLEME AVEC LLDB MAIS OK
-//	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
+	nb_line = line_max / ed->ws_col + 1;
+	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
 	while (nb_line - to_jump > 0)
 	{
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
@@ -282,16 +281,16 @@ void	place_cursor_after(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / ed->ws_col;
-	while (nb_line >= 0)
+	nb_line = line_max / ed->ws_col + 1;
+	while (nb_line > 0)
 	{
 		tputs(tgetstr("up", NULL), 1, ft_putchar);
+		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		nb_line--;
 	}
-	tputs(tgetstr("ce", NULL), 1, ft_putchar);
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putfreshstr(ed->line);
-//	printf("\nLINE_MAX == %d > %d\n", line_max, (int)(ed->cursor_str_pos = ed->prompt_size));
+//	printf("\nLINE_MAX == %d > %d\n", line_max, (int)(ed->cursor_str_pos + ed->prompt_size));
 //	sleep(1);
 	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
@@ -326,22 +325,32 @@ int		replace_line_after_tab(t_editor **ed)
 	return (0);
 }
 */
+
+void	ft_free_t_tab(t_tab *t)
+{
+	ft_tabdel(&(*t).cmd);
+	ft_tabdel(&(*t).elem);
+	ft_strdel(&(*t).word);
+	(*t).nb_word = 0;
+	(*t).nb_char = 0;
+}
+
 int		tabulator(t_editor **ed, int version)
 {
 	char	*word;
 
 	word = NULL;
-	printf("ENTER INSIDE TAB\n");
-	sleep(1);
+///	printf("ENTER INSIDE TAB\n");
+///	sleep(1);
 	place_cursor_before(*ed);
-	printf("00000\n");
-	sleep(1);
+///	printf("00000\n");
+///	sleep(1);
 	if ((*ed)->tabu == -1 && version == 1)
 	{
 		if (lexer_tab(ed) != -1)
 		{
-	printf("11111\n");
-	sleep(1);
+///	printf("11111\n");
+///	sleep(1);
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
 				(*ed)->t.elem = search_bin((*ed)->t.word);
 			else if ((*ed)->t.nb_word == -1)
@@ -350,19 +359,19 @@ int		tabulator(t_editor **ed, int version)
 				(*ed)->t.elem = search_in_rep((*ed)->t.word);
 			ft_strdel(&word);
 			(*ed)->tabu = 0;
-	printf("22222\n");
-	sleep(1);
+///	printf("22222\n");
+///	sleep(1);
 			ft_select(ed, &word, 0);
-	printf("3333\n");
-	sleep(1);
+///	printf("3333\n");
+///	sleep(1);
 		}
-	printf("4444\n");
-	sleep(1);
+///	printf("4444\n");
+///	sleep(1);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
-	printf("55555\n");
-	sleep(1);
+///	printf("55555\n");
+///	sleep(1);
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 			ft_select(ed, &word, 1);
 		if (word)
@@ -370,22 +379,19 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 2)
 	{
-		printf("66666\n");
-		sleep(1);
+///		printf("66666\n");
+///		sleep(1);
 		ft_select(ed, &word, 0);
 	}
 	else if (version == 0)
 	{
-		printf("7777\n");
-		sleep(1);
+///		printf("7777\n");
+///		sleep(1);
 		ft_free_t_select(&(*ed)->sel);
+		ft_free_t_tab(&(*ed)->t);
 	}
-	printf("8888\n");
-	sleep(1);
-//	if ((*ed)->sel->ret)
-///		replace_line_after_tab(ed);
+///	printf("8888\n");
+///	sleep(1);
 	place_cursor_after(*ed);
-//	printf("WORD == %s\n", word);
-//	sleep(1);
 	return (0);
 }

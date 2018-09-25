@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 03:33:57 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 12:30:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,22 +20,28 @@ static int			issep(const char *s, int i)
 	return (0);
 }
 
-static size_t		wordlen(const char *s, char c, size_t index, int *cursor_pos)
+static size_t		wordlen(const char *s, size_t index, int *cursor_pos)
 {
 	int i = index;
 	size_t	count;
+	char	c;
 
+	c = s[i];
 	count = 0;
+	printf("\n000\n");
 	if (ft_isseparator(c))
 		while (s[i] == c)
 		{
+			printf("%c", s[i]);
 			count++;
 			i++;
 		}
 	else if (ft_isblank(c))
 	{
-		while (ft_isblank(s[i]) && s[i] && !(i == *cursor_pos))
+//		while (ft_isblank(s[i]) && s[i] && !(i == *cursor_pos))
+		while (ft_isblank(s[i]) && s[i])
 		{
+			printf("%c", s[i]);
 			i++;
 			count++;
 		}
@@ -44,9 +50,11 @@ static size_t		wordlen(const char *s, char c, size_t index, int *cursor_pos)
 	else if (ft_isprint(c) && !ft_isblank(c))
 		while (ft_isprint(s[i]) && !ft_isblank(s[i]) && s[i] && !issep(s, i))
 		{
+			printf("%c", s[i]);
 			i++;
 			count++;
 		}
+	printf("\n111\n");
 	return (count);
 }
 
@@ -64,10 +72,10 @@ char				**ft_tabsplit(const char *s, int cursor_pos)
 	if (s)
 		while (s[i] != '\0')
 		{
-			tmp = ft_strsub(s, ((int)i), wordlen(s, s[i], i, &set_cursor[0]));
+			tmp = ft_strsub(s, ((int)i), wordlen(s, i, &set_cursor[0]));
 			ft_malloc_cmd(&tablo, tmp);
 			ft_strdel(&tmp);
-			i += wordlen(s, s[i], i, &set_cursor[1]);
+			i += wordlen(s, i, &set_cursor[1]);
 		}
 	return (tablo);
 }

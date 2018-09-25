@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 08:27:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 11:37:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,43 +31,41 @@ static t_line	*ft_init_begin(t_line **line, char *av, int inside)
 	return (after);
 }
 
-//REMPLACER LES VALEUR AVEC LA STRUCT ED
-
-void			ft_init_select(char **av, int index, t_editor **ed)
+void			ft_init_select(t_editor **ed)
 {
 	int		i;
 	t_line	*now;
 	t_line	*line;
 
 	i = -1;
-	printf("ENTER INSIDE INIT SELECT\n");
-	sleep(1);
-	if (av[1])
+///	printf("ENTER INSIDE INIT SELECT\n");
+///	sleep(1);
+	if ((*ed)->t.elem)
 	{
+///		printf("3000\n");
+///		sleep(1);
 		(*ed)->sel = malloc(sizeof(t_select));
 		(*ed)->sel->line = NULL;
-		printf("3000\n");
-		sleep(1);
-		while (av[++i])
+		while ((*ed)->t.elem[++i])
 		{
 			if ((*ed)->sel->line)
-				ft_first_sort(&(*ed)->sel->line, av[i], 0);
+				ft_first_sort(&(*ed)->sel->line, (*ed)->t.elem[i], 0);
 			else
-				now = ft_init_begin(&(*ed)->sel->line, av[i], 0);
+				now = ft_init_begin(&(*ed)->sel->line, (*ed)->t.elem[i], 0);
 		}
 		i = 0;
 		line = (*ed)->sel->line;
-		printf("3001\n");
-		sleep(1);
+///		printf("3001\n");
+///		sleep(1);
 		while (line)
 		{
-			if (i == index)
+			if (i == (*ed)->tabu)
 				line->cursor_inside = 1;
 			i++;
 			line = line->next;
 		}
-		printf("3002\n");
-		sleep(1);
+///		printf("3002\n");
+///		sleep(1);
 		(*ed)->sel->bp = ft_search_big_param((*ed)->sel->line);
 		(*ed)->sel->pose_min = 0;
 		(*ed)->sel->ds = NULL;
@@ -76,9 +74,9 @@ void			ft_init_select(char **av, int index, t_editor **ed)
 		(*ed)->sel->pbl = ft_params_by_line((*ed)->sel);
 		(*ed)->sel->nbl = ft_count_line((*ed)->sel);
 		(*ed)->sel->nbp = ft_count_params((*ed)->sel->line);
-		printf("3003\n");
-		sleep(1);
+///		printf("3003\n");
+///		sleep(1);
 	}
-		printf("3004\n");
-		sleep(1);
+///		printf("3004\n");
+///		sleep(1);
 }

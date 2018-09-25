@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 08:23:31 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 12:30:28 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,7 +68,7 @@ void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
 int						ft_manage_touch(t_editor **ed);
 int						ft_arrows(char arrows, t_select **t, int *place);
 int						ft_outc(int c);
-void					ft_init_select(t_select **sel, char **av, int index, t_editor **ed);
+void					ft_init_select(t_editor **ed);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);
