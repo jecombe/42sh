@@ -6,36 +6,62 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 03:37:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 08:19:55 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/ft_select.h"
 
-int			ft_attrib_line(t_select **t)
+int			replace_line_after_tab(t_editor **ed)
 {
-	t_line		*line;
+	int		i;
 
-	line = (*t)->line;
-	while (line->cursor_inside == 0)
-		line = line->next;
-	(*t)->ret = ft_strdup(line->elem);
+	i = -1;
+	if ((*ed)->t.cmd)
+	{
+		(*ed)->cursor_str_pos = 0;
+		while ((*ed)->t.cmd[++i] && i < (*ed)->t.nb_char)
+		{
+			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
+		}
+		ft_strdel(&(*ed)->t.cmd[(*ed)->t.nb_char - 1]);
+		(*ed)->t.cmd[(*ed)->t.nb_char - 1] = (*ed)->sel->ret;
+		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
+	}
+	else
+	{
+		(*ed)->line = ft_strdup((*ed)->sel->ret);
+		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
+	}
+	//ft_strdel(&(*ed)->sel->ret)	;
 	return (0);
 }
 
-int			ft_manage_touch(char *ret, t_select **t, int *place)
+int			ft_attrib_line(t_editor **ed)
 {
-	if ((ret[0] == 27 && ret[1] == 91) ||
-	(ret[0] == 9 && ret[1] == 0))
+	t_line		*line;
+
+	line = (*ed)->sel->line;
+	while (line->cursor_inside == 0)
+		line = line->next;
+	(*ed)->sel->ret = ft_strdup(line->elem);
+	replace_line_after_tab(ed);
+	return (0);
+}
+
+int			ft_manage_touch(t_editor **ed)
+{
+	if (((*ed)->key[0] == 27 && (*ed)->key[1] == 91) ||
+			((*ed)->key[0] == 9 && (*ed)->key[1] == 0))
 	{
-		ft_arrows(ret[0] == 9 ? 66 : ret[2], &(*t), place);
-		return (ft_attrib_line(t) + 1);
+		ft_arrows((*ed)->key[0] == 9 ? 66 : (*ed)->key[2], &(*ed)->sel, &(*ed)->tabu);
+		return (ft_attrib_line(ed) + 1);
 	}
-	else if (ret[0] == 10)
+	else if ((*ed)->key[0] == 10)
 	{
 		tputs(tgetstr("cd", NULL), 1, ft_putchar);
-		return (ft_attrib_line(t) + 4);
+		return (ft_attrib_line(ed) + 4);
 	}
 	return (-1);
 }

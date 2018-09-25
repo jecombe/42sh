@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 05:35:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 08:19:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -292,7 +292,7 @@ void	place_cursor_after(t_editor *ed)
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putfreshstr(ed->line);
 //	printf("\nLINE_MAX == %d > %d\n", line_max, (int)(ed->cursor_str_pos = ed->prompt_size));
-//	sleep(2);
+//	sleep(1);
 	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
 		move_cursor_left(ed);
@@ -300,7 +300,7 @@ void	place_cursor_after(t_editor *ed)
 		line_max--;
 	}
 }
-
+/*
 int		replace_line_after_tab(t_editor **ed)
 {
 	int		i;
@@ -325,17 +325,23 @@ int		replace_line_after_tab(t_editor **ed)
 //	ft_strdel(&(*ed)->sel->ret);
 	return (0);
 }
-
+*/
 int		tabulator(t_editor **ed, int version)
 {
 	char	*word;
 
 	word = NULL;
+	printf("ENTER INSIDE TAB\n");
+	sleep(1);
 	place_cursor_before(*ed);
+	printf("00000\n");
+	sleep(1);
 	if ((*ed)->tabu == -1 && version == 1)
 	{
 		if (lexer_tab(ed) != -1)
 		{
+	printf("11111\n");
+	sleep(1);
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
 				(*ed)->t.elem = search_bin((*ed)->t.word);
 			else if ((*ed)->t.nb_word == -1)
@@ -344,24 +350,42 @@ int		tabulator(t_editor **ed, int version)
 				(*ed)->t.elem = search_in_rep((*ed)->t.word);
 			ft_strdel(&word);
 			(*ed)->tabu = 0;
+	printf("22222\n");
+	sleep(1);
 			ft_select(ed, &word, 0);
+	printf("3333\n");
+	sleep(1);
 		}
+	printf("4444\n");
+	sleep(1);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
+	printf("55555\n");
+	sleep(1);
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 			ft_select(ed, &word, 1);
 		if (word)
 			(*ed)->line = ft_strdup(word);
 	}
 	else if (version == 2)
+	{
+		printf("66666\n");
+		sleep(1);
 		ft_select(ed, &word, 0);
+	}
 	else if (version == 0)
+	{
+		printf("7777\n");
+		sleep(1);
 		ft_free_t_select(&(*ed)->sel);
-	if ((*ed)->sel->ret)
-		replace_line_after_tab(ed);
+	}
+	printf("8888\n");
+	sleep(1);
+//	if ((*ed)->sel->ret)
+///		replace_line_after_tab(ed);
 	place_cursor_after(*ed);
 //	printf("WORD == %s\n", word);
-//	sleep(2);
+//	sleep(1);
 	return (0);
 }

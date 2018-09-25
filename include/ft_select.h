@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:56:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 08:23:31 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,14 +62,13 @@ typedef struct			s_select
 int						ft_select(t_editor **ed, char **line, int version);
 void					ft_error(const char *s, t_select **t);
 t_term					ft_save_raw_off(t_select **t);
-int						ft_manage_entry(t_editor **ed, t_select **sel);
 char					*ft_read_entry(t_select **t);
 void					ft_print_params(t_select *sel);
 void					ft_get_size_term(t_ws *ws, t_select **t, int fd);
-int						ft_manage_touch(char *ret, t_select **t, int *place);
+int						ft_manage_touch(t_editor **ed);
 int						ft_arrows(char arrows, t_select **t, int *place);
 int						ft_outc(int c);
-void					ft_init_select(t_select **sel, char **av, int index);
+void					ft_init_select(t_select **sel, char **av, int index, t_editor **ed);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
 int						ft_is_file(char *file);

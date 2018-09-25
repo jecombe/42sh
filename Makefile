@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/25 03:54:00 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/25 08:02:15 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -74,7 +74,6 @@ SRCS_NAME =	\
 			ft_select/ft_get_size_term.c \
 			ft_select/ft_init_select.c \
 			ft_select/ft_is_file.c \
-			ft_select/ft_manage_entry.c \
 			ft_select/ft_manage_touch.c \
 			ft_select/ft_outc.c \
 			ft_select/ft_params_by_line.c \

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 03:30:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 08:27:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,46 +31,54 @@ static t_line	*ft_init_begin(t_line **line, char *av, int inside)
 	return (after);
 }
 
-void			ft_init_select(t_select **sel, char **av, int index)
+//REMPLACER LES VALEUR AVEC LA STRUCT ED
+
+void			ft_init_select(char **av, int index, t_editor **ed)
 {
 	int		i;
 	t_line	*now;
 	t_line	*line;
 
 	i = -1;
+	printf("ENTER INSIDE INIT SELECT\n");
+	sleep(1);
 	if (av[1])
 	{
-		*sel = malloc(sizeof(t_select));
-		(*sel)->line = NULL;
+		(*ed)->sel = malloc(sizeof(t_select));
+		(*ed)->sel->line = NULL;
+		printf("3000\n");
+		sleep(1);
 		while (av[++i])
 		{
-			if ((*sel)->line)
-				ft_first_sort(&(*sel)->line, av[i], 0);
+			if ((*ed)->sel->line)
+				ft_first_sort(&(*ed)->sel->line, av[i], 0);
 			else
-				now = ft_init_begin(&(*sel)->line, av[i], 0);
+				now = ft_init_begin(&(*ed)->sel->line, av[i], 0);
 		}
 		i = 0;
-		line = (*sel)->line;
+		line = (*ed)->sel->line;
+		printf("3001\n");
+		sleep(1);
 		while (line)
 		{
 			if (i == index)
-			{
-//				printf("LINE == %s\n", line->elem);
-//				sleep(2);
 				line->cursor_inside = 1;
-			}
-		///	else
-		//		printf("!!!LINE == %s\n", line->elem);
 			i++;
 			line = line->next;
 		}
-		(*sel)->bp = ft_search_big_param((*sel)->line);
-		(*sel)->pose_min = 0;
-		(*sel)->ds = NULL;
-		(*sel)->ret = NULL;
-		ft_get_size_term(&(*sel)->ws, sel, 1);
-		(*sel)->pbl = ft_params_by_line(*sel);
-		(*sel)->nbl = ft_count_line(*sel);
-		(*sel)->nbp = ft_count_params((*sel)->line);
+		printf("3002\n");
+		sleep(1);
+		(*ed)->sel->bp = ft_search_big_param((*ed)->sel->line);
+		(*ed)->sel->pose_min = 0;
+		(*ed)->sel->ds = NULL;
+		(*ed)->sel->ret = NULL;
+		ft_get_size_term(&(*ed)->sel->ws, &(*ed)->sel, 1);
+		(*ed)->sel->pbl = ft_params_by_line((*ed)->sel);
+		(*ed)->sel->nbl = ft_count_line((*ed)->sel);
+		(*ed)->sel->nbp = ft_count_params((*ed)->sel->line);
+		printf("3003\n");
+		sleep(1);
 	}
+		printf("3004\n");
+		sleep(1);
 }
