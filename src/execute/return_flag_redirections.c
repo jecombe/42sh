@@ -17,16 +17,10 @@ int		ft_return_flag(t_redirect *redirect)
 {
 	if (redirect)
 	{
-		if (redirect->redirect == LESS)
-			return (O_RDONLY);
 		if (redirect->redirect == DGREAT)
 			return (O_APPEND);
 		if (redirect->redirect == GREAT)
 			return (O_TRUNC);
-		if (redirect->redirect == DLESS)
-		{
-			return (HEREDOC);
-		}
 	}
 	return (NOTHING);
 }

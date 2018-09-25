@@ -40,7 +40,7 @@ void	ft_read_line(int fd, char *s)
 		ft_putstr_fd(list[i], fd);
 }
 
-int				ft_redirect_heredoc(t_redirect *redirect, int buil)
+int				ft_redirect_heredoc(t_redirect *redirect)
 {
 
 
@@ -51,10 +51,7 @@ int				ft_redirect_heredoc(t_redirect *redirect, int buil)
 	pipe(fd);
 	ft_read_line(fd[1], redirect->file);
 	close(fd[1]);
-	if (buil == 0)
-	{
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (EXIT_SUCCESS);
 }
