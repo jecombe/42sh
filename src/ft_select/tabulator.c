@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/24 10:42:07 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:35:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,7 +21,6 @@ int		echap_char(char **element)
 	while ((*element)[++i])
 		if (ft_isechap((*element)[i]))
 			ft_add_to_str(&*element, '\\', i++);
-//	printf("ELEMENT_ECHAPER == %s\n", *element);
 	return (0);
 }
 
@@ -36,15 +35,8 @@ int		add_bin(char ***bin, DIR *dir, char *line, int version)
 		tmp = ft_strdup(t_dir->d_name);
 		echap_char(&tmp);
 		if ((line && 0 == ft_strncmp(line, tmp, ft_strlen(line))) ||
-//		if ((line && 0 == ft_strstr(tmp, line)) ||
 			!line || version == 1)
-		{
-//			printf("ELEMENT TROUVER\n");
-//			sleep(1);
 			ft_malloc_cmd(bin, tmp);
-		}
-//		else
-//			printf("\n!!ELEMENT TROUVER == %s LINE == %s\n", t_dir->d_name, line);
 		ft_strdel(&tmp);
 	}
 	return (0);
@@ -271,8 +263,9 @@ void	place_cursor_before(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / ed->ws_col + 1;
-	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
+	nb_line = line_max / (ed->ws_col + 1);
+//	nb_line = line_max / ed->ws_col + 1;PROBLEME AVEC LLDB MAIS OK
+//	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
 	while (nb_line - to_jump > 0)
 	{
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
@@ -286,22 +279,56 @@ void	place_cursor_after(t_editor *ed)
 	int		line_max;
 	int	nb_line;
 	int	cursor;
-	int	to_jump;
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / ed->ws_col + 1;
-	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
-	tputs(tgetstr("up", NULL), 1, ft_putchar);
+	nb_line = line_max / ed->ws_col;
+	while (nb_line >= 0)
+	{
+		tputs(tgetstr("up", NULL), 1, ft_putchar);
+		nb_line--;
+	}
 	tputs(tgetstr("ce", NULL), 1, ft_putchar);
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
-	ft_putstr(ed->line);
+	ft_putfreshstr(ed->line);
+//	printf("\nLINE_MAX == %d > %d\n", line_max, (int)(ed->cursor_str_pos = ed->prompt_size));
+//	sleep(2);
+	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
+	{
+		move_cursor_left(ed);
+		ed->cursor_str_pos++;
+		line_max--;
+	}
+}
+
+int		replace_line_after_tab(t_editor **ed)
+{
+	int		i;
+
+	i = -1;
+	if ((*ed)->t.cmd)
+	{
+		(*ed)->cursor_str_pos = 0;
+		while ((*ed)->t.cmd[++i] && i < (*ed)->t.nb_char)
+		{
+			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
+		}
+		ft_strdel(&(*ed)->t.cmd[(*ed)->t.nb_char - 1]);
+		(*ed)->t.cmd[(*ed)->t.nb_char - 1] = (*ed)->sel->ret;
+		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
+	}
+	else
+	{
+		(*ed)->line = ft_strdup((*ed)->sel->ret);
+		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
+	}
+//	ft_strdel(&(*ed)->sel->ret);
+	return (0);
 }
 
 int		tabulator(t_editor **ed, int version)
 {
 	char	*word;
-	char	**element;
 
 	word = NULL;
 	place_cursor_before(*ed);
@@ -331,6 +358,8 @@ int		tabulator(t_editor **ed, int version)
 		ft_select(ed, &word, 0);
 	else if (version == 0)
 		ft_free_t_select(&(*ed)->sel);
+	if ((*ed)->sel->ret)
+		replace_line_after_tab(ed);
 	place_cursor_after(*ed);
 //	printf("WORD == %s\n", word);
 //	sleep(2);

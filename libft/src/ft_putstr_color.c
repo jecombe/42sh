@@ -33,10 +33,6 @@ static void		ft_bold(int nb, int fd)
 		ft_putstr_fd(GREYB, fd);
 }
 
-/*
-**	WTF is that ??? chaque couleur possede deja un ID, jvois pas l'interet d'en
-**	attribuer un autre...
-*/
 void			ft_putstr_color(char const *s, int nb, int fd)
 {
 	if (s)

@@ -25,21 +25,18 @@ int		binary_signal(int status, int pid, char *bin)
 		write(2, " ", 1);
 		ft_strdel(&tmp);
 	}
-	else if (status == 6)
+	if (status == 6)
 		ft_putstr_fd("ABORT", 2);
-	else if (status == 7)
+	if (status == 7)
 		ft_putstr_fd("BUS ERROR", 2);
-	else if (status == 8)
+	if (status == 8)
 		ft_putstr_fd("FLOATING-POINT EXEPTION", 2);
-	else if (status == 11)
+	if (status == 11)
 		ft_putstr_fd("SEGMENTATION FAULT", 2);
-	else if (status == 13)
+	if (status == 13)
 		ft_putstr_fd("BROKEN PIPE", 2);
-	else if (status == 16)
+	if (status == 16)
 		ft_putstr_fd("STACK FAULT", 2);
-	if (status == SIGINT)
-		printf("INTERRUPTION !!!!!!!!\n");
-	//	add_to_set("?", "1");
 	if ((status >= 6 && status <= 8) || (status >= 11 && status <= 16))
 	{
 		write(2, "\t", 1);

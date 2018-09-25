@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 21:46:40 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:26:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,6 +60,15 @@ typedef enum		s_prompt
 	READ,
 }					e_prompt;
 
+typedef struct		s_tab
+{
+	char			**cmd;
+	char			**elem;
+	char			*word;
+	int				nb_word;
+	int				nb_char;
+}					t_tab;
+
 typedef struct		s_read
 {
 	char			*line;
@@ -69,14 +78,6 @@ typedef struct		s_read
 	int				hide;
 }					t_read;
 
-typedef struct		s_tab
-{
-	char			**cmd;
-	char			**elem;
-	char			*word;
-	int				nb_word;
-	int				nb_char;
-}					t_tab;
 
 typedef struct		s_editor
 {
@@ -100,10 +101,10 @@ int		g_bin_exit;
 //char	*g_save_home;
 
 /*
-*******************************************************************************
-**                              CURSOR_MOVEMENT                               *
-*******************************************************************************
-*/
+ *******************************************************************************
+ **                              CURSOR_MOVEMENT                               *
+ *******************************************************************************
+ */
 
 void	move_cursor_left(t_editor *ed);
 void	move_cursor_right(t_editor *ed);
@@ -116,20 +117,20 @@ void	go_to_end_of_line(t_editor *ed);
 int		backspace(t_editor *ed);
 
 /*
-*******************************************************************************
-**                                     CTRL                                   *
-*******************************************************************************
-*/
+ *******************************************************************************
+ **                                     CTRL                                   *
+ *******************************************************************************
+ */
 
 int		clear_window(t_editor *ed, e_prompt prompt);
 void	end_of_text(t_editor *ed, e_prompt *prompt, char **line);
 void	myhandler_interrupt(int signal);
 
 /*
-** ****************************************************************************
-**                              SAVE_RESET_CURSOR_POS                         *
-** ****************************************************************************
-*/
+ ** ****************************************************************************
+ **                              SAVE_RESET_CURSOR_POS                         *
+ ** ****************************************************************************
+ */
 
 char	*cursor_position_escape_sequence(int row, int col);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
@@ -150,5 +151,6 @@ int		term_reinit(struct termios *raw_mode);
 int		get_term_raw_mode(int mode);
 char	*find_env_var(char **env, char *var, int mode);
 void	ft_print_git_branch(void);
+void	ft_putfreshstr(char *str);
 
 #endif

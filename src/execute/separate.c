@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 20:50:14 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:31:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,13 +50,13 @@ int			ft_return_command(t_loop *loop)
 	{
 		if (loop->bin == NULL)
 		{
-		//	printf("FAILURE\n");
+			add_to_set("?", "1");
 			return (EXIT_FAILURE);
 		}
-	//	printf("SUCCES\n");
+		add_to_set("?", "0");
 		return (EXIT_SUCCESS);
 	}
-//	printf("FAILURE\n");
+	add_to_set("?", "1");
 	return (EXIT_FAILURE);
 }
 

@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   ft_concat_tab_to_str.c                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 03:01:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/25 01:29:16 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/25 01:37:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "ft_select.h"
+#include "../include/libft.h"
 
-static int		ft_refresh(t_select *t, int ret)
+int		ft_concat_tab_to_str(char **tablo, char **str)
 {
-	if (ret == 0)
-		return (t->bp > t->ws.ws_col ? 2 : 1);
-	return (0);
-}
+	int		len;
+	int		i;
+	int		j;
 
-int			ft_select(t_editor **ed, char **line, int version)
-{
-	int			ret;
-	t_term		raw;
-
-	ret = 0;
-	version == 0 ? ft_init_select(&(*ed)->sel, (*ed)->t.elem, (*ed)->tabu) : 0;
-	version == 0 ? ft_print_params((*ed)->sel) : 0;
-	version == 1 ? ft_manage_entry(ed, &(*ed)->sel) : 0;
+	len = 0;
+	i = -1;
+	while (tablo[++i])
+		len += ft_strlen(tablo[i]);
+	*str = (char*)malloc(sizeof(char) * (len + 1));
+	i = -1;
+	len = 0;
+	while (tablo[++i])
+	{
+		j = 0;
+		while (tablo[i][j])
+			(*str)[len++] = tablo[i][j++];
+	}
+	(*str)[len] = '\0';
 	return (0);
 }

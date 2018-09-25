@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/24 10:46:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:39:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,6 +46,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D || ENTER_KEY) && (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
+		(*ed)->sel = NULL;
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
 		tputs(tgetstr("cd", NULL), 1, ft_putchar);

@@ -6,7 +6,7 @@
 /*   By: gbarnay  <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/22 19:04:02 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/22 19:30:36 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:29:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ static	char        *ft_get_git_branch()
 	return (NULL);
 }
 
-void	        	ft_print_git_branch(void)
+void				ft_print_git_branch(void)	
 {
 	char    *prompt;
 	char    *git_branch;
@@ -81,7 +81,6 @@ void	        	ft_print_git_branch(void)
 	prompt = ft_miniconcat(prompt, git_branch);
 	free(git_branch);
 	prompt = ft_miniconcat(prompt, "\e[94m)\e[0m ");
-//	prompt = ft_miniconcat(prompt, "\U0001F44D  ");
 	ft_putstr(prompt);
 	free(prompt);
 }

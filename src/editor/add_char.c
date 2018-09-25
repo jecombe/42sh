@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 10:42:22 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:13:31 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:07:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ void			add_char_into_line(char key, t_editor *ed)
 	ed->cursor_str_pos++;
 	ioctl(0, TIOCGWINSZ, &sz);
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	if ((!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col) &&
+	if (ed->line && (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col) &&
 	ed->last_row == sz.ws_row))
 	{
 		if (!((get_cursor_position(0)) % sz.ws_col))

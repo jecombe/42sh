@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_strsplit.c                                    .::    .:/ .      .::   */
+/*   ft_tabsplit.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2017/12/12 20:14:20 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 13:36:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/25 03:33:57 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,6 @@ static size_t		wordlen(const char *s, char c, size_t index, int *cursor_pos)
 	}
 	else if (ft_isprint(c) && !ft_isblank(c))
 		while (ft_isprint(s[i]) && !ft_isblank(s[i]) && s[i] && !issep(s, i))
-//		while (ft_isprint(s[i]) && !ft_isblank(s[i]) && s[i])
 		{
 			i++;
 			count++;

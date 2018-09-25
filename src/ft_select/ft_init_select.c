@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:20:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 03:30:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,10 +68,6 @@ void			ft_init_select(t_select **sel, char **av, int index)
 		(*sel)->pose_min = 0;
 		(*sel)->ds = NULL;
 		(*sel)->ret = NULL;
-		ft_get_size_term(&(*sel)->ws, sel, 1);
-		(*sel)->pbl = ft_params_by_line(*sel);
-		(*sel)->nbl = ft_count_line(*sel);
-		(*sel)->nbp = ft_count_params((*sel)->line);
 		ft_get_size_term(&(*sel)->ws, sel, 1);
 		(*sel)->pbl = ft_params_by_line(*sel);
 		(*sel)->nbl = ft_count_line(*sel);

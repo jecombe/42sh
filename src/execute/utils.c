@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 19:30:26 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:32:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,8 @@
 
 void	ft_print_error(const char *s1, const char *s2)
 {
-/*	ft_putstr_color("42sh: ", 4, 2);
+	/*
+	ft_putstr_color("42sh: ", 4, 2);
 	ft_putstr_color(s1, 1, 2);
 	ft_putstr_fd(STOP, 2);
 	ft_putstr_color(": ", 1, 2);
