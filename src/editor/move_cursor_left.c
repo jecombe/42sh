@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:20:06 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:11:46 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 13:13:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 void	move_cursor_left(t_editor *ed)
 {
 	t_sz sz;
+
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (ed->cursor_str_pos > 0)
 	{

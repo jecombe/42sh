@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 12:34:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 13:15:38 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -290,41 +290,18 @@ void	place_cursor_after(t_editor *ed)
 	}
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putfreshstr(ed->line);
-//	printf("\nLINE_MAX == %d > %d\n", line_max, (int)(ed->cursor_str_pos + ed->prompt_size));
-//	sleep(1);
 	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
-		move_cursor_left(ed);
-		ed->cursor_str_pos++;
+		if (get_cursor_position(0) == 1)
+		{
+			tputs(tgoto(tgetstr("le", NULL), 1, 1), 1, ft_putchar);
+			tputs(tgoto(tgetstr("ch", NULL), 1, 1), 1, ft_putchar);
+		}
+		else
+		tputs(tgetstr("le", NULL), 1, ft_putchar);
 		line_max--;
 	}
 }
-/*
-int		replace_line_after_tab(t_editor **ed)
-{
-	int		i;
-
-	i = -1;
-	if ((*ed)->t.cmd)
-	{
-		(*ed)->cursor_str_pos = 0;
-		while ((*ed)->t.cmd[++i] && i < (*ed)->t.nb_char)
-		{
-			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
-		}
-		ft_strdel(&(*ed)->t.cmd[(*ed)->t.nb_char - 1]);
-		(*ed)->t.cmd[(*ed)->t.nb_char - 1] = (*ed)->sel->ret;
-		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
-	}
-	else
-	{
-		(*ed)->line = ft_strdup((*ed)->sel->ret);
-		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
-	}
-//	ft_strdel(&(*ed)->sel->ret);
-	return (0);
-}
-*/
 
 void	ft_free_t_tab(t_tab *t)
 {

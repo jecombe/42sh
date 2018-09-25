@@ -59,7 +59,7 @@ PROBLEMES A RESOUDRE:<br/>
 echo |<br/>
 \_PROBLEME FLECHE DU BAS<br>
 \_CLEAR LA LIGNE AVANT D AFFICHER LE PROMPT EN UTILISANT FT\_PUTFRESHSTR
-\_Petit segfault de temps en temps dans add\_char
 
 SEGFAULT A RESOUDRE:<br/>
 \_ENVIRONNEMENT VIDE<br/>
+\_Petit segfault de temps en temps dans add\_char<br/>
