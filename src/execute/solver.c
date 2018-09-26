@@ -39,16 +39,24 @@ static void ft_close_fd(t_loop *loop, int pfd[2])
 	loop->fd_save = pfd[0];
 }
 
-int			ft_solve(t_op *opera, pid_t pid, char *cmd)
+void		ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 {
-	add_last_param(opera->cmd);
-	if (isbuiltin(cmd, 1) == EXIT_SUCCESS)
-		return (ft_builtins(opera));
-	else
+	if ((*pid = fork()) == 0)
 	{
-		execve(cmd, opera->cmd, g_env);
+		dup2(loop->fd_in != 0 ? loop->fd_in : loop->fd_save, STDIN_FILENO);
+		if (opera->token == PIPE && loop->fd_out == 1)
+			dup2(pfd[1], STDOUT_FILENO);
+		close(pfd[0]);
+		if (isbuiltin(loop->bin, 1) == EXIT_SUCCESS)
+			exit (ft_builtins(opera));
+		else
+		{
+			execve(loop->bin, opera->cmd, g_env);
+			exit (EXIT_FAILURE);
+		}
 	}
-	return (EXIT_FAILURE);
+	else
+		ft_close_fd(loop, pfd);
 }
 
 void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
@@ -57,19 +65,14 @@ void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
 
 	pid = -1;
 	if (isbuiltin(opera->cmd[0], 0) == EXIT_SUCCESS)
+	{
+		loop->bin = "isbuiltin";
 		ft_builtins(opera);
+	}
 	else if ((loop->bin = ft_search_bin(opera->cmd[0])))
 	{
-		if ((pid = fork()) == 0)
-		{
-			dup2(loop->fd_in != 0 ? loop->fd_in : loop->fd_save, STDIN_FILENO);
-			if (opera->token == PIPE && loop->fd_out == 1)
-				dup2(pfd[1], STDOUT_FILENO);
-			close(pfd[0]);
-			ft_solve(opera, pid, loop->bin);
-		}
-		else
-			ft_close_fd(loop, pfd);
+		ft_solve(opera, loop, &pid, pfd);
+		add_last_param(opera->cmd);
 		ft_hashtable(loop->bin, opera->cmd[0]);
 		add_pid_bin(pid);
 	}
