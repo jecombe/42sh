@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 09:08:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 05:46:30 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,11 +48,15 @@ char	*ft_search_pwd(char *ext)
 	getcwd(pwd, sizeof(pwd));
 	if (ext)
 	{
+//		printf("\n0000\n");
 		tmp = ft_strjoin(pwd, "/");
 		ret = ft_strjoin(tmp, ext);
 		ft_strdel(&tmp);
 	}
 	else
+	{
+//		printf("\n1111\n");
 		ret = ft_strdup(pwd);
+	}
 	return (ret);
 }

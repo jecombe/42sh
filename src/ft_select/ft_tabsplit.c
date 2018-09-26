@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 13:37:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 06:22:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ static size_t		wordlen(const char *s, size_t index, int *cursor_pos)
 			i++;
 			count++;
 		}
-		*cursor_pos = i == *cursor_pos ? -1 : *cursor_pos;
+//		*cursor_pos = i == *cursor_pos ? -1 : *cursor_pos;
 	}
 	else if (ft_isprint(c) && !ft_isblank(c))
 		while (ft_isprint(s[i]) && !ft_isblank(s[i]) && s[i] && !issep(s, i))
@@ -68,9 +68,11 @@ char				**ft_tabsplit(const char *s, int cursor_pos)
 		while (s[i] != '\0')
 		{
 			tmp = ft_strsub(s, ((int)i), wordlen(s, i, &set_cursor[0]));
+			//printf("TMP[i] == |%s|\n", tmp);
 			ft_malloc_cmd(&tablo, tmp);
 			ft_strdel(&tmp);
 			i += wordlen(s, i, &set_cursor[1]);
 		}
+//	sleep(1);
 	return (tablo);
 }

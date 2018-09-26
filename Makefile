@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/25 08:02:15 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/26 07:18:01 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -32,7 +32,6 @@ SRCS_NAME =	\
 			heart/42sh.c \
 			heart/signal.c \
 			heart/42sh_exit.c \
-			\
 			init/init_shell.c \
 			init/init_files.c \
 			init/init_env.c \
@@ -41,7 +40,6 @@ SRCS_NAME =	\
 			init/envset_add.c \
 			init/utils.c \
 			init/envset_manage.c \
-			\
 			editor/get_stdin.c \
 			editor/prompt.c \
 			editor/signal.c \
@@ -66,7 +64,6 @@ SRCS_NAME =	\
 			editor/ft_putfreshstr.c \
 			editor/find_env_var.c \
 			editor/prompt_git.c \
-			\
 			ft_select/ft_arrows.c \
 			ft_select/ft_char_by_line.c \
 			ft_select/ft_count_line.c \
@@ -91,12 +88,10 @@ SRCS_NAME =	\
 			ft_select/ft_tabsplit.c \
 			ft_select/utils.c \
 			ft_select/ft_select_sp.c \
-			\
 			lexer/prelexer.c \
 			lexer/ft_lexer.c \
 			lexer/ft_lexer_break_words.c \
 			lexer/ft_lexer_utils.c \
-			\
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \
 			parser/ft_free_parse.c \
@@ -105,7 +100,6 @@ SRCS_NAME =	\
 			parser/ft_manage_parsing.c \
 			parser/ft_parsing.c \
 			parser/manage_assign.c \
-			\
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/add_tild.c \
@@ -119,7 +113,6 @@ SRCS_NAME =	\
 			extension/ft_free_n_seq.c \
 			extension/ft_free_n_op.c \
 			extension/ft_free_n_redirect.c \
-			\
 			execute/binary.c \
 			execute/binary_signal.c \
 			execute/solver.c \
@@ -128,11 +121,10 @@ SRCS_NAME =	\
 			execute/loop_redirections.c \
 			execute/sequences.c \
 			execute/open_file_redirections.c \
-			execute/return_command.c \
 			execute/return_flag_redirections.c \
+			execute/return_command.c \
 			execute/heredoc.c \
 			execute/init_struct.c \
-			\
 			builtins/builtins.c \
 			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \

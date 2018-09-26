@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 13:06:21 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 03:22:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,8 +23,6 @@ int			replace_line_after_tab(t_editor **ed)
 		(*ed)->cursor_str_pos = 0;
 		while ((*ed)->t.cmd[++i] && i < (*ed)->t.nb_char - 1)
 		{
-			i++;
-			if (i < (*ed)->t.nb_char)
 			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
 		}
 //		printf("\nBEFORE == %s\n", (*ed)->t.cmd[i]);
@@ -40,7 +38,7 @@ int			replace_line_after_tab(t_editor **ed)
 	else
 	{
 		(*ed)->line = ft_strdup((*ed)->sel->ret);
-		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
+		(*ed)->cursor_str_pos += (*ed)->line ? ft_strlen((*ed)->line) : 0;
 	}
 	//ft_strdel(&(*ed)->sel->ret)	;
 	return (0);

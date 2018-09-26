@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 13:15:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 06:45:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -74,12 +74,12 @@ int		check_dir(char **path, char *word)
 	char		*tmp;
 
 	tmp = NULL;
-//	printf("PATH == %s, WORD == %s\n", *path, word);
+//	////printf("PATH == %s, WORD == %s\n", *path, word);
 	if (*path)
 	{
 		if ((*path)[ft_strlen(*path) - 1] == '/')
 		{
-//			printf("CHECK_DIR == 0\n");
+//			////printf("CHECK_DIR == 0\n");
 			if (ft_strlen(*path) - 1 > 0)
 				tmp = ft_strsub(*path, 0, ft_strlen(*path) - 1);
 			else
@@ -96,7 +96,7 @@ int		check_dir(char **path, char *word)
 		}
 		else
 		{
-//			printf("CHECK_DIR == 1\n");
+//			////printf("CHECK_DIR == 1\n");
 			tmp = ft_strsub(*path, 0, ft_strlen(*path) - ft_strlen(ft_strrchr(*path, '/') + 1));
 			if (!ft_isdir(tmp))
 				return (-1);
@@ -114,11 +114,11 @@ int		search_little_word(char **str, char *word)
 
 	if (word && word[ft_strlen(word) - 1] != '/')
 	{
-//		printf("TRUC == %c\n", word[ft_strlen(word) - 1]);
-//		printf("WORD == %s\n", word);
+//		////printf("TRUC == %c\n", word[ft_strlen(word) - 1]);
+//		////printf("WORD == %s\n", word);
 		if (word[0] == '/')
 		{
-//			printf("0TRUC == %s\n", ft_strrchr(word, '/') + 1);
+//			////printf("0TRUC == %s\n", ft_strrchr(word, '/') + 1);
 			*str = ft_strdup(ft_strrchr(word, '/') + 1);
 		}
 		else
@@ -138,7 +138,7 @@ char	**search_in_rep(char *word)
 
 	ret = 0;
 	bin = NULL;
-//	printf("WORD == %s\n", word);
+	//printf("WORD == %s\n", word);
 	if (word)
 	{
 		if (word[0] == '/')
@@ -147,18 +147,18 @@ char	**search_in_rep(char *word)
 			path = ft_search_pwd(word);
 		if ((ret = check_dir(&path, word)) == -1)
 		{
-//			printf("CHECK DIR == -1\n");
+			//printf("CHECK DIR == -1\n");
 			ft_strdel(&path);
 			return (NULL);
 		}
 	}
 	else
 		path = ft_search_pwd(NULL);
+	//printf("\nOPENDIR PATH == %s\n", path);
 	if ((dir = opendir(path)))
 	{
-//		printf("\nOPENDIR PATH == %s\n", path);
 		search_little_word(&path, word);
-//		printf("\nELEMENT A RECHERCHER == %s\n", path);
+		//printf("\nELEMENT A RECHERCHER == %s\n", path);
 		add_bin(&bin, dir, path, ret);
 		closedir(dir);
 	}
@@ -170,29 +170,32 @@ char	**search_var(char *word)
 	char	**ret;
 	char	*tmp;
 	char	*tmp2;
+	char	*tmp3;
 	int		i;
 
 	i = 0;
 	ret = NULL;
-//	printf("00\n");
+//	////printf("00\n");
 	tmp = word[1] ? ft_strdup(word + 1) : NULL;
 	if (g_set)
 	{
-//	printf("11\n");
+//	////printf("11\n");
 		while (g_set[i])
 		{
-			if ((tmp && 0 == ft_strncmp(tmp, tmp, ft_strlen(tmp))) || !tmp)
+			if ((tmp && 0 == ft_strncmp(tmp, g_set[i], ft_strlen(tmp))) || !tmp)
 			{
-				tmp2 = ft_get_value(g_set[i]);
-				ft_malloc_cmd(&ret, tmp2);
+				tmp2 = ft_get_var(g_set[i]);
+				tmp3 = ft_strjoin("$", tmp2);
+				ft_malloc_cmd(&ret, tmp3);
 				ft_strdel(&tmp2);
-//				printf("SEARCH_VAR == %s\n", g_set[i]);
+				ft_strdel(&tmp3);
+//				////printf("SEARCH_VAR == %s\n", g_set[i]);
 			}
 			i++;
 		}
 	}
 	ft_strdel(&tmp);
-//	printf("22\n");
+//	////printf("22\n");
 	return (ret);
 }
 
@@ -246,10 +249,23 @@ int		lexer_tab(t_editor **ed)
 	}
 	if ((*ed)->t.cmd)
 	{
-		(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char > 0 ?
-				(*ed)->t.nb_char - 1 : (*ed)->t.nb_char]);
+		if ((*ed)->t.cmd && !ft_isblank((*ed)->t.cmd[(*ed)->t.nb_char - 1][0]))
+			(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char - 1]);
+		else
+		{
+//			ft_malloc_cmd(&(*ed)->t.cmd, "");//A MODIFIER SELON INDEX
+			ft_add_str_at(&(*ed)->t.cmd, " ", (*ed)->t.nb_char - 1);
+			(*ed)->t.nb_char++;
+			//VOIR SELON LE COMPORTEMENT
+			(*ed)->t.word = NULL;
+		}
 		if ((*ed)->t.word && (*ed)->t.word[0] == '$')
 			(*ed)->t.nb_word = -1;
+//		if ((*ed)->t.word)
+			//printf("T_WORD == %s\n", (*ed)->t.word);
+//		else
+			//printf("!!!T_WORD\n");
+		//sleep(1);
 	}
 	return (1);
 }
@@ -314,61 +330,40 @@ void	ft_free_t_tab(t_tab *t)
 
 int		tabulator(t_editor **ed, int version)
 {
-	char	*word;
-
-	word = NULL;
-///	printf("ENTER INSIDE TAB\n");
-///	sleep(1);
 	place_cursor_before(*ed);
-///	printf("00000\n");
-///	sleep(1);
 	if ((*ed)->tabu == -1 && version == 1)
 	{
 		if (lexer_tab(ed) != -1)
 		{
-///	printf("11111\n");
-///	sleep(1);
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
 				(*ed)->t.elem = search_bin((*ed)->t.word);
 			else if ((*ed)->t.nb_word == -1)
 				(*ed)->t.elem = search_var((*ed)->t.word);
 			else
 				(*ed)->t.elem = search_in_rep((*ed)->t.word);
-			ft_strdel(&word);
-			(*ed)->tabu = 0;
-///	printf("22222\n");
-///	sleep(1);
-			ft_select(ed, &word, 0);
-///	printf("3333\n");
-///	sleep(1);
+			if ((*ed)->t.elem && (*ed)->t.elem[1])
+			{
+				(*ed)->tabu = 0;
+				ft_select(ed, 0);
+			}
 		}
-///	printf("4444\n");
-///	sleep(1);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
-///	printf("55555\n");
-///	sleep(1);
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
-			ft_select(ed, &word, 1);
-		if (word)
-			(*ed)->line = ft_strdup(word);
+			ft_select(ed, 1);
+//		if (word)
+//			(*ed)->line = ft_strdup(word);
 	}
 	else if (version == 2)
 	{
-///		printf("66666\n");
-///		sleep(1);
-		ft_select(ed, &word, 0);
+		ft_select(ed, 0);
 	}
 	else if (version == 0)
 	{
-///		printf("7777\n");
-///		sleep(1);
 		ft_free_t_select(&(*ed)->sel);
 		ft_free_t_tab(&(*ed)->t);
 	}
-///	printf("8888\n");
-///	sleep(1);
 	place_cursor_after(*ed);
 	return (0);
 }
