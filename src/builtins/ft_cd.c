@@ -60,7 +60,7 @@ static int	ft_cd_flags(const char **cmd, char *flag, int *idx)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_chdir(char **curpath, const char *cmd, int fd_open)
+static int	ft_chdir(char **curpath, const char *cmd)
 {
 	char	*pwd;
 
@@ -70,6 +70,7 @@ static int	ft_chdir(char **curpath, const char *cmd, int fd_open)
 		ft_strdel(curpath);
 		if (!(*curpath = ft_envset_value((const char **)g_env, "OLDPWD")))
 			return (EXIT_SUCCESS);
+		ft_putendl_fd(*curpath, STDOUT_FILENO);
 	}
 	if (chdir(*curpath) == -1)
 	{
@@ -88,11 +89,8 @@ int			ft_cd(t_op *exec)
 	int		j;
 	char	flag;
 	char	*curpath;
-	int fd_open;
-	char *pwd;
 
 	j = 1;
-	printf("ok cdddddddddddddd\n");
 	flag = '\0';
 	curpath = NULL;
 	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j))
@@ -100,15 +98,14 @@ int			ft_cd(t_op *exec)
 	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
 				ft_getenv("HOME", g_env)))
 		return (EXIT_SUCCESS);
-
 	if (flag != 'P')
 	{
 		ft_canonical(&curpath);
-		ft_rules(&curpath);
+		//ft_rules(&curpath);
 	}
 	if (!(curpath))
 		return (EXIT_FAILURE);
-	if (ft_chdir(&curpath, exec->cmd[j], fd_open))
+	if (ft_chdir(&curpath, exec->cmd[j]))
 		return (EXIT_FAILURE);
 	ft_strdel(&curpath);
 	return (EXIT_SUCCESS);

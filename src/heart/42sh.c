@@ -32,7 +32,7 @@ int					heart_of_101sh(char *line, int fd_base)
 		if (!(ret = extension(&seq)))
 		{
 			//ft_watch_result(line, lex, seq);
-			ft_sequence(seq, fd_base, pid);
+			ft_sequence(seq, fd_base);
 			ft_free_b_seq(&seq);
 		}
 		//		else

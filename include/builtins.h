@@ -163,7 +163,7 @@ void			ft_hash_print(t_hashtable *hashtable);
 					ft_hash_utils.c
 *******************************************************************************
 */
-
+void		hash_clear(void);
 t_hashtable		*ft_hashtable_create(void);
 t_hashcase		*ft_create_case(const char *cmd, const char *raccmd);
 void			ft_save_hash(t_hashtable **hashtable);

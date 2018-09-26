@@ -19,7 +19,17 @@
 
 # define HEREDOC 10
 # define NOTHING -1
-
+# define FT_ASSIGN (ft_strcmp(opera->cmd[0], "ft_assign") == 0)
+# define FT_HASH (ft_strcmp(opera->cmd[0], "hash") == 0)
+# define FT_ENV (ft_strcmp(opera->cmd[0], "env") == 0)
+# define FT_SETENV (ft_strcmp(opera->cmd[0], "setenv") == 0)
+# define FT_UNSETENV (ft_strcmp(opera->cmd[0], "unsetenv") == 0)
+# define FT_SET (ft_strcmp(opera->cmd[0], "set") == 0)
+# define FT_EXPORT (ft_strcmp(opera->cmd[0], "export") == 0)
+# define FT_UNSET (ft_strcmp(opera->cmd[0], "unset") == 0)
+# define FT_CD (ft_strcmp(opera->cmd[0], "cd") == 0)
+# define FT_ECHO (ft_strcmp(opera->cmd[0], "echo") == 0)
+# define FT_EXIT (ft_strcmp(opera->cmd[0], "exit") == 0)
 
 typedef struct	s_loop
 {
@@ -30,6 +40,12 @@ typedef struct	s_loop
 	char		*bin;
 }				t_loop;
 
+
+void			ft_sequence(t_seq *b_seq, int fd);
+void			ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
+
+int				ft_return_command(t_loop *loop);
+int				isbuiltin(char *cmd, int fork);
 int				ft_solver(t_op *t_exec, pid_t pid, t_loop *loop);
 char			*ft_search_bin(char *cmd);
 char			*ft_go_to(char *bin, int nb);
@@ -46,8 +62,7 @@ int				ft_check_file_is_directory(char *file);
 int				ft_check_source(char *source);
 int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
-void			ft_separate(t_seq *b_seq, int fd, pid_t pid);
-void			ft_sequence(t_seq *b_seq, int fd, pid_t pid);
+
 int				ft_count_pipe(t_op *tmp);
 int				ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one,
 				t_loop *loop);

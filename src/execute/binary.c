@@ -13,6 +13,25 @@
 
 #include "heart.h"
 
+int				isbuiltin(char *cmd, int fork)
+{
+	static char	*builtins[] = { "env", "setenv", "unsetenv", "set", "unset",
+		"export", "cd", "ft_assign", "hash", "exit", NULL };
+	static char *fbuiltins[] = { "echo", NULL };
+	int		i;
+
+	i = -1;
+	if (!fork)
+		while (builtins[++i])
+			if (ft_strcmp(builtins[i], cmd) == 0)
+				return (EXIT_SUCCESS);
+	if (fork)
+		while (fbuiltins[++i])
+			if (ft_strcmp(fbuiltins[i], cmd) == 0)
+				return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
+}
+
 static int		ft_check_direct_bin(const char *cmd)
 {
 	if (access(cmd, F_OK) == -1)
@@ -76,11 +95,15 @@ int				ft_check_hash_bin(const char *cmd, char **buff)
 	return (EXIT_FAILURE);
 }
 
+
+
 char		*ft_search_bin(char *cmd)
 {
 	char	*buff;
 
 	buff = NULL;
+	if (!isbuiltin(cmd, 1))
+		return (cmd);
 	if (!(ft_check_direct_bin(cmd)))
 		return (cmd);
 	if (!(ft_check_hash_bin(cmd, &buff)))

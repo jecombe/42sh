@@ -30,58 +30,49 @@ static void	add_last_param(char **cmd)
 		add_to_set("_", cmd[ft_tablen(cmd) - 1]);
 }
 
-int			waitstat2(int *status)
+static void ft_close_fd(t_loop *loop, int pfd[2])
 {
-	wait(status);
-	while (wait(NULL) > 0)
-		;
-	return (*status);
+	(loop->fd_in  > 0) ? close(loop->fd_in) : 0;
+	(loop->fd_out!= 1) ? close(loop->fd_out) : 0;
+	(loop->fd_save) ? close(loop->fd_save) : 0;
+	close(pfd[1]);
+	loop->fd_save = pfd[0];
 }
 
-int ft_waiting2(int status)
+int			ft_solve(t_op *opera, pid_t pid, char *cmd)
 {
-	int ret;
-
-	status = waitstat2(&status);
-	ret = WEXITSTATUS(status);
-	if (ret > 0)
-		return (EXIT_FAILURE);
+	add_last_param(opera->cmd);
+	if (isbuiltin(cmd, 1) == EXIT_SUCCESS)
+		return (ft_builtins(opera));
 	else
-		return (EXIT_SUCCESS);
+	{
+		execve(cmd, opera->cmd, g_env);
+	}
 	return (EXIT_FAILURE);
 }
 
-int			ft_solver(t_op *t_exec, pid_t pid, t_loop *loop)
+void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
 {
-	char *raccmd;
-	int status;
-	int result;
+	pid_t	pid;
 
-	result = 0;
-	if (ft_check_command(t_exec->cmd[0]) != 0)
+	pid = -1;
+	if (isbuiltin(opera->cmd[0], 0) == EXIT_SUCCESS)
+		ft_builtins(opera);
+	else if ((loop->bin = ft_search_bin(opera->cmd[0])))
 	{
-		add_last_param(t_exec->cmd);
-		exit(result = ft_builtins(t_exec));
+		if ((pid = fork()) == 0)
+		{
+			dup2(loop->fd_in != 0 ? loop->fd_in : loop->fd_save, STDIN_FILENO);
+			if (opera->token == PIPE && loop->fd_out == 1)
+				dup2(pfd[1], STDOUT_FILENO);
+			close(pfd[0]);
+			ft_solve(opera, pid, loop->bin);
+		}
+		else
+			ft_close_fd(loop, pfd);
+		ft_hashtable(loop->bin, opera->cmd[0]);
+		add_pid_bin(pid);
 	}
 	else
-	{
-		raccmd = ft_strdup(t_exec->cmd[0]);
-		add_pid_bin(pid);
-		execve(loop->bin, t_exec->cmd, g_env);
-	}
-	/*{
-	  ft_hashtable(tmp_bin, raccmd);
-	  ft_strdel(&raccmd);
-	  add_last_param(t_exec->cmd);
-	  ft_unset_var("PID_BIN");
-	  }*/
-	/*else
-	  {
-	  ft_strdel(&raccmd);
-	  add_last_param(t_exec->cmd);
-	  if (tmp_bin == NULL)
-	  ft_print_error(t_exec->cmd[0], "Command not found !");*/
-	//result = ft_waiting2(status);
-	add_last_param(t_exec->cmd);
-	return (result);
+		ft_print_error(opera->cmd[0], "Command not found !");
 }

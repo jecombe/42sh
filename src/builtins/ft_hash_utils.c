@@ -13,6 +13,24 @@
 
 #include "heart.h"
 
+void		hash_clear(void)
+{
+	t_hashtable	*hashtable;
+	int			i;
+
+	hashtable = NULL;
+	i = -1;
+	ft_save_hash(&hashtable);
+	while (++i < MAX_HASH)
+		if (hashtable[i].hashcase)
+			while (hashtable[i].hashcase)
+			{
+				ft_strdel(&hashtable[i].hashcase->command);
+				hashtable[i].hashcase = hashtable[i].hashcase->next;
+			}
+	ft_save_hash(&hashtable);
+}
+
 t_hashtable				*ft_hashtable_create(void)
 {
 	t_hashtable			*hashtable;

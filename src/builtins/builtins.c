@@ -13,46 +13,46 @@
 
 #include "heart.h"
 
-int		ft_builtins(t_op *exec)
+static int	ft_builtins_envset(t_op *opera)
+{
+	if ((FT_SETENV || FT_UNSETENV || FT_EXPORT || FT_UNSET) &&
+			ft_strcmp(opera->cmd[0], "PATH") == 0)
+		hash_clear();
+	if (FT_ENV || (FT_SETENV && opera->cmd[1] == NULL))
+		return (ft_env(opera));
+	if (FT_SETENV)
+	{
+		if (opera->cmd[2] && opera->cmd[3])
+			return (ft_bierrors("setenv", NULL, BITOMANY));
+		return (ft_setenv(opera->cmd[1], opera->cmd[2]));
+	}
+	if (FT_UNSETENV)
+		return (ft_unsetenv(opera->cmd[1]));
+	if (FT_SET)
+		return (set(opera));
+	if (FT_UNSET)
+		return (unset(opera));
+	if (FT_EXPORT)
+		return (ft_export(opera));
+	return (EXIT_FAILURE);
+}
+
+int		ft_builtins(t_op *opera)
 {
 	t_hashtable *hashtable = NULL;
 
-	if (ft_strcmp(exec->cmd[0], "ft_assign") == 0)
-		return (ft_assign(exec));
-	else
-		ft_save_hash(&hashtable);
-	if (ft_strcmp(exec->cmd[0], "echo") == 0)
-		if (ft_echo(exec))
-			return (EXIT_FAILURE);
-	if (ft_strcmp(exec->cmd[0], "cd") == 0)
-		if (ft_cd(exec))
-			return (EXIT_FAILURE);
-	if (ft_strcmp(exec->cmd[0], "exit") == 0)
-		if (ft_exit(exec))
-			return (EXIT_FAILURE);
-	if (ft_strcmp(exec->cmd[0], "env") == 0)
-		if (ft_env(exec))
-			return (EXIT_FAILURE);
-	if (ft_strcmp(exec->cmd[0], "setenv") == 0)
-	{
-		if (!exec->cmd[1])
-			return (ft_setenv(NULL, NULL));
-		if (exec->cmd[2] && exec->cmd[3])
-				return (ft_bierrors("setenv", NULL, BITOMANY));
-		ft_setenv(exec->cmd[1], exec->cmd[2]);
-	}
-	if (ft_strcmp(exec->cmd[0], "unsetenv") == 0)
-		return (ft_unsetenv(exec->cmd[1]));
-	if (ft_strcmp(exec->cmd[0], "set") == 0)
-		return (set(exec));
-	if (ft_strcmp(exec->cmd[0], "unset") == 0)
-		return (unset(exec));
-	if (ft_strcmp(exec->cmd[0], "export") == 0)
-		return (ft_export(exec));
-	if (ft_strcmp(exec->cmd[0], "hash") == 0)
-	{
+	ft_save_hash(&hashtable);
+	if (FT_ENV || FT_SETENV || FT_UNSETENV || FT_SET || FT_EXPORT || FT_UNSET)
+		return (ft_builtins_envset(opera));
+	if (FT_ASSIGN)
+		return (ft_assign(opera));
+	if (FT_ECHO)
+		return (ft_echo(opera));
+	if (FT_CD)
+		return (ft_cd(opera));
+	if (FT_EXIT)
+		return (ft_exit(opera));
+	if (FT_HASH)
 		ft_hash_print(hashtable);
-		return (EXIT_SUCCESS);
-	}
 	return (EXIT_SUCCESS);
 }

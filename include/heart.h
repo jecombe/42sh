@@ -39,6 +39,7 @@ char	**g_env;
 
 int		heart_of_101sh(char *line, int fd_base);
 void	signal_shell(void);
+
 void	exit_shell(const char *bin);
 
 #endif
