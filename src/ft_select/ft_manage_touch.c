@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 03:22:50 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 10:12:33 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,22 +25,17 @@ int			replace_line_after_tab(t_editor **ed)
 		{
 			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
 		}
-//		printf("\nBEFORE == %s\n", (*ed)->t.cmd[i]);
 		ft_strdel(&(*ed)->t.cmd[(*ed)->t.nb_char - 1]);
 		(*ed)->t.cmd[(*ed)->t.nb_char - 1] = (*ed)->sel->ret;
-//		printf("AFTER == %s\n\n", (*ed)->t.cmd[i]);
-//		sleep(2);
 		(*ed)->cursor_str_pos += ft_strlen((*ed)->sel->ret);
-//		printf("\nCURSOR OLD == %d\n", (int)(*ed)->cursor_str_pos);
-//		sleep(2);
 		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
 	}
-	else
+	else//CA ME PARAIT CHELOU X)
 	{
 		(*ed)->line = ft_strdup((*ed)->sel->ret);
 		(*ed)->cursor_str_pos += (*ed)->line ? ft_strlen((*ed)->line) : 0;
 	}
-	//ft_strdel(&(*ed)->sel->ret)	;
+//	ft_strdel(&(*ed)->sel->ret);
 	return (0);
 }
 

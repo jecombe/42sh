@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 03:43:09 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 08:39:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,13 +43,13 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
 	}
-	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D || ENTER_KEY) && (*ed)->tabu != -1)
+	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D) && (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
-		(*ed)->sel = NULL;
+//		(*ed)->sel = NULL;
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
-		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+//		tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	}
 	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
 		tabulator(ed, 1);

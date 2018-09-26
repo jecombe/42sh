@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 05:46:30 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 12:57:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,15 +48,58 @@ char	*ft_search_pwd(char *ext)
 	getcwd(pwd, sizeof(pwd));
 	if (ext)
 	{
-//		printf("\n0000\n");
 		tmp = ft_strjoin(pwd, "/");
 		ret = ft_strjoin(tmp, ext);
 		ft_strdel(&tmp);
 	}
 	else
-	{
-//		printf("\n1111\n");
 		ret = ft_strdup(pwd);
-	}
 	return (ret);
+}
+
+char	*ft_search_absolute_path(char *line)
+{
+	int		i;
+	char	*absolute_path;
+
+	i = ft_strlen(line) - ft_strlen(ft_strrchr(line, '/'));
+	absolute_path = ft_strsub(line, 0, i);
+	return (absolute_path);
+}
+
+char	*ft_search_relative_path(char *line)
+{
+	char	*relative_path;
+	char	*tmp;
+	int		i;
+
+	i = ft_strlen(line) - ft_strlen(ft_strrchr(line, '/'));
+	tmp = ft_strsub(line, 0, i);
+	relative_path = ft_search_pwd(tmp);
+	ft_strdel(&tmp);
+	return (relative_path);
+}
+
+char	*ft_search_path(char *line)
+{
+	char	*pwd;
+
+	if (!line || !ft_strchr(line, '/'))
+	{
+	printf("0LINE == %s\n", line);
+		pwd = ft_search_pwd(NULL);
+	}
+	else if (ft_strchr(line, '/') && !(line[0] == '/'))
+	{
+		pwd = ft_search_relative_path(line);
+		printf("1LINE == %s\n", line);
+	}
+	else
+	{
+	printf("2LINE == %s\n", line);
+		pwd = ft_search_absolute_path(line);
+	}
+	printf("0PWD == %s\n", pwd);
+	sleep(2);
+	return (pwd);
 }

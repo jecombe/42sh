@@ -6,12 +6,14 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/11 19:49:39 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 14:16:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 10:57:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../../include/ft_select.h"
+
+//REVOIR CETTE FONCTION CA FONCTIONNE QUE QUAND C EST DANS LE DOSSIER COURANT !!!
 
 static char	*ft_complete_path(char *src, char *file)
 {
@@ -49,6 +51,8 @@ int			ft_is_exec(char *pwd, char *file)
 	struct stat		stat;
 
 	tmp = ft_complete_path(pwd, file);
+	printf("PWD == %s\n", tmp);
+	sleep(2);
 	ret = lstat(tmp, &stat);
 	if (ret == -1)
 		return (0);
@@ -64,7 +68,7 @@ int			ft_is_exec(char *pwd, char *file)
 	return (ret);
 }
 
-int			ft_is_file(char *file)
+int			ft_is_file(char *file, int index)
 {
 	char			*pwd;
 	DIR				*dir;
@@ -74,9 +78,6 @@ int			ft_is_file(char *file)
 	pwd = getenv("PWD");
 	ret = 0;
 	dir = NULL;
-	if (pwd)
-		if (ft_is_dir(pwd, file, dir) == 1)
-			return (1);
 	if ((dir = opendir(pwd)))
 	{
 		while ((dirent = readdir(dir)) != NULL)

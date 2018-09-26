@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 03:47:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 12:57:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,8 +71,8 @@ int						ft_outc(int c);
 void					ft_init_select(t_editor **ed);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
-int						ft_is_file(char *file);
-void					ft_first_sort(t_line **line, char *av, int inside);
+int						ft_is_file(char *file, int index);
+void					ft_first_sort(t_line **line, char *av);
 int						ft_count_params(t_line *line);
 int						ft_char_by_line(t_select **sel);
 t_line					*ft_prepare_print(int i[2], t_line *line, int nb_line);
@@ -89,5 +89,9 @@ char					*ft_search_pwd(char *ext);
 int						ft_isechap(char c);
 int						ft_isseparator(char c);
 char					**ft_tabsplit(const char *s, int cursor_pos);
+int						replace_line_after_tab(t_editor **ed);
+char					*ft_search_absolute_path(char *line);
+char					*ft_search_relative_path(char *line);
+char					*ft_search_path(char *line);
 
 #endif

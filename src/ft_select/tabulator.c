@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 06:45:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/26 12:59:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,45 +69,6 @@ char	**search_bin(char *line)
 	return (bin);
 }
 
-int		check_dir(char **path, char *word)
-{
-	char		*tmp;
-
-	tmp = NULL;
-//	////printf("PATH == %s, WORD == %s\n", *path, word);
-	if (*path)
-	{
-		if ((*path)[ft_strlen(*path) - 1] == '/')
-		{
-//			////printf("CHECK_DIR == 0\n");
-			if (ft_strlen(*path) - 1 > 0)
-				tmp = ft_strsub(*path, 0, ft_strlen(*path) - 1);
-			else
-				tmp = ft_strdup("/");
-			if (!ft_isdir(tmp))
-			{
-				ft_strdel(&tmp);
-				return (-1);
-			}
-			ft_strdel(path);
-			*path = ft_strdup(tmp);
-			ft_strdel(&tmp);
-			return (1);
-		}
-		else
-		{
-//			////printf("CHECK_DIR == 1\n");
-			tmp = ft_strsub(*path, 0, ft_strlen(*path) - ft_strlen(ft_strrchr(*path, '/') + 1));
-			if (!ft_isdir(tmp))
-				return (-1);
-			ft_strdel(path);
-			*path = ft_strdup(tmp);
-		}
-		return (0);
-	}
-	return (-1);
-}
-
 int		search_little_word(char **str, char *word)
 {
 	char	*tmp;
@@ -138,22 +99,13 @@ char	**search_in_rep(char *word)
 
 	ret = 0;
 	bin = NULL;
-	//printf("WORD == %s\n", word);
-	if (word)
+	path = ft_search_path(word);
+	if (ft_isdir(path) == 0)
 	{
-		if (word[0] == '/')
-			path = ft_strdup(word);
-		else
-			path = ft_search_pwd(word);
-		if ((ret = check_dir(&path, word)) == -1)
-		{
-			//printf("CHECK DIR == -1\n");
-			ft_strdel(&path);
-			return (NULL);
-		}
+		//printf("CHECK DIR == -1\n");
+		ft_strdel(&path);
+		return (NULL);
 	}
-	else
-		path = ft_search_pwd(NULL);
 	//printf("\nOPENDIR PATH == %s\n", path);
 	if ((dir = opendir(path)))
 	{
@@ -330,7 +282,7 @@ void	ft_free_t_tab(t_tab *t)
 
 int		tabulator(t_editor **ed, int version)
 {
-	place_cursor_before(*ed);
+	version != 0 ? place_cursor_before(*ed) : 0;
 	if ((*ed)->tabu == -1 && version == 1)
 	{
 		if (lexer_tab(ed) != -1)
@@ -346,6 +298,12 @@ int		tabulator(t_editor **ed, int version)
 				(*ed)->tabu = 0;
 				ft_select(ed, 0);
 			}
+			else if ((*ed)->t.elem && (*ed)->t.elem[0])
+			{
+				(*ed)->sel = malloc(sizeof(t_select));
+				(*ed)->sel->ret = ft_strdup((*ed)->t.elem[0]);
+				replace_line_after_tab(ed);
+			}
 		}
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
@@ -357,13 +315,24 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 2)
 	{
+		//refresh
 		ft_select(ed, 0);
 	}
 	else if (version == 0)
 	{
-		ft_free_t_select(&(*ed)->sel);
+		tputs(tgetstr("cd", NULL), 1, ft_putchar);
+		if ((*ed)->sel)
+		{
+			/*
+			while ((*ed)->sel->nbl >= 0)
+			{
+				tputs(tgoto(tgetstr("do", NULL), 1, 1), 1, ft_putchar);
+				(*ed)->sel->nbl--;
+			}*/
+		}
 		ft_free_t_tab(&(*ed)->t);
+		ft_free_t_select(&(*ed)->sel);
 	}
-	place_cursor_after(*ed);
+	version != 0 ? place_cursor_after(*ed) : 0;
 	return (0);
 }
