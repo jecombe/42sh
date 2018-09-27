@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 16:35:42 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 17:20:12 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,6 +39,8 @@ int			ft_select(t_editor **ed, int version)
 			}
 			version == 1 ? ft_manage_touch(ed) : 0;
 		}
+		else
+			return (1);
 	}
 	return (0);
 }
