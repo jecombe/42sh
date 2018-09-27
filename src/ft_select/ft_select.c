@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:32:02 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:46:16 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 int			ft_select(t_editor **ed, int version)
 {
 	int			ret;
+	t_term		raw;
 
 	ret = 0;
 	if ((*ed)->t.elem)
@@ -25,21 +26,27 @@ int			ft_select(t_editor **ed, int version)
 		{
 			if ((*ed)->t.elem[1])
 			{
+//				printf("0000\n");
+//				sleep(2);
 				version == 0 ? ft_print_params((*ed)->sel) : 0;
 				(*ed)->tabu = 0;
 			}
 			else if ((*ed)->t.elem[0] && (*ed)->tabu == -1)
 			{
-				if ((*ed)->t.elem[0])
-				{
+//				printf("1111\n");
+//				sleep(2);
 					replace_line_after_tab(ed);
 					//REPLACE LINE AFTER TAB
-				}
 			}
 			version == 1 ? ft_manage_touch(ed) : 0;
 		}
 		else
+		{
+//				printf("22222\n");
+//				sleep(2);
 			return (1);
+		}
+//		sleep(2);
 	}
 	return (0);
 }
