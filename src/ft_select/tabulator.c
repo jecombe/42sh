@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 12:59:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 12:02:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,25 +24,35 @@ int		echap_char(char **element)
 	return (0);
 }
 
-int		add_bin(char ***bin, DIR *dir, char *line, int version)
+int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 {
 	struct dirent	*t_dir;
 	char			*tmp;
+	char			*line;
+	int				len_file;
 
+	line = (*ed)->t.word;
 	while ((t_dir = readdir(dir)))
 	{
 		tmp = NULL;
 		tmp = ft_strdup(t_dir->d_name);
 		echap_char(&tmp);
+		len_file = (*ed)->t.is_file ? ft_strlen((*ed)->t.is_file) : 0;
 		if ((line && 0 == ft_strncmp(line, tmp, ft_strlen(line))) ||
 			!line || version == 1)
-			ft_malloc_cmd(bin, tmp);
+		{
+			if (version == 0)
+				ft_add_to_str(&(*ed)->t.is_file, 1, len_file);
+			else
+				ft_add_to_str(&(*ed)->t.is_file, ft_is_file(tmp, path), len_file);
+			ft_malloc_cmd(&(*ed)->t.elem, tmp);
+		}
 		ft_strdel(&tmp);
 	}
 	return (0);
 }
 
-char	**search_bin(char *line)
+char	**search_bin(t_editor **ed)
 {
 	char		**bin;
 	char		*tmp;
@@ -56,10 +66,12 @@ char	**search_bin(char *line)
 	{
 		if ((path = ft_strsplit(tmp, ':')))
 		{
+					printf("WORD == %s\n", (*ed)->t.word);
+					sleep(2);
 			while (path[++i])
 				if ((dir = opendir(path[i])))
 				{
-					add_bin(&bin, dir, line, 0);
+					add_bin(ed, dir, path[i], 0);
 					closedir(dir);
 				}
 			ft_strdel(&tmp);
@@ -69,49 +81,29 @@ char	**search_bin(char *line)
 	return (bin);
 }
 
-int		search_little_word(char **str, char *word)
-{
-	char	*tmp;
-
-	if (word && word[ft_strlen(word) - 1] != '/')
-	{
-//		////printf("TRUC == %c\n", word[ft_strlen(word) - 1]);
-//		////printf("WORD == %s\n", word);
-		if (word[0] == '/')
-		{
-//			////printf("0TRUC == %s\n", ft_strrchr(word, '/') + 1);
-			*str = ft_strdup(ft_strrchr(word, '/') + 1);
-		}
-		else
-			*str = ft_strdup(word);
-	}
-	else
-		ft_strdel(str);
-	return (0);
-}
-
-char	**search_in_rep(char *word)
+char	**search_in_rep(t_editor **ed)
 {
 	char		**bin;
 	char		*path;
+	char		*tmp;
 	DIR			*dir;
 	int			ret;
 
 	ret = 0;
 	bin = NULL;
-	path = ft_search_path(word);
+	path = ft_search_path((*ed)->t.word);
 	if (ft_isdir(path) == 0)
 	{
-		//printf("CHECK DIR == -1\n");
 		ft_strdel(&path);
 		return (NULL);
 	}
-	//printf("\nOPENDIR PATH == %s\n", path);
 	if ((dir = opendir(path)))
 	{
-		search_little_word(&path, word);
-		//printf("\nELEMENT A RECHERCHER == %s\n", path);
-		add_bin(&bin, dir, path, ret);
+		tmp = ft_strdup((*ed)->t.word);
+		ft_cut_word_and_before(&(*ed)->t.word, tmp, &(*ed)->t.before);
+		ft_strdel(&tmp);
+		add_bin(ed, dir, path, ret);
+		ft_strdel(&path);
 		closedir(dir);
 	}
 	return (bin);
@@ -127,11 +119,9 @@ char	**search_var(char *word)
 
 	i = 0;
 	ret = NULL;
-//	////printf("00\n");
 	tmp = word[1] ? ft_strdup(word + 1) : NULL;
 	if (g_set)
 	{
-//	////printf("11\n");
 		while (g_set[i])
 		{
 			if ((tmp && 0 == ft_strncmp(tmp, g_set[i], ft_strlen(tmp))) || !tmp)
@@ -141,13 +131,11 @@ char	**search_var(char *word)
 				ft_malloc_cmd(&ret, tmp3);
 				ft_strdel(&tmp2);
 				ft_strdel(&tmp3);
-//				////printf("SEARCH_VAR == %s\n", g_set[i]);
 			}
 			i++;
 		}
 	}
 	ft_strdel(&tmp);
-//	////printf("22\n");
 	return (ret);
 }
 
@@ -213,11 +201,6 @@ int		lexer_tab(t_editor **ed)
 		}
 		if ((*ed)->t.word && (*ed)->t.word[0] == '$')
 			(*ed)->t.nb_word = -1;
-//		if ((*ed)->t.word)
-			//printf("T_WORD == %s\n", (*ed)->t.word);
-//		else
-			//printf("!!!T_WORD\n");
-		//sleep(1);
 	}
 	return (1);
 }
@@ -275,6 +258,7 @@ void	ft_free_t_tab(t_tab *t)
 {
 	ft_tabdel(&(*t).cmd);
 	ft_tabdel(&(*t).elem);
+	ft_strdel(&(*t).is_file);
 	ft_strdel(&(*t).word);
 	(*t).nb_word = 0;
 	(*t).nb_char = 0;
@@ -288,11 +272,11 @@ int		tabulator(t_editor **ed, int version)
 		if (lexer_tab(ed) != -1)
 		{
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
-				(*ed)->t.elem = search_bin((*ed)->t.word);
+				search_bin(ed);
 			else if ((*ed)->t.nb_word == -1)
 				(*ed)->t.elem = search_var((*ed)->t.word);
 			else
-				(*ed)->t.elem = search_in_rep((*ed)->t.word);
+				(*ed)->t.elem = search_in_rep(ed);
 			if ((*ed)->t.elem && (*ed)->t.elem[1])
 			{
 				(*ed)->tabu = 0;
@@ -305,13 +289,12 @@ int		tabulator(t_editor **ed, int version)
 				replace_line_after_tab(ed);
 			}
 		}
+		(*ed)->tabu = 0;
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 			ft_select(ed, 1);
-//		if (word)
-//			(*ed)->line = ft_strdup(word);
 	}
 	else if (version == 2)
 	{

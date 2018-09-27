@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 12:57:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 11:46:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -85,21 +85,29 @@ char	*ft_search_path(char *line)
 	char	*pwd;
 
 	if (!line || !ft_strchr(line, '/'))
-	{
-	printf("0LINE == %s\n", line);
 		pwd = ft_search_pwd(NULL);
-	}
 	else if (ft_strchr(line, '/') && !(line[0] == '/'))
-	{
 		pwd = ft_search_relative_path(line);
-		printf("1LINE == %s\n", line);
+	else
+		pwd = ft_search_absolute_path(line);
+	return (pwd);
+}
+
+int		ft_cut_word_and_before(char **str, char *word, char **before)
+{
+	int		i;
+
+	if (word && word[ft_strlen(word) - 1] != '/' && ft_strchr(word, '/'))
+	{
+		*str = ft_strdup(ft_strrchr(word, '/') + 1);
+		i = ft_strlen(word) - ft_strlen(*str);
+		*before = ft_strsub(word, 0, i);
+	}
+	else if (!ft_strchr(word, '/'))
+	{
+		*str = ft_strdup(word);
 	}
 	else
-	{
-	printf("2LINE == %s\n", line);
-		pwd = ft_search_absolute_path(line);
-	}
-	printf("0PWD == %s\n", pwd);
-	sleep(2);
-	return (pwd);
+		ft_strdel(str);
+	return (0);
 }

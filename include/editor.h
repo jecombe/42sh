@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 05:26:56 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 11:23:32 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,6 +64,8 @@ typedef struct		s_tab
 {
 	char			**cmd;
 	char			**elem;
+	char			*is_file;//INDES CORRESPONDANT A L ELEM ET IS_FILE[I] EST UN NBR
+	char			*before;//LE PATH COMME DE PAR EXEMPLE
 	char			*word;
 	int				nb_word;
 	int				nb_char;

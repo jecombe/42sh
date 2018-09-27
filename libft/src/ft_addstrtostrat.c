@@ -1,46 +1,44 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_add_to_str.c                                  .::    .:/ .      .::   */
+/*   ft_addstrtostrat.c                               .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/09/15 00:16:54 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 11:48:09 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/27 10:25:18 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/27 10:56:26 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-
-
-int		ft_add_to_str(char **str, char c, int index)
+int		ft_addstrtostrat(char **str, char *to_add, int at)
 {
-	char		*tmp;
-	int			i;
-	int			j;
+	int		i;
+	char	*tmp;
+	int		j;
+	int		add;
 
-	i = 0;
+	add = 0;
 	j = 0;
-	if (*str)
+	i = 0;
+	if (*str && to_add && at < (int)ft_strlen(*str) && at >= 0)
 	{
-		if (!(tmp = (char*)malloc(sizeof(char) * (ft_strlen(*str) + 2))))
+		i = ft_strlen(*str) + ft_strlen(to_add);
+		if (!(tmp = (char*)malloc(sizeof(char) * (i + 1))))
 			return (1);
-		while ((*str)[i] && i < index)
-			tmp[j++] = (*str)[i++];
-		tmp[j++] = c;
+		i = 0;
 		while ((*str)[i])
-			tmp[j++] = (*str)[i++];
+		{
+			if (i == at)
+				while(to_add[j])
+					tmp[add++] = to_add[j++];
+			tmp[add++] = (*str)[i++];
+		}
+		tmp[add] = '\0';
+		ft_strdel(str);
+		*str = ft_strdup(tmp);
 	}
-	else
-	{
-		if (!(tmp = (char*)malloc(sizeof(char) * 2)))
-			return (1);
-		tmp[j++] = c;
-	}
-	tmp[j] = '\0';
-	ft_strdel(str);
-	*str = ft_strdup(tmp);
 	return (0);
 }

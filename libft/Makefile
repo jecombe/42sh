@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/09/25 01:39:27 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/27 10:41:26 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,6 +108,7 @@ SRCS_NAME =	\
 			ft_strisdigit.c \
 			ft_reverse_tab.c \
 			ft_concat_tab_to_str.c \
+			ft_addstrtostrat.c \
 			ft_insert_char_in_str.c \
 			ft_isquote.c
 

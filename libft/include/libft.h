@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 01:38:48 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 10:42:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,5 +132,6 @@ int					ft_add_to_str(char **str, char c, int index);
 int					ft_reverse_tab(char ***tablo);
 int					ft_strisdigit(char *str);
 int					ft_concat_tab_to_str(char **tablo, char **str);
+int					ft_addstrtostrat(char **str, char *to_add, int at);
 
 #endif

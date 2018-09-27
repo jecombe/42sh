@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 04:26:19 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 11:37:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -89,6 +89,8 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->tabu = -1;
 	(*ed)->t.cmd = NULL;
 	(*ed)->t.elem = NULL;
+	(*ed)->t.is_file = NULL;
+	(*ed)->t.before = NULL;
 	(*ed)->t.word = NULL;
 	(*ed)->t.nb_word = 0;
 	(*ed)->t.nb_char = 0;
