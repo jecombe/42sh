@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:13 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 18:29:50 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:57:25 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,13 +31,10 @@ int 		ft_echo_redirect(char **cmd, int ok, int slash_n)
 
 int 		ft_echo(t_op *t_exec)
 {
-	int flag2;
-	int fd_open;
 	int i;
 	int slash_n;
 
 	int ok = 0;
-	t_op *op = NULL;
 	if (t_exec->cmd[1] == NULL)
 	{
 		ok = 1;

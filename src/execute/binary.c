@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 20:52:23 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:18:49 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,12 +44,12 @@ static char		*ft_check_path_bin(const char *cmd)
 	char		*path;
 	char		**grid;
 	int			i;
-	char		buff[4096];
+	char		buff[BUFF_SIZE];
 
 	path = NULL;
 	grid = NULL;
 	i = -1;
-	ft_strclr(buff);
+	ft_bzero(buff, BUFF_SIZE);
 	if (!(path = ft_getenv("PATH", g_env)))
 		return (NULL);
 	if (!(grid = ft_strsplit(path, ':')))

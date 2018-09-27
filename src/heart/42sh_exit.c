@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/16 06:36:43 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 06:38:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:24:23 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +31,7 @@ void		hash_delete(void)
 	free(hashtable);
 }
 
-void		exit_shell(const char *bin)
+void		exit_shell(void)
 {
 	if (g_env)
 		ft_tabdel(&g_env);

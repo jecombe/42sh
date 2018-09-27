@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 06:22:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:36:23 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,7 @@ static size_t		wordlen(const char *s, size_t index, int *cursor_pos)
 	size_t	count;
 	char	c;
 
+	(void)cursor_pos;
 	c = s[i];
 	count = 0;
 	if (ft_isseparator(c))

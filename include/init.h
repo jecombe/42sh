@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:41:57 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:36:09 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:25:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@
 
 int			init_shell(int ac, const char **av);
 int			init_files(const char *bin);
-int			init_env(int ac, const char **av);
+int			init_env(const char **av);
 int			init_set(int ac, const char **av);
 int			init_builtins(const char *bin);
 

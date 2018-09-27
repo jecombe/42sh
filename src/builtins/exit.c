@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:28 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:05:44 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:59:03 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,6 +15,7 @@
 
 int 		ft_exit(t_op *t_exec)
 {
+	(void)t_exec;
 	printf("EXIT\n");
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 00:28:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:42:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,7 +57,7 @@ static char	*recup_inside_bquote(char *cmd, int begin, int j_index)
 	return (ret);
 }
 
-static char	*get_tmp_file(char *cmd, int begin, int j_index)
+static char	*get_tmp_file(void)
 {
 	char		*ret;
 	char		*tmp;
@@ -101,7 +101,7 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 //		ft_strdel(&line);
 		//close(fd);
 //	fflush(NULL);
-		line = get_tmp_file((*cmd)[(*i)->i], (*i)->begin, (*i)->j);
+		line = get_tmp_file();
 	}
 	if (ft_bquote_replace(&(*cmd), &line, i))
 		return (1);

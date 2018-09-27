@@ -6,30 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 05:59:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:01:33 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:56:27 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
-static int	ft_cd_error(const char *cmd, const int stat)
-{
-	ft_putstr_fd("101sh: cd: ", STDERR_FILENO);
-	if (stat == 1)
-	{
-		ft_putchar_fd('-', STDERR_FILENO);
-		ft_putchar_fd(*cmd, STDERR_FILENO);
-		ft_putendl_fd(": invalid option", STDERR_FILENO);
-		ft_putendl_fd("cd: usage: cd [-L|-P] [dir]", STDERR_FILENO);
-	}
-	if (stat == 2)
-	{
-		ft_putstr_fd(cmd, STDERR_FILENO);
-		ft_putendl_fd(": No such file or directory", STDERR_FILENO);
-	}
-	return (EXIT_FAILURE);
-}
 
 static int	ft_cd_flags(const char **cmd, char *flag, int *idx)
 {

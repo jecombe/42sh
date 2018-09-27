@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/23 20:31:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 20:50:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:51:16 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,9 +60,6 @@ int			ft_redirect_input(t_redirect *redirect, t_loop *loop)
 
 int			ft_redirections(t_redirect *redirect, t_loop *loop)
 {
-	int nb;
-	int flag;
-
 	if (redirect->redirect == DLESS)
 		loop->fd_in = ft_redirect_heredoc(redirect);
 	if (ft_redirect_output(redirect, loop) == EXIT_FAILURE)

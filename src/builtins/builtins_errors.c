@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/19 08:12:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:00:00 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:53:37 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void		ft_biflag(const char *prgm, const char *cmd)
+static void		ft_biflag(const char *cmd)
 {
 	ft_putchar_fd('-', 2);
 	ft_putchar_fd(*cmd, 2);
@@ -32,7 +32,7 @@ int		ft_bierrors(const char *prgm, const char *cmd, t_bierror err)
 	ft_putstr_fd(prgm, 2);
 	ft_putstr_fd(": ", 2);
 	if (err == BIFLAG)
-		ft_biflag(prgm, cmd);
+		ft_biflag(cmd);
 	else if (err == BINOFOUND)
 		ft_binofound(cmd);
 	else if (err == BITOMANY)

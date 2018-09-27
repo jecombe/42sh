@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:18:49 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 23:21:24 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:30:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ int		clear_window(t_editor *ed, e_prompt prompt)
 		ft_putstr(ed->line);
 	ed->last_row = get_cursor_position(1);
 	ed->cursor_str_pos = ft_strlen(ed->line);
-	while (cursor_str_pos_tmp != ed->cursor_str_pos)
+	while (cursor_str_pos_tmp != (int)ed->cursor_str_pos)
 		move_cursor_left(ed);
 	return (0);
 }

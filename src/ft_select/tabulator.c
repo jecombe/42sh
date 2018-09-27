@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 17:23:38 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:36:00 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -145,6 +145,7 @@ int		search_end_word(int index, char **tablo)
 	int		i;
 	int		count;
 
+	(void)index;
 	count = 0;
 	i = 0;
 	if (tablo)
@@ -164,7 +165,7 @@ void	binorfile(t_editor **ed, int *end_word)
 
 	i = 0;
 	if ((*ed)->t.cmd)
-		while ((*ed)->t.cmd[i] && *end_word < (*ed)->cursor_str_pos)
+		while ((*ed)->t.cmd[i] && *end_word < (int)(*ed)->cursor_str_pos)
 		{
 			*end_word += ft_strlen((*ed)->t.cmd[i]);
 			if (ft_isseparator((*ed)->t.cmd[i][0]))
@@ -183,7 +184,7 @@ int		lexer_tab(t_editor **ed)
 	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
 	end_word = 0;
 	binorfile(ed, &end_word);
-	if ((*ed)->cursor_str_pos != end_word)
+	if ((int)(*ed)->cursor_str_pos != end_word)
 	{
 		(*ed)->cursor_str_pos = end_word;
 		return (-1);
@@ -213,6 +214,7 @@ void	place_cursor_before(t_editor *ed)
 	int	cursor;
 	int	to_jump;
 
+	cursor = 0;
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	nb_line = line_max / ed->ws_col + 1;
@@ -231,6 +233,7 @@ void	place_cursor_after(t_editor *ed)
 	int	nb_line;
 	int	cursor;
 
+	cursor = 0;
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	nb_line = line_max / ed->ws_col + 1;
@@ -242,7 +245,7 @@ void	place_cursor_after(t_editor *ed)
 	}
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putfreshstr(ed->line);
-	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
+	while (line_max > (int)(ed->cursor_str_pos + ed->prompt_size))
 	{
 		if (get_cursor_position(0) == 1)
 		{

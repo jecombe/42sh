@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 00:03:35 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:50:55 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,7 +37,7 @@ int			add_after_bquote(char *cmd, int j_index, char ***tablo, int ok)
 
 	tab_index = 0;
 	tmp = NULL;
-	if (j_index < ft_strlen(cmd))
+	if (j_index < (int)ft_strlen(cmd))
 	{
 		tmp = ft_strsub(cmd, j_index, ft_strlen(cmd) - j_index);
 		if (*tablo && ok)

@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:57:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/16 09:27:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:27:59 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static int	add_multiline(char **ret, char *news, int i, char ***get_hist)
+static int	add_multiline(char **ret, char *news, char ***get_hist)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -52,7 +52,7 @@ static int	add_hist_to_memory(char **tmp, char *path)
 					str = ft_strdup(tmp[i]);
 			}
 			else if (str)
-				add_multiline(&str, tmp[i], i, &get_hist);
+				add_multiline(&str, tmp[i], &get_hist);
 		}
 	ft_strdel(&str);
 	history_save(&get_hist, NULL, -1, path);

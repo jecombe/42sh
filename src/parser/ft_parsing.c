@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 20:52:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:40:27 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,8 @@
 int			ft_parse_exit(t_token token)
 {
 	char		*name;
-	t_lex		clear_b_seq;
 
+	name = NULL;
 	ft_convert_token(&name, token);
 	ft_putstr_fd("bash: syntax error near unexpected token `", 2);
 	ft_putstr_fd(name, 2);
@@ -34,7 +34,7 @@ int			ft_attribute_token(t_seq **b_seq, char *name, t_token token)
 	else if (token >= AND_IF && token <= PIPE_AND)
 		return (ft_manage_logical_and_pipe(&(*b_seq), token));
 	else if (token >= LESS && token <= DLESSDASH)
-		return (ft_manage_redirection(&(*b_seq), token, name));
+		return (ft_manage_redirection(&(*b_seq), token));
 	else if (token == IO_NUMBER)
 		return (ft_manage_io_number(&*(b_seq), name));
 	else
@@ -45,7 +45,6 @@ t_seq		*ft_parsing(t_lex lex)
 {
 	int				i;
 	t_seq			*b_seq;
-	t_op			*t_op;
 	int				error;
 
 	error = 0;

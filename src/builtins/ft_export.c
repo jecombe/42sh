@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 06:59:18 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:02:54 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:59:52 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -77,7 +77,6 @@ int			assign_var(char *cmd)
 int			ft_export(t_op *exec)
 {
 	int		i;
-	t_op	*tmp;
 
 	i = 1;
 	if (!exec->cmd[1])

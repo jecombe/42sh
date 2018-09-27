@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/26 07:18:01 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/28 01:43:13 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@ NAME = 101sh
 
 MAKE = make
 CC = gcc
-CFLAGS = #-Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra
 CPPFLAGS = -I ./include/
 LDLIBS = -lft -ltermcap
 LDFLAGS = -Llibft/
@@ -89,9 +89,9 @@ SRCS_NAME =	\
 			ft_select/utils.c \
 			ft_select/ft_select_sp.c \
 			lexer/prelexer.c \
-			lexer/ft_lexer.c \
-			lexer/ft_lexer_break_words.c \
-			lexer/ft_lexer_utils.c \
+			lexer/lexer.c \
+			lexer/lexer_break_words.c \
+			lexer/lexer_utils.c \
 			parser/ft_attrib_parsing.c \
 			parser/ft_convert_token.c \
 			parser/ft_free_parse.c \

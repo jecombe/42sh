@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 20:35:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:52:22 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,6 @@ int					ft_pipe(t_op *opera, int fd2)
 	t_loop			loop;
 	int				pfd[2];
 	int				fd[3];
-	int				result;
 
 	ft_memset(&loop, 0, sizeof(t_loop));
 	ft_memset(&pfd, 0, sizeof(int) * 2);
@@ -57,7 +56,7 @@ int					ft_pipe(t_op *opera, int fd2)
 		opera = opera->next;
 	}
 	ft_restore_fd(fd);
-	return (ft_return_command(&loop, result));
+	return (ft_return_command(&loop));
 }
 
 void		ft_sequence(t_seq *b_seq, int fd)

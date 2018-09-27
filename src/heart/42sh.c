@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 07:13:34 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 01:44:27 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,7 +19,6 @@ int					heart_of_101sh(char *line, int fd_base)
 {
 	t_lex			lex;
 	t_seq			*seq;
-	pid_t pid;
 	int				ret;
 
 	ret = 0;
@@ -77,12 +76,13 @@ static void			shell(void)
 
 int			main(int ac, const char **av)
 {
+	dprintf(2, "nvlefnvlev");
 	if (!isatty(0))
 		return (0);
 	if (init_shell(ac, av))
 		return (EXIT_FAILURE);
 	signal_shell();
 	shell();
-	exit_shell(av[0]);
+	exit_shell();
 	return (EXIT_SUCCESS);
 }

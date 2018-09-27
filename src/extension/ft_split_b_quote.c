@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:14:20 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/08/07 04:42:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:42:33 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-const int		equal_to_split(char c, char *str)
+static int		equal_to_split(char c, char *str)
 {
 	int		i;
 
@@ -27,7 +27,7 @@ const int		equal_to_split(char c, char *str)
 	return (0);
 }
 
-const size_t	ft_wordcount_b_quote(const char *s, char *c)
+static size_t	ft_wordcount_b_quote(const char *s, char *c)
 {
 	int		i;
 	size_t	count;
@@ -51,7 +51,7 @@ const size_t	ft_wordcount_b_quote(const char *s, char *c)
 	return (count);
 }
 
-const size_t	ft_wordlen_bquote(const char *s, char *c, size_t i)
+static size_t	ft_wordlen_bquote(const char *s, char *c, size_t i)
 {
 	size_t	count;
 

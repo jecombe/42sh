@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:58:09 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 01:48:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:26:47 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static int			add_info_params(int ac, const char **av)
+static int			add_info_params(const char **av)
 {
 	char	*tmp;
 	int		i;
@@ -89,9 +89,10 @@ static int			get_sysname(int ac)
 
 int					init_set(int ac, const char **av)
 {
+	(void)ac;
 	if (g_env)
 		g_set = ft_tabdup(g_env);
-	add_info_params(ac, av);
+	add_info_params(av);
 	add_info_id();
 	add_to_set("IFS", " \t\n");
 	get_sysname(ac);

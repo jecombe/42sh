@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 23:13:41 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:25:42 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,7 @@ static void		ft_get_file_info(const char *bin)
 	}
 }
 
-int				init_env(int ac, const char **av)
+int				init_env(const char **av)
 {
 	extern char	**environ;
 	char		*s;

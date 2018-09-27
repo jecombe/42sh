@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 20:48:41 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:56:10 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ static void	ft_print_env()
 			ft_putendl_fd(g_env[i], 1);
 }
 
-static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
+static int	ft_env_flags(const char **cmd, char *flag, int *idx)
 {
 	int		i;
 	int		j;
@@ -45,7 +45,7 @@ static int	ft_env_flags(const char **cmd, char *flag, int *idx, int fd_open)
 	return (EXIT_SUCCESS);
 }
 
-static int	ft_assign_env(const char **cmd, char flag, int *idx, int fd_open)
+static int	ft_assign_env(const char **cmd, char flag, int *idx)
 {
 	char	**grid;
 
@@ -98,7 +98,6 @@ int			ft_env(t_op *exec)
 	int		i;
 	char	flag;
 	char	**env;
-	int fd_open;
 
 	i = 0;
 	flag = '\0';
@@ -109,9 +108,9 @@ int			ft_env(t_op *exec)
 	{
 		if (!(env = ft_tabdup(g_env)))
 			return (EXIT_FAILURE);
-		if (ft_env_flags((const char **)exec->cmd, &flag, &i, fd_open))
+		if (ft_env_flags((const char **)exec->cmd, &flag, &i))
 			return (EXIT_FAILURE);
-		if (ft_assign_env((const char **)exec->cmd, flag, &i, fd_open))
+		if (ft_assign_env((const char **)exec->cmd, flag, &i))
 			return (EXIT_FAILURE);
 		ft_exec_env((const char **)exec->cmd, i);
 		ft_tabdel(&g_env);

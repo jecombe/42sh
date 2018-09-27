@@ -18,9 +18,8 @@ static int	ft_waiting(int result)
 	return(EXIT_SUCCESS);
 }
 
-int			ft_return_command(t_loop *loop, int result)
+int			ft_return_command(t_loop *loop)
 {
-
 	if (ft_waiting(loop->result) == EXIT_SUCCESS)
 	{
 		if (loop->bin == NULL && loop->result == -1)

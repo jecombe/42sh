@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:32:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 23:23:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:39:47 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -58,7 +58,7 @@ int								ft_attrib_next_redirect(t_redirect **n_redirect);
 int								ft_attrib_next_op(t_op **n_op);
 int								ft_manage_seq(t_seq **b_seq, t_token token);
 int								ft_manage_logical_and_pipe(t_seq **b_seq, t_token token);
-int								ft_manage_redirection(t_seq **b_seq, t_token token, char *name);
+int								ft_manage_redirection(t_seq **b_seq, t_token token);
 int								ft_manage_word(t_seq **b_seq, char *name);
 int								ft_manage_io_number(t_seq **b_seq, char *name);
 void							ft_convert_token(char **str, t_token token);

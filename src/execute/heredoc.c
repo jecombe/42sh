@@ -42,11 +42,7 @@ void	ft_read_line(int fd, char *s)
 
 int				ft_redirect_heredoc(t_redirect *redirect)
 {
-
-
 	int fd[2];
-	int ok;
-	int statu;
 
 	pipe(fd);
 	ft_read_line(fd[1], redirect->file);

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 17:20:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 00:32:02 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,7 +16,6 @@
 int			ft_select(t_editor **ed, int version)
 {
 	int			ret;
-	t_term		raw;
 
 	ret = 0;
 	if ((*ed)->t.elem)
