@@ -1,7 +1,7 @@
 
 #include "heart.h"
 
-static int	ft_waiting()
+static int	ft_waiting(int result)
 {
 	int status;
 	int ret;
@@ -11,15 +11,17 @@ static int	ft_waiting()
 	while(wait(NULL) > 0)
 		;
 	ret = WEXITSTATUS(status);
+	if (result != -1)
+		return (result);
 	if (ret > 0)
 		return (EXIT_FAILURE);
 	return(EXIT_SUCCESS);
 }
 
-int			ft_return_command(t_loop *loop)
+int			ft_return_command(t_loop *loop, int result)
 {
 
-	if (ft_waiting() == EXIT_SUCCESS)
+	if (ft_waiting(result) == EXIT_SUCCESS)
 	{
 		if (loop->bin == NULL)
 		{

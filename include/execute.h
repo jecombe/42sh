@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 20:47:52 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 17:18:36 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,9 +42,8 @@ typedef struct	s_loop
 
 
 void			ft_sequence(t_seq *b_seq, int fd);
-void			ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
-
-int				ft_return_command(t_loop *loop);
+int				ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
+int				ft_return_command(t_loop *loop, int result);
 int				isbuiltin(char *cmd, int fork);
 int				ft_solver(t_op *t_exec, pid_t pid, t_loop *loop);
 char			*ft_search_bin(char *cmd);
@@ -62,7 +61,6 @@ int				ft_check_file_is_directory(char *file);
 int				ft_check_source(char *source);
 int				ft_return_flag2(t_op *op);
 int				ft_return_fd(t_op *t_exec, int flag);
-
 int				ft_count_pipe(t_op *tmp);
 int				ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one,
 				t_loop *loop);

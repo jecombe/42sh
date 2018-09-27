@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 05:32:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 17:24:31 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,18 +15,10 @@
 
 void	ft_print_error(const char *s1, const char *s2)
 {
-	/*
-	ft_putstr_color("42sh: ", 4, 2);
-	ft_putstr_color(s1, 1, 2);
-	ft_putstr_fd(STOP, 2);
-	ft_putstr_color(": ", 1, 2);
-	ft_putstr_color(s2, 1, 2);
-	ft_putstr_fd(STOP, 2);
-	ft_putchar_fd('\n', 2);*/
-	ft_putstr(s1);
-	ft_putstr(": ");
-	ft_putstr(s2);
-	ft_putstr("\n");
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(s2, 2);
+	ft_putstr_fd("\n", 2);
 }
 
 char	*ft_go_to(char *bin, int nb)
@@ -47,8 +39,7 @@ int				ft_check_file_is_directory(char *file)
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
 		return (-1);
-	else
-		return (0);
+	return (0);
 }
 
 int		ft_check_source(char *source)
@@ -74,8 +65,7 @@ int			ft_check_direct_command(char *cmd)
 	struct stat sb;
 	if (lstat(cmd, &sb) == -1)
 		return (-1);
-	else
-		return (0);
+	return (0);
 }
 
 int		ft_count_pipe(t_op *tmp)

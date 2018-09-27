@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 20:48:03 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 17:23:25 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,7 +59,7 @@ void		ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 		ft_close_fd(loop, pfd);
 }
 
-void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
+int		ft_exec(t_op *opera, t_loop *loop, int *pfd)
 {
 	pid_t	pid;
 
@@ -67,7 +67,7 @@ void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
 	if (isbuiltin(opera->cmd[0], 0) == EXIT_SUCCESS)
 	{
 		loop->bin = "isbuiltin";
-		ft_builtins(opera);
+		return (ft_builtins(opera));
 	}
 	else if ((loop->bin = ft_search_bin(opera->cmd[0])))
 	{
@@ -78,4 +78,5 @@ void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
 	}
 	else
 		ft_print_error(opera->cmd[0], "Command not found !");
+	return (-1);
 }
