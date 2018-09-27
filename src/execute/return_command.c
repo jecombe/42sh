@@ -21,9 +21,9 @@ static int	ft_waiting(int result)
 int			ft_return_command(t_loop *loop, int result)
 {
 
-	if (ft_waiting(result) == EXIT_SUCCESS)
+	if (ft_waiting(loop->result) == EXIT_SUCCESS)
 	{
-		if (loop->bin == NULL)
+		if (loop->bin == NULL && loop->result == -1)
 		{
 			add_to_set("?", "1");
 			return (EXIT_FAILURE);

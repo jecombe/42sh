@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 17:18:36 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 20:34:36 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,11 +38,12 @@ typedef struct	s_loop
 	int			fd_save;
 	int			start;
 	char		*bin;
+	int result;
 }				t_loop;
 
 
 void			ft_sequence(t_seq *b_seq, int fd);
-int				ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
+void			ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
 int				ft_return_command(t_loop *loop, int result);
 int				isbuiltin(char *cmd, int fork);
 int				ft_solver(t_op *t_exec, pid_t pid, t_loop *loop);

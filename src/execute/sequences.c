@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 17:23:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 20:35:29 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,6 +43,7 @@ int					ft_pipe(t_op *opera, int fd2)
 	ft_memset(&loop, 0, sizeof(t_loop));
 	ft_memset(&pfd, 0, sizeof(int) * 2);
 	ft_memset(&fd, 0, sizeof(int) * 3);
+	loop.result = -1;
 	ft_save_fd(fd);
 	while (opera)
 	{
@@ -50,7 +51,7 @@ int					ft_pipe(t_op *opera, int fd2)
 		ft_loop_reset(&loop);
 		if (ft_loop_redirect(opera->redirect, fd2, pfd[1], &loop) == EXIT_FAILURE)
 			return(EXIT_FAILURE);
-		result = ft_exec(opera, &loop, pfd);
+		ft_exec(opera, &loop, pfd);
 		if (opera->token != PIPE)
 			break ;
 		opera = opera->next;
