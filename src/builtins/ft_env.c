@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:02:25 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 20:48:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -83,7 +83,7 @@ static int	ft_exec_env(const char **cmd, int i)
 		utility = ft_search_bin(args[0]);
 		if ((cpid = fork()) == 0)
 			if ((execve(utility, args, g_env)) == -1)
-				return (EXIT_FAILURE);
+				exit (EXIT_FAILURE);
 		if (cpid > 0)
 			wait(&status);
 		ft_tabdel(&args);

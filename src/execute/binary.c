@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:27 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 20:52:23 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -103,9 +103,9 @@ char		*ft_search_bin(char *cmd)
 
 	buff = NULL;
 	if (!isbuiltin(cmd, 1))
-		return (cmd);
+		return (ft_strdup(cmd));
 	if (!(ft_check_direct_bin(cmd)))
-		return (cmd);
+		return (ft_strdup(cmd));
 	if (!(ft_check_hash_bin(cmd, &buff)))
 		return (buff);
 	if (!(buff = ft_check_path_bin(cmd)))
