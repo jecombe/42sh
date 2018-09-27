@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 08:39:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 04:26:19 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,13 +114,18 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	free(ed);
 }
 
-void	refresh_term(t_editor **ed, t_sz ws)
+void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 {
-	(*ed)->ws_col = ws.ws_col;
-	ft_putstr("\r");
-//	tputs(tgetstr("cd", NULL), 1, ft_putchar);
-	display_prompt(find_env_var(g_env, "HOME", 0), 0);
+	if (get_cursor_position(1) == (*ed)->last_row && !((ft_strlen((*ed)->line) + (*ed)->prompt_size) % ws.ws_col))
+		dprintf(2, "OKcol\n");
+	/*
+	tputs(tgoto(tgetstr("cm", NULL), 0, (*ed)->first_row - ((get_cursor_position(1) - (*ed)->first_row) + 1)), 1, ft_putchar);
+	ft_putstr("\E[J");
+	(*ed)->first_row = get_cursor_position(1);
+	display_prompt(prompt == 0 ? find_env_var(g_env, "HOME", 0) : NULL, *prompt);
 	ft_putstr((*ed)->line);
+	(*ed)->last_row = get_cursor_position(1);*/
+	(*ed)->ws_col = ws.ws_col;
 }
 
 int		get_stdin(char **line, e_prompt *prompt)
@@ -145,7 +150,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 			return (1);
 		if (ws.ws_col != ed->ws_col && ed->line)
-			refresh_term(&ed, ws);
+			refresh_term(&ed, ws, prompt);
 		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		ed->key[ret] = '\0';

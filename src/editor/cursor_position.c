@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:26 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 04:45:46 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,50 +15,37 @@
 
 static int		get_row(char *str)
 {
-	int		i;
-	char	tmp[ft_strlen(str) + 1];
+	int i;
 
-	i = -1;
-	while (str[++i] != ';')
-		tmp[i] = str[i];
-	tmp[i] = '\0';
-	free(str);
-	return (ft_atoi(tmp));
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] >= '0' && str[i] <= '9')
+			break ;
+		i++;
+	}
+	return (ft_atoi(str + i));
 }
 
 static int		get_col(char *str)
 {
-	int		i;
-	char	tmp[ft_strlen(str) + 1];
+	int i;
 
 	i = -1;
 	while (str[++i])
-		if (i && str[i - 1] == ';')
-		{
-			ft_strcpy(tmp, str + i);
+		if (i && str[i - 1] == ';' && str[i] >= '0' && str[i] <= '9')
 			break ;
-		}
-	free(str);
-	return (ft_atoi(tmp));
+	return (ft_atoi(str + i));
 }
 
-static int		cursor_position(int mode)
+static	int		cursor_position(int mode)
 {
-	char	buf[2];
-	int		ret;
-	char	*cursor_position;
+	char buf[9];
 
-	cursor_position = NULL;
-	write(1, "\E[6n", 4);
-	while ((ret = read(0, buf, 1)) > 0)
-	{
-		buf[ret] = '\0';
-		if ((buf[0] >= '0' && buf[0] <= '9') || (buf[0] == ';'))
-			cursor_position = ft_strjoin_free(cursor_position, buf);
-		if (ft_strchr(buf, 'R'))
-			break ;
-	}
-	return (mode ? get_row(cursor_position) : get_col(cursor_position));
+	ft_bzero(buf, 9);
+	write(0, "\E[6n", 4);
+	read(0, buf, 9);
+	return (mode ? get_row(buf) : get_col(buf));
 }
 
 size_t			get_cursor_position(int mode)
