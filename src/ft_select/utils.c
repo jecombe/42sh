@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 14:39:53 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 16:57:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -112,12 +112,17 @@ int		ft_cut_word_and_before(char **str, char *word, char **before)
 		*str = ft_strdup(ft_strrchr(word, '/') + 1);
 		i = ft_strlen(word) - ft_strlen(*str);
 		*before = ft_strsub(word, 0, i);
+//	printf("BEFORE == %s\n", *before);
+//	sleep(2);
 	}
 	else if (!ft_strchr(word, '/'))
 	{
 		*str = ft_strdup(word);
 	}
 	else
+	{
+		*before = ft_strdup(word);
 		ft_strdel(str);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 10:12:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 16:57:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,8 +16,16 @@
 int			replace_line_after_tab(t_editor **ed)
 {
 	int		i;
+	char	*tmp;
 
 	i = -1;
+	if ((*ed)->t.before)
+	{
+		tmp = (*ed)->sel->ret ? ft_strjoin((*ed)->t.before, (*ed)->sel->ret) : ft_strdup((*ed)->t.before);
+		ft_strdel(&(*ed)->sel->ret);
+		(*ed)->sel->ret = ft_strdup(tmp);
+		ft_strdel(&tmp);
+	}
 	if ((*ed)->t.cmd)
 	{
 		(*ed)->cursor_str_pos = 0;

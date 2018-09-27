@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 16:31:10 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 17:00:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -260,6 +260,7 @@ void	ft_free_t_tab(t_tab *t)
 	ft_tabdel(&(*t).cmd);
 	ft_tabdel(&(*t).elem);
 	ft_strdel(&(*t).is_file);
+	ft_strdel(&(*t).before);
 	ft_strdel(&(*t).word);
 	(*t).nb_word = 0;
 	(*t).nb_char = 0;
@@ -316,7 +317,7 @@ int		tabulator(t_editor **ed, int version)
 		ft_free_t_tab(&(*ed)->t);
 		ft_free_t_select(&(*ed)->sel);
 	}
-//	version != 0 ? place_cursor_after(*ed) : 0;
-	place_cursor_after(*ed);
+	version != 0 ? place_cursor_after(*ed) : 0;
+//	place_cursor_after(*ed);
 	return (0);
 }
