@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/26 11:58:36 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 09:52:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 15:00:38 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,6 +44,8 @@ static t_line	*ft_init_begin(t_line **line, char *av)
 
 void			manage_init(t_editor **ed, int i, t_line *line)
 {
+	char		*tmp;
+
 	while ((*ed)->t.elem[++i])
 	{
 		if ((*ed)->sel->line)
@@ -56,8 +58,15 @@ void			manage_init(t_editor **ed, int i, t_line *line)
 	while (line)
 	{
 		line->cursor_inside = ++i == (*ed)->tabu ? 1 : 0;
+		line->is_file = (*ed)->t.is_file[i] - '0';
+		if (line->is_file == 2)
+		{
+			tmp = ft_strjoin(line->elem, "/");
+			ft_strdel(&line->elem);
+			line->elem = ft_strdup(tmp);
+			ft_strdel(&tmp);
+		}
 		line = line->next;
-		i++;
 	}
 	(*ed)->sel->bp = ft_search_big_param((*ed)->sel->line);
 	(*ed)->sel->pose_min = 0;

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 12:02:39 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 16:31:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,12 +39,14 @@ int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 		echap_char(&tmp);
 		len_file = (*ed)->t.is_file ? ft_strlen((*ed)->t.is_file) : 0;
 		if ((line && 0 == ft_strncmp(line, tmp, ft_strlen(line))) ||
-			!line || version == 1)
+			!line)
 		{
 			if (version == 0)
-				ft_add_to_str(&(*ed)->t.is_file, 1, len_file);
+				ft_add_to_str(&(*ed)->t.is_file, '1', len_file);
 			else
-				ft_add_to_str(&(*ed)->t.is_file, ft_is_file(tmp, path), len_file);
+				ft_add_to_str(&(*ed)->t.is_file, ft_stat(tmp, path), len_file);
+//			printf("IS_FILE == %s\n\n", (*ed)->t.is_file);
+//			sleep(1);
 			ft_malloc_cmd(&(*ed)->t.elem, tmp);
 		}
 		ft_strdel(&tmp);
@@ -52,22 +54,20 @@ int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 	return (0);
 }
 
-char	**search_bin(t_editor **ed)
+int		search_bin(t_editor **ed)
 {
-	char		**bin;
 	char		*tmp;
 	char		**path;
 	int			i;
 	DIR			*dir;
 
 	i = -1;
-	bin = NULL;
 	if ((tmp = ft_getenv("PATH", g_env)))
 	{
 		if ((path = ft_strsplit(tmp, ':')))
 		{
-					printf("WORD == %s\n", (*ed)->t.word);
-					sleep(2);
+//					printf("WORD == %s\n", (*ed)->t.word);
+//					sleep(2);
 			while (path[++i])
 				if ((dir = opendir(path[i])))
 				{
@@ -78,35 +78,36 @@ char	**search_bin(t_editor **ed)
 			ft_tabdel(&path);
 		}
 	}
-	return (bin);
+	return (0);
 }
 
-char	**search_in_rep(t_editor **ed)
+int		search_in_rep(t_editor **ed)
 {
-	char		**bin;
 	char		*path;
 	char		*tmp;
 	DIR			*dir;
 	int			ret;
 
 	ret = 0;
-	bin = NULL;
 	path = ft_search_path((*ed)->t.word);
+//	printf("WORD == %s NB_WORD == %d\n", (*ed)->t.word, (*ed)->t.nb_word);
+//	printf("PATH == %s\n", path);
+//			sleep(2);
 	if (ft_isdir(path) == 0)
 	{
 		ft_strdel(&path);
-		return (NULL);
+		return (0);
 	}
 	if ((dir = opendir(path)))
 	{
 		tmp = ft_strdup((*ed)->t.word);
 		ft_cut_word_and_before(&(*ed)->t.word, tmp, &(*ed)->t.before);
 		ft_strdel(&tmp);
-		add_bin(ed, dir, path, ret);
+		add_bin(ed, dir, path, 1);
 		ft_strdel(&path);
 		closedir(dir);
 	}
-	return (bin);
+	return (0);
 }
 
 char	**search_var(char *word)
@@ -276,7 +277,7 @@ int		tabulator(t_editor **ed, int version)
 			else if ((*ed)->t.nb_word == -1)
 				(*ed)->t.elem = search_var((*ed)->t.word);
 			else
-				(*ed)->t.elem = search_in_rep(ed);
+				search_in_rep(ed);
 			if ((*ed)->t.elem && (*ed)->t.elem[1])
 			{
 				(*ed)->tabu = 0;
@@ -289,7 +290,6 @@ int		tabulator(t_editor **ed, int version)
 				replace_line_after_tab(ed);
 			}
 		}
-		(*ed)->tabu = 0;
 	}
 	else if ((*ed)->tabu >= 0 && version == 1)
 	{
@@ -299,7 +299,7 @@ int		tabulator(t_editor **ed, int version)
 	else if (version == 2)
 	{
 		//refresh
-		ft_select(ed, 0);
+	//	ft_select(ed, 2);
 	}
 	else if (version == 0)
 	{
@@ -316,6 +316,7 @@ int		tabulator(t_editor **ed, int version)
 		ft_free_t_tab(&(*ed)->t);
 		ft_free_t_select(&(*ed)->sel);
 	}
-	version != 0 ? place_cursor_after(*ed) : 0;
+//	version != 0 ? place_cursor_after(*ed) : 0;
+	place_cursor_after(*ed);
 	return (0);
 }

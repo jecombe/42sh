@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 12:02:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 13:31:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -71,7 +71,7 @@ int						ft_outc(int c);
 void					ft_init_select(t_editor **ed);
 int						ft_count_line(t_select *t);
 int						ft_search_big_param(t_line *line);
-char					ft_is_file(char *file, char *path);
+char					ft_stat(char *file, char *path);
 void					ft_first_sort(t_line **line, char *av);
 int						ft_count_params(t_line *line);
 int						ft_char_by_line(t_select **sel);

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 11:46:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 14:39:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,7 +63,8 @@ char	*ft_search_absolute_path(char *line)
 	char	*absolute_path;
 
 	i = ft_strlen(line) - ft_strlen(ft_strrchr(line, '/'));
-	absolute_path = ft_strsub(line, 0, i);
+	absolute_path = ft_strsub(line, 0, line[1] ? i : 1);
+//	printf("ABSOLUTE == %s\n", absolute_path);
 	return (absolute_path);
 }
 
@@ -85,11 +86,20 @@ char	*ft_search_path(char *line)
 	char	*pwd;
 
 	if (!line || !ft_strchr(line, '/'))
+	{
+//		printf("000\n");
 		pwd = ft_search_pwd(NULL);
+	}
 	else if (ft_strchr(line, '/') && !(line[0] == '/'))
+	{
+//		printf("111\n");
 		pwd = ft_search_relative_path(line);
+	}
 	else
+	{
+//		printf("222\n");
 		pwd = ft_search_absolute_path(line);
+	}
 	return (pwd);
 }
 
