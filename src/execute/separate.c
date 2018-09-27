@@ -6,12 +6,13 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:00:53 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/23 20:50:14 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/27 14:25:49 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
 
 void	ft_save_fd(int fd_org[3])
 {
@@ -28,7 +29,7 @@ void	ft_restore_fd(int fd_org[3])
 }
 
 
-int			ft_waiting()
+int			ft_waiting(int result)
 {
 	int status;
 	int ret;
@@ -38,15 +39,17 @@ int			ft_waiting()
 	while(wait(NULL) > 0)
 		;
 	ret = WEXITSTATUS(status);
+	if (result != -1)
+		return (result);
 	if (ret > 0)
 		return (EXIT_FAILURE);
 	return(EXIT_SUCCESS);
 }
 
-int			ft_return_command(t_loop *loop)
+int			ft_return_command(t_loop *loop, int result)
 {
 
-	if (ft_waiting() == EXIT_SUCCESS)
+	if (ft_waiting(result) == EXIT_SUCCESS)
 	{
 		if (loop->bin == NULL)
 		{
@@ -92,6 +95,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 	char *tmp_bin;
 	int i;
 	int ok;
+	int result;
 
 	i = ft_count_pipe(opera);
 	i++;
@@ -99,6 +103,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 	loop = ft_init_loop(i);
 	while (loop.start != 0)
 	{
+		result = -1;
 		pipe(fd);
 		loop.fd_in = 0;
 		loop.fd_out = 1;
@@ -110,7 +115,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		if (ft_strcmp(loop.bin, "1") == 0)
 		{
 			ok = 1;
-			ft_builtins(opera);
+			result = ft_builtins(opera);
 		}
 		else
 			ok = 0;
@@ -128,7 +133,7 @@ int			ft_go_pipe(t_op *opera, int fd2)
 		opera = opera->next;
 		loop.start--;
 	}
-	return (ft_return_command(&loop));
+	return (ft_return_command(&loop, result));
 }
 
 void		ft_separate(t_seq *b_seq, int fd, pid_t pid)
