@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/28 02:55:25 by gbarnay     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/28 05:48:52 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -92,13 +92,13 @@ SRCS_NAME =	\
 			lexer/lexer.c \
 			lexer/lexer_break_words.c \
 			lexer/lexer_utils.c \
-			parser/ft_attrib_parsing.c \
-			parser/ft_convert_token.c \
-			parser/ft_free_parse.c \
+			parser/attrib_parsing.c \
+			parser/convert_token.c \
+			parser/free_parse.c \
 			parser/parse_error.c \
-			parser/ft_malloc_parsing.c \
-			parser/ft_manage_parsing.c \
-			parser/ft_parsing.c \
+			parser/malloc_parsing.c \
+			parser/manage_parsing.c \
+			parser/parsing.c \
 			parser/manage_assign.c \
 			extension/extension_error.c \
 			extension/quotes_manager.c \
@@ -142,6 +142,7 @@ SRCS_NAME =	\
 			builtins/ft_hash.c \
 			builtins/ft_hash_utils.c \
 			builtins/history.c	\
+			builtins/history_utils.c \
 			builtins/ft_read.c	\
 			builtins/ft_read_utils.c
 
