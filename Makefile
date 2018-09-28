@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/28 01:43:13 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/09/28 02:55:25 by gbarnay     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -141,7 +141,9 @@ SRCS_NAME =	\
 			builtins/ft_assign.c \
 			builtins/ft_hash.c \
 			builtins/ft_hash_utils.c \
-			builtins/history.c
+			builtins/history.c	\
+			builtins/ft_read.c	\
+			builtins/ft_read_utils.c
 
 OBJS_FOLDERS = 	\
 				heart init editor ft_select lexer parser extension execute \
@@ -159,7 +161,6 @@ all: $(NAME)
 
 $(NAME): lib $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LDFLAGS) $(LDLIBS)
-	@(printf "\033[1A" && printf "\033[K") # remove last line
 	@echo "\033[1;32m[ $(NAME) ] Compiled\033[0m"
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
@@ -177,7 +178,7 @@ valgrind: lldb
 	valgrind --leak-check=full --track-origins=yes ./a.out
 
 lldb:
-	gcc -ggdb3 src/*/*.c -I include libft/libft.a -ltermcap
+	gcc -ggdb3 src/*/*.c libft/src/*.c -I include -I libft/include -ltermcap
 
 lib:
 	@make -C $(LIB_PATH)
@@ -189,6 +190,7 @@ clean:
 fclean: clean
 	@$(MAKE) -C $(LIB_PATH) fclean
 	@$(RM) $(NAME)
+	@rm -rf a.out
 	@echo "\033[1;31m[ $(NAME) ] deleted\033[0m"
 	@rm -rf obj
 

@@ -118,6 +118,7 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 
 void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 {
+	(void)prompt;
 	if (get_cursor_position(1) == (*ed)->last_row && !((ft_strlen((*ed)->line) + (*ed)->prompt_size) % ws.ws_col))
 		dprintf(2, "OKcol\n");
 	/*

@@ -44,15 +44,17 @@ int		ft_builtins(t_op *opera)
 	ft_save_hash(&hashtable);
 	if (FT_ENV || FT_SETENV || FT_UNSETENV || FT_SET || FT_EXPORT || FT_UNSET)
 		return (ft_builtins_envset(opera));
-	if (FT_ASSIGN)
+	else if (FT_ASSIGN)
 		return (ft_assign(opera));
-	if (FT_ECHO)
+	else if (FT_ECHO)
 		return (ft_echo(opera));
-	if (FT_CD)
+	else if (FT_CD)
 		return (ft_cd(opera));
-	if (FT_EXIT)
+	else if (FT_EXIT)
 		return (ft_exit(opera));
-	if (FT_HASH)
+	else if (FT_HASH)
 		ft_hash_print(hashtable);
+	else if (FT_READ)
+		ft_read(opera->cmd);
 	return (EXIT_SUCCESS);
 }

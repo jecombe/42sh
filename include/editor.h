@@ -71,32 +71,22 @@ typedef struct		s_tab
 	int				nb_char;
 }					t_tab;
 
-typedef struct		s_read
-{
-	char			*line;
-	e_prompt		*prompt;
-	char			delimiter;
-	int				limit;
-	int				hide;
-}					t_read;
-
-
 typedef struct		s_editor
 {
-	size_t	ws_row;
-	size_t	ws_col;
-	size_t	first_row;
-	size_t	last_row;
-	size_t	prompt_size;
-	size_t	cursor_str_pos;
-	char	*clipboard;
-	char	key[BUFF_SIZE];
-	char	*line;
-	char	*tmp_line;
-	t_tab	t;
-	t_select	*sel;
-	int		hist;
-	int		tabu;
+	size_t			ws_row;
+	size_t			ws_col;
+	size_t			first_row;
+	size_t			last_row;
+	size_t			prompt_size;
+	size_t			cursor_str_pos;
+	char			*clipboard;
+	char			key[BUFF_SIZE];
+	char			*line;
+	char			*tmp_line;
+	t_tab			t;
+	t_select		*sel;
+	int				hist;
+	int				tabu;
 }					t_editor;
 
 int		g_bin_exit;
@@ -154,5 +144,13 @@ int		get_term_raw_mode(int mode);
 char	*find_env_var(char **env, char *var, int mode);
 void	ft_print_git_branch(void);
 void	ft_putfreshstr(char *str);
+
+/*
+ ** ****************************************************************************
+ **                              prompt_git.c                         		   *
+ ** ****************************************************************************
+ */
+
+void				ft_miniconcat(char **s1, char *s2);
 
 #endif

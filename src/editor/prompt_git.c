@@ -6,20 +6,20 @@
 /*   By: gbarnay  <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/22 19:04:02 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 05:29:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/25 05:29:26 by gbarnay     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void		ft_miniconcat(char **s1, char *s2)
+void				ft_miniconcat(char **s1, char *s2)
 {
 	char *ret;
 
 	ret = NULL;
 	ret = ft_strjoin(*s1, s2);
-	ft_strdel(s1);
+	free(*s1);
 	*s1 = ft_strdup(ret);
 	ft_strdel(&ret);
 }

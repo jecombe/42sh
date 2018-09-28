@@ -73,8 +73,6 @@ void			ft_init_select(t_editor **ed)
 {
 	int		i;
 	t_line	*line;
-	DIR		*dir;
-	char	*pwd;
 	char	**file;
 
 	file = NULL;

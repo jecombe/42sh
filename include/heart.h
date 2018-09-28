@@ -16,6 +16,7 @@
 # include <sys/utsname.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
+# include <time.h>
 
 # include <stdio.h>
 # include <curses.h>

@@ -30,6 +30,7 @@
 # define FT_CD (ft_strcmp(opera->cmd[0], "cd") == 0)
 # define FT_ECHO (ft_strcmp(opera->cmd[0], "echo") == 0)
 # define FT_EXIT (ft_strcmp(opera->cmd[0], "exit") == 0)
+# define FT_READ (ft_strcmp(opera->cmd[0], "read") == 0)
 
 typedef struct	s_loop
 {

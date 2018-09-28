@@ -26,6 +26,7 @@ static size_t		wordlen(const char *s, size_t index, int *cursor_pos)
 	size_t	count;
 	char	c;
 
+	(void)cursor_pos;
 	c = s[i];
 	count = 0;
 	if (ft_isseparator(c))

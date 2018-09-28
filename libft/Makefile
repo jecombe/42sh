@@ -123,7 +123,6 @@ all: $(NAME)
 
 $(NAME) : $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
-	@(printf "\033[1A" && printf "\033[K") # remove last line
 	@echo "\033[1;32m[ $(NAME) ] Compiled\033[0m"
 
 $(OBJS_PATH)%.o : $(SRCS_PATH)%.c

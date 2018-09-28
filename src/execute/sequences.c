@@ -74,7 +74,6 @@ void		ft_sequence(t_seq *b_seq, int fd)
 		if ((tkn == TOKEN) || (tkn == AND_IF && !ret) || (tkn == OR_IF && ret))
 			ret = ft_pipe(seq->op, fd);
 		tkn = seq->op->token;
-		printf("%d \n", seq->op->token);
 		if ((seq->op = seq->op->next) == NULL)
 			seq = seq->next;
 	}

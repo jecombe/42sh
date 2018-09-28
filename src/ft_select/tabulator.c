@@ -32,6 +32,7 @@ int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 	int				len_file;
 	char			*tmp2;
 
+	(void)version;
 	line = (*ed)->t.word;
 	while ((t_dir = readdir(dir)))
 	{
@@ -140,6 +141,7 @@ int		search_end_word(int index, char **tablo)
 	int		i;
 	int		count;
 
+	(void)index;
 	count = 0;
 	i = 0;
 	if (tablo)
@@ -159,7 +161,7 @@ void	binorfile(t_editor **ed, int *end_word)
 
 	i = 0;
 	if ((*ed)->t.cmd)
-		while ((*ed)->t.cmd[i] && *end_word < (*ed)->cursor_str_pos)
+		while ((*ed)->t.cmd[i] && (size_t)*end_word < (*ed)->cursor_str_pos)
 		{
 			*end_word += ft_strlen((*ed)->t.cmd[i]);
 			if (ft_isseparator((*ed)->t.cmd[i][0]))
@@ -178,7 +180,7 @@ int		lexer_tab(t_editor **ed)
 	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
 	end_word = 0;
 	binorfile(ed, &end_word);
-	if ((*ed)->cursor_str_pos != end_word)
+	if ((*ed)->cursor_str_pos != (size_t)end_word)
 	{
 		(*ed)->cursor_str_pos = end_word;
 		return (-1);
@@ -205,7 +207,6 @@ void	place_cursor_before(t_editor *ed)
 {
 	int line_max;
 	int	nb_line;
-	int	cursor;
 	int	to_jump;
 
 	line_max = ed->prompt_size;
@@ -224,7 +225,6 @@ void	place_cursor_after(t_editor *ed)
 {
 	int		line_max;
 	int	nb_line;
-	int	cursor;
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
@@ -237,7 +237,7 @@ void	place_cursor_after(t_editor *ed)
 	}
 	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	ft_putfreshstr(ed->line);
-	while (line_max > (ed->cursor_str_pos + ed->prompt_size))
+	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
 		if (get_cursor_position(0) == 1)
 		{

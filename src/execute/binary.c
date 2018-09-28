@@ -16,7 +16,7 @@
 int				isbuiltin(char *cmd, int fork)
 {
 	static char	*builtins[] = { "env", "setenv", "unsetenv", "set", "unset",
-		"export", "cd", "ft_assign", "hash", "exit", NULL };
+		"export", "cd", "ft_assign", "hash", "exit", "read", NULL };
 	static char *fbuiltins[] = { "echo", NULL };
 	int		i;
 

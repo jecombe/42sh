@@ -16,7 +16,24 @@
 
 # include "heart.h"
 
-typedef enum	e_bierror
+#define DO_NOTHING (void)0
+
+typedef struct			s_read
+{
+	char				*line;
+	char				*prompt;
+	char				delimiter;
+	int					limit;
+	int					hide;
+	int					backs;
+	int					split;
+	char				*vars[100];
+	int					fd;
+	int					secs;
+	int					interactive;
+}						t_read;
+
+typedef enum			e_bierror
 {
 	NOBIERROR,
 	BIFLAG,
@@ -24,7 +41,7 @@ typedef enum	e_bierror
 	BITOMANY,
 	BITOFEW,
 	BIEQUAL
-}				t_bierror;
+}						t_bierror;
 
 typedef struct			s_hashcase
 {
@@ -163,12 +180,33 @@ void			ft_hash_print(t_hashtable *hashtable);
 					ft_hash_utils.c
 *******************************************************************************
 */
-void		hash_clear(void);
+void			hash_clear(void);
 t_hashtable		*ft_hashtable_create(void);
 t_hashcase		*ft_create_case(const char *cmd, const char *raccmd);
 void			ft_save_hash(t_hashtable **hashtable);
 void			ft_hash_add(t_hashcase **begin, t_hashcase *hashcase);
 void			history_save(char ***history, char *news, int version, char *s);
 void			history_get(t_editor **ed);
+
+/*
+*******************************************************************************
+					ft_read_utils.c
+*******************************************************************************
+*/
+void			ft_init_read(t_read *rd);
+void			ft_split_to_array(t_read *rd);
+void			ft_read_str_escape(char **s);
+void			ft_read_add_to_set(t_read *rd);
+
+/*
+*******************************************************************************
+					ft_read.c
+*******************************************************************************
+*/
+void			ft_read_input(t_read *rd);
+int				ft_read_options_long(t_read *rd, char letter, char *arg);
+void			ft_read_parse_vars(t_read *rd, char **cmd);
+int				ft_read_options(t_read *rd, char **cmd, int i, int j);
+void			ft_read(char **cmd);
 
 #endif

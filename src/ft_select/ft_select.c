@@ -16,7 +16,6 @@
 int			ft_select(t_editor **ed, int version)
 {
 	int			ret;
-	t_term		raw;
 
 	ret = 0;
 	if ((*ed)->t.elem)

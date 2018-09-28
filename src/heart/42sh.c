@@ -76,7 +76,6 @@ static void			shell(void)
 
 int			main(int ac, const char **av)
 {
-	dprintf(2, "nvlefnvlev");
 	if (!isatty(0))
 		return (0);
 	if (init_shell(ac, av))
