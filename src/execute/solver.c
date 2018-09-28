@@ -3,9 +3,10 @@
 /*                                                              /             */
 /*   solver.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/08/01 01:18:16 by jecombe      #+#   ##    ##    #+#       */
+/*   Created: 2018/09/28 05:17:27 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/28 05:18:50 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,10 +30,10 @@ static void	add_last_param(char **cmd)
 		add_to_set("_", cmd[ft_tablen(cmd) - 1]);
 }
 
-static void ft_close_fd(t_loop *loop, int pfd[2])
+static void	ft_close_fd(t_loop *loop, int pfd[2])
 {
-	(loop->fd_in  > 0) ? close(loop->fd_in) : 0;
-	(loop->fd_out!= 1) ? close(loop->fd_out) : 0;
+	(loop->fd_in > 0) ? close(loop->fd_in) : 0;
+	(loop->fd_out != 1) ? close(loop->fd_out) : 0;
 	(loop->fd_save) ? close(loop->fd_save) : 0;
 	close(pfd[1]);
 	loop->fd_save = pfd[0];
@@ -47,11 +48,11 @@ void		ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 			dup2(pfd[1], STDOUT_FILENO);
 		close(pfd[0]);
 		if (isbuiltin(loop->bin, 1) == EXIT_SUCCESS)
-			exit (ft_builtins(opera));
+			exit(ft_builtins(opera));
 		else
 		{
 			execve(loop->bin, opera->cmd, g_env);
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 	}
 	else

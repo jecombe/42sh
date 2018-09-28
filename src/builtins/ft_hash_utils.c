@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 22:44:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:11 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 04:25:32 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void		hash_clear(void)
+void				hash_clear(void)
 {
 	t_hashtable	*hashtable;
 	int			i;
@@ -31,10 +31,10 @@ void		hash_clear(void)
 	ft_save_hash(&hashtable);
 }
 
-t_hashtable				*ft_hashtable_create(void)
+t_hashtable			*ft_hashtable_create(void)
 {
-	t_hashtable			*hashtable;
-	int					i;
+	t_hashtable	*hashtable;
+	int			i;
 
 	hashtable = NULL;
 	i = -1;
@@ -48,9 +48,9 @@ t_hashtable				*ft_hashtable_create(void)
 	return (hashtable);
 }
 
-t_hashcase				*ft_create_case(const char *cmd, const char *raccmd)
+t_hashcase			*ft_create_case(const char *cmd, const char *raccmd)
 {
-	t_hashcase			*hashcase;
+	t_hashcase	*hashcase;
 
 	if (!(hashcase = (t_hashcase *)malloc(sizeof(t_hashcase))))
 		return (NULL);
@@ -61,7 +61,7 @@ t_hashcase				*ft_create_case(const char *cmd, const char *raccmd)
 	return (hashcase);
 }
 
-void					ft_save_hash(t_hashtable **hashtable)
+void				ft_save_hash(t_hashtable **hashtable)
 {
 	static t_hashtable	*hashsave = NULL;
 
@@ -71,7 +71,7 @@ void					ft_save_hash(t_hashtable **hashtable)
 		*hashtable = hashsave;
 }
 
-void					ft_hash_add(t_hashcase **begin, t_hashcase *hashcase)
+void				ft_hash_add(t_hashcase **begin, t_hashcase *hashcase)
 {
 	while (*begin)
 	{

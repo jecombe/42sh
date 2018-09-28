@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/11 04:13:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:03:19 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 04:25:58 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ int			ft_setenv(const char *name, const char *value)
 	i = -1;
 	env = NULL;
 	if (name == NULL)
-		return (ft_env((t_op *) 0));
+		return (ft_env((t_op *)0));
 	if (ft_strchr(name, '='))
 		return (ft_bierrors("setenv", NULL, BIEQUAL));
 	if (!(s = ft_envset_line((const char **)g_env, name)))

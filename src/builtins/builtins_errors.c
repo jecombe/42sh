@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/19 08:12:50 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:53:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 03:52:26 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static void		ft_binofound(const char *cmd)
 	ft_putendl_fd(": No such file or directory.", 2);
 }
 
-int		ft_bierrors(const char *prgm, const char *cmd, t_bierror err)
+int				ft_bierrors(const char *prgm, const char *cmd, t_bierror err)
 {
 	ft_putstr_fd("101sh: ", 2);
 	ft_putstr_fd(prgm, 2);

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 16:58:56 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 05:02:00 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -187,6 +187,7 @@ void			ft_save_hash(t_hashtable **hashtable);
 void			ft_hash_add(t_hashcase **begin, t_hashcase *hashcase);
 void			history_save(char ***history, char *news, int version, char *s);
 void			history_get(t_editor **ed);
+char			*made_history(char *str);
 
 /*
 *******************************************************************************

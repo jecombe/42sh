@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:52:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:06:15 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 04:58:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,9 +32,6 @@ int				ft_unset_var(char *cmd)
 	return (0);
 }
 
-/*
- * LES REDIRECTIONS NE SONT PAS FAITES
-*/
 int				unset(t_op *exec)
 {
 	int		i;

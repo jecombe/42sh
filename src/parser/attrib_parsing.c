@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_attrib_parsing.c                              .::    .:/ .      .::   */
+/*   attrib_parsing.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:37:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:40:21 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 03:42:05 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,11 +36,14 @@ int			ft_attrib_last_seq(t_seq **b_seq, t_seq **n_seq)
 	}
 	return (0);
 }
+
 int			ft_attrib_last_op(t_seq **b_seq, t_op **ret_op)
 {
 	t_seq		*n_seq;
 	t_op		*n_op;
 
+	n_seq = NULL;
+	n_op = NULL;
 	if (ft_attrib_last_seq(&(*b_seq), &n_seq))
 		return (1);
 	if (!n_seq->op)

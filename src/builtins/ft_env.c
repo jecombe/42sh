@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:56:10 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 04:46:35 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void	ft_print_env()
+static void	ft_print_env(void)
 {
 	int		i;
 
@@ -83,7 +83,7 @@ static int	ft_exec_env(const char **cmd, int i)
 		utility = ft_search_bin(args[0]);
 		if ((cpid = fork()) == 0)
 			if ((execve(utility, args, g_env)) == -1)
-				exit (EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 		if (cpid > 0)
 			wait(&status);
 		ft_tabdel(&args);

@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/23 20:31:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:51:16 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 05:41:22 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,8 @@ int			ft_redirect_output(t_redirect *redirect, t_loop *loop)
 	int flag;
 	int nb;
 
+	flag = 0;
+	nb = 0;
 	if (redirect->redirect == GREAT || redirect->redirect == DGREAT)
 	{
 		if ((nb = ft_check_file_is_directory(redirect->file)) == -1)
@@ -41,6 +43,7 @@ int			ft_redirect_input(t_redirect *redirect, t_loop *loop)
 {
 	int nb;
 
+	nb = 0;
 	if (redirect->redirect == LESS)
 	{
 		if ((nb = ft_check_source(redirect->file)) == -3)
@@ -82,7 +85,8 @@ void		ft_aggregations(t_redirect *redirect, int fd_one)
 	}
 }
 
-int			ft_loop_redirect(t_redirect *redirect,  int fd2, int fd_one, t_loop *loop)
+int			ft_loop_redirect(t_redirect *redirect, int fd2, int fd_one,
+		t_loop *loop)
 {
 	if (fd2 > 1)
 	{

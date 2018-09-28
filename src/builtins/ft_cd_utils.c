@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 22:26:15 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 04:39:08 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 04:27:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ int			ft_canonical(char **curpath)
 		if (!getcwd(cwd, sizeof(cwd)))
 			return (EXIT_FAILURE);
 		ft_strcpy(buf, cwd);
-		buf[ft_strlen(buf) - 1 ] != '/' ? ft_strcat(buf, "/") : 0;
+		buf[ft_strlen(buf) - 1] != '/' ? ft_strcat(buf, "/") : 0;
 		ft_strcat(buf, *curpath);
 		ft_strdel(curpath);
 		if (!(*curpath = ft_strdup(buf)))

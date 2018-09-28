@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   main.c                                           .::    .:/ .      .::   */
+/*   42sh.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/07/18 03:53:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 01:44:27 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/09/28 03:43:21 by dzonda       #+#   ##    ##    #+#       */
+/*   Updated: 2018/09/28 03:46:46 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,17 +29,8 @@ int					heart_of_101sh(char *line, int fd_base)
 	if ((seq = ft_parsing(lex)))
 	{
 		if (!(ret = extension(&seq)))
-		{
-			//ft_watch_result(line, lex, seq);
 			ft_sequence(seq, fd_base);
-			ft_free_b_seq(&seq);
-		}
-		//		else
-		//		{
-		//			printf("!!!!!!!!!!!!!SSSSEEEQQQ\n");
-		//			ft_free_b_seq(&seq);
-		//		}
-		//	printf("FREE_B_SEA FINISH\n");
+		ft_free_b_seq(&seq);
 	}
 	ft_lexer_del(&lex);
 	ft_strdel(&line);
@@ -50,12 +41,11 @@ void        ft_print_logo(void)
 {
 	ft_putstr("\e[95m");
 
-
-	ft_putendl (" _  _  ____      _");
-	ft_putendl ("| || ||___ \\ ___| |__");
-	ft_putendl ("| || |_ __) / __| '_ \\");
-	ft_putendl ("|__   _/ __/\\__ \\ | | |");
-	ft_putendl ("   |_||_____|___/_| |_|");
+	ft_putendl (" _  _  ____      _		dewalter");
+	ft_putendl ("| || ||___ \\ ___| |__		dzonda");
+	ft_putendl ("| || |_ __) / __| '_ \\		gbarnay");
+	ft_putendl ("|__   _/ __/\\__ \\ | | |		gmadec");
+	ft_putendl ("   |_||_____|___/_| |_|		jecombe");
 	ft_putstr("\e[39m");
 	ft_putstr("\n");
 }

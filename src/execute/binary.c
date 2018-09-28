@@ -6,19 +6,19 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:18:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 05:44:22 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int				isbuiltin(char *cmd, int fork)
+int			isbuiltin(char *cmd, int fork)
 {
 	static char	*builtins[] = { "env", "setenv", "unsetenv", "set", "unset",
 		"export", "cd", "ft_assign", "hash", "exit", "read", NULL };
-	static char *fbuiltins[] = { "echo", NULL };
-	int		i;
+	static char	*fbuiltins[] = { "echo", NULL };
+	int			i;
 
 	i = -1;
 	if (!fork)
@@ -32,14 +32,14 @@ int				isbuiltin(char *cmd, int fork)
 	return (EXIT_FAILURE);
 }
 
-static int		ft_check_direct_bin(const char *cmd)
+static int	ft_check_direct_bin(const char *cmd)
 {
 	if (access(cmd, F_OK) == -1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-static char		*ft_check_path_bin(const char *cmd)
+static char	*ft_check_path_bin(const char *cmd)
 {
 	char		*path;
 	char		**grid;
@@ -68,7 +68,7 @@ static char		*ft_check_path_bin(const char *cmd)
 	return (path);
 }
 
-int				ft_check_hash_bin(const char *cmd, char **buff)
+int			ft_check_hash_bin(const char *cmd, char **buff)
 {
 	t_hashtable	*hashtable;
 	t_hashcase	*hashcase;
@@ -94,8 +94,6 @@ int				ft_check_hash_bin(const char *cmd, char **buff)
 	}
 	return (EXIT_FAILURE);
 }
-
-
 
 char		*ft_search_bin(char *cmd)
 {

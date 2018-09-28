@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 17:05:27 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 03:51:58 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -37,10 +37,11 @@ static int	ft_builtins_envset(t_op *opera)
 	return (EXIT_FAILURE);
 }
 
-int		ft_builtins(t_op *opera)
+int			ft_builtins(t_op *opera)
 {
-	t_hashtable *hashtable = NULL;
+	t_hashtable *hashtable;
 
+	hashtable = NULL;
 	ft_save_hash(&hashtable);
 	if (FT_ENV || FT_SETENV || FT_UNSETENV || FT_SET || FT_EXPORT || FT_UNSET)
 		return (ft_builtins_envset(opera));

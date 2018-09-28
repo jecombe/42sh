@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_manage_parsing.c                              .::    .:/ .      .::   */
+/*   manage_parsing.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:39:49 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 03:42:44 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,6 @@ int			ft_manage_seq(t_seq **b_seq, t_token token)
 	}
 	else
 		return (ft_parse_exit(token));
-//		return (2);
 	if (n_seq->token != TOKEN)
 		return (ft_parse_exit(token));
 	n_seq->token = token;
@@ -76,8 +75,6 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	t_op			*n_op;
 	t_redirect		*n_redirect;
 
-	n_op = NULL;
-	n_redirect = NULL;
 	if (ft_attrib_last_op(&(*b_seq), &n_op))
 		return (1);
 	if (n_op->token != TOKEN || !n_op->redirect)

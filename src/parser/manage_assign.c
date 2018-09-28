@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   ft_parsing.c                                     .::    .:/ .      .::   */
+/*   parsing.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/20 05:15:40 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/13 21:04:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 03:42:37 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		ft_search_assignement_word(int i, char **name)
+int			ft_search_assignement_word(int i, char **name)
 {
 	int j;
 	int eq;
@@ -70,7 +70,7 @@ static void	add_assign_annex(char **tmp, char *str)
 	(*tmp)[j] = '\0';
 }
 
-int		ft_add_assign(char **str)
+int			ft_add_assign(char **str)
 {
 	char *tmp;
 
