@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/14 13:01:26 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 05:40:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 18:44:18 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,7 +50,10 @@ int				ft_pipe(t_op *opera, int fd2)
 		ft_loop_reset(&loop);
 		if (ft_loop_redirect(opera->redirect, fd2, pfd[1], &loop)
 				== EXIT_FAILURE)
+		{
+			ft_restore_fd(fd);
 			return (EXIT_FAILURE);
+		}
 		ft_exec(opera, &loop, pfd);
 		if (opera->token != PIPE)
 			break ;
