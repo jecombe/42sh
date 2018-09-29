@@ -15,9 +15,6 @@
 
 int			ft_select(t_editor **ed, int version)
 {
-	int			ret;
-
-	ret = 0;
 	if ((*ed)->t.elem)
 	{
 		version == 0 ? ft_init_select(ed) : 0;

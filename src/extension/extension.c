@@ -45,12 +45,9 @@ static int	ft_parcour_tab(char ***cmd)
 			i->j = 0;
 			while ((*cmd)[i->i][i->j])
 			{
-				if ((ret = backslash_manager(&(*cmd), &i)))
-					;
-				else if ((ret = ft_manage_quote(cmd, &i)))
-					;
-				else if ((ret = manage_tild_and_dollars(cmd, &i)))
-					;
+				if (!(ret = backslash_manager(&(*cmd), &i)))
+					if (!(ret = ft_manage_quote(cmd, &i)))
+						ret = manage_tild_and_dollars(cmd, &i);
 				if (!(*cmd) || !(*cmd)[i->i] || ret == -1)
 					return (return_parcour_tab(*cmd, ret, &i));
 			}

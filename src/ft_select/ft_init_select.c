@@ -11,20 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                          LE - /            */
-/*                                                              /             */
-/*   ft_init_select.c                                 .::    .:/ .      .::   */
-/*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
-/*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/04/02 20:48:47 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 11:52:57 by gmadec      ###    #+. /#+    ###.fr     */
-/*                                                         /                  */
-/*                                                        /                   */
-/* ************************************************************************** */
-
-#include "../../include/ft_select.h"
+#include "ft_select.h"
 
 static t_line	*ft_init_begin(t_line **line, char *av)
 {
@@ -73,9 +60,7 @@ void			ft_init_select(t_editor **ed)
 {
 	int		i;
 	t_line	*line;
-	char	**file;
 
-	file = NULL;
 	i = -1;
 	line = NULL;
 	(*ed)->sel = malloc(sizeof(t_select));

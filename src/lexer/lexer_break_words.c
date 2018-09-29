@@ -78,11 +78,9 @@ void			ft_lexer_break_expansion(char *input, int *idx)
 {
 	char		c;
 	char		d;
-	char		e;
 
 	c = input[*idx];
 	d = ((*idx + 1) < (int)ft_strlen(input) - 1) ? input[*idx + 1] : '\0';
-	e = ((*idx + 2) < (int)ft_strlen(input) - 1) ? input[*idx + 2] : '\0';
 	if (c == '$' && d == '{')
 		while (input[++(*idx)] != '}' && input[*idx])
 			;

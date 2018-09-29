@@ -89,10 +89,8 @@ int			ft_dollar(char ***cmd, int *i, int *j)
 {
 	char		*tmp;
 	char		*line;
-	char		**ret;
 	int			k[3];
 
-	ret = NULL;
 	k[0] = *i;
 	k[1] = *j;
 	k[2] = 0;

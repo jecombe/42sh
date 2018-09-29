@@ -67,12 +67,10 @@ static int			get_sysname(int ac)
 	char			*tmp;
 	struct utsname	t_utsname;
 	struct stat		statbuf;
-	struct passwd	*pwd;
 
 	tmp = NULL;
 	ft_memset(&t_utsname, 0, sizeof(struct utsname));
 	ft_memset(&statbuf, 0, sizeof(struct stat));
-	pwd = NULL;
 	if ((uname(&t_utsname)) == 0)
 		add_to_set("SYSNAME", t_utsname.sysname);
 	if ((tmp = ft_itoa(ac)))

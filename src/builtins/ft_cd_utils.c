@@ -31,6 +31,7 @@ int			ft_canonical(char **curpath)
 		if (!(*curpath = ft_strdup(buf)))
 			return (EXIT_FAILURE);
 	}
+	printf("\n curpath = %s\n", *curpath);
 	return (EXIT_SUCCESS);
 }
 

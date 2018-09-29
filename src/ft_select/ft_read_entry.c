@@ -18,7 +18,16 @@ char	*ft_read_entry(t_select **t)
 	char	c[6];
 	int		ret;
 
-	c[0] = -1;
+	ft_memset(&c, 0, sizeof(char) * 6);
+	ret = 0;
+	if ((ret = read(STDIN_FILENO, c, 5)) == -1)
+	{
+		ft_memset(&c, 0, sizeof(char) * 6);
+		ft_error("read", &(*t));
+	}
+	else
+		c[ret] = '\0';
+	/*c[0] = -1;
 	c[1] = 0;
 	c[2] = 0;
 	c[3] = 0;
@@ -27,17 +36,17 @@ char	*ft_read_entry(t_select **t)
 	ret = read(STDIN_FILENO, c, 5);
 	if (ret == -1)
 		ft_error("read", &(*t));
-	if (c[0] != -1)
+	if ((int)c[0] != -1)
 	{
 		c[ret] = '\0';
 	}
-	if (c[0] == -1)
+	if ((int)c[0] == -1)
 	{
 		c[1] = 0;
 		c[2] = 0;
 		c[3] = 0;
 		c[4] = 0;
 		c[5] = 0;
-	}
+	}*/
 	return (ft_strdup(c));
 }

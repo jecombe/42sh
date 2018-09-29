@@ -16,9 +16,7 @@
 static int		occurence(char *little, char *big, char *old)
 {
 	int		i;
-	int		j;
 
-	j = 0;
 	i = 0;
 	while (big[i] && little[i])
 	{

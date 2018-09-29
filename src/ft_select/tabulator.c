@@ -85,9 +85,7 @@ int		search_in_rep(t_editor **ed)
 	char		*path;
 	char		*tmp;
 	DIR			*dir;
-	int			ret;
 
-	ret = 0;
 	path = ft_search_path((*ed)->t.word);
 	if (ft_isdir(path) == 0)
 	{

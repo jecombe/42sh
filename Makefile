@@ -139,8 +139,8 @@ SRCS_NAME =	\
 			builtins/set.c \
 			builtins/ft_export.c \
 			builtins/ft_assign.c \
-			builtins/ft_hash.c \
-			builtins/ft_hash_utils.c \
+			builtins/hash.c \
+			builtins/hash_utils.c \
 			builtins/history.c	\
 			builtins/history_utils.c \
 			builtins/ft_read.c	\

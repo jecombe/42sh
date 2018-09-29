@@ -54,6 +54,7 @@ static int	ft_chdir(char **curpath, const char *cmd)
 			return (EXIT_SUCCESS);
 		ft_putendl_fd(*curpath, STDOUT_FILENO);
 	}
+	printf("*curpath = %s\n", *curpath);
 	if (chdir(*curpath) == -1)
 	{
 		ft_strdel(&(*curpath));
@@ -75,11 +76,14 @@ int			ft_cd(t_op *exec)
 	j = 1;
 	flag = '\0';
 	curpath = NULL;
+	printf("j = %d && %s\n", j, exec->cmd[1]);
 	if (exec->cmd[j] && ft_cd_flags((const char **)exec->cmd, &flag, &j))
 		return (EXIT_FAILURE);
+	printf("j = %d && %s\n", j, exec->cmd[1]);
 	if (!(curpath = (exec->cmd[j]) ? ft_strdup(exec->cmd[j]) :
 				ft_getenv("HOME", g_env)))
 		return (EXIT_SUCCESS);
+	printf("curpath = %s\n", curpath);
 	if (flag != 'P')
 	{
 		ft_canonical(&curpath);

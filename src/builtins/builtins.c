@@ -16,7 +16,7 @@
 static int	ft_builtins_envset(t_op *opera)
 {
 	if ((FT_SETENV || FT_UNSETENV || FT_EXPORT || FT_UNSET) &&
-			ft_strcmp(opera->cmd[0], "PATH") == 0)
+			ft_strcmp(opera->cmd[1], "PATH") == 0)
 		hash_clear();
 	if (FT_ENV || (FT_SETENV && opera->cmd[1] == NULL))
 		return (ft_env(opera));

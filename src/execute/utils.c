@@ -23,9 +23,6 @@ void	ft_print_error(const char *s1, const char *s2)
 
 char	*ft_go_to(char *bin, int nb)
 {
-	int i;
-
-	i = 0;
 	while (nb)
 	{
 		bin++;

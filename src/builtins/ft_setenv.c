@@ -17,11 +17,9 @@ int			ft_setenv(const char *name, const char *value)
 {
 	char	*s;
 	int		i;
-	char	**env;
 
 	s = NULL;
 	i = -1;
-	env = NULL;
 	if (name == NULL)
 		return (ft_env((t_op *)0));
 	if (ft_strchr(name, '='))

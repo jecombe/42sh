@@ -25,7 +25,7 @@ int			err_bquote_unmatched(e_prompt prompt)
 		ft_putendl_fd("zsh: unmatched |", 2);
 	else if (prompt == BACKSLASH)
 		ft_putendl_fd("zsh: unmatched \\", 2);
-		ft_putendl_fd("zsh: parse error in command substitution", 2);
+	ft_putendl_fd("zsh: parse error in command substitution", 2);
 	return (1);
 }
 
@@ -61,10 +61,8 @@ int			add_before_bquote(char *line, int begin, char ***cmd)
 {
 	char		*tmp;
 	char		*before_bquote;
-	int			i;
 
 	before_bquote = NULL;
-	i = 0;
 	tmp = NULL;
 	if (begin > 0)
 	{
