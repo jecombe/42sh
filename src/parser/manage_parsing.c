@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 06:46:25 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 03:42:44 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 14:53:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,12 +75,16 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	t_op			*n_op;
 	t_redirect		*n_redirect;
 
+	n_op = NULL;
+	n_redirect = NULL;
 	if (ft_attrib_last_op(&(*b_seq), &n_op))
 		return (1);
 	if (n_op->token != TOKEN || !n_op->redirect)
 	{
-		if (n_op->token != TOKEN)
-			if (ft_attrib_next_op(&n_op))
+		/*
+		 *CE IF ETAIT SUR DEUX LIGNES AVANT
+		*/
+		if (n_op->token != TOKEN && ft_attrib_next_op(&n_op))
 				return (1);
 		if (ft_malloc_cmd(&n_op->cmd, name))
 			return (1);
@@ -89,11 +93,15 @@ int			ft_manage_word(t_seq **b_seq, char *name)
 	{
 		if (ft_attrib_last_redirect(&n_op, &n_redirect))
 			return (1);
-		if (n_redirect->file)
-			if (ft_malloc_cmd(&n_op->cmd, name))
+		/*
+		 *CE IF ETAIT SUR DEUX LIGNES AVANT
+		*/
+		if (n_redirect->file && ft_malloc_cmd(&n_op->cmd, name))
 				return (1);
-		if (!n_redirect->file)
-			if (!(n_redirect->file = ft_strdup(name)))
+		/*
+		 *CE IF ETAIT SUR DEUX LIGNES AVANT
+		*/
+		if (!n_redirect->file && !(n_redirect->file = ft_strdup(name)))
 				return (1);
 	}
 	return (0);

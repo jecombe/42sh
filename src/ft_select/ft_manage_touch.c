@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 16:57:02 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/28 15:08:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,9 +59,11 @@ int			ft_attrib_line(t_editor **ed)
 	return (0);
 }
 
-int			ft_manage_touch(t_editor **ed)
+int			ft_manage_touch(t_editor **ed, int version)
 {
-	if (((*ed)->key[0] == 27 && (*ed)->key[1] == 91) ||
+	if (version == 0)
+		return (ft_attrib_line(ed));
+	else if (((*ed)->key[0] == 27 && (*ed)->key[1] == 91) ||
 			((*ed)->key[0] == 9 && (*ed)->key[1] == 0))
 	{
 		ft_arrows((*ed)->key[0] == 9 ? 66 : (*ed)->key[2], &(*ed)->sel, &(*ed)->tabu);
