@@ -137,7 +137,7 @@ SRCS_NAME =	\
 			builtins/exit.c \
 			builtins/unset.c \
 			builtins/set.c \
-			builtins/ft_export.c \
+			builtins/export.c \
 			builtins/ft_assign.c \
 			builtins/hash.c \
 			builtins/hash_utils.c \
