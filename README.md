@@ -15,7 +15,7 @@
 | Le séparateur ";" | ✅ |
 | Gestion correcte des espaces et des tabulations. | ✅ |
 | Gestion des erreurs et de la valeur de retour des commandes | ✅ |
-| echo | ❌ |
+| echo | ✅ |
 | cd | ❌ |
 | exit | ❌ |
 | env | ✅ |
@@ -46,11 +46,12 @@
 | Le globing : "\*", "?", "[]", "{}", etc. (sans utiliser la fonction glob(3) !) | ❌ |
 | Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
 | Rechercher dans l’historique avec ctrl+R. | ❌ |
+| COLORISATION SYNTAXIQUE DU SHELL ACTIVABLE ET DESACTIVABLE | ❌ |
+| COMPLETION COMME LE THEME FISH | ❌ |
 
 PROBLEMES A RESOUDRE:<br/>
+\_LA FONCTION CD NE FONCTIONNE PAS<br/>
 \_TABLE DE HASH<br/>
-\_\`\` > 2<br/>
-\_  > 2<br/>
 \_ls-l<br/>
 \_Les retours d'erreurs<br/>
 \_GESTION DU CTRL+D APRES UNE/DES ERREURS
@@ -73,3 +74,6 @@ TABULATION:<br/>
 \_SI L ELEMENT EST PLUS GRAND QUE WS\_COL<br/>
 \_SI LA TAILLE DE LA FENETRE EST PLUS PETITE QUE LE NOMBRE D ARGUMENT EN HAUTEUR<br/>
 \_L'AFFICHAGE DES VARIABLES<br/>
+
+FONCTION READ:<br/>
+LA TOUCHE BACKSPACE FONCTIONNE D UNE MANIERE ETRANGE<br/>
