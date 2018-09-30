@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/26 11:58:36 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:40:45 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/30 02:59:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ void			manage_init(t_editor **ed, int i, t_line *line)
 	while (line)
 	{
 		line->cursor_inside = ++i == (*ed)->tabu ? 1 : 0;
-		line->is_file = (*ed)->t.is_file[i] - '0';
+		line->is_file = (*ed)->t.is_file ? (*ed)->t.is_file[i] - '0' : 0;
 		line = line->next;
 	}
 	(*ed)->sel->bp = ft_search_big_param((*ed)->sel->line);

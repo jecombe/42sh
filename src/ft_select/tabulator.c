@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:30:34 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/30 02:56:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -117,7 +117,7 @@ char	**search_var(char *word)
 	{
 		while (g_set[i])
 		{
-			if ((tmp && 0 == ft_strncmp(tmp, g_set[i], ft_strlen(tmp))) || !tmp)
+			if (!tmp || (tmp && 0 == ft_strncmp(tmp, g_set[i], ft_strlen(tmp))))
 			{
 				tmp2 = ft_get_var(g_set[i]);
 				tmp3 = ft_strjoin("$", tmp2);
@@ -127,6 +127,7 @@ char	**search_var(char *word)
 			}
 			i++;
 		}
+		i = -1;
 	}
 	ft_strdel(&tmp);
 	return (ret);
