@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 13:53:47 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/09/30 02:27:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,7 +99,9 @@ int		g_bin_exit;
  */
 
 void	move_cursor_left(t_editor *ed);
+void	move_left(t_editor *ed);
 void	move_cursor_right(t_editor *ed);
+void	move_right(void);
 void	move_cursor_up(t_editor *ed);
 void	move_cursor_down(t_editor *ed);
 void	move_word_left(t_editor *ed);
