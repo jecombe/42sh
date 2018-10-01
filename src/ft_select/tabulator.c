@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:56:42 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 03:06:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -166,12 +166,12 @@ void	binorfile(t_editor **ed, int *end_word)
 			else if (ft_isprint((*ed)->t.cmd[i][0]))
 				(*ed)->t.nb_word++;
 			*end_word += ft_strlen((*ed)->t.cmd[i]);
-	//		if ((size_t)*end_word <= (*ed)->cursor_str_pos)
+			if ((size_t)*end_word <= (*ed)->cursor_str_pos)
 				i++;
+		printf("I == %d CMD == |%s|\n\n", i, (*ed)->t.cmd[i - 1]);
+		printf("END == %d CURSOR == %lu\n\n", *end_word, (*ed)->cursor_str_pos);
 		}
 	(*ed)->t.nb_char = i == 0 ? 1 : i;
-//		printf("I == %d CMD == |%s|\n\n", i, (*ed)->t.cmd[(*ed)->t.nb_char - 1]);
-//		printf("END == %d CURSOR == %lu\n\n", *end_word, (*ed)->cursor_str_pos);
 }
 
 int		lexer_tab(t_editor **ed)
@@ -179,6 +179,10 @@ int		lexer_tab(t_editor **ed)
 	int		end_word;
 
 	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
+//	int i = -1;
+//	if ((*ed)->t.cmd)
+//	while ((*ed)->t.cmd[++i])
+//	printf("CMD[%d] == %s\n\n", i, (*ed)->t.cmd[i]);
 	end_word = 0;
 	binorfile(ed, &end_word);
 	if ((*ed)->cursor_str_pos > (size_t)end_word)
@@ -204,6 +208,7 @@ int		lexer_tab(t_editor **ed)
 			ft_add_str_at(&(*ed)->t.cmd, " ", (*ed)->t.nb_char - 1);
 			(*ed)->t.nb_char++;
 			ft_add_str_at(&(*ed)->t.cmd, " ", (*ed)->t.nb_char - 1);
+			(*ed)->t.nb_char++;
 			(*ed)->t.word = NULL;
 		}
 		if ((*ed)->t.word && (*ed)->t.word[0] == '$')
@@ -280,6 +285,8 @@ int		tabulator(t_editor **ed, int version)
 	{
 		if (lexer_tab(ed) != -1)
 		{
+//		printf("\n\nVERSION == %d\n\n", version);
+//		sleep(2);
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
 				search_bin(ed);
 			else if ((*ed)->t.nb_word == -1)
@@ -299,6 +306,8 @@ int		tabulator(t_editor **ed, int version)
 				ft_free_t_tab(&(*ed)->t);
 			}
 		}
+//		printf("\n\nVERSION == %d\n\n", version);
+//		sleep(2);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1 && !ENTER_KEY)
 	{

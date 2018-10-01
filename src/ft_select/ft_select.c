@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:57:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 03:04:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,11 +15,13 @@
 
 int			ft_select(t_editor **ed, int version)
 {
+//		printf("BONJOUR0\n");
+//		sleep(2);
 	if ((*ed)->t.elem)
 	{
 		version == 0 ? ft_init_select(ed) : 0;
-		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col)
-//		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col && (*ed)->sel->nbl < (*ed)->sel->ws.ws_col)
+//		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col)
+		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col && (*ed)->sel->nbl < (*ed)->sel->ws.ws_row)
 		{
 			if ((*ed)->t.elem[1])
 			{

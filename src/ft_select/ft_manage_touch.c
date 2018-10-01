@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 15:08:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 03:04:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,8 @@ int			replace_line_after_tab(t_editor **ed)
 	i = -1;
 	if ((*ed)->t.before)
 	{
+//		printf("BEFORE == %s\n\n", (*ed)->t.before);
+//		sleep(2);
 		tmp = (*ed)->sel->ret ? ft_strjoin((*ed)->t.before, (*ed)->sel->ret) : ft_strdup((*ed)->t.before);
 		ft_strdel(&(*ed)->sel->ret);
 		(*ed)->sel->ret = ft_strdup(tmp);
@@ -40,6 +42,8 @@ int			replace_line_after_tab(t_editor **ed)
 	}
 	else//CA ME PARAIT CHELOU X)
 	{
+//		printf("CHELOU\n");
+//		sleep(2);
 		(*ed)->line = ft_strdup((*ed)->sel->ret);
 		(*ed)->cursor_str_pos += (*ed)->line ? ft_strlen((*ed)->line) : 0;
 	}
