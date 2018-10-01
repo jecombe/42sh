@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 18:43:44 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 18:43:46 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 15:48:23 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,9 @@
 
 static void		ft_skip_n(char *line)
 {
-	int i = 0;
+	int i;
+
+	i = 0;
 	while (line[i])
 	{
 		if (line[i] == '\n')
@@ -23,11 +25,12 @@ static void		ft_skip_n(char *line)
 		i++;
 	}
 }
-void	ft_read_line(int fd, char *s)
+
+void			ft_read_line(int fd, char *s)
 {
-	char	line[100];
-	char	*list[100];
-	int		i;
+	char		line[100];
+	char		*list[100];
+	int			i;
 	e_prompt	prompt;
 
 	prompt = E_HDOC;

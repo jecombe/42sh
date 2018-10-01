@@ -6,14 +6,14 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 05:17:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 05:18:50 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 15:49:26 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void	add_pid_bin(int pid)
+static void		add_pid_bin(int pid)
 {
 	char *tmp;
 
@@ -24,13 +24,13 @@ static void	add_pid_bin(int pid)
 	}
 }
 
-static void	add_last_param(char **cmd)
+static void		add_last_param(char **cmd)
 {
 	if (cmd)
 		add_to_set("_", cmd[ft_tablen(cmd) - 1]);
 }
 
-static void	ft_close_fd(t_loop *loop, int pfd[2])
+static void		ft_close_fd(t_loop *loop, int pfd[2])
 {
 	(loop->fd_in > 0) ? close(loop->fd_in) : 0;
 	(loop->fd_out != 1) ? close(loop->fd_out) : 0;
@@ -39,7 +39,7 @@ static void	ft_close_fd(t_loop *loop, int pfd[2])
 	loop->fd_save = pfd[0];
 }
 
-void		ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
+void			ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 {
 	if ((*pid = fork()) == 0)
 	{
@@ -59,7 +59,7 @@ void		ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 		ft_close_fd(loop, pfd);
 }
 
-void		ft_exec(t_op *opera, t_loop *loop, int *pfd)
+void			ft_exec(t_op *opera, t_loop *loop, int *pfd)
 {
 	pid_t	pid;
 

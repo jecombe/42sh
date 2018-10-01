@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/09/28 05:48:52 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/01 15:46:52 by jecombe     ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -117,14 +117,12 @@ SRCS_NAME =	\
 			execute/binary_signal.c \
 			execute/solver.c \
 			execute/utils.c \
-			execute/check_command.c \
 			execute/loop_redirections.c \
 			execute/sequences.c \
 			execute/open_file_redirections.c \
 			execute/return_flag_redirections.c \
 			execute/return_command.c \
 			execute/heredoc.c \
-			execute/init_struct.c \
 			builtins/builtins.c \
 			builtins/builtins_errors.c \
 			builtins/ft_env_tools.c \

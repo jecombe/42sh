@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 17:24:31 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/01 15:49:40 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,15 +21,6 @@ void	ft_print_error(const char *s1, const char *s2)
 	ft_putstr_fd("\n", 2);
 }
 
-char	*ft_go_to(char *bin, int nb)
-{
-	while (nb)
-	{
-		bin++;
-		nb--;
-	}
-	return (bin);
-}
 int				ft_check_file_is_directory(char *file)
 {
 	struct stat st;
@@ -42,6 +33,7 @@ int				ft_check_file_is_directory(char *file)
 int		ft_check_source(char *source)
 {
 	struct stat sb;
+
 	if (lstat(source, &sb) == -1)
 		return (-3);
 	return (0);
@@ -60,21 +52,8 @@ void		ft_print_message(char *source, int nb)
 int			ft_check_direct_command(char *cmd)
 {
 	struct stat sb;
+
 	if (lstat(cmd, &sb) == -1)
 		return (-1);
 	return (0);
-}
-
-int		ft_count_pipe(t_op *tmp)
-{
-	t_op *tmpp = tmp;
-	int i;
-
-	i = 0;
-	while (tmpp->token == PIPE)
-	{
-		i++;
-		tmpp = tmpp->next;
-	}
-	return (i);
 }
