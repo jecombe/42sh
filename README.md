@@ -76,3 +76,4 @@ TABULATION:<br/>
 
 FONCTION READ:<br/>
 LA TOUCHE BACKSPACE FONCTIONNE D UNE MANIERE ETRANGE<br/>
+Revoir les leaks (double free avec des commandes)<br/>
