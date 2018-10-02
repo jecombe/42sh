@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/12 04:41:57 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:25:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 01:42:59 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,8 +17,8 @@
 # include "heart.h"
 
 int			init_shell(int ac, const char **av);
-int			init_files(const char *bin);
-int			init_env(const char **av);
+int			init_files(const char *path);
+int			init_env(const char *path);
 int			init_set(int ac, const char **av);
 int			init_builtins(const char *bin);
 

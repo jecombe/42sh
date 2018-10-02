@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 05:02:00 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 03:50:47 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,7 +40,8 @@ typedef enum			e_bierror
 	BINOFOUND,
 	BITOMANY,
 	BITOFEW,
-	BIEQUAL
+	BIEQUAL,
+	BINUM
 }						t_bierror;
 
 typedef struct			s_hashcase

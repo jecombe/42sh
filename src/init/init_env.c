@@ -6,12 +6,37 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:25:42 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 01:42:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
+static int		ft_get_shell_info(void)
+{
+	char	*s;
+	int		i;
+
+	s = NULL;
+	i = 0;
+	if (!(s = ft_envset_value((const char **)g_env, "TERM")))
+		if (!(s = ft_strdup("xterm-256color")))
+			return (EXIT_FAILURE);
+	add_to_env("TERM", s);
+	if (tgetent(NULL, s) == ERR)
+		return (EXIT_FAILURE);
+	ft_strdel(&s);
+	if ((s = ft_envset_value((const char **)g_env, "SHLVL")))
+		i = ft_atoi(s);
+	ft_strdel(&s);
+	if (!(s = ft_itoa(i + 1)))
+		return (EXIT_FAILURE);
+	add_to_env("SHLVL", s);
+	ft_strdel(&s);
+	add_to_env("101SH_VERSION", "21SH_PLEINS_DE_SEGFAULT");
+	return (EXIT_SUCCESS);
+}
 
 static void		ft_get_user_info(void)
 {
@@ -34,48 +59,30 @@ static void		ft_get_user_info(void)
 		(str = ft_strjoin("/Users/", buff)) ? add_to_env("HOME", str) : 0;
 		ft_strdel(&str);
 	}
-	add_to_env("101SH_VERSION", "21SH_PLEINS_DE_SEGFAULT");
-	if ((str = ft_getenv("SHLVL", g_env)))
-		i = ft_atoi(str);
-	ft_strdel(&str);
-	(str = ft_itoa(i + 1)) ? add_to_env("SHLVL", str) : 0;
-	ft_strdel(&str);
 }
 
-static void		ft_get_file_info(const char *bin)
+static void		ft_get_file_info(const char *path)
 {
-	char	*path;
 	char	*tmp;
 
-	path = NULL;
 	tmp = NULL;
-	if ((path = search_path_of_101sh(bin)))
-	{
-		if ((tmp = ft_strjoin(path, "/.TMPDIR")))
-			add_to_env("TMPDIR", tmp);
-		ft_strdel(&tmp);
-		if ((tmp = ft_strjoin(path, "/101sh")))
-			add_to_env("_", tmp);
-		ft_strdel(&tmp);
-		ft_strdel(&path);
-	}
+	if ((tmp = ft_strjoin(path, "/.TMPDIR")))
+		add_to_env("TMPDIR", tmp);
+	ft_strdel(&tmp);
+	if ((tmp = ft_strjoin(path, "/101sh")))
+		add_to_env("_", tmp);
+	ft_strdel(&tmp);
 }
 
-int				init_env(const char **av)
+int				init_env(const char *path)
 {
 	extern char	**environ;
-	char		*s;
 
-	s = NULL;
 	if (environ)
 		g_env = ft_tabdup(environ);
-	ft_get_user_info();
-	if (!(s = ft_envset_value((const char **)g_env, "TERM")))
-		if ((s = ft_strdup("xterm-256color")))
-			add_to_env("TERM", s);
-	if (tgetent(NULL, s) == ERR)
+	if (ft_get_shell_info())
 		return (EXIT_FAILURE);
-	ft_strdel(&s);
-	ft_get_file_info(av[0]);
+	ft_get_user_info();
+	ft_get_file_info(path);
 	return (EXIT_SUCCESS);
 }

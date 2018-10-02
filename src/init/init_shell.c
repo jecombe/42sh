@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:58:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:26:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 01:43:59 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,9 +20,9 @@ int			init_shell(int ac, const char **av)
 	path = NULL;
 	if (!(path = search_path_of_101sh(av[0])))
 		return (EXIT_FAILURE);
-	if (init_files(av[0]))
+	if (init_files(path))
 		return (EXIT_FAILURE);
-	if (init_env(av))
+	if (init_env(path))
 		return (EXIT_FAILURE);
 	if (init_set(ac, av))
 		return (EXIT_FAILURE);

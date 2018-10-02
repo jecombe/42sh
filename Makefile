@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/01 15:46:52 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/02 04:04:38 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -168,13 +168,26 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(eval CURSOR=$(shell echo $$(($(CURSOR) + 1))))
 	@$(eval PERCENT=$(shell echo $$(($(CURSOR) * 100 / $(NB_FILES)))))
 	@if [ $(CURSOR) != 1 ]; then\
-        (printf "\e[?25l" && printf "\033[1A");\
-    fi # hide cursor & move up except first time
+		(printf "\e[?25l" && printf "\033[1A");\
+		fi # hide cursor & move up except first time
 	@echo "\033[93m[ $(NAME) ] Compiling: \033[0m\033[1m[$(PERCENT)%] \033[0m$@                       "
 	@printf "\e[?25h" #show cursor
 
 val:
-	valgrind --leak-check=full --track-origins=yes ./a.out
+	@$(shell echo "#false positive for any executable (it seems) \
+	# macOS 10.12.6 \
+	# valgrind 3.13.0 \
+	{ \
+		libtrace initialization false positive \
+		Memcheck:Param \
+		msg->desc.port.name \
+		fun:mach_msg_trap \
+		fun:mach_msg \
+		fun:task_set_special_port \
+		fun:_os_trace_create_debug_control_port \
+		fun:_libtrace_init \
+	}" > $HOME/.valgrind.supp)
+	valgrind --suppressions=${HOME}/.valgrind.supp --leak-check=full --track-origins=yes ./a.out
 
 valgrind: lldb
 	valgrind --leak-check=full --track-origins=yes ./a.out
