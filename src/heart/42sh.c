@@ -40,7 +40,6 @@ int					heart_of_101sh(char *line, int fd_base)
 void        ft_print_logo(void)
 {
 	ft_putstr("\e[95m");
-
 	ft_putendl (" _  _  ____      _		dewalter");
 	ft_putendl ("| || ||___ \\ ___| |__		dzonda");
 	ft_putendl ("| || |_ __) / __| '_ \\		gbarnay");

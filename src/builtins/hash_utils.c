@@ -26,6 +26,8 @@ void				hash_clear(void)
 			while (hashtable[i].hashcase)
 			{
 				ft_strdel(&hashtable[i].hashcase->command);
+				ft_strdel(&hashtable[i].hashcase->raccmd);
+				free(hashtable[i].hashcase);
 				hashtable[i].hashcase = hashtable[i].hashcase->next;
 			}
 	ft_save_hash(&hashtable);

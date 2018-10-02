@@ -49,7 +49,7 @@ int			ft_free_b_seq(t_seq **b_seq)
 	t_seq		*n_seq;
 
 	n_seq = *b_seq;
-	if (n_seq)
+	while (n_seq)
 	{
 		*b_seq = n_seq;
 		ft_free_b_op(&(*b_seq)->op);

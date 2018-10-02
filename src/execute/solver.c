@@ -41,7 +41,7 @@ static void		ft_close_fd(t_loop *loop, int pfd[2])
 
 void			ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
 {
-	if ((*pid = fork()) == 0)
+	if ((*pid = vfork()) == 0)
 	{
 		dup2(loop->fd_in != 0 ? loop->fd_in : loop->fd_save, STDIN_FILENO);
 		if (opera->token == PIPE && loop->fd_out == 1)
@@ -71,7 +71,7 @@ void			ft_exec(t_op *opera, t_loop *loop, int *pfd)
 	}
 	if (isbuiltin(opera->cmd[0], 0) == EXIT_SUCCESS)
 	{
-		loop->bin = "isbuiltin";
+		loop->bin = ft_strdup("isbuiltin");
 		loop->result = ft_builtins(opera);
 	}
 	else if ((loop->bin = ft_search_bin(opera->cmd[0])))

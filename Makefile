@@ -173,6 +173,9 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@echo "\033[93m[ $(NAME) ] Compiling: \033[0m\033[1m[$(PERCENT)%] \033[0m$@                       "
 	@printf "\e[?25h" #show cursor
 
+val:
+	valgrind --leak-check=full --track-origins=yes ./a.out
+
 valgrind: lldb
 	valgrind --leak-check=full --track-origins=yes ./a.out
 

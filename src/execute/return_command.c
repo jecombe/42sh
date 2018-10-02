@@ -39,9 +39,11 @@ int			ft_return_command(t_loop *loop)
 			add_to_set("?", "1");
 			return (EXIT_FAILURE);
 		}
+		ft_strdel(&loop->bin);
 		add_to_set("?", "0");
 		return (EXIT_SUCCESS);
 	}
+	ft_strdel(&loop->bin);
 	add_to_set("?", "1");
 	return (EXIT_FAILURE);
 }

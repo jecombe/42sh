@@ -68,17 +68,23 @@ void			ft_sequence(t_seq *b_seq, int fd)
 	t_seq		*seq;
 	t_token		tkn;
 	int			ret;
+	t_op		*op;
 
 	seq = NULL;
 	tkn = TOKEN;
 	ret = EXIT_SUCCESS;
 	seq = b_seq;
-	while (seq && seq->op)
+	while (seq)
 	{
-		if ((tkn == TOKEN) || (tkn == AND_IF && !ret) || (tkn == OR_IF && ret))
-			ret = ft_pipe(seq->op, fd);
-		tkn = seq->op->token;
-		if ((seq->op = seq->op->next) == NULL)
-			seq = seq->next;
+		op = seq->op;
+		while (op)
+		{
+			if ((tkn == TOKEN) || (tkn == AND_IF && !ret) || (tkn == OR_IF && ret))
+				ret = ft_pipe(op, fd);
+
+			tkn = op->token;
+			op = op->next;
+		}
+		seq = seq->next;
 	}
 }

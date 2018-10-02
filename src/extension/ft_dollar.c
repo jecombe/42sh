@@ -94,6 +94,8 @@ int			ft_dollar(char ***cmd, int *i, int *j)
 	k[0] = *i;
 	k[1] = *j;
 	k[2] = 0;
+	line = NULL;
+	tmp = NULL;
 	if ((k[2] = dollar_end((*cmd)[*i], *j + 1)) >= 1)
 	{
 		tmp = ft_strsub((*cmd)[*i], *j + 1, k[2]);
@@ -105,5 +107,7 @@ int			ft_dollar(char ***cmd, int *i, int *j)
 	}
 	else
 		*j = *j + 1;
+	free(line);
+	free(tmp);
 	return (0);
 }
