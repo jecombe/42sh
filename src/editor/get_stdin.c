@@ -43,7 +43,8 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
 	}
-	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D) && (*ed)->tabu != -1)
+	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D) 
+			&& (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
 //		(*ed)->sel = NULL;
@@ -113,6 +114,7 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	}
 	else
 		*line = ed->line;
+	ft_strdel(&ed->clipboard);		
 	free(ed);
 }
 
@@ -141,8 +143,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 	ed = NULL;
 	get_term_raw_mode(1);
 	line_editor_init(line, *prompt, &ed);
-	display_prompt(prompt == 0 ?
-	find_env_var(g_env, "HOME", 0) : NULL, *prompt);
+//	display_prompt(prompt == 0 ? find_env_var(g_env, "HOME", 0) : NULL, *prompt);
+	display_prompt(*prompt);
 	ed->prompt_size = get_cursor_position(0);
 //	signal(SIGWINCH, myhandler_winsize_change);
 	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
@@ -169,7 +171,6 @@ int		get_stdin(char **line, e_prompt *prompt)
 			break ;
 	}
 	get_stdin_next(line, ed, prompt);
-	//fflush(stdout);
 	//ft_putstr("\033c");
 	get_term_raw_mode(0);
 	return (ret);

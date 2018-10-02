@@ -19,7 +19,8 @@ int		clear_window(t_editor *ed, e_prompt prompt)
 
 	cursor_str_pos_tmp = ed->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
-	display_prompt(find_env_var(g_env, "HOME", 0), prompt);
+//	display_prompt(find_env_var(g_env, "HOME", 0), prompt);
+	display_prompt(prompt);
 	ed->first_row = get_cursor_position(1);
 	if (ed->line)
 		ft_putstr(ed->line);

@@ -34,6 +34,7 @@ static int	add_tild(char **str, int *index)
 			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
 		*index = i;
+		ft_strdel(str);
 		*str = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}

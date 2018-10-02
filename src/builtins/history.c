@@ -51,6 +51,7 @@ static int		advanced_history_search(char **history, t_editor **ed)
 		else if (limit && UP_KEY)
 		{
 			(*ed)->hist = (*ed)->hist + 1;
+			ft_strdel(&tmp);
 			return (0);
 		}
 		ft_strdel(&tmp);

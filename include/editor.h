@@ -132,7 +132,7 @@ void	reset_cursor_position_escape_sequence(char **cursor_position);
 void	add_char_into_line(char key, t_editor *ed);
 int		add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
-void	display_prompt(char *home, e_prompt prompt);
+void	display_prompt(e_prompt prompt);
 int		get_stdin(char **line, e_prompt *prompt);
 void	myhandler_winsize_change(int signal);
 size_t	get_cursor_position(int mode);

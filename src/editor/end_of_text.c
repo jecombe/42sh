@@ -22,7 +22,8 @@ void	end_of_text(t_editor *ed, e_prompt *prompt, char **line)
 		get_cursor_position(1)), 1, ft_putchar);
 	ft_putchar('\n');
 	getcwd(buf, sizeof(buf));
-	display_prompt(find_env_var(g_env, "HOME", 0), PROMPT);
+//	display_prompt(find_env_var(g_env, "HOME", 0), PROMPT);
+	display_prompt(PROMPT);
 	ed->last_row = get_cursor_position(1);
 	ed->first_row = ed->last_row;
 	if (ed->line)

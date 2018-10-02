@@ -30,6 +30,15 @@ int					heart_of_101sh(char *line, int fd_base)
 	{
 		if (!(ret = extension(&seq)))
 			ft_sequence(seq, fd_base);
+	//	int i =-1;
+	//	while (seq->op->cmd[++i])
+	//	printf("CMD[%d] == %s\n", i, seq->op->cmd[i]);
+	//	i = 0;
+	//	while(seq->op->redirect)
+	//	{
+	//		printf("FILE == %s\n", seq->op->redirect->file);
+	//		seq->op->redirect = seq->op->redirect->next;
+	//	}
 		ft_free_b_seq(&seq);
 	}
 	ft_lexer_del(&lex);

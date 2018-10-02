@@ -251,7 +251,8 @@ void	place_cursor_after(t_editor *ed)
 	}
 //	printf("\n\nLINE == %s\n\n", ed->line);
 //	sleep(2);
-	display_prompt(find_env_var(g_env, "HOME", 0), 0);
+//	display_prompt(find_env_var(g_env, "HOME", 0), 0);
+	display_prompt(0);
 	ft_putfreshstr(ed->line);
 //	sleep(2);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))

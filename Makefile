@@ -188,6 +188,7 @@ val:
 		fun:_libtrace_init \
 	}" > $HOME/.valgrind.supp)
 	valgrind --suppressions=${HOME}/.valgrind.supp --leak-check=full --track-origins=yes ./a.out
+	#valgrind --leak-check=full --track-origins=yes ./a.out
 
 valgrind: lldb
 	valgrind --leak-check=full --track-origins=yes ./a.out

@@ -34,7 +34,7 @@ void			ft_read_line(int fd, char *s)
 	e_prompt	prompt;
 
 	prompt = E_HDOC;
-	display_prompt(NULL, prompt);
+	display_prompt(prompt);
 	ft_bzero(line, 100);
 	ft_bzero(list, 100 * sizeof(*list));
 	i = 0;
@@ -45,7 +45,7 @@ void			ft_read_line(int fd, char *s)
 			break ;
 		else
 		{
-			display_prompt(NULL, prompt);
+			display_prompt(prompt);
 			ft_strcat(line, "\n");
 			list[i++] = ft_strdup(line);
 		}

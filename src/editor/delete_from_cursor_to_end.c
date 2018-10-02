@@ -17,22 +17,19 @@ void	delete_from_cursor_to_end(t_editor *ed)
 {
 	char tmp[ed->cursor_str_pos + 1];
 
-	if (ed->clipboard)
-		ft_strdel(&ed->clipboard);
+	ft_strdel(&ed->clipboard);
 	ft_bzero(tmp, sizeof(tmp));
 	ft_putstr("\E[0J");
 	if (!ed->cursor_str_pos)
 	{
-		if (ed->line)
-			ed->clipboard = ft_strdup(ed->line);
+		ed->clipboard = ft_strdup(ed->line);
 		ft_strdel(&(ed->line));
 	}
 	else
 	{
 		ft_strncpy(tmp, ed->line, ed->cursor_str_pos);	
 		ed->clipboard = ft_strdup(ed->line + ed->cursor_str_pos);
-		if (ed->line)
-			ft_strdel(&(ed->line));
+		ft_strdel(&(ed->line));
 		ed->line = ft_strdup(tmp);
 	}
 }

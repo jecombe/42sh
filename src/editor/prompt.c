@@ -74,11 +74,13 @@ static void		prompt_type(e_prompt prompt)
    ft_strdel(&home);
 //	prompt_example();
 }*/
-void		display_prompt(char *home, e_prompt prompt)
+void		display_prompt(e_prompt prompt)
 {
 	char	pwd[4096];
 	char	*error;
+	char	*home;
 
+	home = prompt == 0 ? ft_getenv("HOME", g_env) : NULL;
 	if (prompt != PROMPT)
 		return (prompt_type(prompt));
 	getcwd(pwd, sizeof(pwd));
@@ -94,4 +96,5 @@ void		display_prompt(char *home, e_prompt prompt)
 	ft_putstr(error && error[0] == '1' ? "\U0001F44E" : "\U0001F44D");
 	ft_putstr("  ");
 	free(error);
+	ft_strdel(&home);
 } 

@@ -70,6 +70,7 @@ static int		manage_dsquotes(char ***tablo, t_bquote **i,
 		tmp = f((*tablo)[(*i)->i], &(*i)->j);
 		ft_strdel(&(*tablo)[(*i)->i]);
 		(*tablo)[(*i)->i] = ft_strdup(tmp);
+		ft_strdel(&tmp);
 	}
 	else
 		ft_strdel_in_tab(&(*tablo), (*i)->j + 1);
