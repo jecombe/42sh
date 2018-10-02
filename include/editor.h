@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:27:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 17:21:14 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -73,6 +73,7 @@ typedef struct		s_tab
 
 typedef struct		s_editor
 {
+	size_t			cur_pos;
 	size_t			ws_row;
 	size_t			ws_col;
 	size_t			first_row;

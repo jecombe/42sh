@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 04:45:46 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 17:45:12 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,11 +40,14 @@ static int		get_col(char *str)
 
 static	int		cursor_position(int mode)
 {
-	char buf[9];
+	char buf[20];
+	char *str;
 
-	ft_bzero(buf, 9);
-	write(0, "\E[6n", 4);
-	read(0, buf, 9);
+	str = "\E[6n";
+	ft_bzero(buf, 20);
+	ft_putstr(str);
+	read(0, buf, 20);
+	dprintf(2, "pos: %s\n", buf + 2);
 	return (mode ? get_row(buf) : get_col(buf));
 }
 

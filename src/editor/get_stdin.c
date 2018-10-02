@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 01:39:23 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 17:48:31 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -96,6 +96,7 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->t.nb_word = 0;
 	(*ed)->t.nb_char = 0;
 	(*ed)->sel = NULL;
+	(*ed)->cur_pos = get_cursor_position(0);
 	*line = prompt != PROMPT && prompt != E_PIPE ?
 	ft_strjoin_free(*line, "\n") : NULL;
 	return (1);
@@ -114,7 +115,7 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	}
 	else
 		*line = ed->line;
-	ft_strdel(&ed->clipboard);		
+	ft_strdel(&ed->clipboard);
 	free(ed);
 }
 
@@ -156,11 +157,17 @@ int		get_stdin(char **line, e_prompt *prompt)
 			return (1);
 		if (ws.ws_col != ed->ws_col && ed->line)
 			refresh_term(&ed, ws, prompt);
+		ft_bzero(ed->key, BUFF_SIZE);
 		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
-		tputs(tgetstr("vi", NULL), 1, ft_putchar);
-		ed->key[ret] = '\0';
+				tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		if (ed->key[0])
 		{
+		dprintf(2, "ed->key[0]: %d\n", ed->key[0]);
+		dprintf(2, "ed->key[1]: %d\n", ed->key[1]);
+		dprintf(2, "ed->key[2]: %d\n", ed->key[2]);
+		dprintf(2, "ed->key[3]: %d\n", ed->key[3]);
+		dprintf(2, "ed->key[4]: %d\n", ed->key[4]);
+
 //			printf("KEY == %s\n", ed->key);
 			if (get_keyboard_key(&ret, &ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);

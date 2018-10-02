@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 10:42:22 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/27 04:22:57 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 17:39:41 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,11 +35,13 @@ static void		add_char_into_line_1(char key, t_editor *ed, struct winsize sz)
 	if (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col))
 	{
 		ft_putchar(key);
-		if (!(get_cursor_position(0) % sz.ws_col))
+		//if (!(get_cursor_position(0) % sz.ws_col))
+		if (!(ed->cur_pos % sz.ws_col))
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
 		ed->last_row++;
 	}
-	else if (!(get_cursor_position(0) % sz.ws_col))
+	//else if (!(get_cursor_position(0) % sz.ws_col))
+	else if (!(ed->cur_pos % sz.ws_col))
 	{
 		ft_putchar(key);
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
@@ -54,11 +56,13 @@ void			add_char_into_line(char key, t_editor *ed)
 	t_sz sz;
 	ed->cursor_str_pos++;
 	ioctl(0, TIOCGWINSZ, &sz);
+	ed->cur_pos = !get_cursor_position(0) ? ed->cur_pos + 1 : get_cursor_position(0);
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
 	if (ed->line && (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col) &&
 	ed->last_row == sz.ws_row))
 	{
-		if (!((get_cursor_position(0)) % sz.ws_col))
+		//if (!((get_cursor_position(0)) % sz.ws_col))
+		if (!(ed->cur_pos % sz.ws_col))
 		{
 			ft_putchar(key);
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
@@ -83,6 +87,7 @@ int				add_char_to_line(char key, t_editor *ed)
 	ioctl(0, TIOCGWINSZ, &sz);
 	ed->cursor_str_pos++;
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
+	dprintf(2, "cur_pos: %zu\n", get_cursor_position(0));
 	if (get_cursor_position(0) == sz.ws_col &&
 	get_cursor_position(1) != sz.ws_row)
 	{
