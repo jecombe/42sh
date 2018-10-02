@@ -162,11 +162,11 @@ int		get_stdin(char **line, e_prompt *prompt)
 				tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		if (ed->key[0])
 		{
-		dprintf(2, "ed->key[0]: %d\n", ed->key[0]);
+		/*dprintf(2, "ed->key[0]: %d\n", ed->key[0]);
 		dprintf(2, "ed->key[1]: %d\n", ed->key[1]);
 		dprintf(2, "ed->key[2]: %d\n", ed->key[2]);
 		dprintf(2, "ed->key[3]: %d\n", ed->key[3]);
-		dprintf(2, "ed->key[4]: %d\n", ed->key[4]);
+		dprintf(2, "ed->key[4]: %d\n", ed->key[4]);*/
 
 //			printf("KEY == %s\n", ed->key);
 			if (get_keyboard_key(&ret, &ed, prompt, line))

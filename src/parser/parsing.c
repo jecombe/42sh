@@ -64,7 +64,8 @@ t_seq		*ft_parsing(t_lex lex)
 				ft_putendl("MALLOC ERROR");
 			return (NULL);
 		}
-		ft_strdel(&lex.name[i]);
+		//------DOUBLE FREE SI FT_STRDEL-----------//
+		//ft_strdel(&lex.name[i]);
 		i++;
 	}
 	parse_error(&b_seq);

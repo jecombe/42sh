@@ -80,7 +80,7 @@ void			ft_exec(t_op *opera, t_loop *loop, int *pfd)
 		add_last_param(opera->cmd);
 		ft_hashtable(loop->bin, opera->cmd[0]);
 		add_pid_bin(pid);
-		ft_strdel(&loop->bin);
+		//ft_strdel(&loop->bin);
 	}
 	else
 		ft_print_error(opera->cmd[0], "Command not found !");

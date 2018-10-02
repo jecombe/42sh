@@ -87,7 +87,7 @@ int				add_char_to_line(char key, t_editor *ed)
 	ioctl(0, TIOCGWINSZ, &sz);
 	ed->cursor_str_pos++;
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	dprintf(2, "cur_pos: %zu\n", get_cursor_position(0));
+	//dprintf(2, "cur_pos: %zu\n", get_cursor_position(0));
 	if (get_cursor_position(0) == sz.ws_col &&
 	get_cursor_position(1) != sz.ws_row)
 	{

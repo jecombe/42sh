@@ -47,7 +47,7 @@ static	int		cursor_position(int mode)
 	ft_bzero(buf, 20);
 	ft_putstr(str);
 	read(0, buf, 20);
-	dprintf(2, "pos: %s\n", buf + 2);
+	//dprintf(2, "pos: %s\n", buf + 2);
 	return (mode ? get_row(buf) : get_col(buf));
 }
 
