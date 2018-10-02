@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 03:06:36 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/02 06:51:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -132,26 +132,7 @@ char	**search_var(char *word)
 	ft_strdel(&tmp);
 	return (ret);
 }
-/*
-int		search_end_word(int index, char **tablo)
-{
-	int		i;
-	int		count;
 
-	(void)index;
-	count = 0;
-	i = 0;
-	if (tablo)
-	{
-		while (tablo[i])
-		{
-			count += ft_strlen(tablo[i]);
-			i++;
-		}
-	}
-	return (count);
-}
-*/
 void	binorfile(t_editor **ed, int *end_word)
 {
 	int		i;
@@ -179,10 +160,10 @@ int		lexer_tab(t_editor **ed)
 	int		end_word;
 
 	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
-//	int i = -1;
-//	if ((*ed)->t.cmd)
-//	while ((*ed)->t.cmd[++i])
-//	printf("CMD[%d] == %s\n\n", i, (*ed)->t.cmd[i]);
+	int i = -1;
+	if ((*ed)->t.cmd)
+		while ((*ed)->t.cmd[++i])
+			printf("CMD[%d] == |%s|\n\n", i, (*ed)->t.cmd[i]);
 	end_word = 0;
 	binorfile(ed, &end_word);
 	if ((*ed)->cursor_str_pos > (size_t)end_word)
@@ -251,7 +232,6 @@ void	place_cursor_after(t_editor *ed)
 	}
 //	printf("\n\nLINE == %s\n\n", ed->line);
 //	sleep(2);
-//	display_prompt(find_env_var(g_env, "HOME", 0), 0);
 	display_prompt(0);
 	ft_putfreshstr(ed->line);
 //	sleep(2);
