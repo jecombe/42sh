@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 05:41:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 06:26:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/heart.h"
+#include "heart.h"
 
 static int			issep(const char *s, int i)
 {
@@ -34,33 +34,36 @@ static size_t		wordlen(const char *s, size_t index, int *find, int *cursor)
 		{
 			while (s[i] == c)
 			{
-				if (i == *cursor && *cursor == 0 && *find != -1)
+				if (*find == 3)
 				{
-					printf("00I == %d CURSOR == %d\n", i, *cursor);
 					*find = 2;
-					*cursor += 1;//PAS BON CA !!
+					*cursor = -1;
+					return (count);
+				}
+				if (i + 1 == *cursor && *find != -1)
+				{
+					*find = 3;
+					*cursor += 1;
 				}
 				i++;
 				count++;
 			}
 		}
-		else if (i == *cursor)
+		else if (i == *cursor && *find != -1)
 		{
-			*cursor += 1;//PAS BON CA !!
+			*cursor += 1;
 			if (*find != -1)
-				*find = 2;
+				*find = 3;
 		}
 	}
 	else if (ft_isblank(c))
 	{
-			printf ("00\n");
 		if (ft_isblank(s[i])  && i != *cursor)
 		{
 			while (ft_isblank(s[i]) && s[i] && i != *cursor)
 			{
 				if (i == *cursor && *find != -1)
 				{
-					printf("11I == %d CURSOR == %d\n", i, *cursor);
 					*find = 2;
 					*cursor = -1;
 					break ;
@@ -81,7 +84,6 @@ static size_t		wordlen(const char *s, size_t index, int *find, int *cursor)
 		{
 			if ((i == *cursor || i + 1 == *cursor) && *find != -1)
 			{
-				printf("22I == %d CURSOR == %d\n", i, *cursor);
 				*find = 1;
 				*cursor = -1;
 			}
@@ -143,7 +145,7 @@ char				**ft_tabsplit(const char *s, int cursor_pos)
 				if (!tablo[1])
 					ft_malloc_cmd(&tablo, "");
 				ft_malloc_cmd(&tablo, "");
-				find_cursor = cursor_pos == -1 ? -1 : 0;
+				find_cursor = -1;
 			}
 			else
 			{
