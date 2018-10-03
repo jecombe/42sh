@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 18:43:44 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:48:23 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 13:26:02 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,6 +22,18 @@ static void		ft_skip_n(char *line)
 	{
 		if (line[i] == '\n')
 			line[i] = '\0';
+		i++;
+	}
+}
+
+void			ft_tabdell(char *list[100])
+{
+	int i;
+
+	i = 0;
+	while (list[i])
+	{
+		ft_strdel(&list[i]);
 		i++;
 	}
 }
@@ -54,6 +66,7 @@ void			ft_read_line(int fd, char *s)
 	i = -1;
 	while (list[++i])
 		ft_putstr_fd(list[i], fd);
+	ft_tabdell(list);
 }
 
 int				ft_redirect_heredoc(t_redirect *redirect)
