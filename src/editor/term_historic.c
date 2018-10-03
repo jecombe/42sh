@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/20 13:23:20 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 19:43:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,24 @@ int		term_historic(t_editor **ed)
 	go_to_begin_of_line(*ed);
 	delete_from_cursor_to_end(*ed);
 	history_get(ed);
-	print_str(ed);
-	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
+	dprintf(2, "line: %s\n", (*ed)->line);
+	if ((*ed)->line)
+	{
+		ft_putstr((*ed)->line);
+		(*ed)->last_row = get_cursor_position(1);
+		(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
+		(*ed)->cursor_str_pos--;
+		while ((*ed)->cursor_str_pos)
+		{
+			move_cursor_left(*ed);
+//		dprintf(2, "str_pos: %zu\n", (*ed)->cursor_str_pos);
+		}
+//	dprintf(2, "OKKKKKKKKKKK11111111111111\n");
+		(*ed)->first_row = get_cursor_position(1);
+		while ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) - 1)
+		{
+			move_cursor_right(*ed);
+		}
+	}
 	return (0);
 }
