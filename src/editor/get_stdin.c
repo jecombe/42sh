@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 17:48:31 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 21:55:38 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -131,6 +131,7 @@ void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 	(void)prompt;
 	if (get_cursor_position(1) == (*ed)->last_row && !((ft_strlen((*ed)->line) + (*ed)->prompt_size) % ws.ws_col))
 		dprintf(2, "OKcol\n");
+	dprintf(2, "NOK\n");
 	/*
 	tputs(tgoto(tgetstr("cm", NULL), 0, (*ed)->first_row - ((get_cursor_position(1) - (*ed)->first_row) + 1)), 1, ft_putchar);
 	ft_putstr("\E[J");
@@ -162,7 +163,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 	{
 		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 			return (1);
-		if (ws.ws_col != ed->ws_col && ed->line)
+		if (ws.ws_col != ed->ws_col)
 			refresh_term(&ed, ws, prompt);
 		ft_bzero(ed->key, BUFF_SIZE);
 		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
