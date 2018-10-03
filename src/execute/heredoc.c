@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 18:43:44 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 13:26:02 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 13:56:34 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static void		ft_skip_n(char *line)
 	}
 }
 
-void			ft_tabdell(char *list[100])
+static void			ft_tabdell(char *list[100])
 {
 	int i;
 

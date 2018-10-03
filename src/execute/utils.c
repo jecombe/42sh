@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:25:35 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:49:40 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 13:33:13 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,6 +24,7 @@ void	ft_print_error(const char *s1, const char *s2)
 int				ft_check_file_is_directory(char *file)
 {
 	struct stat st;
+
 	stat(file, &st);
 	if (S_ISDIR(st.st_mode))
 		return (-1);
