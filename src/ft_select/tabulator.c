@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 06:51:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 03:17:01 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -163,7 +163,7 @@ int		lexer_tab(t_editor **ed)
 	int i = -1;
 	if ((*ed)->t.cmd)
 		while ((*ed)->t.cmd[++i])
-			printf("CMD[%d] == |%s|\n\n", i, (*ed)->t.cmd[i]);
+			printf("CMD[%d] == |%s|\n", i, (*ed)->t.cmd[i]);
 	end_word = 0;
 	binorfile(ed, &end_word);
 	if ((*ed)->cursor_str_pos > (size_t)end_word)
@@ -302,8 +302,6 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 0 || (version == 1 && ENTER_KEY && (*ed)->tabu >= 0))
 	{
-//		printf("\n\nVERSION == %d\n\n", version);
-//		sleep(2);
 		int i;
 
 		if ((*ed)->line)

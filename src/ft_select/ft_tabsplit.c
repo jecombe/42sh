@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 04:45:41 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/03 05:41:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,47 +20,71 @@ static int			issep(const char *s, int i)
 	return (0);
 }
 
-static size_t		wordlen(const char *s, size_t index, int *cursor_pos)
+static size_t		wordlen(const char *s, size_t index, int *find, int *cursor)
 {
 	int i = index;
 	size_t	count;
 	char	c;
 
-	(void)cursor_pos;
 	c = s[i];
 	count = 0;
 	if (ft_isseparator(c))
-		while (s[i] == c)
+	{
+		if (s[i] == c && i != *cursor)
 		{
-			count++;
-			i++;
+			while (s[i] == c)
+			{
+				if (i == *cursor && *cursor == 0 && *find != -1)
+				{
+					printf("00I == %d CURSOR == %d\n", i, *cursor);
+					*find = 2;
+					*cursor += 1;//PAS BON CA !!
+				}
+				i++;
+				count++;
+			}
 		}
+		else if (i == *cursor)
+		{
+			*cursor += 1;//PAS BON CA !!
+			if (*find != -1)
+				*find = 2;
+		}
+	}
 	else if (ft_isblank(c))
 	{
-		while (ft_isblank(s[i]) && s[i] && !(i + 1== *cursor_pos))
-//		while (ft_isblank(s[i]) && s[i])
+			printf ("00\n");
+		if (ft_isblank(s[i])  && i != *cursor)
 		{
-			printf("++\n");
-			i++;
-			count++;
+			while (ft_isblank(s[i]) && s[i] && i != *cursor)
+			{
+				if (i == *cursor && *find != -1)
+				{
+					printf("11I == %d CURSOR == %d\n", i, *cursor);
+					*find = 2;
+					*cursor = -1;
+					break ;
+				}
+				i++;
+				count++;
+			}
 		}
-		if (ft_isblank(s[i]))
-			printf("IS_BLANK I == %d COUNT == %ld CURSOR == %d\n\n", i, count, *cursor_pos);
-//		count += i == *cursor_pos + 1 && ft_isblank(s[i]) ? 1 : 0;
-		if ((i == *cursor_pos + 1 && ft_isblank(s[i])) || (i == *cursor_pos && ft_isblank(s[i])))
+		else if (i == *cursor)
 		{
-			printf("+1 i == %d CURSOR == %d COUNT == %ld s[i] == |%c|\n", i, *cursor_pos, count, s[i]);
-			count++;
+			*cursor = -1;
+			if (*find != -1)
+				*find = 2;
 		}
-//		else if (i == *cursor_pos && !ft_isblank(s[i]))
-//		{
-//			printf("-1 i == %d CURSOR == %d, COUNT == %ld s[i] == |%c|\n", i, *cursor_pos, count, s[i]);
-//		//	count--;
-//		}
 	}
 	else if (ft_isprint(c) && !ft_isblank(c))
 		while (ft_isprint(s[i]) && !ft_isblank(s[i]) && s[i] && !issep(s, i))
 		{
+			if ((i == *cursor || i + 1 == *cursor) && *find != -1)
+			{
+				printf("22I == %d CURSOR == %d\n", i, *cursor);
+				*find = 1;
+				*cursor = -1;
+			}
 			i++;
 			count++;
 		}
@@ -71,57 +95,74 @@ char				**ft_tabsplit(const char *s, int cursor_pos)
 {
 	char	**tablo;
 	size_t	i;
+	int		i_tmp;
 	char	*tmp;
-	char	*tmp2 = NULL;
-	int		set_cursor[2];
-		int u = -1;
+	char	*tmp2;
+	int		find_cursor;
 
-	set_cursor[1] = cursor_pos;
-	set_cursor[0] = cursor_pos;
+	find_cursor = 0;
 	i = 0;
+	i_tmp = 0;
 	tablo = NULL;
 	if (s)
 	{
-		while (s[i] != '\0')
+		while (s[i])
 		{
-			u = -1;
-			tmp = ft_strsub(s, ((int)i), wordlen(s, i, &set_cursor[0]));
-			//printf("TMP[i] == |%s|\n", tmp);
-			i += wordlen(s, i, &set_cursor[1]);
-			if ((!tablo || cursor_pos == 2147483646) && !(i >= (size_t)cursor_pos))
+			i_tmp = wordlen(s, i, &find_cursor, &cursor_pos);
+			tmp = ft_strsub(s, ((int)i), i_tmp);
+			i += i_tmp;
+			if (find_cursor == 1)
 			{
-			printf("00I == %d CURSOR == %d\n", (int)i, cursor_pos);
-				ft_malloc_cmd(&tablo, tmp);
-				cursor_pos = cursor_pos == 2147483646 ? 2147483645 : cursor_pos;
-			}
-			else if (i >= (size_t)cursor_pos)
-			{
-			printf("11I == %d CURSOR == %d\n", (int)i, cursor_pos);
 				if (!tablo)
 					ft_malloc_cmd(&tablo, "");
-				ft_malloc_cmd(&tablo, tmp);
-				cursor_pos = 2147483646;
-
+				if (!tablo[1])
+					ft_malloc_cmd(&tablo, tmp);
+				else
+				{
+					i_tmp = ft_tablen(tablo) - 1;
+					tmp2 = ft_strjoin(tablo[i_tmp], tmp);
+					ft_strdel(&tablo[i_tmp]);
+					tablo[i_tmp] = ft_strdup(tmp2);
+					ft_strdel(&tmp2);
+				}
+				ft_malloc_cmd(&tablo, "");
+				find_cursor = -1;
+			}
+			else if (find_cursor == 2)
+			{
+				if (!tablo)
+					ft_malloc_cmd(&tablo, tmp);
+				else
+				{
+					i_tmp = ft_tablen(tablo) - 1;
+					tmp2 = ft_strjoin(tablo[i_tmp], tmp);
+					ft_strdel(&tablo[i_tmp]);
+					tablo[i_tmp] = ft_strdup(tmp2);
+					ft_strdel(&tmp2);
+				}
+				if (!tablo[1])
+					ft_malloc_cmd(&tablo, "");
+				ft_malloc_cmd(&tablo, "");
+				find_cursor = cursor_pos == -1 ? -1 : 0;
 			}
 			else
 			{
-			printf("22I == %d CURSOR == %d\n", (int)i, cursor_pos);
-				tmp2 = ft_strjoin(tablo[ft_tablen(tablo) - 1], tmp);
-				ft_strdel(&tablo[ft_tablen(tablo) - 1]);
-				tablo[ft_tablen(tablo)] = ft_strdup(tmp2);
-				if (cursor_pos == (int)i + 1 && ft_isblank(s[i]))
+				if (!tablo)
+					ft_malloc_cmd(&tablo, tmp);
+				else
 				{
-			printf("-1 i == %ld CURSOR == %d s[i] == |%c|\n", i, cursor_pos ,s[i]);
-					i++;
+					i_tmp = ft_tablen(tablo) - 1;
+					tmp2 = ft_strjoin(tablo[i_tmp], tmp);
+					ft_strdel(&tablo[i_tmp]);
+					tablo[i_tmp] = ft_strdup(tmp2);
+					ft_strdel(&tmp2);
 				}
-				ft_strdel(&tmp2);
 			}
-		while (tablo[++u])
-			printf("TABLO[%d] == |%s|\n", u, tablo[u]);
 			ft_strdel(&tmp);
 		}
-		printf("\n");
+		!tablo ? ft_malloc_cmd(&tablo, "") : 0;
+		!tablo[1] ? ft_malloc_cmd(&tablo, "") : 0;
+		!tablo[2] ? ft_malloc_cmd(&tablo, "") : 0;
 	}
-//	sleep(2);
 	return (tablo);
 }
