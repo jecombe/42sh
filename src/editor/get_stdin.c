@@ -13,7 +13,7 @@
 
 #include "heart.h"
 
-void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
+int		get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
@@ -25,10 +25,17 @@ void	get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 	if ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) &&
 	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
 		add_char_into_line((*ed)->key[0], *ed);
+	else if (ft_isprint((*ed)->key[0]) && ft_strlen((*ed)->key) > 1) // pour le copier/coller
+	{
+		ft_putstr((*ed)->key);
+		(*ed)->cursor_str_pos += ft_strlen((*ed)->key);
+		return (1);
+	}
 	else if (CTRL_K && ft_strlen((*ed)->line + (*ed)->cursor_str_pos))
 		delete_from_cursor_to_end(*ed);
 	else if (CTRL_P)
 		paste_clipboard(*ed);
+	return (0);
 }
 
 int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
@@ -72,7 +79,7 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
 		return (add_char_to_line((*ed)->key[0], *ed));
 	else
-		get_keyboard_key_next(ed, prompt, line);
+		return (get_keyboard_key_next(ed, prompt, line));
 	return (0);
 }
 
