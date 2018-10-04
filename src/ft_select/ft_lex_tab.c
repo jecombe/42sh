@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/04 01:57:51 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 02:29:39 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 03:38:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -60,7 +60,7 @@ static	int			lex_blank(const char *s, int i, int *find, int *cursor)
 }
 
 
-static	int			lex_sep(const char *s, t_tab_lex t, int *find, int *cursor)
+int				lex_sep(const char *s, t_tab_lex t, int *find, int *cursor)
 {
 	if (s[t.i] == t.c && t.i != *cursor)
 	{

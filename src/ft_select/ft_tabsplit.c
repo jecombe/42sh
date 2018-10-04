@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 02:37:59 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 03:09:17 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -99,14 +99,14 @@ static char	**manage_tabsplit(const char *s, int i_tmp, int find_cursor,
 	return (tablo);
 }
 
-char		**ft_tabsplit(const char *s, int cursor_pos)
+char		**ft_tabsplit(t_editor **ed)
 {
 	int		i_tmp;
 	int		find_cursor;
 
 	find_cursor = 0;
 	i_tmp = 0;
-	if (s)
-		return (manage_tabsplit(s, i_tmp, find_cursor, cursor_pos));
+	if ((*ed)->line)
+		return (manage_tabsplit((*ed)->line, i_tmp, find_cursor, (*ed)->cursor_str_pos));
 	return (NULL);
 }

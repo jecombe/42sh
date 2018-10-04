@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 01:19:06 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 04:00:45 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,26 +26,10 @@ int			replace_line_after_tab(t_editor **ed)
 		(*ed)->sel->ret = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
-	if ((*ed)->t.cmd)
-	{
-		(*ed)->cursor_str_pos = 0;
-		while ((*ed)->t.cmd[++i] && i < (*ed)->t.nb_char - 1)
-		{
-			(*ed)->cursor_str_pos += ft_strlen((*ed)->t.cmd[i]);
-		}
-		ft_strdel(&(*ed)->t.cmd[(*ed)->t.nb_char - 1]);
-		(*ed)->t.cmd[(*ed)->t.nb_char - 1] = (*ed)->sel->ret;
-		(*ed)->cursor_str_pos += ft_strlen((*ed)->sel->ret);
+		ft_strdel(&(*ed)->t.cmd[1]);
+		(*ed)->t.cmd[1] = (*ed)->sel->ret;
+		(*ed)->cursor_str_pos = ft_strlen((*ed)->t.cmd[0]) + ft_strlen((*ed)->t.cmd[1]);
 		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
-	}
-	else//CA ME PARAIT CHELOU X)
-	{
-//		printf("CHELOU\n");
-//		sleep(2);
-		(*ed)->line = ft_strdup((*ed)->sel->ret);
-		(*ed)->cursor_str_pos += (*ed)->line ? ft_strlen((*ed)->line) : 0;
-	}
-//	ft_strdel(&(*ed)->sel->ret);
 	return (0);
 }
 

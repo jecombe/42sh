@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 03:17:01 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 04:01:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -133,64 +133,48 @@ char	**search_var(char *word)
 	return (ret);
 }
 
-void	binorfile(t_editor **ed, int *end_word)
+void	binorfile(t_editor **ed, size_t *end_word)
 {
-	int		i;
+	int			i;
+	t_tab_lex	t;
+	int			cursor;
 
 	i = 0;
 	(*ed)->t.nb_word = 0;
-	if ((*ed)->t.cmd)
-		while ((*ed)->t.cmd[i] && (size_t)*end_word <= (*ed)->cursor_str_pos)
-		{
-			if (ft_isseparator((*ed)->t.cmd[i][0]))
-				(*ed)->t.nb_word = 0;
-			else if (ft_isprint((*ed)->t.cmd[i][0]))
-				(*ed)->t.nb_word++;
-			*end_word += ft_strlen((*ed)->t.cmd[i]);
-			if ((size_t)*end_word <= (*ed)->cursor_str_pos)
-				i++;
-		printf("I == %d CMD == |%s|\n\n", i, (*ed)->t.cmd[i - 1]);
-		printf("END == %d CURSOR == %lu\n\n", *end_word, (*ed)->cursor_str_pos);
-		}
-	(*ed)->t.nb_char = i == 0 ? 1 : i;
+	while ((*ed)->t.cmd[0][i])
+	{
+		cursor = -1;
+		t.c = (*ed)->t.cmd[0][i];
+		t.i = i;
+		t.count = 0;
+		if (issep((*ed)->t.cmd[0], i))
+			(*ed)->t.nb_word = 0;
+		else if (ft_isprint((*ed)->t.cmd[0][i]))
+			(*ed)->t.nb_word++;
+		i++;
+	}
+	(*ed)->t.nb_char = 1;
+	*end_word = ft_strlen((*ed)->t.cmd[0]) + ft_strlen((*ed)->t.cmd[1]);
 }
 
 int		lexer_tab(t_editor **ed)
 {
-	int		end_word;
+	size_t		end_word;
 
-	(*ed)->t.cmd = ft_tabsplit((*ed)->line, (*ed)->cursor_str_pos);
-	int i = -1;
-	if ((*ed)->t.cmd)
-		while ((*ed)->t.cmd[++i])
-			printf("CMD[%d] == |%s|\n", i, (*ed)->t.cmd[i]);
-	end_word = 0;
-	binorfile(ed, &end_word);
-	if ((*ed)->cursor_str_pos > (size_t)end_word)
+	if (((*ed)->t.cmd = ft_tabsplit(ed)))
 	{
-		(*ed)->cursor_str_pos = end_word;
-		return (-1);
-	}
-	if ((*ed)->t.cmd)
-	{
-		if (((*ed)->t.nb_char == 1 && ft_isblank((*ed)->t.cmd[0][0])))
+		binorfile(ed, &end_word);
+		if ((*ed)->cursor_str_pos < end_word)
 		{
-//			printf("000\n\n");
-			(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char - 1]);
-		}
-		else if ((*ed)->t.cmd && !ft_isblank((*ed)->t.cmd[(*ed)->t.nb_char - 1][0]))
-		{
-//			printf("111CMD == |%s|\n\n", (*ed)->t.cmd[(*ed)->t.nb_char - 1]);
-			(*ed)->t.word = ft_strdup((*ed)->t.cmd[(*ed)->t.nb_char - 1]);
+			(*ed)->cursor_str_pos = end_word;
+			return (-1);
 		}
 		else
 		{
-//			printf("222\n\n");
-			ft_add_str_at(&(*ed)->t.cmd, " ", (*ed)->t.nb_char - 1);
-			(*ed)->t.nb_char++;
-			ft_add_str_at(&(*ed)->t.cmd, " ", (*ed)->t.nb_char - 1);
-			(*ed)->t.nb_char++;
-			(*ed)->t.word = NULL;
+			if ((*ed)->t.cmd[1][0])
+			(*ed)->t.word = ft_strdup((*ed)->t.cmd[1]);
+			else
+				(*ed)->t.word = NULL;
 		}
 		if ((*ed)->t.word && (*ed)->t.word[0] == '$')
 			(*ed)->t.nb_word = -1;
@@ -266,8 +250,6 @@ int		tabulator(t_editor **ed, int version)
 	{
 		if (lexer_tab(ed) != -1)
 		{
-//		printf("\n\nVERSION == %d\n\n", version);
-//		sleep(2);
 			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
 				search_bin(ed);
 			else if ((*ed)->t.nb_word == -1)
@@ -287,8 +269,6 @@ int		tabulator(t_editor **ed, int version)
 				ft_free_t_tab(&(*ed)->t);
 			}
 		}
-//		printf("\n\nVERSION == %d\n\n", version);
-//		sleep(2);
 	}
 	else if ((*ed)->tabu >= 0 && version == 1 && !ENTER_KEY)
 	{
@@ -330,6 +310,5 @@ int		tabulator(t_editor **ed, int version)
 		(*ed)->tabu = -1;
 	}
 	version != 0 ? place_cursor_after(*ed) : 0;
-//	place_cursor_after(*ed);
 	return (0);
 }
