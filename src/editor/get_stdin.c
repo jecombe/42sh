@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 08:03:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 09:05:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -133,11 +133,12 @@ int		get_stdin(char **line, e_prompt *prompt)
 	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 		return (1);
 	ed->ws_col = ws.ws_col;
+	ed->ws_row = ws.ws_row;
 	while (ret != -1)
 	{
 		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 			return (1);
-		if (ws.ws_col != ed->ws_col)
+		if (ws.ws_col != ed->ws_col || ws.ws_row != ed->ws_row)
 			refresh_term(&ed, ws, prompt);
 		ft_bzero(ed->key, BUFF_SIZE);
 		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
