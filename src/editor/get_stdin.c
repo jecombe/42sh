@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 21:55:38 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 06:10:18 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -101,6 +101,7 @@ int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
 	(*ed)->t.before = NULL;
 	(*ed)->t.word = NULL;
 	(*ed)->t.nb_word = 0;
+	(*ed)->t.nb_line = 0;
 	(*ed)->t.nb_char = 0;
 	(*ed)->sel = NULL;
 	(*ed)->cur_pos = get_cursor_position(0);

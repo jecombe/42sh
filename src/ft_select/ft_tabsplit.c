@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/25 03:31:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 03:09:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 07:31:35 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,7 +35,6 @@ static void	ft_find_word(char ***tablo, char *tmp, int *find_cursor, int i_tmp)
 
 static void	ft_find_space(char ***tablo, char *tmp, int *find_cursor, int i_tmp)
 {
-	printf("FIND SPACE\n");
 	char *tmp2;
 
 	if (!*tablo)
@@ -103,10 +102,18 @@ char		**ft_tabsplit(t_editor **ed)
 {
 	int		i_tmp;
 	int		find_cursor;
+	char	**ret;
 
 	find_cursor = 0;
+	ret = NULL;
 	i_tmp = 0;
 	if ((*ed)->line)
-		return (manage_tabsplit((*ed)->line, i_tmp, find_cursor, (*ed)->cursor_str_pos));
-	return (NULL);
+		ret = manage_tabsplit((*ed)->line, i_tmp, find_cursor, (*ed)->cursor_str_pos);
+	else
+	{
+		ft_malloc_cmd(&ret, "");
+		ft_malloc_cmd(&ret, "");
+		ft_malloc_cmd(&ret, "");
+	}
+	return (ret);
 }

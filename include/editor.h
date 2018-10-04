@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 17:21:14 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 04:46:20 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -69,6 +69,7 @@ typedef struct		s_tab
 	char			*word;
 	int				nb_word;
 	int				nb_char;
+	int				nb_line;
 }					t_tab;
 
 typedef struct		s_editor

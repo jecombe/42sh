@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:23:54 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/21 23:59:19 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 07:46:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/ft_select.h"
+#include "ft_select.h"
 
 static int		ft_up_and_down(char arrows, t_select **t, t_line *l, int y)
 {
@@ -118,8 +118,8 @@ static void		ft_left_and_right(char arrows, t_select **t, t_line *l, int y)
 
 int				ft_arrows(char arrows, t_select **t, int *place)
 {
-	t_line	*l;
-	int		y;
+	t_line		*l;
+	int			 y;
 
 	if (!(arrows == 65 || arrows == 66 || arrows == 67 || arrows == 68))
 		return (1);

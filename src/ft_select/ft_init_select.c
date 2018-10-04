@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/26 11:58:36 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:59:39 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 07:41:41 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,6 +51,7 @@ void			manage_init(t_editor **ed, int i, t_line *line)
 	(*ed)->sel->ds = NULL;
 	(*ed)->sel->ret = NULL;
 	ft_get_size_term(&(*ed)->sel->ws, &(*ed)->sel, 1);
+	(*ed)->sel->ws.ws_row -= (*ed)->t.nb_line;
 	(*ed)->sel->pbl = ft_params_by_line((*ed)->sel);
 	(*ed)->sel->nbl = ft_count_line((*ed)->sel);
 	(*ed)->sel->nbp = ft_count_params((*ed)->sel->line);

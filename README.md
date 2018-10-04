@@ -50,6 +50,7 @@
 | COMPLETION COMME LE THEME FISH | ❌ |
 
 PROBLEMES A RESOUDRE:<br/>
+\_cd ..<br/>
 \_LA FONCTION CD NE FONCTIONNE PAS<br/>
 \_TABLE DE HASH<br/>
 \_ls-l<br/>

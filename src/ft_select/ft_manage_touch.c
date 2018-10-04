@@ -6,12 +6,19 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 04:13:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 07:47:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+static int	is_arrows(char *s)
+{
+	if ((s[0] == 27 && s[1] == 91 && s[2] >= 65 && s[2] <= 68) || (s[0] == 9 && s[1] == 0))
+		return (1);
+	return (0);
+}
 
 int			replace_line_after_tab(t_editor **ed)
 {
@@ -38,6 +45,7 @@ int			ft_attrib_line(t_editor **ed)
 	t_line		*line;
 
 	line = (*ed)->sel->line;
+	if (line->cursor_inside == 0)
 	while (line->cursor_inside == 0)
 		line = line->next;
 	(*ed)->sel->ret = ft_strdup(line->elem);
@@ -49,8 +57,7 @@ int			ft_manage_touch(t_editor **ed, int version)
 {
 	if (version == 0)
 		return (ft_attrib_line(ed));
-	else if (((*ed)->key[0] == 27 && (*ed)->key[1] == 91) ||
-			((*ed)->key[0] == 9 && (*ed)->key[1] == 0))
+	else if (is_arrows((*ed)->key))
 	{
 		ft_arrows((*ed)->key[0] == 9 ? 66 : (*ed)->key[2], &(*ed)->sel, &(*ed)->tabu);
 		return (ft_attrib_line(ed) + 1);

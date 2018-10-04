@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 04:19:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 06:13:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -185,17 +185,16 @@ int		lexer_tab(t_editor **ed)
 void	place_cursor_before(t_editor *ed)
 {
 	int line_max;
-	int	nb_line;
 	int	to_jump;
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / ed->ws_col + 1;
+	ed->t.nb_line = line_max / ed->ws_col + 1;
 	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
-	while (nb_line - to_jump > 0)
+	while (ed->t.nb_line - to_jump > 0)
 	{
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
-		nb_line--;
+		to_jump++;
 	}
 	ft_putchar('\r');
 }
@@ -207,7 +206,7 @@ void	place_cursor_after(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / ed->ws_col + 1;
+	nb_line = ed->t.nb_line;
 	while (nb_line > 0)
 	{
 		tputs(tgetstr("up", NULL), 1, ft_putchar);
@@ -245,6 +244,8 @@ void	ft_free_t_tab(t_tab *t)
 
 int		tabulator(t_editor **ed, int version)
 {
+	(*ed)->t.nb_line = ((*ed)->prompt_size +
+	((*ed)->line ? ft_strlen((*ed)->line) : 0)) / (*ed)->ws_col + 1;
 	version != 0 ? place_cursor_before(*ed) : 0;
 	if ((*ed)->tabu == -1 && version == 1)
 	{
