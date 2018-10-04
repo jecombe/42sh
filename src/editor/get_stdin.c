@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 06:10:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 08:03:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,33 +81,6 @@ int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
 	else
 		return (get_keyboard_key_next(ed, prompt, line));
 	return (0);
-}
-
-int		line_editor_init(char **line, e_prompt prompt, t_editor **ed)
-{
-	if (!(*ed = (t_editor*)malloc(sizeof(t_editor))))
-		return (0);
-	(*ed)->clipboard = NULL;
-	(*ed)->cursor_str_pos = 0;
-	(*ed)->first_row = get_cursor_position(1);
-	(*ed)->last_row = (*ed)->first_row;
-	(*ed)->line = NULL;
-	(*ed)->tmp_line = NULL;
-	(*ed)->hist = -2;
-	(*ed)->tabu = -1;
-	(*ed)->t.cmd = NULL;
-	(*ed)->t.elem = NULL;
-	(*ed)->t.is_file = NULL;
-	(*ed)->t.before = NULL;
-	(*ed)->t.word = NULL;
-	(*ed)->t.nb_word = 0;
-	(*ed)->t.nb_line = 0;
-	(*ed)->t.nb_char = 0;
-	(*ed)->sel = NULL;
-	(*ed)->cur_pos = get_cursor_position(0);
-	*line = prompt != PROMPT && prompt != E_PIPE ?
-	ft_strjoin_free(*line, "\n") : NULL;
-	return (1);
 }
 
 void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)

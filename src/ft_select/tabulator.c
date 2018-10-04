@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 06:13:42 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 08:33:11 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 		tmp = ft_stat(tmp2, path) == '2' ?
 			ft_strjoin(tmp2, "/") : ft_strdup(tmp2);
 		if ((line && 0 == ft_strncmp(line, tmp, ft_strlen(line))) ||
-			(!line && tmp[0] != '.'))
+				(!line && tmp[0] != '.'))
 		{
 			ft_add_to_str(&(*ed)->t.is_file, ft_stat(tmp2, path), len_file);
 			ft_malloc_cmd(&(*ed)->t.elem, tmp);
@@ -172,7 +172,7 @@ int		lexer_tab(t_editor **ed)
 		else
 		{
 			if ((*ed)->t.cmd[1][0])
-			(*ed)->t.word = ft_strdup((*ed)->t.cmd[1]);
+				(*ed)->t.word = ft_strdup((*ed)->t.cmd[1]);
 			else
 				(*ed)->t.word = NULL;
 		}
@@ -213,11 +213,11 @@ void	place_cursor_after(t_editor *ed)
 		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		nb_line--;
 	}
-//	printf("\n\nLINE == %s\n\n", ed->line);
-//	sleep(2);
+	//	printf("\n\nLINE == %s\n\n", ed->line);
+	//	sleep(2);
 	display_prompt(0);
 	ft_putfreshstr(ed->line);
-//	sleep(2);
+	//	sleep(2);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
 		if (get_cursor_position(0) == 1)
@@ -226,7 +226,7 @@ void	place_cursor_after(t_editor *ed)
 			tputs(tgoto(tgetstr("ch", NULL), 1, 1), 1, ft_putchar);
 		}
 		else
-		tputs(tgetstr("le", NULL), 1, ft_putchar);
+			tputs(tgetstr("le", NULL), 1, ft_putchar);
 		line_max--;
 	}
 }
@@ -242,73 +242,84 @@ void	ft_free_t_tab(t_tab *t)
 	(*t).nb_char = 0;
 }
 
-int		tabulator(t_editor **ed, int version)
+void	first_tab(t_editor **ed)
 {
-	(*ed)->t.nb_line = ((*ed)->prompt_size +
-	((*ed)->line ? ft_strlen((*ed)->line) : 0)) / (*ed)->ws_col + 1;
-	version != 0 ? place_cursor_before(*ed) : 0;
-	if ((*ed)->tabu == -1 && version == 1)
+	if (lexer_tab(ed) != -1)
 	{
-		if (lexer_tab(ed) != -1)
+		if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
+			search_bin(ed);
+		else if ((*ed)->t.nb_word == -1)
+			(*ed)->t.elem = search_var((*ed)->t.word);
+		else
+			search_in_rep(ed);
+		if ((*ed)->t.elem && (*ed)->t.elem[1])
 		{
-			if ((*ed)->t.nb_word == 1 || (*ed)->t.nb_word == 0)
-				search_bin(ed);
-			else if ((*ed)->t.nb_word == -1)
-				(*ed)->t.elem = search_var((*ed)->t.word);
-			else
-				search_in_rep(ed);
-			if ((*ed)->t.elem && (*ed)->t.elem[1])
-			{
-				(*ed)->tabu = 0;
-				ft_select(ed, 0);
-			}
-			else if ((*ed)->t.elem && (*ed)->t.elem[0])
-			{
-				(*ed)->sel = malloc(sizeof(t_select));
-				(*ed)->sel->ret = ft_strdup((*ed)->t.elem[0]);
-				replace_line_after_tab(ed);
-				ft_free_t_tab(&(*ed)->t);
-			}
+			(*ed)->tabu = 0;
+			ft_select(ed, 0);
+		}
+		else if ((*ed)->t.elem && (*ed)->t.elem[0])
+		{
+			(*ed)->sel = malloc(sizeof(t_select));
+			(*ed)->sel->ret = ft_strdup((*ed)->t.elem[0]);
+			replace_line_after_tab(ed);
+			ft_free_t_tab(&(*ed)->t);
 		}
 	}
+}
+
+void	end_tab_sequence(t_editor **ed)
+{
+	int i;
+
+	if ((*ed)->line)
+	{
+		i = (*ed)->cursor_str_pos + (*ed)->prompt_size - 1;
+		while ((size_t)++i < (*ed)->prompt_size + ft_strlen((*ed)->line))
+			move_right();
+	}
+	(*ed)->key[0] = 0;
+	(*ed)->key[1] = 0;
+	tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	if ((*ed)->line)
+	{
+		i = (*ed)->cursor_str_pos + (*ed)->prompt_size - 1;
+		while ((size_t)++i < (*ed)->prompt_size + ft_strlen((*ed)->line))
+			move_left(*ed);
+	}
+	ft_free_t_tab(&(*ed)->t);
+	ft_free_t_select(&(*ed)->sel);
+	(*ed)->tabu = -1;
+	printf("END\n");
+	sleep(1);
+}
+
+void	resolve_more_long(t_editor **ed)
+{
+	tabulator(ed, 2);
+}
+
+int		tabulator(t_editor **ed, int version)
+{
+	if (is_more_long(ed))
+		resolve_more_long(ed);
+	version != 0 ? place_cursor_before(*ed) : 0;
+	if ((*ed)->tabu == -1 && version == 1)
+		first_tab(ed);
 	else if ((*ed)->tabu >= 0 && version == 1 && !ENTER_KEY)
 	{
+		//IN TAB
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 			ft_select(ed, 1);
 	}
 	else if (version == 2)
 	{
 		//refresh
-	//	ft_select(ed, 2);
+		//	ft_select(ed, 2);
 	}
 	else if (version == 0 || (version == 1 && ENTER_KEY && (*ed)->tabu >= 0))
 	{
-		int i;
-
-		if ((*ed)->line)
-		{
-			i = (*ed)->cursor_str_pos + (*ed)->prompt_size;
-			while ((size_t)i < (*ed)->prompt_size + ft_strlen((*ed)->line))
-			{
-				move_right();
-				i++;
-			}
-		}
-		(*ed)->key[0] = 0;
-		(*ed)->key[1] = 0;
-		tputs(tgetstr("cd", NULL), 1, ft_putchar);
-		if ((*ed)->line)
-		{
-			i = (*ed)->cursor_str_pos + (*ed)->prompt_size;
-			while ((size_t)i < (*ed)->prompt_size + ft_strlen((*ed)->line))
-			{
-				move_left(*ed);
-				i++;
-			}
-		}
-		ft_free_t_tab(&(*ed)->t);
-		ft_free_t_select(&(*ed)->sel);
-		(*ed)->tabu = -1;
+		//END TAB SEQUENCE
+		end_tab_sequence(ed);
 	}
 	version != 0 ? place_cursor_after(*ed) : 0;
 	return (0);

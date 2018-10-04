@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 07:51:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 08:10:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -104,5 +104,6 @@ void					ft_free_t_tab(t_tab *t);
 int						issep(const char *s, int i);
 int						lex_tab(const char *s, int i, int *find, int *cursor);
 int						lex_sep(const char *s, t_tab_lex t, int *find, int *cursor);
+int						is_more_long(t_editor **ed);
 
 #endif
