@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 09:05:58 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 20:29:02 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,7 +88,8 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	if ((ed->last_row - get_cursor_position(1)) != 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0,
 		ed->last_row - get_cursor_position(1)), 1, ft_putchar);
-	ft_putchar('\n');
+	else
+		ft_putchar('\n');
 	if (*prompt != PROMPT && *prompt != E_PIPE)
 	{
 		*line = ed->line == NULL ? *line : ft_strjoin_free(*line, ed->line);
@@ -105,7 +106,6 @@ void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 	(void)prompt;
 	if (get_cursor_position(1) == (*ed)->last_row && !((ft_strlen((*ed)->line) + (*ed)->prompt_size) % ws.ws_col))
 		dprintf(2, "OKcol\n");
-	dprintf(2, "NOK\n");
 	/*
 	tputs(tgoto(tgetstr("cm", NULL), 0, (*ed)->first_row - ((get_cursor_position(1) - (*ed)->first_row) + 1)), 1, ft_putchar);
 	ft_putstr("\E[J");
@@ -126,10 +126,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 	ed = NULL;
 	get_term_raw_mode(1);
 	line_editor_init(line, *prompt, &ed);
-//	display_prompt(prompt == 0 ? find_env_var(g_env, "HOME", 0) : NULL, *prompt);
 	display_prompt(*prompt);
 	ed->prompt_size = get_cursor_position(0);
-//	signal(SIGWINCH, myhandler_winsize_change);
 	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 		return (1);
 	ed->ws_col = ws.ws_col;
@@ -145,13 +143,6 @@ int		get_stdin(char **line, e_prompt *prompt)
 				tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		if (ed->key[0])
 		{
-		/*dprintf(2, "ed->key[0]: %d\n", ed->key[0]);
-		dprintf(2, "ed->key[1]: %d\n", ed->key[1]);
-		dprintf(2, "ed->key[2]: %d\n", ed->key[2]);
-		dprintf(2, "ed->key[3]: %d\n", ed->key[3]);
-		dprintf(2, "ed->key[4]: %d\n", ed->key[4]);*/
-
-//			printf("KEY == %s\n", ed->key);
 			if (get_keyboard_key(&ret, &ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
 		}
