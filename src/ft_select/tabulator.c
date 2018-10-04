@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 04:01:18 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 04:19:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,7 +42,7 @@ int		add_bin(t_editor **ed, DIR *dir, char *path, int version)
 		tmp = ft_stat(tmp2, path) == '2' ?
 			ft_strjoin(tmp2, "/") : ft_strdup(tmp2);
 		if ((line && 0 == ft_strncmp(line, tmp, ft_strlen(line))) ||
-			!line)
+			(!line && tmp[0] != '.'))
 		{
 			ft_add_to_str(&(*ed)->t.is_file, ft_stat(tmp2, path), len_file);
 			ft_malloc_cmd(&(*ed)->t.elem, tmp);

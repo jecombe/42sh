@@ -6,12 +6,12 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:28:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 04:00:45 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 04:13:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../../include/ft_select.h"
+#include "ft_select.h"
 
 int			replace_line_after_tab(t_editor **ed)
 {
@@ -26,10 +26,10 @@ int			replace_line_after_tab(t_editor **ed)
 		(*ed)->sel->ret = ft_strdup(tmp);
 		ft_strdel(&tmp);
 	}
-		ft_strdel(&(*ed)->t.cmd[1]);
-		(*ed)->t.cmd[1] = (*ed)->sel->ret;
-		(*ed)->cursor_str_pos = ft_strlen((*ed)->t.cmd[0]) + ft_strlen((*ed)->t.cmd[1]);
-		ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
+	ft_strdel(&(*ed)->t.cmd[1]);
+	(*ed)->t.cmd[1] = (*ed)->sel->ret;
+	(*ed)->cursor_str_pos = ft_strlen((*ed)->t.cmd[0]) + ft_strlen((*ed)->t.cmd[1]);
+	ft_concat_tab_to_str((*ed)->t.cmd, &(*ed)->line);
 	return (0);
 }
 
