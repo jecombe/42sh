@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 08:42:21 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 00:34:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -289,8 +289,6 @@ void	end_tab_sequence(t_editor **ed)
 	ft_free_t_tab(&(*ed)->t);
 	ft_free_t_select(&(*ed)->sel);
 	(*ed)->tabu = -1;
-	printf("END\n");
-	sleep(1);
 }
 
 void	resolve_more_long(t_editor **ed)
