@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 08:10:15 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 08:49:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -136,12 +136,17 @@ int		ft_cut_word_and_before(char **str, char *word, char **before)
 
 int		is_more_long(t_editor **ed)
 {
-	int		tmp;
+	int		tmp_nb;
+	int		cmp;
 
-	tmp = (*ed)->t.nb_line;
+	tmp_nb = (*ed)->t.nb_line;
 	(*ed)->t.nb_line = ((*ed)->prompt_size +
 	((*ed)->line ? ft_strlen((*ed)->line) : 0)) / (*ed)->ws_col + 1;
-	if (tmp != 0 && tmp != (*ed)->t.nb_line)
-		return (1);
+	if (tmp_nb != 0 && tmp_nb != (*ed)->t.nb_line)
+	{
+		cmp = tmp_nb / (*ed)->ws_col;
+		if (cmp != (*ed)->t.nb_line / (*ed)->ws_col)
+			return (cmp != (*ed)->t.nb_line / (*ed)->ws_col);
+	}
 	return (0);
 }
