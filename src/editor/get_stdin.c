@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 20:29:02 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 20:41:42 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,12 +25,12 @@ int		get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
 	if ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) &&
 	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
 		add_char_into_line((*ed)->key[0], *ed);
-	else if (ft_isprint((*ed)->key[0]) && ft_strlen((*ed)->key) > 1) // pour le copier/coller
+/*	else if (ft_isprint((*ed)->key[0]) && ft_strlen((*ed)->key) > 1) // pour le copier/coller
 	{
 		ft_putstr((*ed)->key);
 		(*ed)->cursor_str_pos += ft_strlen((*ed)->key);
 		return (1);
-	}
+	}*/
 	else if (CTRL_K && ft_strlen((*ed)->line + (*ed)->cursor_str_pos))
 		delete_from_cursor_to_end(*ed);
 	else if (CTRL_P)

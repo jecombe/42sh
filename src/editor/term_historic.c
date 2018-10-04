@@ -6,25 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 20:25:32 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 20:41:21 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
-static void	print_str(t_editor **ed)
-{
-	int			loop;
-
-	loop = 0;
-	if ((*ed)->line)
-	{
-		(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
-		while ((*ed)->line[loop])
-			add_char_to_line((*ed)->line[loop++], *ed);
-	}
-}
 
 static int	down_key(t_editor **ed)
 {
@@ -39,7 +26,6 @@ static int	down_key(t_editor **ed)
 			ft_strdel(&(*ed)->line);
 			(*ed)->line = ft_strdup((*ed)->tmp_line);
 			ft_strdel(&(*ed)->tmp_line);
-			print_str(ed);
 		}
 		(*ed)->hist = -2;
 		(*ed)->cursor_str_pos = (*ed)->line ? ft_strlen((*ed)->line) : 0;
