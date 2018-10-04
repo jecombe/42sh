@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/02 04:04:38 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/04 01:56:05 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -65,6 +65,7 @@ SRCS_NAME =	\
 			editor/find_env_var.c \
 			editor/prompt_git.c \
 			ft_select/ft_arrows.c \
+			ft_select/ft_lex_tab.c \
 			ft_select/ft_char_by_line.c \
 			ft_select/ft_count_line.c \
 			ft_select/ft_count_params.c \

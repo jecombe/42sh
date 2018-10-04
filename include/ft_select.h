@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/27 13:45:58 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 17:33:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/04 02:19:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,10 +41,16 @@ typedef struct			s_line
 	int					is_file;
 	int					ds;
 	int					cursor_inside;
-//	int					select;
 	struct s_line		*prev;
 	struct s_line		*next;
 }						t_line;
+
+typedef struct			s_tablex
+{
+	char				c;
+	int					i;
+	int					count;
+}						t_tab_lex;
 
 typedef struct			s_select
 {
@@ -95,5 +101,7 @@ char					*ft_search_relative_path(char *line);
 char					*ft_search_path(char *line);
 int						ft_cut_word_and_before(char **str, char *word, char **before);
 void					ft_free_t_tab(t_tab *t);
+int						issep(const char *s, int i);
+int						lex_tab(const char *s, int i, int *find, int *cursor);
 
 #endif
