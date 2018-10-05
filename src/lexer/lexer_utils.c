@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:41:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 01:41:04 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 21:05:41 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,36 +42,6 @@ int				ft_isreserved(char *input)
 			return (value);
 	return (WORD);
 }
-
-int				ft_isalias(char **name)
-{
-	int		fd;
-	char	*line;
-	char	**grid;
-
-	fd = -1;
-	line = NULL;
-	grid = NULL;
-	if ((fd = open("./.101sh_aliases", O_CREAT | O_RDONLY, 0644)) == -1)
-		return (EXIT_FAILURE);
-	while (get_next_line(fd, &line))
-	{
-		if (!(grid = ft_strsplit(line, '=')))
-			return (EXIT_FAILURE);
-		if (ft_strcmp(*name, grid[0]) == 0)
-		{
-			ft_strdel(name);
-			*name = ft_strdup(grid[1]);
-		}
-		ft_strdel(&grid[0]);
-		ft_strdel(&grid[1]);
-		ft_strdel(&line);
-	}
-	if (close(fd) == -1)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
-
 void			ft_lexer_del(t_lex *lex)
 {
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:40:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 01:40:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 21:06:54 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,12 +68,6 @@ t_lex				lexer(char *input)
 	idx = 0;
 	v = -1;
 	while ((lex.name[++v] = ft_lexer_break_input(input, &idx)))
-	{
-		if (v == 0 || lex.token[v - 1] == SEMI || lex.token[v - 1] == AND ||
-				lex.token[v - 1] == PIPE)
-			if (ft_isalias(&lex.name[v]))
-				break ;
 		lex.token[v] = ft_lexer_token(lex.name[v], input[idx]);
-	}
 	return (lex);
 }
