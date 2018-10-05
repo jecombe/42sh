@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:56:50 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/26 23:44:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 16:49:30 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,19 +32,12 @@ static int		check_if_next_word(char *line)
 void			move_word_right(t_editor *ed)
 {
 	size_t next_word_pos;
-	t_sz sz;
 
 	next_word_pos = check_if_next_word(ed->line + ed->cursor_str_pos);
 	if (next_word_pos)
 	{
 		next_word_pos += ed->cursor_str_pos;
-		while (ed->cursor_str_pos < next_word_pos)
-		{
-			if (get_cursor_position(0) == sz.ws_col)
-				tputs(tgetstr("do", NULL), 1, ft_putchar);
-			else
-				tputs(tgetstr("nd", NULL), 1, ft_putchar);
-			ed->cursor_str_pos++;
-		}
+		while (ed->cursor_str_pos != next_word_pos)
+			move_cursor_right(ed);
 	}
 }

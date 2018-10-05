@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/30 02:27:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 16:34:49 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,7 +25,7 @@ void	move_right(void)
 		tputs(tgetstr("nd", NULL), 1, ft_putchar);
 }
 
-void	move_cursor_right(t_editor *ed)
+void		move_cursor_right(t_editor *ed)
 {
 	if (ed->cursor_str_pos < ft_strlen(ed->line))
 	{
