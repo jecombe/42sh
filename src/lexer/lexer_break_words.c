@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:40:55 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 01:40:58 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 19:06:19 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,7 @@ int				ft_lexer_break_operator(char *input, int idx, int i)
 		}
 		else if (input[idx] == ';' || input[idx] == '&' || input[idx] == '|' ||
 			input[idx] == '(' || input[idx] == ')' || input[idx] == '<' ||
-			input[idx] == '>' || input[idx] == '-')
+			input[idx] == '>')
 		{
 			ret = 1;
 		}
