@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 00:33:33 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/14 23:17:17 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 04:14:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,8 +36,16 @@ int		ft_free_n_seq(t_seq **n_seq, t_seq **b_seq)
 		}
 		else
 			ret = 1;
-		free(*n_seq);
-		*n_seq = NULL;
+		if (ret != 1)
+		{
+			free(*n_seq);
+			*n_seq = NULL;
+		}
 	}
-		return (ret);
+	if (ret == 1)
+	{
+		ft_free_b_seq(b_seq);
+	}
+	printf("FREE NSEQ == %p\n", *n_seq);
+	return (ret);
 }

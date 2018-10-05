@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 00:34:46 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 02:19:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -199,6 +199,11 @@ void	place_cursor_before(t_editor *ed)
 	ft_putchar('\r');
 }
 
+void	replace_ypos(t_editor *ed)
+{
+	(void)ed;
+}
+
 void	place_cursor_after(t_editor *ed)
 {
 	int		line_max;
@@ -206,7 +211,16 @@ void	place_cursor_after(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = ed->t.nb_line;
+
+	nb_line = line_max / (int)ed->ws_col + 1;
+	replace_ypos(ed);
+//	if (nb_line != oldline_max / ed->ws_col + 1)
+//	{
+//		printf("NB_LINE: %d NB_OLDLINE: %ld\n", nb_line, oldline_max / ed->ws_col + 1);
+//		sleep(1);
+//	}
+//	printf("NB_LINE == %d\n", nb_line);
+//	sleep(1);
 	while (nb_line > 0)
 	{
 		tputs(tgetstr("up", NULL), 1, ft_putchar);
@@ -291,15 +305,10 @@ void	end_tab_sequence(t_editor **ed)
 	(*ed)->tabu = -1;
 }
 
-void	resolve_more_long(t_editor **ed)
-{
-	tabulator(ed, 2);
-}
-
 int		tabulator(t_editor **ed, int version)
 {
-	if (is_more_long(ed))
-		resolve_more_long(ed);
+	ft_strdel(&(*ed)->tmp_line);
+	(*ed)->tmp_line = ft_strdup((*ed)->line);
 	version != 0 ? place_cursor_before(*ed) : 0;
 	if ((*ed)->tabu == -1 && version == 1)
 		first_tab(ed);

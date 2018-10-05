@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/30 05:32:17 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 03:42:23 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 04:06:54 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,7 +48,9 @@ int			ft_free_b_seq(t_seq **b_seq)
 {
 	t_seq		*n_seq;
 
+	printf("BSEQ %p\n", *b_seq);
 	n_seq = *b_seq;
+	printf("NSEQ %p\n", n_seq);
 	while (n_seq)
 	{
 		*b_seq = n_seq;

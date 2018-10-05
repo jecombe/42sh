@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 20:41:42 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 03:28:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -106,6 +106,11 @@ void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 	(void)prompt;
 	if (get_cursor_position(1) == (*ed)->last_row && !((ft_strlen((*ed)->line) + (*ed)->prompt_size) % ws.ws_col))
 		dprintf(2, "OKcol\n");
+	if ((*ed)->tabu != -1)
+	{
+		ft_strdel(&(*ed)->tmp_line);
+		tabulator(ed, 2);
+	}
 	/*
 	tputs(tgoto(tgetstr("cm", NULL), 0, (*ed)->first_row - ((get_cursor_position(1) - (*ed)->first_row) + 1)), 1, ft_putchar);
 	ft_putstr("\E[J");

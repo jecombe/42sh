@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 03:43:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 03:46:46 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 04:06:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,7 @@ int					heart_of_101sh(char *line, int fd_base)
 	//		seq->op->redirect = seq->op->redirect->next;
 	//	}
 		ft_free_b_seq(&seq);
+//		ret != 1 ? ft_free_b_seq(&seq) : 0;
 	}
 	ft_lexer_del(&lex);
 	ft_strdel(&line);

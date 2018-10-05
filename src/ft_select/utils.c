@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 08:49:14 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 03:28:03 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -142,11 +142,13 @@ int		is_more_long(t_editor **ed)
 	tmp_nb = (*ed)->t.nb_line;
 	(*ed)->t.nb_line = ((*ed)->prompt_size +
 	((*ed)->line ? ft_strlen((*ed)->line) : 0)) / (*ed)->ws_col + 1;
+//	printf("\nTMP_NB == %d NB_LINE == %d\n", tmp_nb, (*ed)->t.nb_line);
+//	sleep(1);
 	if (tmp_nb != 0 && tmp_nb != (*ed)->t.nb_line)
 	{
 		cmp = tmp_nb / (*ed)->ws_col;
 		if (cmp != (*ed)->t.nb_line / (*ed)->ws_col)
-			return (cmp != (*ed)->t.nb_line / (*ed)->ws_col);
+			return ((*ed)->t.nb_line / (*ed)->ws_col);
 	}
 	return (0);
 }
