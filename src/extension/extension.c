@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 05:00:48 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 04:12:02 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 04:44:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -94,7 +94,7 @@ int			extension(t_seq **b_seq)
 		{
 			if (ft_free_n_seq(&n_seq, b_seq) == 1)
 			{
-				printf("EXT == %p\n", *b_seq);
+//				printf("EXT == %p\n", *b_seq);
 				return (1);
 			}
 		}

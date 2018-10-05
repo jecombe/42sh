@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 02:19:25 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 06:43:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -320,6 +320,7 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 2)
 	{
+		ft_print_params((*ed)->sel);
 		//refresh
 		//	ft_select(ed, 2);
 	}
