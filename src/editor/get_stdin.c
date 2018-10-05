@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 15:44:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 16:23:23 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -88,8 +88,7 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	if ((ed->last_row - get_cursor_position(1)) != 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0,
 		ed->last_row - get_cursor_position(1)), 1, ft_putchar);
-	else
-		ft_putchar('\n');
+	ft_putchar('\n');
 	if (*prompt != PROMPT && *prompt != E_PIPE)
 	{
 		*line = ed->line == NULL ? *line : ft_strjoin_free(*line, ed->line);
@@ -107,8 +106,8 @@ void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 
 	cursor_str_pos_tmp = (*ed)->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
-	(*ed)->first_row = get_cursor_position(1);
 	display_prompt(*prompt);
+	(*ed)->first_row = get_cursor_position(1);
 	ft_putstr((*ed)->line);
 	(*ed)->last_row = get_cursor_position(1);
 	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
@@ -149,6 +148,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 			refresh_term(&ed, ws, prompt);
 			if (ed->key[0])
 		{
+		//	dprintf(2, "line: [%c]\n", ed->key[0]);
+		//	dprintf(2, "line_len: [%zu]\n", ft_strlen(ed->key));
 			if (get_keyboard_key(&ret, &ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
 		}
