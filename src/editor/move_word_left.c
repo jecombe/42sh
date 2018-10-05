@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:54:46 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 16:49:53 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/05 17:03:36 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,6 +40,6 @@ void			move_word_left(t_editor *ed)
 
 	if ((previous_word_pos =
 	check_if_previous_word(ed->line, ed->cursor_str_pos)) != -1)
-		while (ed->cursor_str_pos != previous_word_pos)
+		while (ed->cursor_str_pos > previous_word_pos)
 			move_cursor_left(ed);
 }
