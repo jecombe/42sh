@@ -6,19 +6,22 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/01 04:22:27 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 07:53:43 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 03:23:46 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
+void		ft_refresh()
+{
+}
+
 int			ft_select(t_editor **ed, int version)
 {
 	if ((*ed)->t.elem)
 	{
-		version == 0 ? ft_init_select(ed) : 0;
-		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col)
+		if ((*ed)->sel->pbl)
 		{
 			if ((*ed)->t.elem[1])
 			{
@@ -34,6 +37,7 @@ int			ft_select(t_editor **ed, int version)
 			ft_free_t_tab(&(*ed)->t);
 			ft_free_t_select(&(*ed)->sel);
 			(*ed)->tabu = -1;
+			tputs(tgetstr("bl", NULL), 1, ft_putchar);
 			ft_putchar('\a');
 		}
 	}

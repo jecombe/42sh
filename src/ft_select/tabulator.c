@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 06:43:09 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 05:20:48 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -185,23 +185,55 @@ int		lexer_tab(t_editor **ed)
 void	place_cursor_before(t_editor *ed)
 {
 	int line_max;
+//	int		nb_line;
 	int	to_jump;
 
+//	line_max = ed->prompt_size;
+//	line_max += ed->line ? ft_strlen(ed->line) : 0;
+//	nb_line = line_max / (ed->ws_col + 2);
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	ed->t.nb_line = line_max / ed->ws_col + 1;
-	to_jump = (ed->cursor_str_pos + ed->prompt_size) / ed->ws_col;
-	while (ed->t.nb_line - to_jump > 0)
+	ed->t.nb_line = line_max / (ed->ws_col + 2);
+	to_jump = (ed->cursor_str_pos + ed->prompt_size) / (ed->ws_col + 2);
+/*	printf("\n00LINE: %s\n", ed->line);
+	printf("00LINE_MAX: %d\n", line_max);
+	printf("00NB_LINE == %d TO_JUMP == %d DO == %d\n\n", ed->t.nb_line, to_jump, ed->t.nb_line - to_jump);*/
+//	sleep(1);
+//	tputs(tgetstr("cb", NULL), 1, ft_putchar);
+	while (ed->t.nb_line - to_jump >= 0)
+//	while (nb_line > 0)
 	{
+		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
+//		tputs(tgetstr("dl", NULL), 1, ft_putchar);
+//		nb_line--;
 		to_jump++;
 	}
 	ft_putchar('\r');
 }
 
-void	replace_ypos(t_editor *ed)
+void	clean_old_line(t_editor *ed)
 {
-	(void)ed;
+	int		line_max;
+	int		nb_line;
+
+	line_max = ed->prompt_size;
+	line_max += ed->line ? ft_strlen(ed->tmp_line) : 0;
+	nb_line = line_max / (ed->ws_col + 2);
+
+	ft_putchar('\r');
+	while (nb_line >= 0)
+	{
+		tputs(tgetstr("up", NULL), 1, ft_putchar);
+		tputs(tgetstr("ce", NULL), 1, ft_putchar);
+		nb_line--;
+	}
+	nb_line = line_max / (ed->ws_col + 2);
+	while (nb_line >= 0)
+	{
+		tputs(tgetstr("do", NULL), 1, ft_putchar);
+		nb_line--;
+	}
 }
 
 void	place_cursor_after(t_editor *ed)
@@ -211,36 +243,21 @@ void	place_cursor_after(t_editor *ed)
 
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
-
-	nb_line = line_max / (int)ed->ws_col + 1;
-	replace_ypos(ed);
-//	if (nb_line != oldline_max / ed->ws_col + 1)
-//	{
-//		printf("NB_LINE: %d NB_OLDLINE: %ld\n", nb_line, oldline_max / ed->ws_col + 1);
-//		sleep(1);
-//	}
-//	printf("NB_LINE == %d\n", nb_line);
-//	sleep(1);
-	while (nb_line > 0)
+	nb_line = line_max / (ed->ws_col + 2);
+	clean_old_line(ed);
+	while (nb_line >= 0)
 	{
 		tputs(tgetstr("up", NULL), 1, ft_putchar);
 		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		nb_line--;
 	}
-	//	printf("\n\nLINE == %s\n\n", ed->line);
-	//	sleep(2);
+	line_max = ed->prompt_size;
+	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	display_prompt(0);
 	ft_putfreshstr(ed->line);
-	//	sleep(2);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
-		if (get_cursor_position(0) == 1)
-		{
-			tputs(tgoto(tgetstr("le", NULL), 1, 1), 1, ft_putchar);
-			tputs(tgoto(tgetstr("ch", NULL), 1, 1), 1, ft_putchar);
-		}
-		else
-			tputs(tgetstr("le", NULL), 1, ft_putchar);
+		move_left(ed);
 		line_max--;
 	}
 }
@@ -269,14 +286,23 @@ void	first_tab(t_editor **ed)
 		if ((*ed)->t.elem && (*ed)->t.elem[1])
 		{
 			(*ed)->tabu = 0;
+			ft_init_select(ed);
+	//		if ((*ed)->)
 			ft_select(ed, 0);
 		}
-		else if ((*ed)->t.elem && (*ed)->t.elem[0])
+		else if ((*ed)->t.elem && ft_strlen((*ed)->t.elem[0]) < (*ed)->ws_col)
 		{
 			(*ed)->sel = malloc(sizeof(t_select));
 			(*ed)->sel->ret = ft_strdup((*ed)->t.elem[0]);
 			replace_line_after_tab(ed);
 			ft_free_t_tab(&(*ed)->t);
+			(*ed)->tabu = -1;
+		}
+		else
+		{
+			tputs(tgetstr("bl", NULL), 1, ft_putchar);
+			ft_free_t_tab(&(*ed)->t);
+			(*ed)->tabu = -1;
 		}
 	}
 }
@@ -320,7 +346,8 @@ int		tabulator(t_editor **ed, int version)
 	}
 	else if (version == 2)
 	{
-		ft_print_params((*ed)->sel);
+		if ((*ed)->sel->bp < (*ed)->sel->ws.ws_col)
+			ft_print_params((*ed)->sel);
 		//refresh
 		//	ft_select(ed, 2);
 	}

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/03 00:50:51 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 04:56:33 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 03:21:53 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,9 @@
 
 int		ft_count_line(t_select *t)
 {
-	return (ft_count_params(t->line) % ft_params_by_line(t) == 0 ?
-	ft_count_params(t->line) / ft_params_by_line(t) :
-	ft_count_params(t->line) / ft_params_by_line(t) + 1);
+	if (ft_params_by_line(t))
+		return (ft_count_params(t->line) % ft_params_by_line(t) == 0 ?
+		ft_count_params(t->line) / ft_params_by_line(t) :
+		ft_count_params(t->line) / ft_params_by_line(t) + 1);
+	return (0);
 }
