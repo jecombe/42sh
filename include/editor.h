@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 19:45:08 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 21:42:58 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -156,9 +156,9 @@ void	ft_putfreshstr(char *str);
  ** ****************************************************************************
  */
 
-void				ft_miniconcat(char **s1, char *s2);
-
+void	ft_miniconcat(char **s1, char *s2);
 int		line_editor_init(char **line, e_prompt prompt, t_editor **ed);
 void	init_t_tab(t_editor **ed);
 
+void	window_resize(t_editor **ed, t_sz ws, e_prompt *prompt);
 #endif

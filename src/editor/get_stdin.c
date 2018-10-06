@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 17:07:36 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 21:43:05 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,28 +100,6 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	free(ed);
 }
 
-void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
-{
-	size_t cursor_str_pos_tmp;
-
-	cursor_str_pos_tmp = (*ed)->cursor_str_pos;
-	tputs(tgetstr("cl", NULL), 1, ft_putchar);
-	display_prompt(*prompt);
-	(*ed)->prompt_size = get_cursor_position(0);
-	(*ed)->first_row = get_cursor_position(1);
-	ft_putstr((*ed)->line);
-	(*ed)->last_row = get_cursor_position(1);
-	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
-	while ((*ed)->cursor_str_pos != cursor_str_pos_tmp)
-		move_cursor_left(*ed);
-	if ((*ed)->tabu != -1)
-	{
-		ft_strdel(&(*ed)->tmp_line);
-		tabulator(ed, 2);
-	}
-	(*ed)->ws_col = ws.ws_col;
-}
-
 int		get_stdin(char **line, e_prompt *prompt)
 {
 	int			ret;
@@ -146,7 +124,7 @@ int		get_stdin(char **line, e_prompt *prompt)
 		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
 			return (1);
 		if (ws.ws_col != ed->ws_col || ws.ws_row != ed->ws_row)
-			refresh_term(&ed, ws, prompt);
+			window_resize(&ed, ws, prompt);
 			if (ed->key[0])
 		{
 		//	dprintf(2, "line: [%c]\n", ed->key[0]);
