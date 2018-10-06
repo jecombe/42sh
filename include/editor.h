@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 17:18:09 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 19:45:08 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,6 +111,7 @@ void	move_word_right(t_editor *ed);
 void	go_to_begin_of_line(t_editor *ed);
 void	go_to_end_of_line(t_editor *ed);
 int		backspace(t_editor *ed);
+void	move_to_previous_new_line(t_editor *ed);
 
 /*
  *******************************************************************************

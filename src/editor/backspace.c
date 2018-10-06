@@ -6,13 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:10:17 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 03:09:25 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 19:44:26 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
 
 int		backspace(t_editor *ed)
 {
@@ -23,7 +22,12 @@ int		backspace(t_editor *ed)
 	ioctl(0, TIOCGWINSZ, &sz);
 	bzero(tmp, sizeof(tmp));
 	ed->cursor_str_pos--;
-	if (get_cursor_position(0) == 1)
+	if (ed->line[ed->cursor_str_pos] == '\n')
+	{
+		move_to_previous_new_line(ed);
+		ed->last_row--;
+	}
+	else if (get_cursor_position(0) == 1)
 	{
 		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
 		tputs(tgoto(tgetstr("ch", NULL), 0, sz.ws_col - 1), 1, ft_putchar);
