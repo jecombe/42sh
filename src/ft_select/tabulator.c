@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 16:47:31 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 21:13:46 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -254,7 +254,10 @@ void	place_cursor_after(t_editor *ed)
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	display_prompt(0);
+	ed->prompt_size = get_cursor_position(0);
+	ed->first_row = get_cursor_position(1);
 	ft_putfreshstr(ed->line);
+	ed->last_row = get_cursor_position(1);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))
 	{
 		move_left(ed);
