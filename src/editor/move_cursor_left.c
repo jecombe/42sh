@@ -6,26 +6,35 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:20:06 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 20:04:35 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 17:14:06 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void    move_to_next_new_line(t_editor *ed)
+void    move_to_previous_new_line(t_editor *ed)
 {
 	int i;
 	int tmp_cursor_str_pos;
 
 	i = -1;
 	tmp_cursor_str_pos = ed->cursor_str_pos - 1;
-	tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
-	while (ed->line[tmp_cursor_str_pos] != '\n')
-		tmp_cursor_str_pos--;
-	tmp_cursor_str_pos = ed->cursor_str_pos - (tmp_cursor_str_pos + 1);
-	while (++i < tmp_cursor_str_pos)
-		tputs(tgetstr("nd", NULL), 1, ft_putchar);
+	if (get_cursor_position(1) - 1 == ed->first_row)
+	{
+		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
+		tputs(tgoto(tgetstr("ch", NULL), 1, (ed->prompt_size - 1) +
+		ed->cursor_str_pos), 1, ft_putchar);
+	}
+	else
+	{
+		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
+		while (ed->line[tmp_cursor_str_pos] != '\n')
+			tmp_cursor_str_pos--;
+		tmp_cursor_str_pos = ed->cursor_str_pos - (tmp_cursor_str_pos + 1);
+		while (++i < tmp_cursor_str_pos)
+			tputs(tgetstr("nd", NULL), 1, ft_putchar);
+	}
 }
 
 void	move_left(t_editor *ed)
@@ -35,8 +44,13 @@ void	move_left(t_editor *ed)
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (get_cursor_position(0) == 1 && ed->cursor_str_pos)
 	{
-		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
-		tputs(tgoto(tgetstr("ch", NULL), 0, sz.ws_col - 1), 1, ft_putchar);
+		if (ed->line[ed->cursor_str_pos] == '\n')
+			move_to_previous_new_line(ed);
+		else
+		{
+			tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
+			tputs(tgoto(tgetstr("ch", NULL), 0, sz.ws_col - 1), 1, ft_putchar);
+		}
 	}
 	else
 		tputs(tgetstr("le", NULL), 1, ft_putchar);

@@ -6,13 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 16:34:49 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 17:45:50 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
 
 void	move_right(void)
 {
@@ -29,7 +28,10 @@ void		move_cursor_right(t_editor *ed)
 {
 	if (ed->cursor_str_pos < ft_strlen(ed->line))
 	{
+		if (ed->line[ed->cursor_str_pos] == '\n')
+			tputs(tgetstr("do", NULL), 1, ft_putchar);
+		else
+			move_right();
 		ed->cursor_str_pos++;
-		move_right();
 	}
 }

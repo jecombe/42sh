@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 16:32:29 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 17:07:36 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -107,6 +107,7 @@ void	refresh_term(t_editor **ed, t_sz ws, e_prompt *prompt)
 	cursor_str_pos_tmp = (*ed)->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
 	display_prompt(*prompt);
+	(*ed)->prompt_size = get_cursor_position(0);
 	(*ed)->first_row = get_cursor_position(1);
 	ft_putstr((*ed)->line);
 	(*ed)->last_row = get_cursor_position(1);

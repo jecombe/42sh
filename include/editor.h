@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 08:04:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/06 17:18:09 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -159,4 +159,5 @@ void				ft_miniconcat(char **s1, char *s2);
 
 int		line_editor_init(char **line, e_prompt prompt, t_editor **ed);
 void	init_t_tab(t_editor **ed);
+
 #endif
