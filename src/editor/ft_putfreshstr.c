@@ -15,9 +15,15 @@
 
 void		ft_putfreshstr(char *str)
 {
+	int		i;
+
+	i = 0;
 	if (str)
 	{
-		tputs(tgetstr("ce", NULL), 1, ft_putchar);
-		write(1, str, ft_strlen(str));
+		while (str[i])
+		{
+			tputs(tgetstr("ce", NULL), 1, ft_putchar);
+			write(1, &str[i++], 1);
+		}
 	}
 }
