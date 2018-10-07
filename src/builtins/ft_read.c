@@ -6,7 +6,7 @@
 /*   By: gbarnay <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2060/00/00 00:00:00 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 19:28:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:21:15 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -116,7 +116,7 @@ void		ft_read(char **cmd)
 	ft_init_read(&rd);
 	if (!ft_read_options(&rd, cmd, 0, 0))
 	{
-		ft_putstr("lol read: usage: read [-ers] [-u fd] [-t timeout] [-p prompt] "
+		ft_putstr("read: usage: read [-ers] [-u fd] [-t timeout] [-p prompt] "
 				"[-a array] [-n nchars] [-d delim] [name ...]\n");
 		return ;
 	}

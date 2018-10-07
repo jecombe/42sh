@@ -6,84 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 21:43:05 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 06:42:53 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		get_keyboard_key_next(t_editor **ed, e_prompt *prompt, char **line)
-{
-	if (UP_KEY || DOWN_KEY)
-		term_historic(ed);
-	else if (CTRL_C)
-		end_of_text(*ed, prompt, line);
-	else if (!ft_strcmp(SHIFT_UP, (*ed)->key) || !ft_strcmp(SHIFT_DOWN, (*ed)->key))
-		!ft_strcmp(SHIFT_UP, (*ed)->key) ? move_cursor_up(*ed) :
-		move_cursor_down(*ed);
-	if ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) &&
-	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
-		add_char_into_line((*ed)->key[0], *ed);
-/*	else if (ft_isprint((*ed)->key[0]) && ft_strlen((*ed)->key) > 1) // pour le copier/coller
-	{
-		ft_putstr((*ed)->key);
-		(*ed)->cursor_str_pos += ft_strlen((*ed)->key);
-		return (1);
-	}*/
-	else if (CTRL_K && ft_strlen((*ed)->line + (*ed)->cursor_str_pos))
-		delete_from_cursor_to_end(*ed);
-	else if (CTRL_P)
-		paste_clipboard(*ed);
-	return (0);
-}
-
-int		get_keyboard_key(int *ret, t_editor **ed, e_prompt *prompt, char **line)
-{
-	t_sz	ws;
-
-	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
-		return (1);
-	ws.ws_col != (*ed)->ws_col ? (*ed)->ws_col = ws.ws_col : 0;
-	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
-	{
-		ft_strdel(&(*ed)->tmp_line);
-		(*ed)->hist = -2;
-	}
-	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D) 
-			&& (*ed)->tabu != -1)
-	{
-		tabulator(ed, 0);
-//		(*ed)->sel = NULL;
-		ft_strdel(&(*ed)->tmp_line);
-		(*ed)->tabu = -1;
-//		tputs(tgetstr("cd", NULL), 1, ft_putchar);
-	}
-	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
-		tabulator(ed, 1);
-	else if (CTRL_D)
-		*ret = -2;
-	else if (HOME_KEY || END_KEY || CTRL_A || CTRL_E)
-		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
-	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
-		return (backspace(*ed));
-	else if (LEFT_KEY || RIGHT_KEY)
-		LEFT_KEY ? move_cursor_left(*ed) : move_cursor_right(*ed);
-	else if (CTRL_L)
-		return (clear_window(*ed, *prompt));
-	else if ((!ft_strcmp(SHIFT_RIGHT, (*ed)->key) ||
-	!ft_strcmp(SHIFT_LEFT, (*ed)->key)) && (*ed)->line)
-		!ft_strcmp(SHIFT_LEFT, (*ed)->key) ? move_word_left(*ed) :
-		move_word_right(*ed);
-	else if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line) &&
-	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
-		return (add_char_to_line((*ed)->key[0], *ed));
-	else
-		return (get_keyboard_key_next(ed, prompt, line));
-	return (0);
-}
-
-void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
+static void		get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 {
 	if ((ed->last_row - get_cursor_position(1)) != 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0,
@@ -92,53 +22,108 @@ void	get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 	if (*prompt != PROMPT && *prompt != E_PIPE)
 	{
 		*line = ed->line == NULL ? *line : ft_strjoin_free(*line, ed->line);
-		ft_strdel(&ed->line);
 	}
 	else
-		*line = ed->line;
-	ft_strdel(&ed->clipboard);
-	free(ed);
+		*line = ft_strdup(ed->line);
+}
+
+static int		get_keyboard_key_ctrl(t_editor **ed, char **line, e_prompt *p)
+{
+	if (CTRL_D && !(*ed)->line && *p == PROMPT)
+		(*ed)->ret = -2;
+	else if (CTRL_C)
+		end_of_text(*ed, p, line);
+	else if (CTRL_L)
+		clear_window(*ed, *p);
+	else if (CTRL_K && (ft_strlen((*ed)->line) + (*ed)->cursor_str_pos))
+		delete_from_cursor_to_end(*ed);
+	else if (CTRL_P)
+		paste_clipboard(*ed);
+	return (EXIT_SUCCESS);
+}
+
+static int		get_keyboard_key_tab(t_editor **ed)
+{
+	if ((TAB_KEY || UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY))
+		tabulator(ed, 1);
+	else
+	{
+		tabulator(ed, 0);
+		ft_strdel(&((*ed)->line));
+		(*ed)->tabu = -1;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
+{
+	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
+	{
+		ft_strdel(&(*ed)->tmp_line);
+		(*ed)->hist = -2;
+	}
+	if (CTRL_D || CTRL_C || CTRL_L || CTRL_K || CTRL_P)
+		get_keyboard_key_ctrl(ed, line, prompt);
+	else if ((TAB_KEY && *prompt == PROMPT) || (*ed)->tabu != -1)
+		get_keyboard_key_tab(ed);
+	else if (UP_KEY || DOWN_KEY)
+		term_historic(ed);
+	else if (LEFT_KEY || RIGHT_KEY)
+		LEFT_KEY ? move_cursor_left(*ed) : move_cursor_right(*ed) ;
+	else if (SHIFT_UP || SHIFT_DOWN)
+		SHIFT_UP ? move_cursor_up(*ed) : move_cursor_down(*ed);
+	else if ((SHIFT_LEFT || SHIFT_RIGHT) && (*ed)->line)
+		SHIFT_LEFT ? move_word_left(*ed) : move_word_right(*ed) ;
+	else if (HOME_KEY || CTRL_A || END_KEY || CTRL_E)
+		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
+	else if (ft_isprint((*ed)->key[0]))
+		return (print_key(ed));
+	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
+		backspace(*ed);
+	/*
+	else if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line) &&
+	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
+		return (add_char_to_line((*ed)->key[0], *ed));
+	else
+		return (get_keyboard_key_next(ed, prompt, line));*/
+	return (EXIT_SUCCESS);
+}
+
+void get_info(t_editor *ed, char *line)
+{
+	(void)line;
+	int fd = open("/dev/ttys004", O_WRONLY);
+	dprintf(fd, "Size = col %ld row %ld\tfirst %ld\n", ed->ws_col, ed->ws_row, ed->first_row);
+	dprintf(fd, "Cur_pos = %ld\t\tlast %ld\n", ed->cur_pos, ed->last_row);
+	dprintf(fd, "Line =  %s curstr  %ld len %ld\n", ed->line, ed->cursor_str_pos, ed->cursor_str_pos);
+	close(fd);
 }
 
 int		get_stdin(char **line, e_prompt *prompt)
 {
-	int			ret;
 	t_editor	*ed;
-	t_sz		ws;
 
-	ret = -2;
 	ed = NULL;
 	get_term_raw_mode(1);
-	line_editor_init(line, *prompt, &ed);
 	display_prompt(*prompt);
-	ed->prompt_size = get_cursor_position(0);
-	if (ioctl(1, TIOCGWINSZ, &ws) == -1)
-		return (1);
-	ed->ws_col = ws.ws_col;
-	ed->ws_row = ws.ws_row;
-	while (ret != -1)
+	if ((ed = line_editor_init(line, *prompt)) == NULL)
+		return (-2);
+	term_size(ed);
+	while (ed->ret != -1)
 	{
+		get_info(ed, *line);
 		ft_bzero(ed->key, BUFF_SIZE);
-		ret = read(STDIN_FILENO, ed->key, BUFF_SIZE);
-		tputs(tgetstr("vi", NULL), 1, ft_putchar);
-		if (ioctl(1, TIOCGWINSZ, &ws) == -1)
-			return (1);
-		if (ws.ws_col != ed->ws_col || ws.ws_row != ed->ws_row)
-			window_resize(&ed, ws, prompt);
-			if (ed->key[0])
-		{
-		//	dprintf(2, "line: [%c]\n", ed->key[0]);
-		//	dprintf(2, "line_len: [%zu]\n", ft_strlen(ed->key));
-			if (get_keyboard_key(&ret, &ed, prompt, line))
+		read(STDIN_FILENO, ed->key, BUFF_SIZE - 1);
+		if (term_size(ed) == EXIT_SUCCESS)
+			window_resize(&ed, prompt);
+		if (ed->key[0])
+			if (get_keyboard_key(&ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
-		}
-	//	save_ed(&ed, 0);
-		tputs(tgetstr("ve", NULL), 1, ft_putchar);
-		if (ft_strchr(ed->key, '\n') || (ret == -2 && !(ed->line) && *prompt == 0))
+		if (ed->key[0] && (ft_strchr(ed->key, '\n') ||
+			(ed->ret == -2 && !(ed->line) && *prompt == 0)))
 			break ;
 	}
 	get_stdin_next(line, ed, prompt);
-	//ft_putstr("\033c");
 	get_term_raw_mode(0);
-	return (ret);
+	return (line_editor_delete(&ed));
 }

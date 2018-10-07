@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 21:42:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 03:45:06 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,17 +19,17 @@
 # define WHITE "\033[7;49;37m"
 # define END "\033[0m"
 # define LEFT_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 68)
-# define RIGHT_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 67)
-# define UP_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 65)
-# define DOWN_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 66)
+# define RIGHT_KEY ((*ed)->key[0] == 27 &&  (*ed)->key[1] == 91 && (*ed)->key[2] == 67)
+# define UP_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 &&  (*ed)->key[2] == 65)
+# define DOWN_KEY ((*ed)->key[0] == 27 && (*ed)->key[1]  == 91 && (*ed)->key[2] == 66)
 # define SPACE_KEY ((*ed)->key[0] == 32 && (*ed)->key[1] == 0)
 # define TAB_KEY ((*ed)->key[0] == 9 && (*ed)->key[1] == 0)
-# define BS_KEY ((*ed)->key[0] == 127 && (*ed)->key[1] == 0)
+# define BS_KEY ((*ed)->key[0] == 127 && (*ed)->key[1]  == 0)
 # define ENTER_KEY ((*ed)->key[0] == 10 && (*ed)->key[1] == 0)
-# define BACKSPACE ((*ed)->key[0] == 127 && (*ed)->key[1] == 0)
+# define BACKSPACE ((*ed)->key[0] == 127 && (*ed)->key[1]  == 0)
 # define CTRL_A ((*ed)->key[0] == 1 && (*ed)->key[1] == 0)
 # define CTRL_E ((*ed)->key[0] == 5 && (*ed)->key[1] == 0)
-# define CTRL_C ((*ed)->key[0] == 3 && (*ed)->key[1] == 0)
+# define CTRL_C ((*ed)->key[0]== 3 && (*ed)->key[1] == 0)
 # define CTRL_D ((*ed)->key[0] == 4 && (*ed)->key[1] == 0)
 # define CTRL_L ((*ed)->key[0] == 12 && (*ed)->key[1] == 0)
 # define CTRL_K ((*ed)->key[0] == 11 && (*ed)->key[1] == 0)
@@ -38,10 +38,10 @@
 # define CTRL_P ((*ed)->key[0] == 16 && (*ed)->key[1] == 0)
 # define HOME_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 72)
 # define END_KEY ((*ed)->key[0] == 27 && (*ed)->key[1] == 91 && (*ed)->key[2] == 70)
-# define SHIFT_UP "\E[1;2A"
-# define SHIFT_DOWN "\E[1;2B"
-# define SHIFT_LEFT "\E[1;2D"
-# define SHIFT_RIGHT "\E[1;2C"
+# define SHIFT_UP (!ft_strcmp("\E[1;2A", (*ed)->key))
+# define SHIFT_DOWN (!ft_strcmp("\E[1;2B", (*ed)->key))
+# define SHIFT_RIGHT (!ft_strcmp("\E[1;2C", (*ed)->key))
+# define SHIFT_LEFT (!ft_strcmp("\E[1;2D", (*ed)->key))
 
 typedef struct winsize	t_sz;
 typedef struct dirent	t_dirent;
@@ -74,6 +74,7 @@ typedef struct		s_tab
 
 typedef struct		s_editor
 {
+	int				ret;
 	size_t			cur_pos;
 	size_t			ws_row;
 	size_t			ws_col;
@@ -157,8 +158,11 @@ void	ft_putfreshstr(char *str);
  */
 
 void	ft_miniconcat(char **s1, char *s2);
-int		line_editor_init(char **line, e_prompt prompt, t_editor **ed);
+t_editor*line_editor_init(char **line, e_prompt prompt);
+int		line_editor_delete(t_editor **ed);
 void	init_t_tab(t_editor **ed);
+int		term_size(t_editor *ed);
+void	window_resize(t_editor **ed, e_prompt *prompt);
+int		print_key(t_editor **ed);
 
-void	window_resize(t_editor **ed, t_sz ws, e_prompt *prompt);
 #endif

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 10:42:22 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 17:39:41 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:34:55 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,12 +35,10 @@ static void		add_char_into_line_1(char key, t_editor *ed, struct winsize sz)
 	if (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col))
 	{
 		ft_putchar(key);
-		//if (!(get_cursor_position(0) % sz.ws_col))
 		if (!(ed->cur_pos % sz.ws_col))
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
 		ed->last_row++;
 	}
-	//else if (!(get_cursor_position(0) % sz.ws_col))
 	else if (!(ed->cur_pos % sz.ws_col))
 	{
 		ft_putchar(key);
@@ -54,6 +52,7 @@ void			add_char_into_line(char key, t_editor *ed)
 {
 	char *cursor_reset;
 	t_sz sz;
+
 	ed->cursor_str_pos++;
 	ioctl(0, TIOCGWINSZ, &sz);
 	ed->cur_pos = !get_cursor_position(0) ? ed->cur_pos + 1 : get_cursor_position(0);
@@ -61,7 +60,6 @@ void			add_char_into_line(char key, t_editor *ed)
 	if (ed->line && (!((ft_strlen(ed->line) + ed->prompt_size) % sz.ws_col) &&
 	ed->last_row == sz.ws_row))
 	{
-		//if (!((get_cursor_position(0)) % sz.ws_col))
 		if (!(ed->cur_pos % sz.ws_col))
 		{
 			ft_putchar(key);
@@ -84,10 +82,11 @@ void			add_char_into_line(char key, t_editor *ed)
 int				add_char_to_line(char key, t_editor *ed)
 {
 	t_sz sz;
+
+	ft_memset(&sz, 0, sizeof(sz));
 	ioctl(0, TIOCGWINSZ, &sz);
 	ed->cursor_str_pos++;
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	//dprintf(2, "cur_pos: %zu\n", get_cursor_position(0));
 	if (get_cursor_position(0) == sz.ws_col &&
 	get_cursor_position(1) != sz.ws_row)
 	{
@@ -107,3 +106,23 @@ int				add_char_to_line(char key, t_editor *ed)
 	tputs(tgetstr("ei", NULL), 1, ft_putchar);
 	return (1);
 }
+
+int		print_key(t_editor **ed)
+{
+	if (ft_strlen((*ed)->key) == 1)
+	{
+		if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line))
+			return (add_char_to_line((*ed)->key[0], *ed));
+		else
+			add_char_into_line((*ed)->key[0], *ed);
+	}
+	else
+	{
+		ft_putstr((*ed)->key);
+		(*ed)->cursor_str_pos += ft_strlen((*ed)->key);
+		return (1);
+	}
+	return (EXIT_SUCCESS);
+}
+
+

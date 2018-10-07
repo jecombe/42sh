@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:41:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 21:05:41 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:19:51 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,6 +42,7 @@ int				ft_isreserved(char *input)
 			return (value);
 	return (WORD);
 }
+
 void			ft_lexer_del(t_lex *lex)
 {
 	int		i;

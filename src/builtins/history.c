@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/16 02:27:55 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 05:02:14 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:31:13 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -42,19 +42,16 @@ static int		advanced_history_search(char **history, t_editor **ed)
 	{
 		limit = 0;
 		tmp = made_history(history[i]);
-		if ((limit = occurence((*ed)->tmp_line, tmp, (*ed)->line)) && j <= (*ed)->hist)
+		if ((limit = occurence((*ed)->tmp_line, tmp, (*ed)->line)) &&
+			j <= (*ed)->hist && j++)
 		{
 			ft_strdel(&(*ed)->line);
 			(*ed)->line = ft_strdup(tmp);
-			j++;
-		}
-		else if (limit && UP_KEY)
-		{
-			(*ed)->hist = (*ed)->hist + 1;
-			ft_strdel(&tmp);
-			return (0);
 		}
 		ft_strdel(&tmp);
+		if (limit && UP_KEY)
+			if (((*ed)->hist = (*ed)->hist + 1))
+				return (0);
 		i++;
 	}
 	return (0);

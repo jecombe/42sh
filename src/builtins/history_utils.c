@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 04:59:26 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 05:17:18 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:32:12 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -54,30 +54,30 @@ char			*made_history(char *str)
 
 static int		add_memory(char *news, char ***histsave)
 {
-	char	*tmp;
+	char	*s;
 	char	*tmp2;
 	int		histsize;
 	int		histfilesize;
 
-	tmp = ft_getenv("HISTSIZE", g_set);
-	histsize = tmp && ft_strisdigit(tmp) ? ft_atoi(tmp) : 500;
-	ft_strdel(&tmp);
+	s = ft_getenv("HISTSIZE", g_set);
+	histsize = s && ft_strisdigit(s) ? ft_atoi(s) : 500;
+	ft_strdel(&s);
 	histfilesize = *histsave ? ft_tablen(*histsave) + 1 : 1;
 	while (--histfilesize >= histsize && histfilesize >= 0)
 		ft_strdel_in_tab(histsave, 0);
-	tmp = ft_itoa(histfilesize == 500 ? histfilesize : histfilesize + 1);
-	add_to_set("HISTFILESIZE", tmp);
-	ft_strdel(&tmp);
-	tmp = *histsave ? made_history((*histsave)[ft_tablen(*histsave) - 1]) : NULL;
-	if ((!*histsave || (*histsave && ft_strcmp(tmp, news))) && histsize > 0)
+	s = ft_itoa(histfilesize == 500 ? histfilesize : histfilesize + 1);
+	add_to_set("HISTFILESIZE", s);
+	ft_strdel(&s);
+	s = *histsave ? made_history((*histsave)[ft_tablen(*histsave) - 1]) : NULL;
+	if ((!*histsave || (*histsave && ft_strcmp(s, news))) && histsize > 0)
 	{
-		ft_strdel(&tmp);
-		tmp = ft_strjoin("[", news);
-		tmp2 = ft_strjoin(tmp, "]");
+		ft_strdel(&s);
+		s = ft_strjoin("[", news);
+		tmp2 = ft_strjoin(s, "]");
 		ft_malloc_cmd(histsave, tmp2);
 		ft_strdel(&tmp2);
 	}
-	ft_strdel(&tmp);
+	ft_strdel(&s);
 	return (0);
 }
 

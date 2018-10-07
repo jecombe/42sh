@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/16 06:36:43 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:24:23 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 07:55:07 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,9 +16,11 @@
 void		hash_delete(void)
 {
 	t_hashtable	*hashtable;
+	t_hashcase	*tmp;
 	int			i;
 
 	hashtable = NULL;
+	tmp = NULL;
 	i = -1;
 	ft_save_hash(&hashtable);
 	while (++i < MAX_HASH)
@@ -27,8 +29,9 @@ void		hash_delete(void)
 			{
 				ft_strdel(&hashtable[i].hashcase->command);
 				ft_strdel(&hashtable[i].hashcase->raccmd);
+				tmp = hashtable[i].hashcase->next;
 				free(hashtable[i].hashcase);
-				hashtable[i].hashcase = hashtable[i].hashcase->next;
+				hashtable[i].hashcase = tmp;
 			}
 	free(hashtable);
 }

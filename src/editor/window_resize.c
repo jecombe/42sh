@@ -6,17 +6,20 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 21:40:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 22:12:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 03:41:49 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void	window_resize(t_editor **ed, t_sz ws, e_prompt *prompt)
+void	window_resize(t_editor **ed, e_prompt *prompt)
 {
-	size_t cursor_str_pos_tmp;
+	t_sz	ws;
+	size_t	cursor_str_pos_tmp;
 
+	ft_memset(&ws, 0, sizeof(ws));
+	cursor_str_pos_tmp = 0;
 	cursor_str_pos_tmp = (*ed)->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
 	display_prompt(*prompt);
@@ -32,5 +35,18 @@ void	window_resize(t_editor **ed, t_sz ws, e_prompt *prompt)
 		ft_strdel(&(*ed)->tmp_line);
 		tabulator(ed, 2);
 	}
-	(*ed)->ws_col = ws.ws_col;
+}
+
+int			term_size(t_editor *ed)
+{
+	t_sz	sz;
+
+	ft_memset(&sz, 0, sizeof(sz));
+	if (ioctl(0, TIOCGWINSZ, &sz) == -1)
+		return (EXIT_FAILURE);
+	if (ed->ws_col == sz.ws_col && ed->ws_row == sz.ws_row)
+		return (EXIT_FAILURE);
+	ed->ws_col = sz.ws_col;
+	ed->ws_row = sz.ws_row;
+	return (EXIT_SUCCESS);
 }

@@ -6,12 +6,40 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 17:45:12 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:33:38 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
+char			*cursor_position_escape_sequence(int row, int col)
+{
+	char *h_pos;
+	char *v_pos;
+	char *cursor_pos;
+
+	v_pos = ft_itoa(get_cursor_position(1) - row);
+	h_pos = ft_itoa(get_cursor_position(0) - col);
+	cursor_pos = ft_strnew(6 + ft_strlen(v_pos) + ft_strlen(h_pos));
+	ft_strcpy(cursor_pos, "\E[");
+	ft_strcat(cursor_pos, v_pos);
+	ft_strcat(cursor_pos, ";");
+	ft_strcat(cursor_pos, h_pos);
+	ft_strcat(cursor_pos, "H");
+	ft_strdel(&h_pos);
+	ft_strdel(&v_pos);
+	return (cursor_pos);
+}
+
+void	reset_cursor_position_escape_sequence(char **cursor_positon)
+{
+	if (cursor_positon)
+	{
+		ft_putstr(*cursor_positon);
+		ft_strdel(cursor_positon);
+	}
+}
 
 static int		get_row(char *str)
 {
@@ -38,25 +66,22 @@ static int		get_col(char *str)
 	return (ft_atoi(str + i));
 }
 
-static	int		cursor_position(int mode)
-{
-	char buf[20];
-	char *str;
-
-	str = "\E[6n";
-	ft_bzero(buf, 20);
-	ft_putstr(str);
-	read(0, buf, 20);
-	//dprintf(2, "pos: %s\n", buf + 2);
-	return (mode ? get_row(buf) : get_col(buf));
-}
-
 size_t			get_cursor_position(int mode)
 {
 	size_t res;
+	char	buf[20];
+	char	*str;
 
+	res = 0;
+	ft_bzero(buf, 20);
+	str = "\E[6n";
 	tputs(tgetstr("sc", NULL), 1, ft_putchar);
-	res = cursor_position(mode);
+	ft_putstr(str);
+	read(0, buf, sizeof(buf));
+	if (mode)
+		res = get_row(buf);
+	else
+		res = get_col(buf);
 	tputs(tgetstr("rc", NULL), 1, ft_putchar);
 	return (res);
 }

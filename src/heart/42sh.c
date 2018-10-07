@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 03:43:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/05 04:45:13 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:18:18 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -64,12 +64,13 @@ static void			shell(void)
 	char			*line;
 
 	prompt = PROMPT;
-	line = NULL;
+
 	ft_print_logo();
 	while (get_stdin(&line, &prompt) != -2)
 	{
 		if (line && (!(prompt = prelexer(line))))
 			heart_of_101sh(line, 1);
+		line = NULL;
 	}
 }
 

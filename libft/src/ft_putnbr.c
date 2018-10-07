@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:12:04 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/07/12 11:38:12 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:08:11 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ static void		ft_print_itoa(int n, size_t len)
 	long int	nb;
 
 	i = -1;
-	str[len + 1] = '\0';
+	ft_bzero(str, sizeof(str));
 	while (str[++i])
 		str[i] = '\0';
 	nb = (long int)n;
@@ -40,6 +40,7 @@ void			ft_putnbr(int nb)
 {
 	size_t len;
 
+	len = 0;
 	len = nb < 0 ? ft_nbrlen(nb * -1) : ft_nbrlen(nb);
 	if (nb >= 2147483647)
 		ft_putstr("2147483647");

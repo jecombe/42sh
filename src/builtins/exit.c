@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:28 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 02:32:40 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:22:21 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static int	ft_exit_error(char *cmd, t_bierror error, int ret)
 	return (ret);
 }
 
-int 		ft_exit(t_op *opera)
+int			ft_exit(t_op *opera)
 {
 	int i;
 	int ret;

@@ -6,17 +6,17 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:10:17 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 19:44:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/07 08:33:09 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		backspace(t_editor *ed)
+int			backspace(t_editor *ed)
 {
-	char tmp[ft_strlen(ed->line)];
-	char *cursor_reset;
+	char	tmp[ft_strlen(ed->line)];
+	char	*cursor_reset;
 	t_sz	sz;
 
 	ioctl(0, TIOCGWINSZ, &sz);

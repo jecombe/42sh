@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/06 21:43:32 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/07 03:28:16 by dzonda      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -17,7 +17,7 @@ NAME = 101sh
 
 MAKE = make
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = #-Wall -Werror -Wextra
 CPPFLAGS = -I ./include/
 LDLIBS = -lft -ltermcap
 LDFLAGS = -Llibft/
@@ -45,20 +45,12 @@ SRCS_NAME =	\
 			editor/signal.c \
 			editor/cursor_position.c \
 			editor/backspace.c \
-			editor/clear_window.c \
-			editor/escape_sequence.c \
-			editor/go_to_begin_of_line.c \
-			editor/go_to_end_of_line.c \
-			editor/move_cursor_up.c \
-			editor/move_cursor_down.c \
-			editor/move_cursor_left.c \
-			editor/move_cursor_right.c \
-			editor/move_word_left.c \
-			editor/move_word_right.c \
-			editor/end_of_text.c \
+			editor/go_to_of_line.c \
+			editor/move.c \
+			editor/move_cursor.c \
+			editor/move_word.c \
+			editor/ctrl.c \
 			editor/add_char.c \
-			editor/delete_from_cursor_to_end.c \
-			editor/paste_clipboard.c \
 			editor/term_historic.c \
 			editor/term_init.c \
 			editor/ft_putfreshstr.c \
