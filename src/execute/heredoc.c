@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 18:43:44 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 13:56:34 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/08 17:24:20 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static void		ft_skip_n(char *line)
 	}
 }
 
-static void			ft_tabdell(char *list[100])
+/*static void			ft_tabdell(char *list[100])
 {
 	int i;
 
@@ -36,37 +36,37 @@ static void			ft_tabdell(char *list[100])
 		ft_strdel(&list[i]);
 		i++;
 	}
-}
+}*/
 
 void			ft_read_line(int fd, char *s)
 {
-	char		line[100];
+	char		*line;
 	char		*list[100];
+	char		*listt;
+	int ret;
 	int			i;
 	e_prompt	prompt;
 
 	prompt = E_HDOC;
-	display_prompt(prompt);
-	ft_bzero(line, 100);
 	ft_bzero(list, 100 * sizeof(*list));
 	i = 0;
-	while (read(1, line, 4096) > 0)
+	while ((ret = get_stdin(&line, &prompt)) != -2)
 	{
-		ft_skip_n(line);
-		if (ft_strcmp(line, s) == 0)
+		listt = ft_strdup(line + 1);
+		if (ft_strcmp(listt, s) == 0 || ret == -3)
 			break ;
 		else
 		{
-			display_prompt(prompt);
-			ft_strcat(line, "\n");
 			list[i++] = ft_strdup(line);
+			ft_strdel(&line);
 		}
-		ft_bzero(line, 100);
 	}
-	i = -1;
-	while (list[++i])
-		ft_putstr_fd(list[i], fd);
-	ft_tabdell(list);
+	if (ret != -3)
+	{
+		i = -1;
+		while (list[++i])
+			ft_putstr_fd(list[i], fd);
+	}
 }
 
 int				ft_redirect_heredoc(t_redirect *redirect)

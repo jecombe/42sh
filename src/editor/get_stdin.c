@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/07 06:42:53 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/08 17:20:37 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,7 +29,7 @@ static void		get_stdin_next(char **line, t_editor *ed, e_prompt *prompt)
 
 static int		get_keyboard_key_ctrl(t_editor **ed, char **line, e_prompt *p)
 {
-	if (CTRL_D && !(*ed)->line && *p == PROMPT)
+	if (CTRL_D && !(*ed)->line)
 		(*ed)->ret = -2;
 	else if (CTRL_C)
 		end_of_text(*ed, p, line);
@@ -119,8 +119,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 		if (ed->key[0])
 			if (get_keyboard_key(&ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
-		if (ed->key[0] && (ft_strchr(ed->key, '\n') ||
-			(ed->ret == -2 && !(ed->line) && *prompt == 0)))
+		if (ed->key[0] && ((ft_strchr(ed->key, '\n') ||
+			(ed->ret == -2 && !ed->line) || (ed->ret == -3 && *prompt == E_HDOC))))
 			break ;
 	}
 	get_stdin_next(line, ed, prompt);

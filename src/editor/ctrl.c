@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 23:45:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/07 08:36:38 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/08 17:10:36 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -82,6 +82,7 @@ void	end_of_text(t_editor *ed, e_prompt *prompt, char **line)
 	display_prompt(PROMPT);
 	ed->last_row = get_cursor_position(1);
 	ed->first_row = ed->last_row;
+	ed->ret = *prompt == E_HDOC ? -3 : ed->ret;
 	ft_strdel(&(ed->line));
 	*prompt = PROMPT;
 	ed->cursor_str_pos = 0;
