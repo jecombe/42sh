@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 17:49:11 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 00:37:23 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -75,7 +75,8 @@ typedef struct		s_tab
 typedef struct		s_editor
 {
 	int				ret;
-	size_t			cur_pos;
+	size_t			cur_col;
+	size_t			cur_row;
 	size_t			ws_row;
 	size_t			ws_col;
 	size_t			first_row;
@@ -130,7 +131,7 @@ void	myhandler_interrupt(int signal);
  ** ****************************************************************************
  */
 
-char	*cursor_position_escape_sequence(int row, int col);
+char	*cursor_position_escape_sequence(int row, int col, t_editor *ed);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
 void	add_char_into_line(char key, t_editor *ed);

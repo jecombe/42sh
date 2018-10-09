@@ -6,21 +6,21 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/07 08:33:38 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 00:38:27 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-char			*cursor_position_escape_sequence(int row, int col)
+char			*cursor_position_escape_sequence(int row, int col, t_editor *ed)
 {
 	char *h_pos;
 	char *v_pos;
 	char *cursor_pos;
 
-	v_pos = ft_itoa(get_cursor_position(1) - row);
-	h_pos = ft_itoa(get_cursor_position(0) - col);
+	v_pos = ft_itoa(ed->cur_row - row);
+	h_pos = ft_itoa(ed->cur_col - col);
 	cursor_pos = ft_strnew(6 + ft_strlen(v_pos) + ft_strlen(h_pos));
 	ft_strcpy(cursor_pos, "\E[");
 	ft_strcat(cursor_pos, v_pos);

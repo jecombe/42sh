@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:48:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 23:44:13 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/09 23:56:56 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,6 +66,8 @@ void	move_cursor_left(t_editor *ed)
 	{
 		ed->cursor_str_pos--;
 		move_left(ed);
+		ed->cur_col = get_cursor_position(0);
+		ed->cur_row = get_cursor_position(1);
 	}
 }
 
@@ -77,6 +79,8 @@ void		move_cursor_right(t_editor *ed)
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
 		else
 			move_right();
+		ed->cur_col = get_cursor_position(0);
+		ed->cur_row = get_cursor_position(1);
 		ed->cursor_str_pos++;
 	}
 }

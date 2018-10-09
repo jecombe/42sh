@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 23:45:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/08 17:10:36 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/09 23:44:12 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,6 +63,7 @@ int		clear_window(t_editor *ed, e_prompt prompt)
 	cursor_str_pos_tmp = ed->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
 	display_prompt(prompt);
+	ed->cur_col = get_cursor_position(0);
 	ed->first_row = get_cursor_position(1);
 	if (ed->line)
 		ft_putstr(ed->line);
@@ -70,6 +71,7 @@ int		clear_window(t_editor *ed, e_prompt prompt)
 	ed->cursor_str_pos = ft_strlen(ed->line);
 	while (cursor_str_pos_tmp != (int)ed->cursor_str_pos)
 		move_cursor_left(ed);
+	ed->cur_row = get_cursor_position(1);
 	return (0);
 }
 

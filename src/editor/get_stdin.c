@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 20:08:48 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/09 23:20:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -98,16 +98,6 @@ static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 	return (EXIT_SUCCESS);
 }
 
-void get_info(t_editor *ed, char *line)
-{
-	(void)line;
-	int fd = open("/dev/ttys004", O_WRONLY);
-	dprintf(fd, "Size = col %ld row %ld\tfirst %ld\n", ed->ws_col, ed->ws_row, ed->first_row);
-	dprintf(fd, "Cur_pos = %ld\t\tlast %ld\n", ed->cur_pos, ed->last_row);
-	dprintf(fd, "Line =  %s curstr  %ld len %ld\n", ed->line, ed->cursor_str_pos, ed->cursor_str_pos);
-	close(fd);
-}
-
 int		get_stdin(char **line, e_prompt *prompt)
 {
 	t_editor	*ed;
@@ -120,7 +110,6 @@ int		get_stdin(char **line, e_prompt *prompt)
 	term_size(ed);
 	while (ed->ret != -1)
 	{
-		get_info(ed, *line);
 		ft_bzero(ed->key, BUFF_SIZE);
 		read(STDIN_FILENO, ed->key, BUFF_SIZE - 1);
 		if (term_size(ed) == EXIT_SUCCESS)
