@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 03:43:21 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/07 08:18:18 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/09 17:29:24 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -63,14 +63,13 @@ static void			shell(void)
 	e_prompt		prompt;
 	char			*line;
 
+	line = NULL;
 	prompt = PROMPT;
-
 	ft_print_logo();
 	while (get_stdin(&line, &prompt) != -2)
 	{
 		if (line && (!(prompt = prelexer(line))))
 			heart_of_101sh(line, 1);
-		line = NULL;
 	}
 }
 
