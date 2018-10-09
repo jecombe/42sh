@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/08 17:20:37 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/09 20:08:48 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ static int		get_keyboard_key_ctrl(t_editor **ed, char **line, e_prompt *p)
 
 static int		get_keyboard_key_tab(t_editor **ed)
 {
-	if ((TAB_KEY || UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY))
+	if (!(TAB_KEY || UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY))
 		tabulator(ed, 1);
 	else
 	{
@@ -62,10 +62,19 @@ static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->hist = -2;
 	}
-	if (CTRL_D || CTRL_C || CTRL_L || CTRL_K || CTRL_P)
+	else if (!(TAB_KEY || UP_KEY || DOWN_KEY || RIGHT_KEY || LEFT_KEY || CTRL_D)
+			&& (*ed)->tabu != -1)
+	{
+		tabulator(ed, 0);
+		//(*ed)->sel = NULL;
+		ft_strdel(&(*ed)->tmp_line);
+		(*ed)->tabu = -1;
+		//tputs(tgetstr("cd", NULL), 1, ft_putchar);
+	}
+	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
+		tabulator(ed, 1);
+	else if (CTRL_D || CTRL_C || CTRL_L || CTRL_K || CTRL_P)
 		get_keyboard_key_ctrl(ed, line, prompt);
-	else if ((TAB_KEY && *prompt == PROMPT) || (*ed)->tabu != -1)
-		get_keyboard_key_tab(ed);
 	else if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
 	else if (LEFT_KEY || RIGHT_KEY)
