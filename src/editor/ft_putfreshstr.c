@@ -22,8 +22,8 @@ void		ft_putfreshstr(char *str)
 	{
 		while (str[i])
 		{
-			tputs(tgetstr("ce", NULL), 1, ft_putchar);
 			write(1, &str[i++], 1);
+			tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		}
 	}
 }

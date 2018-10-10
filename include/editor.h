@@ -166,4 +166,7 @@ int		term_size(t_editor *ed);
 void	window_resize(t_editor **ed, e_prompt *prompt);
 int		print_key(t_editor **ed);
 
+void	del_lines(int nb_line);
+void	insert_lines(int nb_line);
+
 #endif

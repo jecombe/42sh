@@ -58,6 +58,7 @@ SRCS_NAME =	\
 			editor/prompt_git.c \
 			editor/move_to_previous_new_line.c \
 			editor/window_resize.c \
+			editor/insert_del_line.c \
 			ft_select/ft_arrows.c \
 			ft_select/ft_lex_tab.c \
 			ft_select/ft_char_by_line.c \

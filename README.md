@@ -77,7 +77,8 @@ HISTORIQUE:<br/>
 TABULATION:<br/>
 \_SI L ELEMENT EST PLUS GRAND QUE WS\_COL, REGLE SALEMENT<br/>
 \_LE REFRESH<br/>
-\_POUR FAIRE PROPRE IL FAUX DEL LES LINE EN TROP QUAND LE PROMPT PASSE DE +1/-1 LIGNE ET REINTRODUIRE LE PROMPT ENTRE LES DEUX MAIS POUR L INSTANT ON SE CONTENTE DE CA !
+\_Quand on reste appuyer sur TAB directement, on perd le curseur<br/>
+\_On perd le curseur aussi quand on del la line apres une TAB ! J avais deja regle ce probleme<br/>
 
 FONCTION READ:<br/>
 LA TOUCHE BACKSPACE FONCTIONNE D UNE MANIERE ETRANGE<br/>

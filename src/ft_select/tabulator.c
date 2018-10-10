@@ -185,28 +185,16 @@ int		lexer_tab(t_editor **ed)
 void	place_cursor_before(t_editor *ed)
 {
 	int line_max;
-//	int		nb_line;
 	int	to_jump;
 
-//	line_max = ed->prompt_size;
-//	line_max += ed->line ? ft_strlen(ed->line) : 0;
-//	nb_line = line_max / (ed->ws_col + 2);
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	ed->t.nb_line = line_max / (ed->ws_col + 2);
 	to_jump = (ed->cursor_str_pos + ed->prompt_size) / (ed->ws_col + 2);
-/*	printf("\n00LINE: %s\n", ed->line);
-	printf("00LINE_MAX: %d\n", line_max);
-	printf("00NB_LINE == %d TO_JUMP == %d DO == %d\n\n", ed->t.nb_line, to_jump, ed->t.nb_line - to_jump);*/
-//	sleep(1);
-//	tputs(tgetstr("cb", NULL), 1, ft_putchar);
 	while (ed->t.nb_line - to_jump >= 0)
-//	while (nb_line > 0)
 	{
 		tputs(tgetstr("ce", NULL), 1, ft_putchar);
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
-//		tputs(tgetstr("dl", NULL), 1, ft_putchar);
-//		nb_line--;
 		to_jump++;
 	}
 	ft_putchar('\r');
@@ -222,18 +210,7 @@ void	clean_old_line(t_editor *ed)
 	nb_line = line_max / (ed->ws_col + 2);
 
 	ft_putchar('\r');
-	while (nb_line >= 0)
-	{
-		tputs(tgetstr("up", NULL), 1, ft_putchar);
-		tputs(tgetstr("ce", NULL), 1, ft_putchar);
-		nb_line--;
-	}
-	nb_line = line_max / (ed->ws_col + 2);
-	while (nb_line >= 0)
-	{
-		tputs(tgetstr("do", NULL), 1, ft_putchar);
-		nb_line--;
-	}
+	del_lines(nb_line);
 }
 
 void	place_cursor_after(t_editor *ed)
@@ -245,12 +222,7 @@ void	place_cursor_after(t_editor *ed)
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	nb_line = line_max / (ed->ws_col + 2);
 	clean_old_line(ed);
-	while (nb_line >= 0)
-	{
-		tputs(tgetstr("up", NULL), 1, ft_putchar);
-		tputs(tgetstr("ce", NULL), 1, ft_putchar);
-		nb_line--;
-	}
+	insert_lines(nb_line);
 	line_max = ed->prompt_size;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	display_prompt(0);
