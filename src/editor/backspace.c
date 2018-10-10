@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:10:17 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 21:09:37 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 21:23:12 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -47,16 +47,12 @@ int			backspace(t_editor *ed)
 	cursor_reset = cursor_position_escape_sequence(0, 0, ed);
 	ft_putstr("\E[0J");
 	ft_putstr(ed->line + ed->cursor_str_pos);
-		dprintf(2, "get_cursor_position(0): %zu\n", get_cursor_position(0));
 	reset_cursor_position_escape_sequence(&cursor_reset);
 		ed->last_char--;
-		dprintf(2, "ed->last: %zu\n", ed->last_char);
 	if (ed->last_char == 0)
 	{
-		dprintf(2, "ed->last_row: %zu\n", ed->last_row);
 		ed->last_char = sz.ws_col;
 		ed->last_row--;
-		dprintf(2, "ed->last: %zu\n", ed->last_char);
 	}
 	return (0);
 }
