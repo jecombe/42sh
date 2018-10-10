@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 00:37:23 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 21:18:57 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -81,7 +81,8 @@ typedef struct		s_editor
 	size_t			ws_col;
 	size_t			first_row;
 	size_t			last_row;
-	size_t			prompt_size;
+	size_t			first_char;
+	size_t			last_char;
 	size_t			cursor_str_pos;
 	char			*clipboard;
 	char			key[BUFF_SIZE];

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 19:39:48 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/06 19:40:04 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 15:08:36 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,7 +23,7 @@ void    move_to_previous_new_line(t_editor *ed)
 	if (get_cursor_position(1) - 1 == ed->first_row)
 	{
 		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
-		tputs(tgoto(tgetstr("ch", NULL), 1, (ed->prompt_size - 1) +
+		tputs(tgoto(tgetstr("ch", NULL), 1, (ed->first_char - 1) +
 		ed->cursor_str_pos), 1, ft_putchar);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 23:20:18 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 19:20:49 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,10 +111,10 @@ int		get_stdin(char **line, e_prompt *prompt)
 	while (ed->ret != -1)
 	{
 		ft_bzero(ed->key, BUFF_SIZE);
-		read(STDIN_FILENO, ed->key, BUFF_SIZE - 1);
+		ed->ret = read(STDIN_FILENO, ed->key, BUFF_SIZE - 1);
 		if (term_size(ed) == EXIT_SUCCESS)
 			window_resize(&ed, prompt);
-		if (ed->key[0])
+		if (ed->ret)
 			if (get_keyboard_key(&ed, prompt, line))
 				ed->line = ft_strjoin_free(ed->line, ed->key);
 		if (ed->key[0] && ((ft_strchr(ed->key, '\n') ||

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 18:19:28 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/10 21:20:35 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -187,10 +187,10 @@ void	place_cursor_before(t_editor *ed)
 	int line_max;
 	int	to_jump;
 
-	line_max = ed->prompt_size;
+	line_max = ed->first_char;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	ed->t.nb_line = line_max / (ed->ws_col + 2);
-	to_jump = (ed->cursor_str_pos + ed->prompt_size) / (ed->ws_col + 2);
+	to_jump = (ed->cursor_str_pos + ed->first_char) / (ed->ws_col + 2);
 	while (ed->t.nb_line - to_jump >= 0)
 	{
 		tputs(tgetstr("ce", NULL), 1, ft_putchar);
@@ -205,7 +205,7 @@ void	clean_old_line(t_editor *ed)
 	int		line_max;
 	int		nb_line;
 
-	line_max = ed->prompt_size;
+	line_max = ed->first_char;
 	line_max += ed->line ? ft_strlen(ed->tmp_line) : 0;
 	nb_line = line_max / (ed->ws_col + 2);
 
@@ -218,19 +218,19 @@ void	place_cursor_after(t_editor *ed)
 	int		line_max;
 	int		nb_line;
 
-	line_max = ed->prompt_size;
+	line_max = ed->first_char;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	nb_line = line_max / (ed->ws_col + 2);
 	clean_old_line(ed);
 	insert_lines(nb_line);
-	line_max = ed->prompt_size;
+	line_max = ed->first_char;
 	line_max += ed->line ? ft_strlen(ed->line) : 0;
 	display_prompt(0);
-	ed->prompt_size = get_cursor_position(0);
+	ed->first_char = get_cursor_position(0);
 	ed->first_row = get_cursor_position(1);
 	ft_putfreshstr(ed->line);
 	ed->last_row = get_cursor_position(1);
-	while ((size_t)line_max > (ed->cursor_str_pos + ed->prompt_size))
+	while ((size_t)line_max > (ed->cursor_str_pos + ed->first_char))
 	{
 		move_left(ed);
 		line_max--;
@@ -288,8 +288,8 @@ void	end_tab_sequence(t_editor **ed)
 
 	if ((*ed)->line)
 	{
-		i = (*ed)->cursor_str_pos + (*ed)->prompt_size - 1;
-		while ((size_t)++i < (*ed)->prompt_size + ft_strlen((*ed)->line))
+		i = (*ed)->cursor_str_pos + (*ed)->first_char - 1;
+		while ((size_t)++i < (*ed)->first_char + ft_strlen((*ed)->line))
 			move_right();
 	}
 	(*ed)->key[0] = 0;
@@ -297,8 +297,8 @@ void	end_tab_sequence(t_editor **ed)
 	tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	if ((*ed)->line)
 	{
-		i = (*ed)->cursor_str_pos + (*ed)->prompt_size - 1;
-		while ((size_t)++i < (*ed)->prompt_size + ft_strlen((*ed)->line))
+		i = (*ed)->cursor_str_pos + (*ed)->first_char - 1;
+		while ((size_t)++i < (*ed)->first_char + ft_strlen((*ed)->line))
 			move_left(*ed);
 	}
 	ft_free_t_tab(&(*ed)->t);
