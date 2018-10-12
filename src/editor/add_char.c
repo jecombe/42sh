@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 10:42:22 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 21:23:22 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/12 18:04:43 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,26 +30,26 @@ static void		add_char_into_line_2(char key, t_editor *ed)
 	tputs(tgetstr("rc", NULL), 1, ft_putchar);
 }
 
-static void		add_char_into_line_1(char key, t_editor *ed, struct winsize sz)
+static void		add_char_into_line_1(char key, t_editor *ed)
 {
-	if (ed->last_char == sz.ws_col)
+	if (ed->last_char == ed->ws_col)
 	{
-		ed->last_char = 1;
+		ed->last_char = 0;
 		ft_putchar(key);
-		if (ed->cur_col == sz.ws_col)
+		if (ed->cur_col == ed->ws_col)
 		{
 			ed->cur_col = 0;
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
-		ed->cur_row = ed->cur_row == sz.ws_row ? ed->cur_row : ed->cur_row + 1;
+		ed->cur_row = ed->cur_row == ed->ws_col ? ed->cur_row : ed->cur_row + 1;
 		}
-		ed->last_row = ed->last_row == sz.ws_row ? ed->last_row : ed->last_row + 1;
+		ed->last_row = ed->last_row == ed->ws_col ? ed->last_row : ed->last_row + 1;
 	}
-	else if (ed->cur_col == sz.ws_col)
+	else if (ed->cur_col == ed->ws_col)
 	{
 		ed->cur_col = 0;
 		ft_putchar(key);
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
-		ed->cur_row = ed->cur_row == sz.ws_row ? ed->cur_row : ed->cur_row + 1;
+		ed->cur_row = ed->cur_row == ed->ws_col ? ed->cur_row : ed->cur_row + 1;
 	}
 	else
 		ft_putchar(key);
@@ -61,11 +61,10 @@ void			add_char_into_line(char key, t_editor *ed)
 	t_sz sz;
 
 	ed->cursor_str_pos++;
-	ioctl(0, TIOCGWINSZ, &sz);
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	if (ed->line && ed->last_char == sz.ws_col && ed->last_row == sz.ws_row)
+	if (ed->line && ed->last_char == ed->ws_col && ed->last_row == ed->ws_col)
 	{
-		if (ed->cur_col == sz.ws_col)
+		if (ed->cur_col == ed->ws_col)
 		{
 			ed->cur_col = 0;
 			tputs(tgetstr("do", NULL), 1, ft_putchar);
@@ -81,7 +80,7 @@ void			add_char_into_line(char key, t_editor *ed)
 		ed->last_char = 0;
 	}
 	else
-		add_char_into_line_1(key, ed, sz);
+		add_char_into_line_1(key, ed);
 	add_char_into_line_2(key, ed);
 	ed->cur_col++;
 	ed->last_char++;
@@ -91,26 +90,25 @@ int				add_char_to_line(char key, t_editor *ed)
 {
 	t_sz sz;
 
-	ft_memset(&sz, 0, sizeof(sz));
-	ioctl(0, TIOCGWINSZ, &sz);
 	ed->cursor_str_pos++;
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
-	if (ed->cur_col == sz.ws_col && ed->cur_row != sz.ws_row)
+	if (ed->cur_col == ed->ws_col && ed->cur_row != ed->ws_col)
 	{
 		ed->cur_col = 0;
 		ed->last_char = 0;
 		ft_putchar(key);
 		tputs(tgetstr("do", NULL), 1, ft_putchar);
 		ed->cur_row++;
-		ed->last_row++;
+		ed->last_row = ed->last_row == ed->ws_col ? ed->ws_col : ed->last_row++;
 	}
-	else if (ed->cur_col == sz.ws_col && ed->cur_row == sz.ws_row)
+	else if (ed->cur_col == ed->ws_col && ed->cur_row == ed->ws_col)
 	{
 		ed->cur_col = 0;
 		ed->last_char = 0;
 		ft_putchar(key);
-		ed->cur_row = sz.ws_row;
+		ed->cur_row = ed->ws_col;
 		tputs(tgetstr("sf", NULL), 1, ft_putchar);
+		ed->last_row = ed->last_row == ed->ws_col ? ed->ws_col : ed->last_row++;
 		ed->first_row--;
 	}
 	else
@@ -123,8 +121,10 @@ int				add_char_to_line(char key, t_editor *ed)
 
 void	add_paste_into_line(t_editor *ed)
 {
+	int		tmp_last_pos;
 	char	tmp[ft_strlen(ed->line) + ft_strlen(ed->key) + 1];
 
+	tmp_last_pos = ed->cursor_str_pos + ft_strlen(ed->key);
 	if (ed->line)
 	{
 		ft_bzero(tmp, ft_strlen(ed->line) + ft_strlen(ed->key) + 1);
@@ -143,6 +143,12 @@ void	add_paste_into_line(t_editor *ed)
 	ed->last_char = get_cursor_position(0);
 	ed->last_row = get_cursor_position(1);
 	ed->cursor_str_pos = ft_strlen(ed->line);
+	dprintf(2, "get_cur_pos_1: %zu\n", get_cursor_position(0));
+	while (ed->cursor_str_pos != tmp_last_pos)
+		move_cursor_left(ed);
+	dprintf(2, "get_cur_pos_2: %zu\n", get_cursor_position(0));
+	if (ed->cur_col == ed->ws_col && ed->cur_row == ed->ws_row)
+		tputs(tgetstr("sf", NULL), 1, ft_putchar);
 }
 
 int		print_key(t_editor **ed)

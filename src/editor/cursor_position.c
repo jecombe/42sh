@@ -1,11 +1,12 @@
+/* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
 /*   cursor_position.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/06/01 04:13:30 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 00:38:27 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/12 18:13:31 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/12 18:14:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,7 +32,7 @@ char			*cursor_position_escape_sequence(int row, int col, t_editor *ed)
 	return (cursor_pos);
 }
 
-void	reset_cursor_position_escape_sequence(char **cursor_positon)
+void			reset_cursor_position_escape_sequence(char **cursor_positon)
 {
 	if (cursor_positon)
 	{
@@ -67,7 +68,7 @@ static int		get_col(char *str)
 
 size_t			get_cursor_position(int mode)
 {
-	size_t res;
+	size_t	res;
 	char	buf[20];
 	char	*str;
 

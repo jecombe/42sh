@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 02:51:08 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 18:32:58 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/12 15:36:14 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -61,7 +61,7 @@ t_editor	*line_editor_init(char **line, e_prompt prompt)
 	ed->first_row = get_cursor_position(1);
 	ed->last_row = ed->first_row;
 	ed->first_char = ed->cur_col;
-	ed->last_char = ed->first_char - 1;
+	ed->last_char = ed->first_char;
 	ed->line = NULL;
 	ed->tmp_line = NULL;
 	ed->clipboard = NULL;

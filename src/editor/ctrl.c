@@ -6,18 +6,18 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 23:45:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/09 23:44:12 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/12 18:33:11 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void	paste_clipboard_into_line(t_editor *ed)
+static void		paste_clipboard_into_line(t_editor *ed)
 {
 	char tmp[ft_strlen(ed->line) + ft_strlen(ed->clipboard) + 1];
 
-	bzero(tmp, sizeof(tmp));
+	bzero(tmp, ft_strlen(ed->line) + ft_strlen(ed->clipboard) + 1);
 	ft_strncpy(tmp, ed->line, ed->cursor_str_pos);
 	ft_strcat(tmp, ed->clipboard);
 	ft_strcat(tmp, ed->line + ed->cursor_str_pos);
@@ -30,12 +30,8 @@ static void	paste_clipboard_into_line(t_editor *ed)
 	ed->line = ft_strdup(tmp);
 }
 
-void		paste_clipboard(t_editor *ed)
+void			paste_clipboard(t_editor *ed)
 {
-	t_sz sz;
-
-	ft_memset(&sz, 0, sizeof(sz));
-	ioctl(0, TIOCGWINSZ, &sz);
 	if (ed->clipboard)
 	{
 		if (ed->cursor_str_pos == ft_strlen(ed->line))
@@ -43,8 +39,8 @@ void		paste_clipboard(t_editor *ed)
 			ed->line = ft_strjoin_free(ed->line, ed->clipboard);
 			ed->cursor_str_pos = ft_strlen(ed->line);
 			ft_putstr(ed->clipboard);
-			if (get_cursor_position(0) == sz.ws_col &&
-				get_cursor_position(1) != sz.ws_row)
+			if (get_cursor_position(0) == ed->ws_col &&
+				get_cursor_position(1) != ed->ws_row)
 			{
 				tputs(tgetstr("do", NULL), 1, ft_putchar);
 				ed->last_row = get_cursor_position(1);
@@ -57,21 +53,22 @@ void		paste_clipboard(t_editor *ed)
 
 int		clear_window(t_editor *ed, e_prompt prompt)
 {
-	int cursor_str_pos_tmp;
+	size_t	cursor_str_pos_tmp;
 
-	cursor_str_pos_tmp = 0;
 	cursor_str_pos_tmp = ed->cursor_str_pos;
 	tputs(tgetstr("cl", NULL), 1, ft_putchar);
 	display_prompt(prompt);
-	ed->cur_col = get_cursor_position(0);
 	ed->first_row = get_cursor_position(1);
+	ed->first_char = get_cursor_position(0);
 	if (ed->line)
 		ft_putstr(ed->line);
-	ed->last_row = get_cursor_position(1);
-	ed->cursor_str_pos = ft_strlen(ed->line);
-	while (cursor_str_pos_tmp != (int)ed->cursor_str_pos)
-		move_cursor_left(ed);
+	ed->cur_col = get_cursor_position(0);
 	ed->cur_row = get_cursor_position(1);
+	ed->last_row = get_cursor_position(1);
+	ed->last_char = get_cursor_position(0);
+	ed->cursor_str_pos = ft_strlen(ed->line);
+	while (cursor_str_pos_tmp != ed->cursor_str_pos)
+		move_cursor_left(ed);
 	return (0);
 }
 
