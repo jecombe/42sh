@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 21:20:35 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 14:59:44 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -230,6 +230,9 @@ void	place_cursor_after(t_editor *ed)
 	ed->first_row = get_cursor_position(1);
 	ft_putfreshstr(ed->line);
 	ed->last_row = get_cursor_position(1);
+	ed->cur_col = get_cursor_position(0);
+	ed->cur_row = get_cursor_position(1);
+	ed->cursor_str_pos = ft_strlen(ed->line);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->first_char))
 	{
 		move_left(ed);
