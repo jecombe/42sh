@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:08:07 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 22:23:03 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static int	down_key(t_editor **ed)
+static int		down_key(t_editor **ed)
 {
 	(*ed)->hist -= (*ed)->hist == -3 ? 0 : 1;
 	if ((*ed)->hist < 0 && !((*ed)->hist <= -3))
@@ -35,7 +35,7 @@ static int	down_key(t_editor **ed)
 	return ((*ed)->hist < 0 ? 0 : 1);
 }
 
-size_t		count_new_lines(char *line, size_t first_char_pos)
+size_t			count_new_lines(char *line, size_t first_char_pos)
 {
 	int i;
 	int line_len;
@@ -59,7 +59,7 @@ size_t		count_new_lines(char *line, size_t first_char_pos)
 	return (sum);
 }
 
-int		term_historic(t_editor **ed)
+int				term_historic(t_editor **ed)
 {
 	int new_line_sum;
 

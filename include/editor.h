@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/10 00:46:23 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 21:18:57 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 20:43:01 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -135,8 +135,9 @@ void	myhandler_interrupt(int signal);
 char	*cursor_position_escape_sequence(int row, int col, t_editor *ed);
 void	reset_cursor_position_escape_sequence(char **cursor_position);
 
+void	add_paste_into_line(t_editor *ed);
 void	add_char_into_line(char key, t_editor *ed);
-int		add_char_to_line(char key, t_editor *ed);
+void	add_char_to_line(char key, t_editor *ed);
 char	*cut_pwd_dir(char *pwd);
 void	display_prompt(e_prompt prompt);
 int		get_stdin(char **line, e_prompt *prompt);

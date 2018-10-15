@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:48:57 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:18:47 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 22:42:59 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,10 +15,6 @@
 
 void	move_cursor_up(t_editor *ed)
 {
-	t_sz sz;
-
-	ft_memset(&sz, 0 , sizeof(sz));
-	ioctl(0, TIOCGWINSZ, &sz);
 	if (get_cursor_position(1) != ed->first_row)
 	{
 		if (get_cursor_position(1) - 1 == ed->first_row &&
@@ -30,31 +26,26 @@ void	move_cursor_up(t_editor *ed)
 		}
 		else
 			ed->cursor_str_pos = ed->cursor_str_pos - (get_cursor_position(0) +
-			(sz.ws_col - get_cursor_position(0)));
+			(ed->ws_col - get_cursor_position(0)));
 		tputs(tgetstr("up", NULL), 1, ft_putchar);
 	}
 }
 
 void	move_cursor_down(t_editor *ed)
 {
-	t_sz sz;
-
-	ft_memset(&sz, 0 , sizeof(sz));
-	ioctl(0, TIOCGWINSZ, &sz);
-	if (get_cursor_position(1) != ed->last_row)
+	if (ed->cur_row != ed->last_row)
 	{
-		if (get_cursor_position(1) + 1 == ed->last_row && (ft_strlen(ed->line
-		+ ed->cursor_str_pos) - (sz.ws_col - get_cursor_position(0))
-		< get_cursor_position(0)))
+		if (ed->cur_row + 1 == ed->last_row && (ft_strlen(ed->line
+		+ ed->cursor_str_pos) - (ed->ws_col - ed->cur_col)
+		< ed->cur_col))
 		{
 			tputs(tgoto(tgetstr("ch", NULL), 0, (ft_strlen(ed->line +
-			ed->cursor_str_pos) - (sz.ws_col - get_cursor_position(0))) - 1), 1,
-			ft_putchar);
+			ed->cursor_str_pos) - (ed->ws_col - ed->cur_col)) - 1), 1, ft_putchar);
 			ed->cursor_str_pos = ft_strlen(ed->line);
 		}
 		else
 			ed->cursor_str_pos = ed->cursor_str_pos + ((get_cursor_position(0) +
-			(sz.ws_col - get_cursor_position(0))));
+			(ed->ws_col - get_cursor_position(0))));
 		tputs(tgoto(tgetstr("cv", NULL), 0, get_cursor_position(1)), 1,
 		ft_putchar);
 	}
@@ -71,7 +62,7 @@ void	move_cursor_left(t_editor *ed)
 	}
 }
 
-void		move_cursor_right(t_editor *ed)
+void	move_cursor_right(t_editor *ed)
 {
 	if (ed->cursor_str_pos < ft_strlen(ed->line))
 	{

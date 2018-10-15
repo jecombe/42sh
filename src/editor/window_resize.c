@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 21:40:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 14:46:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 21:34:34 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,7 @@ void	window_resize(t_editor **ed, e_prompt *prompt)
 	}
 }
 
-int			term_size(t_editor *ed)
+int		term_size(t_editor *ed)
 {
 	t_sz	sz;
 

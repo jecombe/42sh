@@ -6,17 +6,12 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/13 23:22:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/03 21:49:30 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 21:18:56 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
-/*
- ** pwd = Path Working Directory
- ** rwd = Real Working Directory
- */
 
 char			*cut_pwd_dir(char *pwd)
 {
@@ -49,32 +44,8 @@ static void		prompt_type(e_prompt prompt)
 	else if (prompt == DB_QUOTE)
 		ft_putstr("dquote bquote> ");
 }
-/*
-   void			display_prompt(char *home, e_prompt prompt)
-   {
-   char pwd[4096];
 
-   if (prompt != PROMPT)
-   return (prompt_type(prompt));
-   getcwd(pwd, sizeof(pwd));
-   ft_putstr(WHITE);
-   ft_putstr("101sh");
-   ft_putstr(END);
-   ft_putchar(' ');
-   ft_putstr(BLUE);
-   if (!ft_strcmp(pwd, !home ? "" : home))
-   ft_putstr("~");
-   else if (ft_strlen(pwd) == (ft_strlen(cut_pwd_dir(pwd)) + 1))
-   ft_putstr(pwd);
-   else
-   ft_putstr(cut_pwd_dir(pwd));
-   ft_putstr(END);
-   ft_putchar(' ');
-   if (home)
-   ft_strdel(&home);
-//	prompt_example();
-}*/
-void		display_prompt(e_prompt prompt)
+void			display_prompt(e_prompt prompt)
 {
 	char	pwd[4096];
 	char	*error;

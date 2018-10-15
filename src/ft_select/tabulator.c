@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   tabulator.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 14:59:44 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 20:10:58 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 20:14:20 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -232,12 +232,12 @@ void	place_cursor_after(t_editor *ed)
 	ed->last_row = get_cursor_position(1);
 	ed->cur_col = get_cursor_position(0);
 	ed->cur_row = get_cursor_position(1);
-	ed->cursor_str_pos = ft_strlen(ed->line);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->first_char))
 	{
 		move_left(ed);
 		line_max--;
 	}
+	ed->cursor_str_pos = ft_strlen(ed->line);
 }
 
 void	ft_free_t_tab(t_tab *t)

@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 14:40:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 21:29:27 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,39 +66,32 @@ static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 			&& (*ed)->tabu != -1)
 	{
 		tabulator(ed, 0);
-		//(*ed)->sel = NULL;
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
-		//tputs(tgetstr("cd", NULL), 1, ft_putchar);
 	}
-	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY || RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
+	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY ||
+	RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
 		tabulator(ed, 1);
 	else if (CTRL_D || CTRL_C || CTRL_L || CTRL_K || CTRL_P)
 		get_keyboard_key_ctrl(ed, line, prompt);
 	else if (UP_KEY || DOWN_KEY)
 		term_historic(ed);
 	else if (LEFT_KEY || RIGHT_KEY)
-		LEFT_KEY ? move_cursor_left(*ed) : move_cursor_right(*ed) ;
+		LEFT_KEY ? move_cursor_left(*ed) : move_cursor_right(*ed);
 	else if (SHIFT_UP || SHIFT_DOWN)
 		SHIFT_UP ? move_cursor_up(*ed) : move_cursor_down(*ed);
 	else if ((SHIFT_LEFT || SHIFT_RIGHT) && (*ed)->line)
-		SHIFT_LEFT ? move_word_left(*ed) : move_word_right(*ed) ;
+		SHIFT_LEFT ? move_word_left(*ed) : move_word_right(*ed);
 	else if (HOME_KEY || CTRL_A || END_KEY || CTRL_E)
 		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
 	else if (ft_isprint((*ed)->key[0]))
 		return (print_key(ed));
 	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
 		backspace(*ed);
-	/*
-	else if ((*ed)->cursor_str_pos == ft_strlen((*ed)->line) &&
-	ft_strlen((*ed)->key) == 1 && ft_isprint((*ed)->key[0]))
-		return (add_char_to_line((*ed)->key[0], *ed));
-	else
-		return (get_keyboard_key_next(ed, prompt, line));*/
 	return (EXIT_SUCCESS);
 }
 
-int		get_stdin(char **line, e_prompt *prompt)
+int				get_stdin(char **line, e_prompt *prompt)
 {
 	t_editor	*ed;
 
@@ -115,8 +108,8 @@ int		get_stdin(char **line, e_prompt *prompt)
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
 		if (term_size(ed) == EXIT_SUCCESS)
 			window_resize(&ed, prompt);
-			if (ed->ret && get_keyboard_key(&ed, prompt, line))
-				ed->line = ft_strjoin_free(ed->line, ed->key);
+		if (ed->ret && get_keyboard_key(&ed, prompt, line))
+			ed->line = ft_strjoin_free(ed->line, ed->key);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);
 		if (ed->key[0] && ((ft_strchr(ed->key, '\n') ||
 			(ed->ret == -2 && !ed->line) || (ed->ret == -3 && *prompt == E_HDOC))))

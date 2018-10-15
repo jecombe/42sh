@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 02:51:08 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/12 15:36:14 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 21:41:25 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		term_reinit(struct termios *raw_mode)
+int			term_reinit(struct termios *raw_mode)
 {
 	static struct termios	term_default;
 	static int				state = 0;
@@ -27,7 +27,7 @@ int		term_reinit(struct termios *raw_mode)
 	return (0);
 }
 
-int		get_term_raw_mode(int mode)
+int			get_term_raw_mode(int mode)
 {
 	struct termios raw_mode;
 
@@ -75,7 +75,7 @@ t_editor	*line_editor_init(char **line, e_prompt prompt)
 	return (ed);
 }
 
-int				line_editor_delete(t_editor **ed)
+int			line_editor_delete(t_editor **ed)
 {
 	int		ret;
 

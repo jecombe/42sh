@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:10:17 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 12:58:18 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 20:15:15 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -39,8 +39,6 @@ static void		backspace_next(t_editor **ed)
 int				backspace(t_editor *ed)
 {
 	ed->cursor_str_pos--;
-	dprintf(2, "cur_row: %zu\n", ed->cur_row);
-	dprintf(2, "get_cur_row: %zu\n", get_cursor_position(1));
 	if (ed->line[ed->cursor_str_pos] == '\n')
 	{
 		move_to_previous_new_line(ed);
@@ -48,7 +46,6 @@ int				backspace(t_editor *ed)
 	}
 	else if (ed->cur_col == 1)
 	{
-		dprintf(2, "OK1\n");
 		ed->cur_col = ed->ws_col;
 		tputs(tgoto(tgetstr("sr", NULL), 1, 1), 1, ft_putchar);
 		tputs(tgoto(tgetstr("ch", NULL), 0, ed->ws_col - 1), 1, ft_putchar);

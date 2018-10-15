@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/07 03:28:16 by dzonda      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/15 20:37:17 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -51,6 +51,7 @@ SRCS_NAME =	\
 			editor/move_word.c \
 			editor/ctrl.c \
 			editor/add_char.c \
+			editor/paste_line.c \
 			editor/term_historic.c \
 			editor/term_init.c \
 			editor/ft_putfreshstr.c \

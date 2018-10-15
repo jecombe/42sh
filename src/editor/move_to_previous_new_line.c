@@ -6,14 +6,14 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 19:39:48 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/10 15:08:36 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 20:50:04 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void    move_to_previous_new_line(t_editor *ed)
+void	move_to_previous_new_line(t_editor *ed)
 {
 	int i;
 	int tmp_cursor_str_pos;

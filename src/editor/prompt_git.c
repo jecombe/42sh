@@ -3,10 +3,10 @@
 /*                                                              /             */
 /*   prompt_git.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: gbarnay  <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/09/22 19:04:02 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/25 05:29:26 by gbarnay     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/10/15 21:19:07 by dewalter     #+#   ##    ##    #+#       */
+/*   Updated: 2018/10/15 21:21:38 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,10 +24,10 @@ void				ft_miniconcat(char **s1, char *s2)
 	ft_strdel(&ret);
 }
 
-static	char        *ft_check_git_config(char **path)
+static	char		*ft_check_git_config(char **path)
 {
-	int        fd;
-	char    *line;
+	int		fd;
+	char	*line;
 
 	ft_miniconcat(path, "/config");
 	fd = open(*path, O_RDONLY);
@@ -49,11 +49,11 @@ static	char        *ft_check_git_config(char **path)
 	return (NULL);
 }
 
-static	char        *ft_get_git_branch()
+static	char		*ft_get_git_branch(void)
 {
-	int        i;
-	char    cwd[1024];
-	char    *path;
+	int		i;
+	char	cwd[1024];
+	char	*path;
 
 	getcwd(cwd, 1024);
 	path = ft_strdup(cwd);
@@ -73,10 +73,10 @@ static	char        *ft_get_git_branch()
 	return (NULL);
 }
 
-void				ft_print_git_branch(void)	
+void				ft_print_git_branch(void)
 {
-	char    *prompt;
-	char    *git_branch;
+	char	*prompt;
+	char	*git_branch;
 
 	prompt = ft_strdup("\e[94mgit:(\e[95m");
 	git_branch = ft_get_git_branch();

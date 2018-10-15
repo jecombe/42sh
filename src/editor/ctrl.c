@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/06 23:45:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/12 18:33:11 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 20:31:52 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,7 @@ void			paste_clipboard(t_editor *ed)
 	}
 }
 
-int		clear_window(t_editor *ed, e_prompt prompt)
+int				clear_window(t_editor *ed, e_prompt prompt)
 {
 	size_t	cursor_str_pos_tmp;
 
@@ -72,22 +72,26 @@ int		clear_window(t_editor *ed, e_prompt prompt)
 	return (0);
 }
 
-void	end_of_text(t_editor *ed, e_prompt *prompt, char **line)
+void			end_of_text(t_editor *ed, e_prompt *prompt, char **line)
 {
 	if ((ed->last_row - get_cursor_position(1)) > 0)
 		tputs(tgoto(tgetstr("DO", NULL), 0, ed->last_row -
 		get_cursor_position(1)), 1, ft_putchar);
 	ft_putchar('\n');
 	display_prompt(PROMPT);
-	ed->last_row = get_cursor_position(1);
-	ed->first_row = ed->last_row;
+	ed->first_row = get_cursor_position(1);
+	ed->last_row = ed->first_row;
+	ed->cur_row = ed->first_row;
+	ed->cur_col = get_cursor_position(0);
+	ed->first_char = ed->cur_col;
+	ed->last_char = ed->cur_col;
 	ed->ret = *prompt == E_HDOC ? -3 : ed->ret;
 	ft_strdel(&(ed->line));
 	*prompt = PROMPT;
 	ed->cursor_str_pos = 0;
 }
 
-void	delete_from_cursor_to_end(t_editor *ed)
+void			delete_from_cursor_to_end(t_editor *ed)
 {
 	char tmp[ed->cursor_str_pos + 1];
 
@@ -101,7 +105,7 @@ void	delete_from_cursor_to_end(t_editor *ed)
 	}
 	else
 	{
-		ft_strncpy(tmp, ed->line, ed->cursor_str_pos);	
+		ft_strncpy(tmp, ed->line, ed->cursor_str_pos);
 		ed->clipboard = ft_strdup(ed->line + ed->cursor_str_pos);
 		ft_strdel(&(ed->line));
 		ed->line = ft_strdup(tmp);

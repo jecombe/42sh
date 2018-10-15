@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:54:46 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/12 17:39:05 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/15 22:36:33 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,9 +16,7 @@
 static int		check_if_previous_word(char *line, size_t cursor_str_pos)
 {
 	size_t s_pos;
-	t_sz sz;
 
-	ft_memset(&sz, 0, sizeof(sz));
 	s_pos = cursor_str_pos;
 	while (cursor_str_pos > 0)
 	{
