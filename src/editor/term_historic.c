@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 22:23:03 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/16 17:23:43 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,6 +68,7 @@ int				term_historic(t_editor **ed)
 	{
 		if ((*ed)->hist <= -2)
 		{
+			dprintf(2, "OK\n");
 			(*ed)->tmp_line = ft_strdup((*ed)->line);
 			(*ed)->hist = 0;
 		}
@@ -92,5 +93,7 @@ int				term_historic(t_editor **ed)
 	while ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) - 1)
 		move_cursor_right(*ed);
 	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
+	(*ed)->cur_col = get_cursor_position(0);
+	(*ed)->cur_row = get_cursor_position(1);
 	return (0);
 }

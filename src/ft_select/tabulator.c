@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 20:10:58 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 20:14:20 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/16 21:01:25 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -229,9 +229,10 @@ void	place_cursor_after(t_editor *ed)
 	ed->first_char = get_cursor_position(0);
 	ed->first_row = get_cursor_position(1);
 	ft_putfreshstr(ed->line);
-	ed->last_row = get_cursor_position(1);
-	ed->cur_col = get_cursor_position(0);
-	ed->cur_row = get_cursor_position(1);
+//	dprintf(2, "get_cur: %zu\n", get_cursor_position(0));
+//	ed->last_row = get_cursor_position(1);
+//	ed->cur_col = get_cursor_position(0);
+//	ed->cur_row = get_cursor_position(1);
 	while ((size_t)line_max > (ed->cursor_str_pos + ed->first_char))
 	{
 		move_left(ed);
@@ -335,5 +336,8 @@ int		tabulator(t_editor **ed, int version)
 		end_tab_sequence(ed);
 	}
 	version != 0 ? place_cursor_after(*ed) : 0;
+	(*ed)->last_row = get_cursor_position(1);
+	(*ed)->cur_col = get_cursor_position(0);
+	(*ed)->cur_row = get_cursor_position(1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 18:27:26 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/04 07:43:29 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/16 22:01:40 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,26 +36,26 @@ void		ft_print_select(t_line *str, int j, int bp, int v)
 	int		sp;
 
 	sp = 0;
-	j > 0 ? ft_putstr_fd(" ", 2) : 0;
+	j > 0 ? ft_putstr(" ") : 0;
 	if (str->is_file)
 	{
 		if (str->is_file == 1 || str->is_file == 2)
-			str->is_file == 1 ? ft_putstr_fd(GREEN, 2) : ft_putstr_fd(RED, 2);
-		str->is_file == 3 ? ft_putstr_fd(WHITE, 2) : 0;
+			str->is_file == 1 ? ft_putstr(GREEN) : ft_putstr(RED);
+		str->is_file == 3 ? ft_putstr(WHITE) : 0;
 	}
-	ft_putstr_fd(BOLD, 2);
-	str->cursor_inside == 1 ? ft_putstr_fd(IBLUE, 2) : 0;
+	ft_putstr(BOLD);
+	str->cursor_inside == 1 ? ft_putstr(IBLUE) : 0;
 	str->cursor_inside == 1 ? tputs(tgetstr("us", NULL), 1, ft_outc) : 0;
-	ft_putstr_fd(str->elem, 2);
+	ft_putstr(str->elem);
 	sp = bp - ft_strlen(str->elem);
 	while (sp > 0)
 	{
-		ft_putstr_fd(" ", 2);
+		ft_putstr(" ");
 		sp--;
 	}
 	str->cursor_inside == 1 && v == 1 ? tputs(tgetstr("ue", NULL), 1, ft_outc) :
 	0;
-	ft_putstr_fd(END, 2);
+	ft_putstr(END);
 }
 
 void		ft_print_params(t_select *t)
@@ -68,7 +68,7 @@ void		ft_print_params(t_select *t)
 	while (i[0] < t->nbl)
 	{
 		if (i[0] < t->ws.ws_row + t->pose_min)
-			ft_putstr_fd(i[0] > t->pose_min ? "\n\r" : "\r", 2);
+			ft_putstr(i[0] > t->pose_min ? "\n\r" : "\r");
 		i[1] = -1;
 		while (++i[1] < t->pbl && i[0] + (t->nbl * i[1]) < t->nbp)
 		{
@@ -80,6 +80,6 @@ void		ft_print_params(t_select *t)
 		}
 		i[0]++;
 	}
-	ft_putstr_fd("\r", 2);
+	ft_putstr("\r");
 	ft_place_cursor(i[0] - 1, 0, 0);
 }

@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/15 20:37:17 by dewalter    ###    #+. /#+    ###.fr      #
+#    Updated: 2018/10/16 15:42:05 by dewalter    ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -42,14 +42,12 @@ SRCS_NAME =	\
 			init/envset_manage.c \
 			editor/get_stdin.c \
 			editor/prompt.c \
-			editor/signal.c \
 			editor/cursor_position.c \
 			editor/backspace.c \
 			editor/go_to_of_line.c \
 			editor/move.c \
 			editor/move_cursor.c \
 			editor/move_word.c \
-			editor/ctrl.c \
 			editor/add_char.c \
 			editor/paste_line.c \
 			editor/term_historic.c \
@@ -60,6 +58,10 @@ SRCS_NAME =	\
 			editor/move_to_previous_new_line.c \
 			editor/window_resize.c \
 			editor/insert_del_line.c \
+			editor/delete_from_cursor_to_end.c \
+			editor/clear_window.c \
+			editor/end_of_text.c \
+			editor/paste_clipboard.c \
 			ft_select/ft_arrows.c \
 			ft_select/ft_lex_tab.c \
 			ft_select/ft_char_by_line.c \
@@ -171,7 +173,7 @@ $(NAME): lib $(OBJS)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(eval CURSOR=$(shell echo $$(($(CURSOR) + 1))))
-	@$(eval PERCENT=$(shell printf "[%3d/%3d - \e[1m\e[93m%3d%%\e[0m]" $(CURSOR) $(NB_FILES) $$(($(CURSOR) * 100 / $(NB_FILES)))))	
+	@$(eval PERCENT=$(shell printf "[%3d/%3d - \e[1m\e[93m%3d%%\e[0m]" $(CURSOR) $(NB_FILES) $$(($(CURSOR) * 100 / $(NB_FILES)))))
 	@$(eval LOADSIZE=$(shell echo $$(($(CURSOR) * $(COLS) / $(NB_FILES)))))
 	@printf "\e[?25l\e[s\e[35m\e[44m"
 	@tput setaf $$((($(CURSOR)%7)+9))

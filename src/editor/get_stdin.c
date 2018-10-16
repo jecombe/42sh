@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/05/12 00:01:33 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 21:29:27 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/16 21:17:23 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,6 +55,13 @@ static int		get_keyboard_key_tab(t_editor **ed)
 	return (EXIT_SUCCESS);
 }
 
+int				enough_space_on_screen(t_editor *ed)
+{
+	dprintf(2, "max_char: %zu\n", ed->ws_col * ed->ws_row);
+	dprintf(2, "line_len: %zu\n", ed->first_char * ed->first_row);
+	return (1);
+}
+
 static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 {
 	if (!(UP_KEY || DOWN_KEY) && (*ed)->hist != -2)
@@ -68,6 +75,9 @@ static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 		tabulator(ed, 0);
 		ft_strdel(&(*ed)->tmp_line);
 		(*ed)->tabu = -1;
+		(*ed)->last_row = get_cursor_position(1);
+		(*ed)->cur_col = get_cursor_position(0);
+		(*ed)->cur_row = get_cursor_position(1);
 	}
 	if ((TAB_KEY && *prompt == PROMPT) || ((UP_KEY || DOWN_KEY || LEFT_KEY ||
 	RIGHT_KEY || ENTER_KEY) && (*ed)->tabu != -1))
@@ -84,7 +94,7 @@ static int		get_keyboard_key(t_editor **ed, e_prompt *prompt, char **line)
 		SHIFT_LEFT ? move_word_left(*ed) : move_word_right(*ed);
 	else if (HOME_KEY || CTRL_A || END_KEY || CTRL_E)
 		HOME_KEY || CTRL_A ? go_to_begin_of_line(*ed) : go_to_end_of_line(*ed);
-	else if (ft_isprint((*ed)->key[0]))
+	else if (ft_isprint((*ed)->key[0]) /*&& enough_space_on_screen(*ed)*/)
 		return (print_key(ed));
 	else if (BACKSPACE && (*ed)->line && (*ed)->cursor_str_pos)
 		backspace(*ed);
