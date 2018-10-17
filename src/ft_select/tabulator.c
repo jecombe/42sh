@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 20:10:58 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 21:01:25 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/17 18:01:18 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -213,32 +213,32 @@ void	clean_old_line(t_editor *ed)
 	del_lines(nb_line);
 }
 
-void	place_cursor_after(t_editor *ed)
+void	place_cursor_after(t_editor **ed)
 {
 	int		line_max;
 	int		nb_line;
 
-	line_max = ed->first_char;
-	line_max += ed->line ? ft_strlen(ed->line) : 0;
-	nb_line = line_max / (ed->ws_col + 2);
-	clean_old_line(ed);
+	line_max = (*ed)->first_char;
+	line_max += (*ed)->line ? ft_strlen((*ed)->line) : 0;
+	nb_line = line_max / ((*ed)->ws_col + 2);
+	clean_old_line((*ed));
 	insert_lines(nb_line);
-	line_max = ed->first_char;
-	line_max += ed->line ? ft_strlen(ed->line) : 0;
+	line_max = (*ed)->first_char;
+	line_max += (*ed)->line ? ft_strlen((*ed)->line) : 0;
 	display_prompt(0);
-	ed->first_char = get_cursor_position(0);
-	ed->first_row = get_cursor_position(1);
-	ft_putfreshstr(ed->line);
-//	dprintf(2, "get_cur: %zu\n", get_cursor_position(0));
-//	ed->last_row = get_cursor_position(1);
-//	ed->cur_col = get_cursor_position(0);
-//	ed->cur_row = get_cursor_position(1);
-	while ((size_t)line_max > (ed->cursor_str_pos + ed->first_char))
+	(*ed)->first_char = get_cursor_position(0);
+	(*ed)->first_row = get_cursor_position(1);
+	ft_putfreshstr((*ed)->line);
+	(*ed)->last_char = get_cursor_position(0);
+	(*ed)->last_row = get_cursor_position(1);
+	(*ed)->cur_col = (*ed)->last_char;
+	(*ed)->cur_row = (*ed)->last_row;
+	while ((size_t)line_max > ((*ed)->cursor_str_pos + (*ed)->first_char))
 	{
-		move_left(ed);
+		move_left((*ed));
 		line_max--;
 	}
-	ed->cursor_str_pos = ft_strlen(ed->line);
+	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
 }
 
 void	ft_free_t_tab(t_tab *t)
@@ -335,9 +335,6 @@ int		tabulator(t_editor **ed, int version)
 		//END TAB SEQUENCE
 		end_tab_sequence(ed);
 	}
-	version != 0 ? place_cursor_after(*ed) : 0;
-	(*ed)->last_row = get_cursor_position(1);
-	(*ed)->cur_col = get_cursor_position(0);
-	(*ed)->cur_row = get_cursor_position(1);
+	version != 0 ? place_cursor_after(ed) : 0;
 	return (0);
 }

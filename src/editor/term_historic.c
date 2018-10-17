@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 10:01:52 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/16 17:23:43 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/17 19:38:42 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,13 +62,14 @@ size_t			count_new_lines(char *line, size_t first_char_pos)
 int				term_historic(t_editor **ed)
 {
 	int new_line_sum;
+	int ret;
 
+	ret = 0;
 	new_line_sum = 0;
 	if (UP_KEY)
 	{
 		if ((*ed)->hist <= -2)
 		{
-			dprintf(2, "OK\n");
 			(*ed)->tmp_line = ft_strdup((*ed)->line);
 			(*ed)->hist = 0;
 		}
@@ -76,14 +77,40 @@ int				term_historic(t_editor **ed)
 	else if (DOWN_KEY)
 		if (!down_key(ed))
 			return (0);
+		dprintf(2, "first_row0: %zu\n" , (*ed)->first_row);
 	go_to_begin_of_line(*ed);
+		dprintf(2, "first_row1: %zu\n" , (*ed)->first_row);
 	delete_from_cursor_to_end(*ed);
+		dprintf(2, "first_row2: %zu\n" , (*ed)->first_row);
 	history_get(ed);
+		dprintf(2, "first_row3: %zu\n" , (*ed)->first_row);
+	new_line_sum = count_new_lines((*ed)->line, (*ed)->first_char);
+		dprintf(2, "new_line_sum: %d\n", new_line_sum);
+	if ((ret = new_line_sum + (*ed)->first_row) > (*ed)->ws_row)
+	{
+		dprintf(2, "ret: %d\n", ret);
+		dprintf(2, "ws_row: %zu\n", (*ed)->ws_row);
+		ret = ret / 2;
+			(*ed)->first_row = (*ed)->first_row - ret;
+		while (ret > (*ed)->ws_row)
+		{
+			(*ed)->first_row--;
+			tputs(tgetstr("sf", NULL), 1, ft_putchar);
+			ret--;
+
+		}
+	}
+		dprintf(2, "OK\n");
 	ft_putstr((*ed)->line);
-	(*ed)->last_row = get_cursor_position(1);
-	(*ed)->cursor_str_pos = ft_strlen((*ed)->line) - 1;
+	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
+
+	/*
 	if ((new_line_sum = count_new_lines((*ed)->line, (*ed)->first_char)) > 0)
+	{
+		dprintf(2, "new_line_sum: %d\n", new_line_sum);
 		(*ed)->first_row = (*ed)->last_row - new_line_sum;
+		dprintf(2, "first_row: %zu\n" , (*ed)->first_row);
+	}
 	else
 	{
 		while ((*ed)->cursor_str_pos)
@@ -91,9 +118,12 @@ int				term_historic(t_editor **ed)
 		(*ed)->first_row = get_cursor_position(1);
 	}
 	while ((*ed)->cursor_str_pos != ft_strlen((*ed)->line) - 1)
-		move_cursor_right(*ed);
+		move_cursor_right(*ed);*/
 	(*ed)->cursor_str_pos = ft_strlen((*ed)->line);
 	(*ed)->cur_col = get_cursor_position(0);
 	(*ed)->cur_row = get_cursor_position(1);
+	(*ed)->last_row = (*ed)->cur_row;
+	(*ed)->last_char = (*ed)->cur_col;
+		dprintf(2, "first_row: %zu\n" , (*ed)->first_row);
 	return (0);
 }
