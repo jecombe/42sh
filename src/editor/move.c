@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/06/19 04:30:23 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 22:37:26 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/18 23:34:58 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,10 +24,16 @@ void	move_right(void)
 		tputs(tgetstr("nd", NULL), 1, ft_putchar);
 }
 
+int		ft_outtc(int c)
+{
+	return (write(0, &c, 1));
+}
+
 void	move_left(t_editor *ed)
 {
 	t_sz sz;
 
+	char buf[32];
 	ioctl(0, TIOCGWINSZ, &sz);
 	if (get_cursor_position(0) == 1 && ed->cursor_str_pos)
 	{
@@ -40,5 +46,12 @@ void	move_left(t_editor *ed)
 		}
 	}
 	else
-		tputs(tgetstr("le", NULL), 1, ft_putchar);
+		tputs(tgetstr("le", NULL), 1, ft_outtc);
+	/*int i = 0;
+	while (i < sizeof(buf)-1)
+	{
+		if (read(0, buf+i, 1) != 1)
+			break;
+		i++;
+	}*/
 }

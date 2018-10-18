@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/12 18:13:31 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/15 20:16:24 by dewalter    ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/10/18 23:30:13 by dewalter    ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -66,22 +66,29 @@ static int		get_col(char *str)
 	return (ft_atoi(str + i));
 }
 
-size_t			get_cursor_position(int mode)
+size_t		get_cursor_position(int mode)
 {
-	size_t	res;
-	char	buf[20];
-	char	*str;
+	size_t  res;
+	char    buf[32];
+	unsigned int i;
 
-	res = 0;
-	ft_bzero(buf, 20);
-	str = "\E[6n";
-	tputs(tgetstr("sc", NULL), 1, ft_putchar);
-	ft_putstr(str);
-	read(0, buf, sizeof(buf));
+	i = 0;
+	if (write(1, "\x1b[6n", 4) != 4)
+		return (-1);
+	while (i < sizeof(buf) -1)
+	{
+		if (read(0,buf+i,1) != 1)
+			break;
+		if (buf[i] == 'R')
+			break;
+		i++;
+	}
+	buf[i] = '\0';
+	if (buf[0] != 27 || buf[1] != '[')
+		return (-1);
 	if (mode)
 		res = get_row(buf);
 	else
 		res = get_col(buf);
-	tputs(tgetstr("rc", NULL), 1, ft_putchar);
-	return (res);
+		return (res);
 }
