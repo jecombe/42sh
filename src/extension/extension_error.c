@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/09 07:14:01 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 08:58:54 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/23 06:27:38 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,8 @@ static int		error_n_redirect(t_redirect **b_redirect)
 	{
 		if (!n_redirect->file)
 		{
-			ft_putendl("bash: ambiguous redirect");
+			ft_putendl_fd("bash: ambiguous redirect", 2);
+			add_to_set("?", "1");
 			return (1);
 		}
 		n_redirect = n_redirect->next;

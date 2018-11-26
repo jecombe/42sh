@@ -6,14 +6,35 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 04:29:30 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 09:01:35 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 15:01:15 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int		add_bin_tab(t_shell **sh, DIR *dir, char *path)
+static char	*tab_replace_tild(char *line)
+{
+	char	*ret;
+	char	*tmp;
+
+	ret = NULL;
+	if (line && line[0] == '~' && (line[1] == '/' || !line[1]))
+	{
+		if ((tmp = ft_getenv("HOME", g_set)))
+		{
+			ret = line[1] && tmp ? ft_strjoin(tmp, line + 1) : ft_strdup(tmp);
+			ft_strdel(&tmp);
+		}
+		else
+			ret = ft_strdup(line);
+	}
+	else
+		ret = ft_strdup(line);
+	return (ret);
+}
+
+int			add_bin_tab(t_shell **sh, DIR *dir, char *path)
 {
 	struct dirent	*t_dir;
 	char			*tmp;
@@ -21,7 +42,7 @@ int		add_bin_tab(t_shell **sh, DIR *dir, char *path)
 	int				len_file;
 	char			*tmp2;
 
-	line = (*sh)->t.word;
+	line = tab_replace_tild((*sh)->t.word);
 	while ((t_dir = readdir(dir)))
 	{
 		tmp2 = ft_strdup(t_dir->d_name);
@@ -38,10 +59,11 @@ int		add_bin_tab(t_shell **sh, DIR *dir, char *path)
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
+	ft_strdel(&line);
 	return (0);
 }
 
-void	manage_first_tab(t_shell **sh, char key[])
+void		manage_first_tab(t_shell **sh, char key[])
 {
 	if ((*sh)->t.elem && (*sh)->t.elem[1])
 	{
@@ -63,20 +85,16 @@ void	manage_first_tab(t_shell **sh, char key[])
 	{
 		tputs(tgetstr("bl", NULL), 1, ft_putchar);
 		ft_free_t_tab(&(*sh)->t);
-		ft_free_t_select(&(*sh)->sel);
 		(*sh)->tabu = -1;
 	}
 }
 
-void	first_tab(t_shell **sh, char key[])
+void		first_tab(t_shell **sh, char key[])
 {
 	if (lexer_tab(sh) != -1)
 	{
 		if ((*sh)->t.nb_word == 1 || (*sh)->t.nb_word == 0)
-		{
 			search_bin_tab(sh);
-			search_in_rep_tab(sh);//RESOUDRE LES COULEURS DE FICHIERS
-		}
 		else if ((*sh)->t.nb_word == -1)
 			(*sh)->t.elem = search_var_tab((*sh)->t.word);
 		else
@@ -87,7 +105,7 @@ void	first_tab(t_shell **sh, char key[])
 		ft_free_t_tab(&(*sh)->t);
 }
 
-int		tabulator(t_shell **ed, int version, char key[])
+int			tabulator(t_shell **ed, int version, char key[])
 {
 	version != 0 ? place_cursor_before(*ed) : 0;
 	if ((*ed)->tabu == -1 && version == 1)

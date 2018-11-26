@@ -6,14 +6,14 @@
 #    By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/11/24 18:33:54 by dzonda       #+#   ##    ##    #+#        #
-#    Updated: 2018/11/09 07:36:22 by gmadec      ###    #+. /#+    ###.fr      #
+#    Updated: 2018/11/25 16:33:03 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
 
 .PHONY: all re clean fclean lib
 
-NAME = 101sh
+NAME = 42sh
 
 MAKE = make
 CC = gcc
@@ -63,6 +63,7 @@ SRCS_NAME =	\
 			lexer/prelexer.c \
 			lexer/lexer.c \
 			lexer/lexer_break_words.c \
+			lexer/lexer_break_sub.c \
 			lexer/lexer_utils.c \
 			parser/attrib_parsing.c \
 			parser/convert_token.c \
@@ -74,7 +75,9 @@ SRCS_NAME =	\
 			extension/extension_error.c \
 			extension/quotes_manager.c \
 			extension/add_tild.c \
+			extension/subshell_manager.c \
 			extension/extension.c \
+			extension/dollar_sub.c \
 			extension/bquote_manager.c \
 			extension/backslash_manager.c \
 			extension/ft_split_b_quote.c \
@@ -84,6 +87,7 @@ SRCS_NAME =	\
 			extension/ft_free_n_seq.c \
 			extension/ft_free_n_op.c \
 			extension/ft_free_n_redirect.c \
+			extension/utils_parcour_tab.c \
 			execute/binary.c \
 			execute/binary_signal.c \
 			execute/solver.c \
@@ -142,6 +146,7 @@ OBJS_FOLDERS_BIS = $(addprefix $(OBJS_PATH),$(OBJS_FOLDERS))
 NB_FILES = $(words $(SRCS_NAME))
 SHELL = /bin/bash # just because sh print -n from echo
 COLS = $(shell tput cols)
+DEL_DSYMFILE = $(shell [ -e a.out.dSYM ] && echo rm -rf a.out.dSYM)
 
 all: $(NAME)
 
@@ -151,7 +156,7 @@ $(NAME): init lib $(OBJS)
 	@tput setaf 10 	# set green color
 	@tput bold
 	@$(eval CURSOR := $(if $(CURSOR),$(CURSOR),0)) # is CURSOR var set ?
-	@echo -n "[ $(NAME)   ] Compiled $(CURSOR)/$(NB_FILES) files."
+	@echo -n "[ $(NAME)    ] Compiled $(CURSOR)/$(NB_FILES) files."
 	@tput sgr0 	# reset color
 	@tput el 	# clear from cursor to end of line
 	@echo ""
@@ -183,11 +188,13 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(CC) $(CFLAGS) $(CPPFLAGS) -o $@ -c $<
 
 val: lldb
-	valgrind --suppressions=${HOME}/.valgrind.supp --leak-check=full --track-origins=yes ./a.out
-	#valgrind --leak-check=full --track-origins=yes ./a.out
+	valgrind --suppressions=.valgrind.supp --leak-check=full --track-origins=yes ./a.out
 
 valgrind: lldb
-	valgrind --leak-check=full --track-origins=yes ./a.out
+	valgrind --suppressions=.valgrind.supp --leak-check=full --track-origins=yes ./a.out
+
+valsup: lldb
+	valgrind --gen-suppressions=all --leak-check=full --track-origins=yes --show-leak-kinds=all ./a.out
 
 lldb:
 	gcc -ggdb3 src/*/*.c libft/src/*.c -I include -I libft/include -ltermcap
@@ -198,6 +205,7 @@ lib:
 clean:
 	@$(MAKE) -C $(LIB_PATH) clean
 	@$(RM) $(OBJS)
+	@rm -rf obj
 
 fclean: clean
 	@$(MAKE) -C $(LIB_PATH) fclean
@@ -207,5 +215,6 @@ fclean: clean
 	@echo "[ $(NAME)   ] deleted."
 	@printf "\e[0m"		# reset color
 	@rm -rf obj
+	$(DEL_DSYMFILE)
 
 re: fclean all

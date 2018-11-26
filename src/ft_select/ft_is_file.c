@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/11 19:49:39 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 10:28:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 14:19:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,6 +27,8 @@ char		ft_stat(char *file, char *path)
 	if (lstat(complete, &stat) == -1 && (ft_strdel(&complete) + 1))
 		return ('0');
 	if ((stat.st_mode & S_IFMT) == S_IFDIR && (ft_strdel(&complete) + 1))
+		return ('2');
+	if ((stat.st_mode & S_IFMT) == S_IFLNK && (ft_strdel(&complete) + 1))
 		return ('2');
 	ft_strdel(&complete);
 	ret = (stat.st_mode & S_IFMT) == S_IFREG ? '1' : '0';

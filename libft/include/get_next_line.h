@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/19 16:47:05 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/10 01:00:30 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 10:45:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -14,7 +14,7 @@
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define GNL_SIZE 3
+# define GNL_SIZE 10000
 
 # include "./libft.h"
 # include <sys/types.h>

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 00:32:29 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 08:59:35 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 10:50:43 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,10 +28,10 @@ int			dollar_end(char *str, int debut)
 	int		i;
 
 	i = debut;
-	while (str[i] && !ft_isquote(str[i]) && !ft_isblank(str[i]) &&
-			str[i] != '\\' && str[i] != '$' && str[i] != '?')
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	if ((str[i] == '$' || str[i] == '?') && i == debut)
+	if (ft_isprint(str[i]) && !ft_isquote(str[i]) && !ft_isalnum(str[i]) &&
+			str[i] != '(' && i == debut)
 		i++;
 	return (i > debut ? i - debut : 0);
 }
@@ -88,28 +88,30 @@ int			replace_line(char ***cmd, char *line, int k[3])
 	return (replace_in_and_after(k, cmd, &tmp, &tmp2));
 }
 
-int			ft_dollar(char ***cmd, int *i, int *j)
+int			ft_dollar(char ***cmd, t_bquote **i)
 {
 	char		*tmp;
 	char		*line;
 	int			k[3];
 
-	k[0] = *i;
-	k[1] = *j;
+	k[0] = (*i)->i;
+	k[1] = (*i)->j;
 	k[2] = 0;
 	line = NULL;
 	tmp = NULL;
-	if ((k[2] = dollar_end((*cmd)[*i], *j + 1)) >= 1)
+	if ((k[2] = dollar_end((*cmd)[(*i)->i], (*i)->j + 1)) >= 1)
 	{
-		tmp = ft_strsub((*cmd)[*i], *j + 1, k[2]);
+		tmp = ft_strsub((*cmd)[(*i)->i], (*i)->j + 1, k[2]);
 		line = dollar_replace(tmp);
 		if (replace_line(cmd, line, k))
-			ft_strdel_in_tab(cmd, *i);
+			ft_strdel_in_tab(cmd, (*i)->i);
 		if (line)
-			*j = *j + (int)ft_strlen(line);
+			(*i)->j = (*i)->j + (int)ft_strlen(line) - k[2];
 	}
+	else if (k[2] == -1)
+		ft_chardel_at(&(*cmd)[(*i)->i], (*i)->j);
 	else
-		*j = *j + 1;
+		(*i)->j = (*i)->j + 1;
 	free(line);
 	free(tmp);
 	return (0);

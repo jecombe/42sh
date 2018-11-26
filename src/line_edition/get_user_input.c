@@ -6,7 +6,7 @@
 /*   By: gbarnay <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/18 20:15:51 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 09:10:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/17 11:35:39 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,10 +41,10 @@ int			ft_reprint_cmd(t_shell *sh)
 	int		i;
 	int		cursor_in_line;
 
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &sh->ws);
+	ft_get_cols(&sh->ws);
 	i = g_cursor_pos;
 	cursor_in_line = ft_recup_cursor_pos(sh, &cursor_in_line, &cursor_in_line);
-	while (g_cmd[i])
+	while (g_cmd && g_cmd[i])
 	{
 		if (!(g_cmd[i] == '\n'))
 		{
@@ -126,7 +126,7 @@ char		*ft_get_user_input(t_prompt *prompt)
 		if (!(read(0, buff, 4)))
 			return (NULL);
 		tputs(tgetstr("vi", NULL), 1, ft_putchar);
-		ioctl(STDOUT_FILENO, TIOCGWINSZ, &sh.ws);
+		ft_get_cols(&sh.ws);
 		if (ft_get_user_input_buff_checker(&sh, buff))
 			return (g_cmd);
 		tputs(tgetstr("ve", NULL), 1, ft_putchar);

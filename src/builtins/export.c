@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 06:59:18 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/07 22:39:26 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 10:48:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,7 +51,8 @@ int			str_isassign(char *str)
 	{
 		while (str[i])
 		{
-			if (ft_isalnum(str[i]) || (str[i] == '=' && i > 0))
+			if (ft_isalnum(str[i]) || ((str[i] == '=' || str[i] == '_')
+						&& i > 0))
 				i++;
 			else
 				return (0);
@@ -71,6 +72,8 @@ int			assign_var(char *cmd)
 	value = ft_get_value(cmd);
 	add_to_set(name, value);
 	add_to_env(name, value);
+	ft_strdel(&name);
+	ft_strdel(&value);
 	return (0);
 }
 

@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   manage_loop_fd.c                                 .::    .:/ .      .::   */
+/*   lexer_break_sub.c                                .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/30 17:46:47 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/21 16:00:32 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/25 09:54:34 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/25 13:21:36 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-void		ft_save_fd(int fd_org[3])
+void			ft_lexer_break_sub(char *input, int *idx)
 {
-	fd_org[0] = dup(0);
-	fd_org[1] = dup(1);
-	fd_org[2] = dup(2);
-}
+	char	c;
 
-void		ft_restore_fd(int fd_org[3])
-{
-	dup2(fd_org[0], 0);
-	dup2(fd_org[1], 1);
-	dup2(fd_org[2], 2);
-}
-
-void		ft_loop_reset(t_loop *loop)
-{
-	loop->fd_in = 0;
-	loop->fd_out = 1;
+	c = input[*idx];
+	if (c == '(')
+		while (input[++(*idx)])
+			if (input[*idx] == '\0' || (input[(*idx)] == ')' &&
+						(*idx == 0 || input[*idx - 1] == '\\')))
+				break ;
 }

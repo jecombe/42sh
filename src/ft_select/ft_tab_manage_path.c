@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/08 10:38:38 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 10:39:24 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/21 02:26:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,7 +38,8 @@ char	*ft_search_absolute_path(char *line)
 	char	*absolute_path;
 
 	i = ft_strlen(line) - ft_strlen(ft_strrchr(line, '/'));
-	absolute_path = ft_strsub(line, 0, line[1] ? i : 1);
+	i = i ? i : 1;
+	absolute_path = ft_strsub(line, 0, i);
 	return (absolute_path);
 }
 
@@ -58,13 +59,29 @@ char	*ft_search_relative_path(char *line)
 char	*ft_search_path(char *line)
 {
 	char	*pwd;
+	char	*tmp;
+	char	*tmp2;
 
-	if (!line || !ft_strchr(line, '/'))
-		pwd = ft_search_pwd(NULL);
-	else if (ft_strchr(line, '/') && !(line[0] == '/'))
-		pwd = ft_search_relative_path(line);
+	if (line && line[0] == '~' && (tmp2 = ft_getenv("HOME", g_set)))
+	{
+		if (line[1] == '/')
+			tmp = ft_strjoin(tmp2, line + 1);
+		else if (!line[1])
+			tmp = ft_strdup(tmp2);
+		else
+			tmp = ft_strdup(line);
+		ft_strdel(&tmp2);
+	}
 	else
-		pwd = ft_search_absolute_path(line);
+		tmp = line ? ft_strdup(line) : NULL;
+	if (!tmp || !ft_strchr(tmp, '/'))
+		pwd = ft_search_pwd(NULL);
+	else if (ft_strchr(tmp, '/') && !(tmp[0] == '/'))
+		pwd = ft_search_relative_path(tmp);
+	else
+		pwd = line && line[0] == '~' && !line[1] ? ft_strdup(tmp) :
+			ft_search_absolute_path(tmp);
+	ft_strdel(&tmp);
 	return (pwd);
 }
 

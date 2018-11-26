@@ -6,22 +6,12 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:20:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 04:46:35 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 10:07:20 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
-static void	ft_print_env(void)
-{
-	int		i;
-
-	i = -1;
-	if (g_env)
-		while (g_env[++i])
-			ft_putendl_fd(g_env[i], 1);
-}
 
 static int	ft_env_flags(const char **cmd, char *flag, int *idx)
 {
@@ -40,6 +30,7 @@ static int	ft_env_flags(const char **cmd, char *flag, int *idx)
 				return (ft_bierrors("env", &cmd[i][j], BIFLAG));
 			*flag = 'i';
 		}
+		j = -1;
 	}
 	*idx = i;
 	return (EXIT_SUCCESS);
@@ -67,55 +58,56 @@ static int	ft_assign_env(const char **cmd, char flag, int *idx)
 
 static int	ft_exec_env(const char **cmd, int i)
 {
-	pid_t	cpid;
-	int		status;
 	char	**args;
-	char	*utility;
+	char	*line;
+	int		ret;
 
-	cpid = -1;
-	status = 1;
 	args = NULL;
-	utility = NULL;
+	line = NULL;
+	ret = 0;
 	while (cmd[i])
-		ft_malloc_cmd(&args, (char *)cmd[i++]);
-	if (args != NULL)
 	{
-		utility = ft_search_bin(args[0]);
-		if ((cpid = fork()) == 0)
-			if ((execve(utility, args, g_env)) == -1)
-				exit(EXIT_FAILURE);
-		if (cpid > 0)
-			wait(&status);
-		ft_tabdel(&args);
-		ft_strdel(&utility);
-		return ((WEXITSTATUS(status) == 1) ? EXIT_FAILURE : EXIT_SUCCESS);
+		line = ft_strjoin_free(line, (char *)cmd[i++]);
+		line = ft_strjoin_free(line, " ");
 	}
-	return (EXIT_SUCCESS);
+	ret = line ? heart_of_101sh(line, 0) : 0;
+	ft_strdel(&line);
+	return (ret);
+}
+
+static int	manage_env(t_op *exec, int *ret)
+{
+	char	**env;
+	char	**set;
+	char	flag;
+	int		i;
+
+	i = 0;
+	flag = '\0';
+	if (!(env = ft_tabdup(g_env)))
+		return (EXIT_FAILURE);
+	if (!(set = ft_tabdup(g_set)))
+		return (EXIT_FAILURE);
+	if (ft_env_flags((const char **)exec->cmd, &flag, &i))
+		return (EXIT_FAILURE + ft_tabdel(&env) + ft_tabdel(&set));
+	if (ft_assign_env((const char **)exec->cmd, flag, &i))
+		return (EXIT_FAILURE + ft_tabdel(&env) + ft_tabdel(&set));
+	*ret = ft_exec_env((const char **)exec->cmd, i);
+	ft_tabdel(&g_env);
+	ft_tabdel(&g_set);
+	g_env = env;
+	g_set = set;
+	return (0);
 }
 
 int			ft_env(t_op *exec)
 {
-	int		i;
-	char	flag;
-	char	**env;
+	int		ret;
 
-	i = 0;
-	flag = '\0';
-	env = NULL;
+	ret = 0;
 	if (!exec || exec->cmd[1] == NULL)
 		ft_print_env();
-	else
-	{
-		if (!(env = ft_tabdup(g_env)))
-			return (EXIT_FAILURE);
-		if (ft_env_flags((const char **)exec->cmd, &flag, &i))
-			return (EXIT_FAILURE);
-		if (ft_assign_env((const char **)exec->cmd, flag, &i))
-			return (EXIT_FAILURE);
-		ft_exec_env((const char **)exec->cmd, i);
-		ft_tabdel(&g_env);
-		g_env = ft_tabdup(env);
-		ft_tabdel(&env);
-	}
-	return (EXIT_SUCCESS);
+	else if (manage_env(exec, &ret))
+		return (EXIT_FAILURE);
+	return (ret);
 }

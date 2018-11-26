@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/07/14 07:27:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 07:10:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 13:19:25 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -111,6 +111,7 @@ t_lex				lexer(char *input);
 
 int					ft_lexer_break_operator(char *input, int idx, int i);
 void				ft_lexer_break_quote(char *input, int *idx);
+void				ft_lexer_break_sub(char *input, int *idx);
 int					ft_lexer_break_blank(char *input, int *idx, int *i);
 void				ft_lexer_break_expansion(char *input, int *idx);
 int					ft_lexer_break_comment(char *input, int *idx);
@@ -126,5 +127,6 @@ int					ft_isoperator(char *input);
 int					ft_isreserved(char *input);
 int					ft_isalias(char **name);
 void				ft_lexer_del(t_lex *lex);
+int					prelex_norm(char **line);
 
 #endif

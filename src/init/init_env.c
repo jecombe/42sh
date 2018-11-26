@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:33:44 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 17:05:05 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/18 02:24:56 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -65,7 +65,6 @@ static void		ft_get_file_info(const char *path)
 {
 	char	*tmp;
 
-	tmp = NULL;
 	if ((tmp = ft_strjoin(path, "/.TMPDIR")))
 		add_to_env("TMPDIR", tmp);
 	ft_strdel(&tmp);

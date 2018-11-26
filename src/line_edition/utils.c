@@ -58,3 +58,12 @@ int			ft_count_line_cmd(t_shell *sh)
 	ft_strdel(&cmd);
 	return (y);
 }
+
+void		ft_get_cols(t_ws *ws)
+{
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, ws);
+	if (!ws->ws_col)
+		ws->ws_col = 80;
+	if (!ws->ws_row)
+		ws->ws_row = 80;
+}

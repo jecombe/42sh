@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/07 16:12:31 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:08:01 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/20 21:55:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,7 @@
 int		ft_pushed_key_ctrl_c(t_shell *sh, char key[])
 {
 	(void)key;
+	add_to_set("?", "1");
 	ft_pushed_key_home_end(sh, FT_KEY_END);
 	TERMCAP("do");
 	TERMCAP("cr");
@@ -36,7 +37,7 @@ int		ft_pushed_key_ctrl_d(t_shell *sh, char key[])
 		get_term_raw_mode(0);
 		if (g_prompt == E_HDOC)
 			return (ft_pushed_key_ctrl_c(sh, key));
-		g_cmd = ft_strdup("exit\n");
+		g_cmd = ft_strdup(FT_KEY_CTRL_D);
 		ft_putstr("\n");
 		return (1);
 	}

@@ -6,41 +6,49 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 05:52:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 06:54:16 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/18 03:32:47 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int				ft_unset_var(char *cmd)
+static int		unset_loop(char *name)
 {
-	int			i;
-	int			j;
+	char	*s;
+	int		i;
+	char	**env;
 
-	i = 0;
-	while (cmd && g_set && g_set[i])
+	s = NULL;
+	i = -1;
+	env = NULL;
+	if (g_set)
 	{
-		j = 0;
-		while (g_set[i][j] && cmd[j] && g_set[i][j] == cmd[j])
-			j++;
-		if (j > 0 && g_set[i][j] == '=' && j == (int)ft_strlen(cmd))
-			return (ft_strdel_in_tab(&g_set, i));
-		i++;
+		if (name == NULL)
+			return (ft_bierrors("unset", NULL, BITOFEW));
+		if (!(s = ft_envset_line((const char **)g_set, name)))
+			return (EXIT_SUCCESS);
+		env = ft_tabdup(g_set);
+		ft_tabdel(&g_set);
+		g_set = NULL;
+		while (env[++i])
+			if (!(ft_strcmp(env[i], s) == 0))
+				ft_malloc_cmd(&g_set, env[i]);
+		ft_tabdel(&env);
+		ft_strdel(&s);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int				unset(t_op *exec)
 {
 	int		i;
 
-	i = 1;
-	if (exec->cmd)
-		while (g_set && exec->cmd[i])
-		{
-			ft_unset_var(exec->cmd[i]);
-			ft_unsetenv(exec->cmd[i++]);
-		}
-	return (0);
+	i = 0;
+	while (g_set && exec->cmd[++i])
+		unset_loop(exec->cmd[i]);
+	i = 0;
+	while (g_env && exec->cmd[++i])
+		ft_unsetenv(exec->cmd[i]);
+	return (EXIT_SUCCESS);
 }

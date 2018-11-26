@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/05 04:28:47 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 07:36:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/23 10:49:27 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -100,6 +100,7 @@ char					*ft_get_value(char *line);
 char					*ft_envset_line(const char **envset, const char *name);
 char					*ft_envset_value(const char **envset, const char *name);
 char					*ft_envset_join(const char *name, const char *value);
+void					ft_print_env(void);
 
 /*
 *******************************************************************************

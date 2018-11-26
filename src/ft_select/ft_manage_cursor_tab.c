@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/08 10:48:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 08:51:22 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/17 11:36:02 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ void	place_cursor_after(t_shell *sh)
 	i = g_cursor_pos;
 	g_cursor_pos = 0;
 	ft_reprint_cmd(sh);
-	g_cursor_pos = ft_strlen(g_cmd);
+	g_cursor_pos = g_cmd ? ft_strlen(g_cmd) : 0;
 	while (g_cursor_pos > i)
 		ft_pushed_left(sh);
 	g_cursor_pos = i;

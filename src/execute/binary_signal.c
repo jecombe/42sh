@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/29 17:33:06 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/07 14:56:00 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 11:29:56 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ int		binary_signal(int status, int pid, char *bin)
 {
 	char	*tmp;
 
-	if ((status >= 6 && status <= 8) || (status >= 11 && status <= 16))
+	if ((status >= 6 && status <= 8) || (status >= 10 && status <= 16))
 	{
 		ft_putstr_fd("[1]\t", 2);
 		tmp = ft_itoa(pid);
@@ -31,7 +31,7 @@ int		binary_signal(int status, int pid, char *bin)
 	status == 11 ? ft_putstr_fd("SEGMENTATION FAULT", 2) : 0;
 	status == 13 ? ft_putstr_fd("BROKEN PIPE", 2) : 0;
 	status == 16 ? ft_putstr_fd("STACK FAULT", 2) : 0;
-	if ((status >= 6 && status <= 8) || (status >= 11 && status <= 16))
+	if ((status >= 6 && status <= 8) || (status >= 10 && status <= 16))
 	{
 		write(2, "\t", 1);
 		ft_putendl_fd(bin, 2);

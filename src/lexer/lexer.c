@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:40:38 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:18:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 13:36:44 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -34,7 +34,9 @@ static char			*ft_lexer_break_input(char *input, int *idx)
 	}
 	if (input[*idx] == '\0' && (*idx == i))
 		return (NULL);
-	s = ft_strsub(input, i, (*idx - i));
+	if ((s = ft_strsub(input, i, (*idx - i))) &&
+			!input[*idx] && s[ft_strlen(s) - 1] == '\n')
+		ft_chardel_at(&s, ft_strlen(s) - 1);
 	return (s);
 }
 

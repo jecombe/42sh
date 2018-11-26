@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/10 06:30:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 04:48:36 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 13:46:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,4 +41,13 @@ char		*ft_get_value(char *line)
 			i++;
 		}
 	return (NULL);
+}
+
+void		ft_print_env(void)
+{
+	int		i;
+
+	i = -1;
+	while (g_env && g_env[++i])
+		ft_putendl(g_env[i]);
 }

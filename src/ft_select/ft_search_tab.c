@@ -6,12 +6,21 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/08 10:56:07 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 11:20:20 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 10:37:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
+int		ft_islink(char *test)
+{
+	struct stat		stat;
+
+	if (lstat(test, &stat) != -1 && (stat.st_mode & S_IFMT) == S_IFLNK)
+		return (1);
+	return (0);
+}
 
 int		search_bin_tab(t_shell **ed)
 {
@@ -45,12 +54,12 @@ int		search_in_rep_tab(t_shell **ed)
 	DIR			*dir;
 
 	path = ft_search_path((*ed)->t.word);
-	if (ft_isdir(path) == 0)
+	if (path && ft_isdir(path) == 0 && ft_islink(path) == 0)
 	{
 		ft_strdel(&path);
 		return (0);
 	}
-	if ((dir = opendir(path)))
+	if (path && (dir = opendir(path)))
 	{
 		tmp = ft_strdup((*ed)->t.word);
 		ft_cut_word_and_before(&(*ed)->t.word, tmp, &(*ed)->t.before);

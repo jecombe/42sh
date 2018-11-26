@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:34:28 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 15:20:14 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 09:49:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,7 +33,6 @@ int			ft_exit(t_op *opera)
 
 	i = -1;
 	ret = 0;
-	history_save(NULL, NULL, 2, NULL);
 	if (opera->cmd[1])
 	{
 		while (opera->cmd[1][++i])

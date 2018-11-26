@@ -6,32 +6,12 @@
 /*   By: gbarnay <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2060/00/00 00:00:00 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 09:11:44 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 12:14:57 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
-
-/*
-**void		ft_debug_rd(t_read *rd)
-**{
-**	printf("-------------\n");
-**	printf("line:\t[%s]\n", rd->line);
-**	printf("prompt:\t[%s]\n", rd->prompt);
-**	printf("delim:\t[%c]\n", rd->delimiter);
-**	printf("limit:\t[%d]\n", rd->limit);
-**	printf("hide:\t[%d]\n", rd->hide);
-**	printf("backs:\t[%d]\n", rd->backs);
-**	printf("split:\t[%d]\n", rd->split);
-**	for (int i = 0; rd->vars[i]; i++)
-**		printf("var[%d]:\t[%s]\n", i, rd->vars[i]);
-**	printf("fd:\t[%d]\n", rd->fd);
-**	printf("secs:\t[%d]\n", rd->secs);
-**	printf("inter:\t[%d]\n", rd->interactive);
-**	printf("-------------\n");
-**}
-*/
 
 void		ft_init_read(t_read *rd)
 {

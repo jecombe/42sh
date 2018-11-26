@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/12 20:16:54 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:32:43 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/23 07:00:07 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -57,6 +57,7 @@ void				*ft_memset(void *s, int c, size_t len);
 char				*ft_strcat(char *s1, const char *s2);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strdup(const char *s1);
+char				*ft_strdup_free(char *s1, char *to_free);
 size_t				ft_strlen(const char *s);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 char				*ft_strncpy(char *dst, const char *src, size_t len);

@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/07 16:11:53 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:09:37 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/21 00:56:41 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -46,7 +46,7 @@ int		ft_pushed_key_del(t_shell *sh, char key[])
 		tmp_cursor = g_cursor_pos;
 		while (g_cursor_pos)
 			ft_pushed_left(sh);
-		ft_chardel_at(&g_cmd, tmp_cursor - 1);
+		ft_chardel_at(&g_cmd, tmp_cursor);
 		TERMCAP("cd");
 		if (g_cmd)
 		{

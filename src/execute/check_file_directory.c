@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/08 17:06:48 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 17:11:06 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/21 16:29:20 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,24 +22,6 @@ int				ft_check_file_is_directory(const char *file)
 	return (0);
 }
 
-int				ft_check_file_is_regular(const char *file)
-{
-	struct stat st;
-
-	if (stat(file, &st) == 0 && S_ISREG(st.st_mode))
-		return (-4);
-	return (0);
-}
-
-int				ft_check_file_is_regular2(const char *file)
-{
-	struct stat st;
-
-	if (stat(file, &st) == 0 && st.st_mode & S_IXUSR)
-		return (-5);
-	return (0);
-}
-
 int				ft_check_source(char *source)
 {
 	struct stat sb;
@@ -49,11 +31,9 @@ int				ft_check_source(char *source)
 	return (0);
 }
 
-int				ft_check_direct_command(char *cmd)
+int				ft_check_permission(char *source)
 {
-	struct stat sb;
-
-	if (lstat(cmd, &sb) == -1)
-		return (-1);
-	return (0);
+	if (access(source, R_OK) == 0)
+		return (0);
+	return (-1);
 }

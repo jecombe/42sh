@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/15 07:06:53 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 08:53:32 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 15:14:30 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,7 +26,7 @@ static int	replace_cmd(char **to_copy, char ***to_past)
 	return (0);
 }
 
-static int	ft_bquote_replace(char ***cmd, char **in_bquote, t_bquote **index)
+int			ft_bquote_replace(char ***cmd, char **in_bquote, t_bquote **index)
 {
 	int			i;
 	char		**begin_copy;
@@ -58,41 +58,39 @@ static char	*recup_inside_bquote(char *cmd, int begin, int j_index)
 	return (ret);
 }
 
-static char	*get_tmp_file(void)
+char		*get_tmp_file(void)
 {
 	char		*ret;
-	char		*tmp;
 	char		*line;
 	int			fd;
 
-	fd = open(".tmp_file", O_CREAT, O_RDONLY);
 	ret = NULL;
 	line = NULL;
-	while (get_next_line(fd, &line) > 0)
+	if (g_error_bquote == 0 && access(".tmp_file", 0) != -1)
 	{
-		if (ret)
+		fd = open(".tmp_file", O_RDONLY);
+		while (fd && get_next_line(fd, &line) > 0 && g_interupt == 0)
 		{
-			tmp = ft_strjoin(ret, "\n");
-			ft_strdel(&ret);
-			ret = ft_strjoin(tmp, line);
-			ft_strdel(&tmp);
+			ret = ret ? ft_strjoin_free(ret, "\n") : NULL;
+			ret = ft_strjoin_free(ret, line);
+			ft_strdel(&line);
 		}
-		else
-			ret = ft_strdup(line);
 		ft_strdel(&line);
+		g_interupt == 1 ? ft_strdel(&ret) : 0;
+		fd > -1 ? close(fd) : 0;
+		fd > -1 ? unlink(".tmp_file") : 0;
 	}
-	close(fd);
 	return (ret);
 }
 
 int			bquote_manager(char ***cmd, t_bquote **i)
 {
-	int			fd;
 	char		*line;
 	char		*tmp;
 	t_prompt	prompt;
 
 	prompt = PROMPT;
+	line = NULL;
 	if ((line = recup_inside_bquote((*cmd)[(*i)->i], (*i)->begin, (*i)->j)))
 	{
 		tmp = ft_strdup(line);
@@ -103,13 +101,12 @@ int			bquote_manager(char ***cmd, t_bquote **i)
 			return (err_bquote_unmatched(prompt));
 		}
 		ft_strdel(&tmp);
-		fd = 3;
-		heart_of_101sh(line, fd);
+		heart_of_101sh(line, 3);
 		ft_strdel(&line);
 		line = get_tmp_file();
-		unlink(".tmp_file");
 	}
 	if (ft_bquote_replace(&(*cmd), &line, i))
 		return (1);
+	ft_strdel(&line);
 	return (0);
 }

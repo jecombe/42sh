@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   manage_loop_fd.c                                 .::    .:/ .      .::   */
+/*   ft_strdup_free.c                                 .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
+/*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/10/30 17:46:47 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/21 16:00:32 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/23 06:34:28 by gmadec       #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/23 07:00:19 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "heart.h"
+#include "../include/libft.h"
 
-void		ft_save_fd(int fd_org[3])
+char	*ft_strdup_free(char *s1, char *to_free)
 {
-	fd_org[0] = dup(0);
-	fd_org[1] = dup(1);
-	fd_org[2] = dup(2);
-}
+	int		i;
+	char	*dest;
 
-void		ft_restore_fd(int fd_org[3])
-{
-	dup2(fd_org[0], 0);
-	dup2(fd_org[1], 1);
-	dup2(fd_org[2], 2);
-}
-
-void		ft_loop_reset(t_loop *loop)
-{
-	loop->fd_in = 0;
-	loop->fd_out = 1;
+	i = -1;
+	dest = NULL;
+	if (!s1)
+		return (NULL);
+	if (!(dest = ft_strnew(ft_strlen(s1))))
+		return (NULL);
+	while (s1[++i])
+		dest[i] = s1[i];
+	free(to_free);
+	return (dest);
 }

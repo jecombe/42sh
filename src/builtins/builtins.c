@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/02 15:33:04 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 07:37:11 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/18 05:17:04 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -62,19 +62,21 @@ static int			ft_search_assignement_word(int i, char **name)
 	return (name[0] ? -1 : 0);
 }
 
-static int		ft_builtins_envset(t_op *opera)
+static int			ft_builtins_envset(t_op *opera)
 {
-	if ((FT_SETENV || FT_UNSETENV || FT_EXPORT || FT_UNSET) &&
-			opera->cmd[1] && ft_strcmp(opera->cmd[1], "PATH") == 0)
-		hash_clear();
+	int i;
+
+	i = 0;
+	if (FT_SETENV || FT_UNSETENV || FT_EXPORT || FT_UNSET)
+		while (opera->cmd[++i])
+			if (!ft_strcmp(opera->cmd[i], "PATH"))
+				hash_clear();
 	if (FT_ENV || (FT_SETENV && opera->cmd[1] == NULL))
 		return (ft_env(opera));
-	if (FT_SETENV)
-	{
-		if (opera->cmd[2] && opera->cmd[3])
-			return (ft_bierrors("setenv", NULL, BITOMANY));
+	if (FT_SETENV && opera->cmd[2] && opera->cmd[3])
+		return (ft_bierrors("setenv", NULL, BITOMANY));
+	else if (FT_SETENV)
 		return (ft_setenv(opera->cmd[1], opera->cmd[2]));
-	}
 	if (FT_UNSETENV)
 		return (ft_unsetenv(opera->cmd[1]));
 	if (FT_SET)
@@ -88,7 +90,7 @@ static int		ft_builtins_envset(t_op *opera)
 	return (EXIT_FAILURE);
 }
 
-int				ft_builtins(t_op *opera, t_loop *loop)
+int					ft_builtins(t_op *opera, t_loop *loop)
 {
 	t_hashtable *hashtable;
 

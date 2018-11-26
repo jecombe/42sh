@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/26 08:10:15 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 17:15:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 12:30:29 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,7 +49,7 @@
 typedef struct termios		t_termios;
 typedef struct s_select		t_select;
 typedef struct winsize		t_ws;
-typedef struct s_shell		t_shell;
+struct s_shell;
 
 typedef struct	s_key
 {
@@ -67,6 +67,9 @@ typedef enum	e_prompt
 	E_HDOC,
 	E_PIPE,
 	BACKSLASH,
+	ORIF,
+	ANDIF,
+	SUBST,
 	READ
 }				t_prompt;
 
@@ -131,5 +134,7 @@ int				ft_pushed_key_ctrl_d(t_shell *sh, char key[]);
 int				ft_pushed_key_ctrl_l(t_shell *sh, char key[]);
 int				ft_init_shell_struct(t_shell *sh, t_prompt *prompt);
 int				get_term_raw_mode(int mode);
+void			ft_read_raw_mode();
+void			ft_get_cols(t_ws *ws);
 
 #endif

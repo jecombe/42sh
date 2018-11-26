@@ -6,7 +6,7 @@
 #    By: dzonda <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/10 20:37:15 by dzonda            #+#    #+#              #
-#    Updated: 2018/11/01 14:26:25 by jecombe     ###    #+. /#+    ###.fr      #
+#    Updated: 2018/11/23 06:36:00 by gmadec      ###    #+. /#+    ###.fr      #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SRCS_NAME =	\
 			ft_strcpy.c \
 			ft_strdel.c \
 			ft_strdup.c \
+			ft_strdup_free.c \
 			ft_strequ.c \
 			ft_striter.c \
 			ft_striteri.c \
@@ -163,11 +164,13 @@ $(OBJS_PATH)%.o : $(SRCS_PATH)%.c
 
 clean:
 	@$(RM) $(OBJS)
+	@rm -rf obj
 
 fclean: clean
 	@$(RM) $(NAME)
 	@printf "\e[1;31m"	# set red color
 	@echo "[ $(NAME) ] deleted."
 	@printf "\e[0m"		# reset color
+	@rm -rf obj
 
 re: fclean all

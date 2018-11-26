@@ -6,7 +6,7 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:39:56 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 17:16:16 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 11:58:44 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,6 +33,8 @@
 # define FT_READ (ft_strcmp(opera->cmd[0], "read") == 0)
 
 int g_h;
+int g_error_bquote;
+
 typedef struct	s_loop
 {
 	int			fd_in;
@@ -41,13 +43,14 @@ typedef struct	s_loop
 	char		*bin;
 	int			result;
 	int			exit;
-	int			ok;
+	pid_t		pid;
+	int			error_redir_nb;
 }				t_loop;
 
-int				ft_sequence(t_seq *b_seq, int fd);
-int				ft_exec(t_op *opera, t_loop *loop, int pfd[3]);
+int				ft_sequence(t_seq *b_seq, int fd, t_loop *loop);
+int				ft_exec(t_op *opera, t_loop *loop, int pfd[3], int fd2);
 int				ft_return_command(t_loop *loop);
-int				isbuiltin(char *cmd, int fork);
+int				isbuiltin(char *cmd);
 char			*ft_search_bin(char *cmd);
 int				ft_builtins(t_op *t_exec, t_loop *loop);
 int				ft_open_redirect(char *file, int flag, int flag2);
@@ -62,12 +65,17 @@ int				ft_loop_redirect(t_redirect *redirect, int fd2, int fd_one,
 		t_loop *loop);
 void			ft_print_error(const char *s1, const char *s2);
 int				binary_signal(int status, int pid, char *bin);
-void			ft_print_message(char *source, int nb);
+int				ft_print_message(char *source, int nb);
 void			ft_save_fd(int fd_org[3]);
 void			ft_restore_fd(int fd_org[3]);
 void			ft_loop_reset(t_loop *loop);
 int				ft_check_file_is_regular(const char *file);
 int				ft_check_file_is_regular2(const char *file);
-void			ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2]);
+void			ft_solve(t_op *opera, t_loop *loop, int pfd[2]);
+int				ft_command_not_found(t_op *opera, t_loop *loop);
+void			ft_message_random(void);
+int				init_parcour_tab(t_bquote **i);
+int				return_parcour_tab(char **cmd, int ret, t_bquote **i);
+int				ft_check_permission(char *source);
 
 #endif

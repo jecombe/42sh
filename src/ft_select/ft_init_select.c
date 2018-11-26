@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/26 11:58:36 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 10:30:09 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 13:20:52 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -51,9 +51,10 @@ void			manage_init(t_shell **ed, int i, t_line *line)
 	(*ed)->sel->ds = NULL;
 	(*ed)->sel->ret = NULL;
 	(*ed)->sel->ws = (*ed)->ws;
-	(*ed)->sel->ws.ws_row -= (*ed)->t.nb_line;
 	(*ed)->sel->pbl = ft_params_by_line((*ed)->sel);
 	(*ed)->sel->nbl = ft_count_line((*ed)->sel);
+	(*ed)->sel->ws.ws_row -= (*ed)->sel->ws.ws_row <= (*ed)->sel->nbl +
+		(*ed)->t.nb_line ? (*ed)->t.nb_line : 0;
 	(*ed)->sel->nbp = ft_count_params((*ed)->sel->line);
 }
 
@@ -67,5 +68,19 @@ void			ft_init_select(t_shell **ed)
 	(*ed)->sel = malloc(sizeof(t_select));
 	(*ed)->sel->line = NULL;
 	if ((*ed)->t.elem)
+	{
 		manage_init(ed, i, line);
+		i = (*ed)->sel->nbl;
+		while (i > 0)
+		{
+			TERMCAP("sf");
+			i--;
+		}
+		i = (*ed)->sel->nbl;
+		while (i > 0)
+		{
+			TERMCAP("up");
+			i--;
+		}
+	}
 }

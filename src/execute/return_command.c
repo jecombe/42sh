@@ -6,33 +6,37 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 05:41:48 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/02 16:15:22 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 11:38:56 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static int			ft_waiting(int result)
+static int			ft_waiting(t_loop *loop)
 {
-	int status;
-	int ret;
+	int		status;
 
 	status = 0;
-	wait(&status);
+	waitpid(loop->pid, &status, 0);
 	while (wait(NULL) > 0)
 		;
-	ret = WEXITSTATUS(status);
-	if (result != -1)
-		return (result);
-	if (ret > 0)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (loop->result == -1)
+	{
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
+		if (WIFSIGNALED(status))
+		{
+			binary_signal(status, loop->pid, loop->bin);
+			return (WTERMSIG(status));
+		}
+	}
+	return (loop->result);
 }
 
 int					ft_return_command(t_loop *loop)
 {
-	if (ft_waiting(loop->result) == EXIT_SUCCESS)
+	if (ft_waiting(loop) == EXIT_SUCCESS)
 	{
 		if (loop->bin == NULL && loop->result == -1)
 		{

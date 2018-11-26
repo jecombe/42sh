@@ -6,34 +6,23 @@
 /*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/01 01:45:49 by jecombe      #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/01 15:51:55 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/21 05:53:50 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int			isbuiltin(char *cmd, int fork)
+int			isbuiltin(char *cmd)
 {
-	static char	*builtins[] = { "setenv", "unsetenv", "unset",
-		"export", "ft_assign", "hash", "exit", "read", NULL };
-	static char	*fbuiltins[] = { "echo", "env", "set", NULL };
-	static char	*fbuiltinss[] = {"cd", NULL };
+	static char	*builtins[] = {"cd", "setenv", "unsetenv", "export", "unset",
+		"exit", "echo", "env", "set", "ft_assign", "hash", "read", NULL };
 	int			i;
 
 	i = -1;
-	if (fork == 0)
-		while (builtins[++i])
-			if (ft_strcmp(builtins[i], cmd) == 0)
-				return (EXIT_SUCCESS);
-	if (fork == 1)
-		while (fbuiltins[++i])
-			if (ft_strcmp(fbuiltins[i], cmd) == 0)
-				return (EXIT_SUCCESS);
-	if (fork == 2)
-		while (fbuiltinss[++i])
-			if (ft_strcmp(fbuiltinss[i], cmd) == 0)
-				return (EXIT_SUCCESS);
+	while (builtins[++i])
+		if (ft_strcmp(builtins[i], cmd) == 0)
+			return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }
 
@@ -41,7 +30,9 @@ static int	ft_check_direct_bin(const char *cmd)
 {
 	if (access(cmd, F_OK) == -1)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	if (cmd[0] == '/' || !ft_strncmp(cmd, "./", 2))
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }
 
 static char	*ft_check_path_bin(const char *cmd)
@@ -105,13 +96,13 @@ char		*ft_search_bin(char *cmd)
 	char	*buff;
 
 	buff = NULL;
-	if (!isbuiltin(cmd, 1))
+	if (!isbuiltin(cmd))
 		return (ft_strdup(cmd));
 	if (!(ft_check_direct_bin(cmd)))
 		return (ft_strdup(cmd));
 	if (!(ft_check_hash_bin(cmd, &buff)))
 		return (buff);
 	if (!(buff = ft_check_path_bin(cmd)))
-		return (NULL);
+		ft_strdel(&buff);
 	return (buff);
 }

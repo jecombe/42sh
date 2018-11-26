@@ -6,39 +6,17 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/25 20:13:12 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/03 04:37:12 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 15:37:05 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-int			backslash_out_dquote(char **cmd, int *j)
+static int	escpape_charspec(char c)
 {
-	char		*tmp;
-	int			i;
-	int			i2;
-
-	i = 0;
-	if (!(tmp = malloc(sizeof(char) * ft_strlen(*cmd))))
+	if (c == '$' || c == '`' || c == '"' || c == '\\')
 		return (1);
-	while (i < *j)
-	{
-		tmp[i] = (*cmd)[i];
-		i++;
-	}
-	i2 = i;
-	i++;
-	while ((*cmd)[i])
-	{
-		tmp[i2] = (*cmd)[i];
-		i++;
-		i2++;
-	}
-	tmp[i2] = '\0';
-	ft_strdel(&(*cmd));
-	*cmd = ft_strdup(tmp);
-	ft_strdel(&tmp);
 	return (0);
 }
 
@@ -46,13 +24,22 @@ int			backslash_manager(char ***cmd, t_bquote **i)
 {
 	if (*cmd && (*cmd)[(*i)->i][(*i)->j] == '\\')
 	{
-		if ((*i)->dquote == 0)
+		if ((*i)->dquote == 0 && (*cmd)[(*i)->i][(*i)->j + 1] != '\n')
+			ft_chardel_at(&(*cmd)[(*i)->i], (*i)->j);
+		else if ((*cmd)[(*i)->i][(*i)->j + 1] == '\n')
 		{
-			if (backslash_out_dquote(&(*cmd)[(*i)->i], &(*i)->j))
-				return (-1);
+			ft_chardel_at(&(*cmd)[(*i)->i], (*i)->j);
+			ft_chardel_at(&(*cmd)[(*i)->i], (*i)->j);
+			(*i)->j = (*i)->j - 1;
 		}
 		else
-			(*i)->j = (*i)->j + 1;
+		{
+			if (escpape_charspec((*cmd)[(*i)->i][(*i)->j + 1]))
+				ft_chardel_at(&(*cmd)[(*i)->i], (*i)->j);
+			else
+				(*i)->j = (*i)->j + 1;
+		}
+		(*i)->j = (*i)->j + 1;
 		return (1);
 	}
 	return (0);

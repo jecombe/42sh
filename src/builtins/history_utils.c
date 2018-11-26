@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 04:59:26 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 12:09:00 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 03:45:37 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -86,7 +86,6 @@ void		history_save(char ***history, char *news, int version, char *s)
 	static char		*path = NULL;
 	char			*tmp;
 
-	tmp = NULL;
 	if (version == -1)
 	{
 		path = ft_strdup(s);

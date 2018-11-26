@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/18 06:07:24 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 10:45:55 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 15:01:48 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,7 +17,7 @@ int		ft_isdir(char *test)
 {
 	struct stat		stat;
 
-	if (lstat(test, &stat) != -1 && (stat.st_mode & S_IFMT) == S_IFDIR)
+	if (lstat(test, &stat) != -1 && ((stat.st_mode & S_IFMT) == S_IFDIR))
 		return (1);
 	return (0);
 }

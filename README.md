@@ -5,8 +5,8 @@
 
 | <h2>Partie Obligatoire</h2> | <h2>status</h2> |
 | :-----------: | :-----------:|
-| NORME. | 🐌 |
-| LEAKS. | 🐌 |
+| NORME. | ✅ |
+| LEAKS. | ✅ |
 | Affichage d’un prompt. | ✅ |
 | lecture de la ligne de commande, sans édition de ligne. | ✅ |
 | Exécution de commandes simples avec leurs paramètres et gestion du PATH. | ✅ |
@@ -21,7 +21,7 @@
 | env | ✅ |
 | setenv | ✅ |
 | unsetenv | ✅ |
-| GESTION DE LA VARIABLE PATH | ❌ |
+| GESTION DE LA VARIABLE PATH | ✅ |
 | Les pipes "\|" | ✅ |
 | Les aggrégations de descripteurs de fichiers, par exemple pour fermer la sortie d’erreur | ✅ |
 | Editer la ligne à l’endroit où se trouve le curseur. | ✅ |
@@ -41,25 +41,14 @@
 | Edition de ligne telle que demandée dans le ftsh3. | ✅ |
 | les variables locales et les builtin unset et export. | ✅ |
 | Les back quotes "‘". | ✅ |
-| L’historique des commandes et les builtins history et "!" avec toutes leurs options si elles en ont. | 🐢 |
+| Les sous shells avec les operateurs "()". | 🏎 |
 | Complétion dynamique. | ✅ |
-| Le Job control et les builtins jobs, fg et bg, et l’operateur "&". | 🐌 |
-| COLORISATION SYNTAXIQUE DU SHELL ACTIVABLE ET DESACTIVABLE | ❌ |
-| COMPLETION COMME LE THEME FISH | ❌ |
+| Les descripteurs de fichiers et la builtin read avec toutes ses options.| ✅ |
 
-SEGFAULT A RESOUDRE:<br/>
-\_ENVIRONNEMENT VIDE(A BIEN VERIFIER)<br/>
 
-TABULATION:<br/>
-\_LE REFRESH(INT GLOBAL OBLIGE)<br/>
-\_LES REPERTOIRES, LES BINAIRES ET LES VARIABLES POUR LA PREMIERE TAB(COULEURS A REVOIR)<br/>
-\_AUCUNE VARIABLE D ENVIRONNEMENT<br/>
-<br/>
-\_ALT + HAUT/BAS<br/>
-\_REVOIR LES BSLASH<br/>
-\_LES VARIABLES LOCALES ET ENV<br/>
-\_GESTION DES SIGNAUX<br/>
-\_RETOUR DE PROMPT<br/>
-\_PUSH DU 21SH<br/>
+
+<br>
+<br>
+<br>
 \_PUSH DU 42SH<br/>
 \_RECHECHE DE STAGE<br/>

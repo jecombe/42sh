@@ -19,18 +19,16 @@ void		ft_read_input(t_read *rd)
 	time_t	start;
 
 	start = time(NULL);
-	rd->interactive ? DO_NOTHING : get_term_raw_mode(1);
+	ft_read_raw_mode();
 	ft_bzero(key, sizeof(key));
 	ft_putstr(rd->prompt);
-	while (read(rd->fd, key, 1) != -1)
+	while (read(rd->fd, key, 1) >= -1)
 	{
-		if ((key[0] == rd->delimiter) ||
+		if ((key[0] == rd->delimiter) || !ft_strncmp(FT_KEY_CTRL_C, key, 4) ||
 			(rd->secs && (time(NULL) - start >= rd->secs)) ||
+			!ft_strncmp(FT_KEY_CTRL_D, key, 4) ||
 			(rd->limit && rd->line && ft_strlen(rd->line) >= (size_t)rd->limit))
-		{
-			get_term_raw_mode(0);
 			return ;
-		}
 		else if (rd->line)
 			ft_miniconcat(&rd->line, key);
 		else
@@ -39,7 +37,6 @@ void		ft_read_input(t_read *rd)
 			write(STDOUT_FILENO, key, sizeof(key));
 		ft_bzero(key, sizeof(key));
 	}
-	rd->interactive ? DO_NOTHING : get_term_raw_mode(0);
 }
 
 int			ft_read_options_long(t_read *rd, char letter, char *arg)
@@ -120,6 +117,7 @@ void		ft_read(char **cmd)
 		return ;
 	}
 	ft_read_input(&rd);
+	get_term_raw_mode(0);
 	if (!rd.line)
 		return ;
 	if (rd.split)

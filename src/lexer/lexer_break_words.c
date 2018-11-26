@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:40:55 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:20:17 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/26 10:57:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,8 +32,7 @@ int				ft_lexer_break_operator(char *input, int idx, int i)
 					ret = 1;
 		}
 		else if (input[idx] == ';' || input[idx] == '&' || input[idx] == '|' ||
-			input[idx] == '(' || input[idx] == ')' || input[idx] == '<' ||
-			input[idx] == '>')
+			input[idx] == '<' || input[idx] == '>')
 		{
 			ret = 1;
 		}
@@ -46,16 +45,27 @@ void			ft_lexer_break_quote(char *input, int *idx)
 {
 	char	c;
 
-	c = 0;
 	c = input[*idx];
-	if (c == '"' || c == '\'')
+	if (c == '"')
 	{
 		while (input[++(*idx)])
-			if (input[(*idx)] == c && input[*idx - 1] != '\\')
+		{
+			if (c == '\\' && input[++(*idx)] && input[(*idx)] != '\n')
+				++(*idx);
+			if (input[*idx] == '\0' || input[(*idx)] == c)
 				break ;
+		}
 	}
-	else if (c == '\\' && input[++(*idx)] && input[(*idx)] != '\n')
-		++(*idx);
+	else if (c == '\'')
+		while (input[++(*idx)])
+		{
+			if (input[(*idx)] == c)
+				break ;
+		}
+	else if (c == '\\' && input[++(*idx)])
+		(*idx) = (*idx) + 1;
+	else if (c == '(')
+		ft_lexer_break_sub(input, idx);
 }
 
 int				ft_lexer_break_blank(char *input, int *idx, int *i)

@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/04/13 18:27:26 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/25 06:09:41 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 13:16:08 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -68,7 +68,10 @@ void		ft_print_params(t_select *t)
 	while (i[0] < t->nbl)
 	{
 		if (i[0] < t->ws.ws_row + t->pose_min)
-			ft_putstr(i[0] > t->pose_min ? "\n\r" : "\r");
+		{
+			i[0] > t->pose_min ? TERMCAP("sf") : 0;
+			TERMCAP("cr");
+		}
 		i[1] = -1;
 		while (++i[1] < t->pbl && i[0] + (t->nbl * i[1]) < t->nbp)
 		{
@@ -80,6 +83,6 @@ void		ft_print_params(t_select *t)
 		}
 		i[0]++;
 	}
-	ft_putstr("\r");
+	TERMCAP("cr");
 	ft_place_cursor(i[0] - 1, 0, 0);
 }

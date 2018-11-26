@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/11/07 15:56:11 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:10:52 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/18 05:49:01 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,9 +16,11 @@
 static int	ft_pushed_key_altup_altdown_check(t_shell *sh, char *key, int lr[2],
 		int target)
 {
-	if (!ft_strncmp(FT_KEY_ALT_UP, key, 4) ? !g_cursor_pos : lr[1] == -1 &&
-	TERMCAP("rc"))
+	if (!ft_strncmp(FT_KEY_ALT_UP, key, 4) ? !g_cursor_pos : lr[1] == -1)
+	{
+		TERMCAP("rc");
 		return (1);
+	}
 	else
 	{
 		if (!ft_strncmp(FT_KEY_ALT_UP, key, 4))

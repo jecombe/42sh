@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:57:36 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/09 07:31:52 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/17 14:43:10 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -55,7 +55,7 @@ int			add_to_set(char *name, char *value)
 		return (EXIT_FAILURE);
 	if (!g_set || !(s = ft_envset_line((const char **)g_set, name)))
 	{
-		if (!(ft_malloc_cmd(&g_set, (s = ft_envset_join(name, value)))))
+		if (!(ft_malloc_cmd(&g_set, s = ft_envset_join(name, value))))
 			sort_set();
 	}
 	else

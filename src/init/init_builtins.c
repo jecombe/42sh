@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:57:58 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/09/28 00:27:59 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 08:06:05 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ static int	add_multiline(char **ret, char *news, char ***get_hist)
 	tmp2 = ft_strjoin(*ret, tmp);
 	ft_strdel(ret);
 	*ret = ft_strdup(tmp2);
-	if (news[ft_strlen(news) - 1] == ']')
+	if (news && ft_strlen(news) > 0 && news[ft_strlen(news) - 1] == ']')
 	{
 		ft_malloc_cmd(get_hist, *ret);
 		ft_strdel(ret);

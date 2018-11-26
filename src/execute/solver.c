@@ -3,19 +3,19 @@
 /*                                                              /             */
 /*   solver.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: jecombe <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2018/09/28 05:17:27 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 17:09:29 by jecombe     ###    #+. /#+    ###.fr     */
+/*   Created: 2018/11/16 22:57:09 by jecombe      #+#   ##    ##    #+#       */
+/*   Updated: 2018/11/21 17:20:54 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
 
-static void			add_pid_bin(int pid)
+void				add_pid_bin(int pid)
 {
-	char *tmp;
+	char	*tmp;
 
 	if ((tmp = ft_itoa(pid)))
 	{
@@ -24,45 +24,44 @@ static void			add_pid_bin(int pid)
 	}
 }
 
-static void			ft_close_fd(t_loop *loop, int pfd[2])
+static void			ft_close_fd(t_loop *loop, int pfd[2], t_op *opera)
 {
 	(loop->fd_in > 0) ? close(loop->fd_in) : 0;
 	(loop->fd_out != 1) ? close(loop->fd_out) : 0;
-	(loop->fd_save) ? close(loop->fd_save) : 0;
-	close(pfd[1]);
-	loop->fd_save = pfd[0];
+	if (opera->token == PIPE)
+	{
+		(loop->fd_save) ? close(loop->fd_save) : 0;
+		close(pfd[1]);
+		loop->fd_save = pfd[0];
+	}
 }
 
-void				ft_solve(t_op *opera, t_loop *loop, pid_t *pid, int pfd[2])
+static void			ft_execve(t_loop *loop, t_op *opera)
 {
-	if ((*pid = vfork()) == 0)
+	add_pid_bin(loop->pid);
+	execve(loop->bin, opera->cmd, g_env);
+}
+
+void				ft_solve(t_op *opera, t_loop *loop, int pfd[2])
+{
+	if ((loop->pid = fork()) == 0)
 	{
 		dup2(loop->fd_in != 0 ? loop->fd_in : loop->fd_save, STDIN_FILENO);
-		if (opera->token == PIPE && loop->fd_out == 1)
-			dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[0]);
+		if (opera->token == PIPE)
+		{
+			loop->fd_out == 1 ? dup2(pfd[1], 1) : 0;
+			close(pfd[0]);
+		}
 		if (loop->bin == NULL)
-		{
-			ft_print_error(opera->cmd[0], "Command not found !");
-			ft_putstr("\007");
-			loop->result = -1;
-			exit(EXIT_FAILURE);
-		}
-		if (isbuiltin(loop->bin, 1) == EXIT_SUCCESS)
-		{
-			loop->ok = 1;
+			exit(ft_command_not_found(opera, loop));
+		if (isbuiltin(opera->cmd[0]) == EXIT_SUCCESS && opera->token == PIPE)
 			exit(ft_builtins(opera, loop));
-		}
-		if (isbuiltin(opera->cmd[0], 2) == EXIT_SUCCESS)
-			exit(loop->result);
 		else
 		{
-			add_pid_bin(*pid);
-			ft_hashtable(loop->bin, opera->cmd[0]);
-			execve(loop->bin, opera->cmd, g_env);
-			exit(0);
+			ft_execve(loop, opera);
+			exit(EXIT_SUCCESS);
 		}
 	}
 	else
-		ft_close_fd(loop, pfd);
+		ft_close_fd(loop, pfd, opera);
 }

@@ -6,12 +6,18 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/28 01:41:01 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/07 08:19:51 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 13:20:09 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "heart.h"
+
+int				prelex_norm(char **line)
+{
+	ft_chardel_at(line, ft_strlen(*line) - 1);
+	return (0);
+}
 
 int				ft_isoperator(char *input)
 {

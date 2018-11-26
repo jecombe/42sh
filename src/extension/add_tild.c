@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/28 10:56:19 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 08:51:04 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/25 07:04:00 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -29,16 +29,16 @@ static int	add_tild(char **str, int *index)
 			return (1);
 		while (var[++i])
 			tmp[i] = var[i];
-		ft_strdel(&var);
 		while ((*str)[j])
 			tmp[i++] = (*str)[j++];
 		tmp[i] = '\0';
-		*index = i;
+		*index = ft_strlen(var);
 		ft_strdel(str);
 		*str = tmp;
 	}
 	else
 		*index = *index + 1;
+	ft_strdel(&var);
 	return (0);
 }
 
@@ -50,7 +50,7 @@ int			manage_tild_and_dollars(char ***cmd, t_bquote **i)
 			return (-1);
 	}
 	else if ((*cmd)[(*i)->i][(*i)->j] == '$')
-		ft_dollar(cmd, &(*i)->i, &(*i)->j);
+		ft_dollar(cmd, i);
 	else
 		(*i)->j++;
 	return (0);

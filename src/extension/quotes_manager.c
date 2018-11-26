@@ -6,7 +6,7 @@
 /*   By: gmadec <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/08/08 06:05:00 by gmadec       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 09:09:37 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 04:59:14 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,17 +45,17 @@ static char		*ft_replace_quote(char *str, int *j, int *i)
 	ret = NULL;
 	if ((*i == 0 && *j == 0 && str[1] && str[2]) || *i != 0 || *j != 0)
 	{
-		if (!(ret = malloc(sizeof(char) * (ft_strlen(str) - 1))))
+		if (!(ret = malloc(sizeof(char) * (ft_strlen(str)))))
 			return (NULL);
 		while (++j_tmp < *j)
 			ret[j_tmp] = str[j_tmp];
-		while (str[*j + 1] != '\'')
+		while (str[*j] && str[*j + 1] && str[*j + 1] != '\'')
 		{
 			ret[j_tmp++] = str[*j + 1];
 			*j += 1;
 		}
 		j_tmp2 = *j + 2;
-		while (str[j_tmp2])
+		while (str[j_tmp2 - 1] && str[j_tmp2])
 			ret[j_tmp++] = str[j_tmp2++];
 		ret[j_tmp] = '\0';
 	}

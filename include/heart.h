@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/02 01:40:43 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/06 15:45:29 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/24 03:01:58 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -49,6 +49,7 @@
 # include "execute.h"
 
 char			**g_set;
+int				g_interupt;
 char			**g_env;
 char			*g_cmd;
 int				g_cursor_pos;

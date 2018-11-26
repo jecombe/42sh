@@ -6,7 +6,7 @@
 /*   By: dewalter <marvin@le-101.fr>                +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 21:19:07 by dewalter     #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/04 15:31:51 by gmadec      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/18 06:01:42 by jecombe     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -95,7 +95,7 @@ int					ft_get_git_branch(char buff[])
 	ret = 0;
 	if ((git_branch = ft_get_git_branch_inner()))
 	{
-		ft_geoprintf(buff, "\e[94mgit:(\e[95m%s\e[94m)\e[0m ", git_branch);
+		ft_geoprintf(buff, "\e[94mgit:(\033[1;31m%s\e[94m)\e[0m ", git_branch);
 		ret = ft_strlen(git_branch);
 		free(git_branch);
 	}

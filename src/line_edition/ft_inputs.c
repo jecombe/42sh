@@ -6,7 +6,7 @@
 /*   By: gbarnay <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/02/19 22:41:54 by gbarnay      #+#   ##    ##    #+#       */
-/*   Updated: 2018/11/08 16:03:16 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/16 23:13:21 by dzonda      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,7 +45,7 @@ void	ft_init_input_keys(t_shell *sh)
 	sh->keys[7].f = &ft_pushed_key_tab;
 	ft_memcpy(sh->keys[8].key, FT_KEY_DEL, 4);
 	sh->keys[8].f = &ft_pushed_key_del;
-	ft_memcpy(sh->keys[8].key, FT_KEY_ALT_UD, 4);
+	ft_memcpy(sh->keys[9].key, FT_KEY_ALT_UD, 4);
 	sh->keys[9].f = &ft_pushed_key_altup_altdown;
 	ft_memcpy(sh->keys[10].key, FT_KEY_ALT_LR, 4);
 	sh->keys[10].f = &ft_pushed_key_altleft_altright;

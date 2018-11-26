@@ -6,7 +6,7 @@
 /*   By: dzonda <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/09/13 22:58:19 by dzonda       #+#   ##    ##    #+#       */
-/*   Updated: 2018/10/02 01:43:59 by dzonda      ###    #+. /#+    ###.fr     */
+/*   Updated: 2018/11/19 09:17:42 by gmadec      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,13 +21,20 @@ int			ft_init_vars(int ac, const char **av)
 	if (!(path = search_path_of_101sh(av[0])))
 		return (EXIT_FAILURE);
 	if (init_files(path))
+	{
+		ft_strdel(&path);
 		return (EXIT_FAILURE);
-	if (init_env(path))
+	}
+	if (init_set(ac, av) || init_env(path))
+	{
+		ft_strdel(&path);
 		return (EXIT_FAILURE);
-	if (init_set(ac, av))
-		return (EXIT_FAILURE);
+	}
 	if (init_builtins((const char *)path))
+	{
+		ft_strdel(&path);
 		return (EXIT_FAILURE);
+	}
 	ft_strdel(&path);
 	return (EXIT_SUCCESS);
 }
