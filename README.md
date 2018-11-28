@@ -36,7 +36,7 @@ Shell based on bash.
   - `hash`
   - `read`
 
-## Shell line edition ##
+## Shell Line Edition ##
 - Copy: <kbd>command</kbd> + <kbd>C</kbd>
 - Paste: <kbd>command</kbd> + <kbd>V</kbd>
 - Dynamic autocompletion: <kbd>Tab</kbd>
